@@ -34,13 +34,11 @@ class ItemTaggableManager(_TaggableManager):
         pass
 
 
-
 class LibraryTag(TagBase):
     """
     A custom tag to implement Tag hierarchies.
     """
     parents = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="children")
-
 
 
 class Item(models.Model):
@@ -76,4 +74,3 @@ class Item(models.Model):
 
     class Meta:
         ordering = ['name']
-
