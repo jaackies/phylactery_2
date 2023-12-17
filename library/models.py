@@ -63,7 +63,7 @@ class Item(models.Model):
     description = models.TextField(blank=True)
     condition = models.TextField(blank=True)
     notes = models.TextField(blank=True)
-    tags = TaggableManager(manager=ItemTaggableManager, through=)
+    tags = TaggableManager(manager=ItemTaggableManager, through=TaggedLibraryItem)
 
     min_players = models.PositiveIntegerField(blank=True, null=True)
     max_players = models.PositiveIntegerField(blank=True, null=True)
