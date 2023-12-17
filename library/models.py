@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Item(models.Model):
     """
     Stores all the data related to a single library item.
