@@ -1,6 +1,6 @@
 from django.db import models
 from taggit.managers import _TaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import TagBase, TaggedItemBase
 
 
 class TaggedLibraryItem(TaggedItemBase):
@@ -9,6 +9,21 @@ class TaggedLibraryItem(TaggedItemBase):
     """
     content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
     computed = models.BooleanField(default=False)
+
+
+class ItemTaggableManager(_TaggableManager):
+    """
+    A custom TaggableManager to help with Library tagging.
+    """
+    pass
+
+
+class LibraryTag(TagBase):
+    """
+    A custom tag to implement Tag hierarchies.
+    """
+    pass
+
 
 
 class Item(models.Model):
