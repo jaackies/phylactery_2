@@ -1,5 +1,5 @@
 from django.db import models
-from taggit.managers import _TaggableManager
+from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
 
 
@@ -7,6 +7,11 @@ class TaggedLibraryItem(TaggedItemBase):
     """
     A custom model to store the Tags for the library system.
     """
+    tag = models.ForeignKey(
+        LibraryTag,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_items"
+    )
     content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
     computed = models.BooleanField(default=False)
 
@@ -40,6 +45,10 @@ class LibraryTag(TagBase):
     """
     parents = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="children")
 
+    class Meta:
+        verbose_name = "Tag"
+        verbose_name_plural = "Tags"
+
 
 class Item(models.Model):
     """
@@ -54,6 +63,7 @@ class Item(models.Model):
     description = models.TextField(blank=True)
     condition = models.TextField(blank=True)
     notes = models.TextField(blank=True)
+    tags = TaggableManager(manager=ItemTaggableManager, through=)
 
     min_players = models.PositiveIntegerField(blank=True, null=True)
     max_players = models.PositiveIntegerField(blank=True, null=True)
