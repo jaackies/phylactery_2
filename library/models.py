@@ -15,14 +15,31 @@ class ItemTaggableManager(_TaggableManager):
     """
     A custom TaggableManager to help with Library tagging.
     """
-    pass
+    def add_base(self, *tags):
+        """
+        Adds base tags to the Item.
+        """
+        self.add(*tags, through_defaults={"computed": False})
+
+    def add_computed(self, *tags):
+        """
+        Adds computed tags to the Item.
+        """
+        self.add(*tags, through_defaults={"computed": True})
+
+    def set_base(self, tags, clear=False):
+        """
+        Sets base tags for the Item
+        """
+        pass
+
 
 
 class LibraryTag(TagBase):
     """
     A custom tag to implement Tag hierarchies.
     """
-    pass
+    parents = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="children")
 
 
 
