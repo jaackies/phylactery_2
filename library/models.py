@@ -3,19 +3,6 @@ from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
 
 
-class TaggedLibraryItem(TaggedItemBase):
-    """
-    A custom model to store the Tags for the library system.
-    """
-    tag = models.ForeignKey(
-        LibraryTag,
-        on_delete=models.CASCADE,
-        related_name="%(app_label)s_%(class)s_items"
-    )
-    content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
-    computed = models.BooleanField(default=False)
-
-
 class ItemTaggableManager(_TaggableManager):
     """
     A custom TaggableManager to help with Library tagging.
@@ -48,6 +35,19 @@ class LibraryTag(TagBase):
     class Meta:
         verbose_name = "Tag"
         verbose_name_plural = "Tags"
+
+
+class TaggedLibraryItem(TaggedItemBase):
+    """
+    A custom model to store the Tags for the library system.
+    """
+    tag = models.ForeignKey(
+        LibraryTag,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_items"
+    )
+    content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
+    computed = models.BooleanField(default=False)
 
 
 class Item(models.Model):
