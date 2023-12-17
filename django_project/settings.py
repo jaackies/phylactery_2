@@ -154,7 +154,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 INTERNAL_IPS = ["127.0.0.1"]
 
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = "accounts.UnigamesUser"
 
 # django-allauth config
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
