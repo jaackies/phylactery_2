@@ -1,4 +1,14 @@
 from django.db import models
+from taggit.managers import _TaggableManager
+from taggit.models import TaggedItemBase
+
+
+class TaggedLibraryItem(TaggedItemBase):
+    """
+    A custom model to store the Tags for the library system.
+    """
+    content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
+    computed = models.BooleanField(default=False)
 
 
 class Item(models.Model):
