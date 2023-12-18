@@ -134,7 +134,7 @@ class Item(models.Model):
             tags_to_search -= already_searched
             if len(tags_to_search) == 0:
                 break
-            already_searched += tags_to_search
+            already_searched |= tags_to_search
             tags_to_search = set(LibraryTag.objects.filter(children__in=tags_to_search))
         self.computed_tags.set(already_searched, clear=True)
 
