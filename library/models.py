@@ -125,9 +125,35 @@ class Item(models.Model):
             self.average_play_time = (self.min_play_time + self.max_play_time) // 2
 
     def compute_tags(self, recursion=True):
-        # Computes all inherited tags.
         # This method is called upon saving the Item or Tag.
-        pass
+
+        # Calculate the items computed tags by finding all parents, until there's none left.
+        tags_to_search = set(self.base_tags.all())
+        already_searched = set()
+        while True:
+            tags_to_search -= already_searched
+            if len(tags_to_search) == 0:
+                break
+            already_searched += tags_to_search
+            tags_to_search = set(LibraryTag.objects.filter(children__in=tags_to_search))
+        self.computed_tags.set(already_searched, clear=True)
+
+        # If the item doesn't have an associated "Item: <>" tag, create it.
+        # Then, set its parents to be this item's base tags.
+        if self.item_tag is None:
+            self.item_tag = LibraryTag.objects.create(name=f"Item: {self.name}")
+        else:
+            # Make sure the name of the Tag is updated.
+            if self.item_tag.name != f"Item: {self.name}":
+                self.item_tag.name = f"Item: {self.name}"
+        self.item_tag.parents.set(self.base_tags.all())
+
+        # Finally, we re-save any items with Tags that depend on this one.
+        if recursion:
+            # TODO: Finish this
+            pass
+
+
 
 
     def save(self, *args, **kwargs):
