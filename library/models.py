@@ -58,9 +58,13 @@ class Item(models.Model):
     description = models.TextField(blank=True)
     condition = models.TextField(blank=True)
     notes = models.TextField(blank=True)
+
+    # The tags for the Item. Base tags are the tags manually applied to the item.
+    # Computed tags are the ones automatically set due to tag hierarchy.
     base_tags = TaggableManager(manager=ItemTaggableManager, through=BaseTaggedLibraryItem, blank=True, verbose_name="Base Tags", related_name="base_items")
     computed_tags = TaggableManager(manager=ItemTaggableManager, through=ComputedTaggedLibraryItem, blank=True, verbose_name="Computed Tags", related_name="computed_items")
 
+    # Data for display on the Item's page.
     min_players = models.PositiveIntegerField(blank=True, null=True)
     max_players = models.PositiveIntegerField(blank=True, null=True)
 
