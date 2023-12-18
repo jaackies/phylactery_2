@@ -7,23 +7,7 @@ class ItemTaggableManager(_TaggableManager):
     """
     A custom TaggableManager to help with Library tagging.
     """
-    def add_base(self, *tags):
-        """
-        Adds base tags to the Item.
-        """
-        self.add(*tags, through_defaults={"computed": False})
-
-    def add_computed(self, *tags):
-        """
-        Adds computed tags to the Item.
-        """
-        self.add(*tags, through_defaults={"computed": True})
-
-    def set_base(self, tags, clear=False):
-        """
-        Sets base tags for the Item
-        """
-        pass
+    pass
 
 
 class LibraryTag(TagBase):
@@ -37,7 +21,7 @@ class LibraryTag(TagBase):
         verbose_name_plural = "Tags"
 
 
-class TaggedLibraryItem(TaggedItemBase):
+class BaseTaggedLibraryItem(TaggedItemBase):
     """
     A custom model to store the Tags for the library system.
     """
@@ -47,7 +31,18 @@ class TaggedLibraryItem(TaggedItemBase):
         related_name="%(app_label)s_%(class)s_items"
     )
     content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
-    computed = models.BooleanField(default=False)
+
+
+class ComputedTaggedLibraryItem(TaggedItemBase):
+    """
+    A custom model to store the Tags for the library system.
+    """
+    tag = models.ForeignKey(
+        LibraryTag,
+        on_delete=models.CASCADE,
+        related_name="%(app_label)s_%(class)s_items"
+    )
+    content_object = models.ForeignKey("Item", on_delete=models.CASCADE)
 
 
 class Item(models.Model):
@@ -63,7 +58,8 @@ class Item(models.Model):
     description = models.TextField(blank=True)
     condition = models.TextField(blank=True)
     notes = models.TextField(blank=True)
-    tags = TaggableManager(manager=ItemTaggableManager, through=TaggedLibraryItem)
+    base_tags = TaggableManager(manager=ItemTaggableManager, through=BaseTaggedLibraryItem, blank=True, related_name="base_items")
+    computed_tags = TaggableManager(manager=ItemTaggableManager, through=ComputedTaggedLibraryItem, related_name="computed_items")
 
     min_players = models.PositiveIntegerField(blank=True, null=True)
     max_players = models.PositiveIntegerField(blank=True, null=True)
