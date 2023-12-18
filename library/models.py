@@ -80,3 +80,29 @@ class Item(models.Model):
 
     class Meta:
         ordering = ['name']
+
+    # Methods
+    def __str__(self):
+        # The name for the object in the admin interface.
+        return self.name
+
+    def all_tags(self):
+        # Helper method to return all the item's tags.
+        return self.base_tags.all().union(self.computed_tags.all())
+
+    def players_display(self):
+        # Returns a string representation of the player count.
+        if not (self.min_players or self.max_players):
+            # No player count given.
+            return ""
+        if self.min_players == self.max_players:
+            # Exactly N players.
+            return f"{self.min_players} player{'s' if self.min_players > 1 else ''}"
+        if not self.min_players:
+            # There's a max but no minimum.
+            return f"1 - {self.max_players} players"
+        if not self.max_players:
+            # There's a minimum but no max.
+            return f"{self.max_players}+ players"
+        # The base case
+        return f"{self.min_players} - {self.max_players} players"
