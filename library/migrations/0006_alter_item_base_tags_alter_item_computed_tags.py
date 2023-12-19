@@ -5,20 +5,25 @@ import taggit.managers
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('library', '0005_remove_basetaggedlibraryitem_computed'),
-    ]
-
-    operations = [
-        migrations.AlterField(
-            model_name='item',
-            name='base_tags',
-            field=taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='library.BaseTaggedLibraryItem', to='library.LibraryTag', verbose_name='Base Tags'),
-        ),
-        migrations.AlterField(
-            model_name='item',
-            name='computed_tags',
-            field=taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='library.ComputedTaggedLibraryItem', to='library.LibraryTag', verbose_name='Computed Tags'),
-        ),
-    ]
+	dependencies = [
+		('library', '0005_remove_basetaggedlibraryitem_computed'),
+	]
+	
+	operations = [
+		migrations.AlterField(
+			model_name='item',
+			name='base_tags',
+			field=taggit.managers.TaggableManager(
+				blank=True, help_text='A comma-separated list of tags.', through='library.BaseTaggedLibraryItem',
+				to='library.LibraryTag', verbose_name='Base Tags'
+			),
+		),
+		migrations.AlterField(
+			model_name='item',
+			name='computed_tags',
+			field=taggit.managers.TaggableManager(
+				blank=True, help_text='A comma-separated list of tags.', through='library.ComputedTaggedLibraryItem',
+				to='library.LibraryTag', verbose_name='Computed Tags'
+			),
+		),
+	]

@@ -5,10 +5,12 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import UnigamesUserCreationForm, UnigamesUserChangeForm
 from .models import UnigamesUser
 
+
 class UnigamesUserAdmin(UserAdmin):
-    add_form = UnigamesUserCreationForm
-    form = UnigamesUserChangeForm
-    model = UnigamesUser
-    list_display = ['email', 'username',]
+	add_form = UnigamesUserCreationForm
+	form = UnigamesUserChangeForm
+	model = UnigamesUser
+	list_display = ['email', 'username', ]
+
 
 admin.site.register(UnigamesUser, UnigamesUserAdmin)
