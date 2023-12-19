@@ -5,15 +5,17 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('library', '0006_alter_item_base_tags_alter_item_computed_tags'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='item',
-            name='item_tag',
-            field=models.OneToOneField(default=None, editable=False, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='item', to='library.librarytag'),
-        ),
-    ]
+	dependencies = [
+		('library', '0006_alter_item_base_tags_alter_item_computed_tags'),
+	]
+	
+	operations = [
+		migrations.AddField(
+			model_name='item',
+			name='item_tag',
+			field=models.OneToOneField(
+				default=None, editable=False, null=True, on_delete=django.db.models.deletion.SET_NULL,
+				related_name='item', to='library.librarytag'
+			),
+		),
+	]

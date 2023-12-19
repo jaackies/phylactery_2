@@ -7,63 +7,68 @@ import taggit.managers
 
 
 class Migration(migrations.Migration):
-
-    initial = True
-
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Item',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
-                ('slug', models.SlugField(max_length=100)),
-                ('description', models.TextField(blank=True)),
-                ('condition', models.TextField(blank=True)),
-                ('notes', models.TextField(blank=True)),
-                ('min_players', models.PositiveIntegerField(blank=True, null=True)),
-                ('max_players', models.PositiveIntegerField(blank=True, null=True)),
-                ('min_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
-                ('max_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
-                ('average_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
-                ('is_borrowable', models.BooleanField(default=True)),
-                ('is_high_demand', models.BooleanField(default=False)),
-                ('image', models.ImageField(null=True, upload_to=library.models.Item.get_image_filename)),
-            ],
-            options={
-                'ordering': ['name'],
-            },
-        ),
-        migrations.CreateModel(
-            name='LibraryTag',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
-                ('slug', models.SlugField(allow_unicode=True, max_length=100, unique=True, verbose_name='slug')),
-                ('parents', models.ManyToManyField(blank=True, related_name='children', to='library.librarytag')),
-            ],
-            options={
-                'verbose_name': 'Tag',
-                'verbose_name_plural': 'Tags',
-            },
-        ),
-        migrations.CreateModel(
-            name='TaggedLibraryItem',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('computed', models.BooleanField(default=False)),
-                ('content_object', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='library.item')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='%(app_label)s_%(class)s_items', to='library.librarytag')),
-            ],
-            options={
-                'abstract': False,
-            },
-        ),
-        migrations.AddField(
-            model_name='item',
-            name='tags',
-            field=taggit.managers.TaggableManager(help_text='A comma-separated list of tags.', through='library.TaggedLibraryItem', to='library.LibraryTag', verbose_name='Tags'),
-        ),
-    ]
+	initial = True
+	
+	dependencies = [
+	]
+	
+	operations = [
+		migrations.CreateModel(
+			name='Item',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('name', models.CharField(max_length=100, unique=True)),
+				('slug', models.SlugField(max_length=100)),
+				('description', models.TextField(blank=True)),
+				('condition', models.TextField(blank=True)),
+				('notes', models.TextField(blank=True)),
+				('min_players', models.PositiveIntegerField(blank=True, null=True)),
+				('max_players', models.PositiveIntegerField(blank=True, null=True)),
+				('min_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
+				('max_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
+				('average_play_time', models.PositiveIntegerField(blank=True, help_text='in minutes', null=True)),
+				('is_borrowable', models.BooleanField(default=True)),
+				('is_high_demand', models.BooleanField(default=False)),
+				('image', models.ImageField(null=True, upload_to=library.models.Item.get_image_filename)),
+			],
+			options={
+				'ordering': ['name'],
+			},
+		),
+		migrations.CreateModel(
+			name='LibraryTag',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('name', models.CharField(max_length=100, unique=True, verbose_name='name')),
+				('slug', models.SlugField(allow_unicode=True, max_length=100, unique=True, verbose_name='slug')),
+				('parents', models.ManyToManyField(blank=True, related_name='children', to='library.librarytag')),
+			],
+			options={
+				'verbose_name': 'Tag',
+				'verbose_name_plural': 'Tags',
+			},
+		),
+		migrations.CreateModel(
+			name='TaggedLibraryItem',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('computed', models.BooleanField(default=False)),
+				('content_object', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='library.item')),
+				('tag', models.ForeignKey(
+					on_delete=django.db.models.deletion.CASCADE, related_name='%(app_label)s_%(class)s_items',
+					to='library.librarytag'
+				)),
+			],
+			options={
+				'abstract': False,
+			},
+		),
+		migrations.AddField(
+			model_name='item',
+			name='tags',
+			field=taggit.managers.TaggableManager(
+				help_text='A comma-separated list of tags.', through='library.TaggedLibraryItem',
+				to='library.LibraryTag', verbose_name='Tags'
+			),
+		),
+	]

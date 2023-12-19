@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('library', '0004_alter_item_base_tags_computedtaggedlibraryitem_and_more'),
-    ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='basetaggedlibraryitem',
-            name='computed',
-        ),
-    ]
+	dependencies = [
+		('library', '0004_alter_item_base_tags_computedtaggedlibraryitem_and_more'),
+	]
+	
+	operations = [
+		migrations.RemoveField(
+			model_name='basetaggedlibraryitem',
+			name='computed',
+		),
+	]

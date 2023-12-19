@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
-    dependencies = [
-        ('library', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.RenameField(
-            model_name='item',
-            old_name='tags',
-            new_name='base_tags',
-        ),
-    ]
+	dependencies = [
+		('library', '0001_initial'),
+	]
+	
+	operations = [
+		migrations.RenameField(
+			model_name='item',
+			old_name='tags',
+			new_name='base_tags',
+		),
+	]
