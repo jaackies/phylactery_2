@@ -9,9 +9,9 @@ class ItemFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: f"Item {n}")
     slug = factory.Sequence(lambda n: slugify(f"Item {n}"))
-    description = None
-    condition = None
-    notes = None
+    description = ""
+    condition = ""
+    notes = ""
 
     min_players = None
     max_players = None
