@@ -122,7 +122,7 @@ class Item(models.Model):
         # Before saving, we calculate the playtime.
         # After saving, we compute the full tags for the Item.
         self.compute_playtime()
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs)  # This actually does the saving.
         self.compute_tags()
 
     def compute_playtime(self):
