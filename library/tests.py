@@ -49,6 +49,10 @@ class LibraryModelTests(TestCase):
         eligible.compute_play_time()
         self.assertEquals(eligible.average_play_time, 45)
 
+        eligible.average_play_time = 59
+        eligible.compute_play_time()
+        self.assertEquals(eligible.average_play_time, 59)
+
     def test_tagging(self):
         item = ItemFactory()
         tag = LibraryTagFactory()
