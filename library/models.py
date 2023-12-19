@@ -112,7 +112,7 @@ class Item(models.Model):
             return f"1 - {self.max_players} players"
         if not self.max_players:
             # There's a minimum but no max.
-            return f"{self.max_players}+ players"
+            return f"{self.min_players}+ players"
         # The base case
         return f"{self.min_players} - {self.max_players} players"
 
