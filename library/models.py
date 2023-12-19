@@ -27,7 +27,7 @@ class LibraryTag(TagBase):
         Find any Items that have this tag in their base_tags or computed_tags, and re-save them.
         """
         for item in Item.objects.filter(
-            Q(base_tags__in=self) | Q(computed_tags__in=self)
+            Q(base_tags__in=[self]) | Q(computed_tags__in=[self])
         ):
             item.compute_tags(recursion=False)
 
@@ -173,5 +173,4 @@ class Item(models.Model):
 
         # Finally, we re-save any items with Tags that depend on this one.
         if recursion:
-            # TODO: Finish this
-            pass
+            self.item_tag.recompute_dependant_items()

@@ -54,8 +54,40 @@ class LibraryModelTests(TestCase):
         self.assertEquals(eligible.average_play_time, 59)
 
     def test_tagging(self):
-        item = ItemFactory()
-        tag = LibraryTagFactory()
-        item.base_tags.add(tag)
-        self.assertIn(tag, item.base_tags.all())
+        # child -> parent
+        # Edge of the Empire -> Star Wars
+        # Edge of the Empire -> RPG
+        # Star Wars -> Aliens
+        # Star Wars -> Droids
+        # Droids -> Robots
+        # Robots -> Droids
+        # Robots -> Sci-Fi
+        edge_e = LibraryTagFactory(name="Edge of the Empire")
+        star_wars = LibraryTagFactory(name="Star Wars")
+        rpg = LibraryTagFactory(name="RPG")
+        aliens = LibraryTagFactory(name="Aliens")
+        droids = LibraryTagFactory(name="Droids")
+        robots = LibraryTagFactory(name="Robots")
+        sci_fi = LibraryTagFactory(name="Sci-Fi")
 
+        edge_e.parents.set([star_wars, rpg])
+        star_wars.parents.set([aliens, droids])
+        droids.parents.add(robots)
+        robots.parents.add(droids)
+        robots.parents.add(sci_fi)
+
+        edge_e.save()
+        star_wars.save()
+        rpg.save()
+        aliens.save()
+        droids.save()
+        robots.save()
+        sci_fi.save()
+
+        new_item = ItemFactory(name="Star Wars RPG")
+        new_item.base_tags.add(star_wars)
+        new_item.base_tags.add(rpg)
+        new_item.save()
+
+        # This item should now have the tags "Star Wars", "RPG", "Aliens", "Droids", "Robots", "Sci-Fi"
+        self.assertEquals(set(new_item.all_tags), {star_wars, rpg, aliens, robots, droids, sci_fi})
