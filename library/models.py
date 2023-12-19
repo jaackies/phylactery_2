@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
 
@@ -19,6 +20,20 @@ class LibraryTag(TagBase):
     class Meta:
         verbose_name = "Tag"
         verbose_name_plural = "Tags"
+
+    def recompute_dependant_items(self):
+        """
+        Called when a Tag object is saved.
+        Find any Items that have this tag in their base_tags or computed_tags, and re-save them.
+        """
+        for item in Item.objects.filter(
+            Q(base_tags__in=self) | Q(computed_tags__in=self)
+        ):
+            item.compute_tags(recursion=False)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.recompute_dependant_items()
 
 
 class BaseTaggedLibraryItem(TaggedItemBase):
