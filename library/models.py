@@ -121,11 +121,11 @@ class Item(models.Model):
         # This method is called whenever the Item is saved.
         # Before saving, we calculate the playtime.
         # After saving, we compute the full tags for the Item.
-        self.compute_playtime()
+        self.compute_play_time()
         super().save(*args, **kwargs)  # This actually does the saving.
         self.compute_tags()
 
-    def compute_playtime(self):
+    def compute_play_time(self):
         # Calculates and sets the average play time of the Item.
         # This method is called upon saving the Item.
         if self.average_play_time is None and (self.min_play_time is not None and self.max_play_time is not None):
@@ -160,14 +160,3 @@ class Item(models.Model):
         if recursion:
             # TODO: Finish this
             pass
-
-
-
-
-    def save(self, *args, **kwargs):
-        # Override of the base save method, to compute the playtime and compute tags.
-        self.compute_playtime()
-        super().save(*args, **kwargs)
-        # self.compute_tags()
-
-
