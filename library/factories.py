@@ -22,3 +22,10 @@ class ItemFactory(factory.django.DjangoModelFactory):
     is_high_demand = False
 
     image = None
+
+
+class LibraryTagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = LibraryTag
+
+    name = factory.Sequence(lambda n: f"tag{n}")
