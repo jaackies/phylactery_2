@@ -36,6 +36,19 @@ class LibraryModelTests(TestCase):
         different = ItemFactory(min_players=2, max_players=6)
         self.assertEquals(different.players_display, "2 - 6 players")
 
+    def test_compute_play_time(self):
+        ineligible_1 = ItemFactory(min_play_time=30)
+        ineligible_1.compute_play_time()
+        self.assertEquals(ineligible_1.average_play_time, None)
+
+        ineligible_2 = ItemFactory(max_play_time=60)
+        ineligible_2.compute_play_time()
+        self.assertEquals(ineligible_2.average_play_time, None)
+
+        eligible = ItemFactory(min_play_time=30, max_play_time=60)
+        eligible.compute_play_time()
+        self.assertEquals(eligible.average_play_time, 45)
+
     def test_tagging(self):
         item = ItemFactory()
         tag = LibraryTagFactory()
