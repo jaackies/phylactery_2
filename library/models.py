@@ -117,6 +117,14 @@ class Item(models.Model):
         return f"{self.min_players} - {self.max_players} players"
 
     # Methods
+    def save(self, *args, **kwargs):
+        # This method is called whenever the Item is saved.
+        # Before saving, we calculate the playtime.
+        # After saving, we compute the full tags for the Item.
+        self.compute_playtime()
+        super().save(*args, **kwargs)
+        self.compute_tags()
+
     def compute_playtime(self):
         # Calculates and sets the average play time of the Item.
         # This method is called upon saving the Item.
