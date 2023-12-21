@@ -94,7 +94,7 @@ class Rank(models.Model):
 	
 	member = models.ForeignKey("Member", on_delete=models.CASCADE, related_name="ranks")
 	rank_name = models.TextField(max_length=20, choices=RankChoices.choices)
-	assigned_date = models.DateField(default=datetime.date.today)
+	assigned_date = models.DateField(default=timezone.now)
 	expired_date = models.DateField(blank=True, null=True)
 	
 	# Custom manager to help with quality of life
