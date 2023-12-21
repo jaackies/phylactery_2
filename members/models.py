@@ -69,7 +69,7 @@ class Rank(models.Model):
 		IPP = 'IPP', 'IPP (Immediate Past President)'
 	
 	member = models.ForeignKey("Member", on_delete=models.CASCADE, related_name="ranks")
-	rank_name = models.TextField(max_length=20, choices=RankChoices)
+	rank_name = models.TextField(max_length=20, choices=RankChoices.choices)
 	assigned_date = models.DateField(default=datetime.date.today)
 	expired_date = models.DateField(blank=True, null=True)
 	
