@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.db.models import ExpressionWrapper, Q
 from django.utils import timezone
 
 from accounts.models import UnigamesUser
@@ -44,7 +45,22 @@ class Member(models.Model):
 			return True
 		else:
 			return False
-	
+
+
+class RankManager(models.Manager):
+	def get_queryset(self):
+		return super().get_queryset().annotate(expired=ExpressionWrapper(
+			Q(expired_date__lte=datetime.date.today())
+		))
+
+
+class ActiveRankManager(RankManager):
+	"""
+	Custom manager for Ranks, which returns only active (non-expired) ranks.
+	"""
+	def get_queryset(self):
+		return super().get_queryset().filter(expired=False)
+
 
 class Rank(models.Model):
 	"""
@@ -72,6 +88,9 @@ class Rank(models.Model):
 	rank_name = models.TextField(max_length=20, choices=RankChoices.choices)
 	assigned_date = models.DateField(default=datetime.date.today)
 	expired_date = models.DateField(blank=True, null=True)
+	
+	objects = RankManager()
+	active = ActiveRankManager()
 	
 	@property
 	def is_expired(self):
