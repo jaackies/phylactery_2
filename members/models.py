@@ -48,6 +48,22 @@ class Member(models.Model):
 			return False
 
 
+class Membership(models.Model):
+	"""
+	Stores information about a single membership purchased for a single member.
+	"""
+	member = models.ForeignKey("Member", on_delete=models.SET_NULL, null=True, related_name="memberships")
+	phone_number = models.CharField(max_length=20)
+	date_purchased = models.DateField(default=timezone.now)
+	guild_member = models.BooleanField()
+	amount_paid = models.IntegerField()
+	expired = models.BooleanField(default=False)
+	authorised_by = models.ForeignKey("Member", on_delete=models.SET_NULL, null=True, related_name="authorised")
+	
+	def __str__(self):
+		return f"Membership: {self.member.long_name} ({self.date_purchased.year})"
+
+
 class RankChoices(models.TextChoices):
 	EXCLUDED = 'EXCLUDED', 'Excluded'
 	GATEKEEPER = 'GATEKEEPER', 'Gatekeeper'
