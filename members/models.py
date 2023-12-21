@@ -48,6 +48,22 @@ class Member(models.Model):
 			return False
 
 
+class RankChoices(models.TextChoices):
+	EXCLUDED = 'EXCLUDED', 'Excluded'
+	GATEKEEPER = 'GATEKEEPER', 'Gatekeeper'
+	WEBKEEPER = 'WEBKEEPER', 'Webkeeper'
+	COMMITTEE = 'COMMITTEE', 'Committee'
+	LIFEMEMBER = 'LIFEMEMBER', 'Life Member'
+	PRESIDENT = 'PRESIDENT', 'President'
+	VICEPRESIDENT = 'VICEPRESIDENT', 'Vice-President'
+	TREASURER = 'TREASURER', 'Treasurer'
+	SECRETARY = 'SECRETARY', 'Secretary'
+	LIBRARIAN = 'LIBRARIAN', 'Librarian'
+	FRESHERREP = 'FRESHERREP', 'Fresher-Rep'
+	OCM = 'OCM', 'OCM'
+	IPP = 'IPP', 'IPP (Immediate Past President)'
+
+
 class RankManager(models.Manager):
 	"""
 	Custom manager for ranks - this will annotate all Ranks with an easy to use "expired" field.
@@ -83,20 +99,6 @@ class Rank(models.Model):
 	Each rank has an assignment date and expiry date.
 	A rank stops granting privileges when current_date >= expiry_date.
 	"""
-	class RankChoices(models.TextChoices):
-		EXCLUDED = 'EXCLUDED', 'Excluded'
-		GATEKEEPER = 'GATEKEEPER', 'Gatekeeper'
-		WEBKEEPER = 'WEBKEEPER', 'Webkeeper'
-		COMMITTEE = 'COMMITTEE', 'Committee'
-		LIFEMEMBER = 'LIFEMEMBER', 'Life Member'
-		PRESIDENT = 'PRESIDENT', 'President'
-		VICEPRESIDENT = 'VICEPRESIDENT', 'Vice-President'
-		TREASURER = 'TREASURER', 'Treasurer'
-		SECRETARY = 'SECRETARY', 'Secretary'
-		LIBRARIAN = 'LIBRARIAN', 'Librarian'
-		FRESHERREP = 'FRESHERREP', 'Fresher-Rep'
-		OCM = 'OCM', 'OCM'
-		IPP = 'IPP', 'IPP (Immediate Past President)'
 	
 	member = models.ForeignKey("Member", on_delete=models.CASCADE, related_name="ranks")
 	rank_name = models.TextField(max_length=20, choices=RankChoices.choices)
