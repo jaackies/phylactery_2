@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -43,5 +45,44 @@ class Member(models.Model):
 		else:
 			return False
 	
+
+class Rank(models.Model):
+	"""
+	Stores a rank for a Member, for granting permission and such.
+	There are currently 13 hard-coded ranks.
+	Each rank has an assignment date and expiry date.
+	A rank stops granting privileges when current_date >= expiry_date.
+	"""
+	class RankChoices(models.TextChoices):
+		EXCLUDED = 'EXCLUDED', 'Excluded'
+		GATEKEEPER = 'GATEKEEPER', 'Gatekeeper'
+		WEBKEEPER = 'WEBKEEPER', 'Webkeeper'
+		COMMITTEE = 'COMMITTEE', 'Committee'
+		LIFEMEMBER = 'LIFEMEMBER', 'Life Member'
+		PRESIDENT = 'PRESIDENT', 'President'
+		VICEPRESIDENT = 'VICEPRESIDENT', 'Vice-President'
+		TREASURER = 'TREASURER', 'Treasurer'
+		SECRETARY = 'SECRETARY', 'Secretary'
+		LIBRARIAN = 'LIBRARIAN', 'Librarian'
+		FRESHERREP = 'FRESHERREP', 'Fresher-Rep'
+		OCM = 'OCM', 'OCM'
+		IPP = 'IPP', 'IPP (Immediate Past President)'
 	
+	member = models.ForeignKey("Member", on_delete=models.CASCADE, related_name="ranks")
+	rank_name = models.TextField(max_length=20, choices=RankChoices)
+	assigned_date = models.DateField(default=datetime.date.today)
+	expired_date = models.DateField(blank=True, null=True)
+	
+	@property
+	def is_expired(self):
+		# A rank is expired if the expiry date <= today
+		if datetime.date.today() >= self.expired_date:
+			return True
+		else:
+			return False
+	
+	def set_expired(self):
+		# Set the expiry date to today.
+		self.expired_date = datetime.date.today()
+		self.save()
 	
