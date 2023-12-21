@@ -1,7 +1,8 @@
 import datetime
 
 from django.db import models
-from django.db.models import ExpressionWrapper, Q
+from django.db.models import Case, When, Value
+from django.db.models.functions import Now
 from django.utils import timezone
 
 from accounts.models import UnigamesUser
@@ -48,15 +49,28 @@ class Member(models.Model):
 
 
 class RankManager(models.Manager):
+	"""
+	Custom manager for ranks - this will annotate all Ranks with an easy to use "expired" field.
+	"""
 	def get_queryset(self):
-		return super().get_queryset().annotate(expired=ExpressionWrapper(
-			Q(expired_date__lte=datetime.date.today())
+		# Annotates the default queryset.
+		return super().get_queryset().annotate(expired=Case(
+			When(expired_date__lte=Now(), then=Value(True)),
+			default=Value(False),
+			output_field=models.BooleanField()
 		))
+	
+	# This lets you use Ranks.objects.all_active/all_expired as a shortcut.
+	def all_active(self):
+		return self.all().filter(expired=False)
+	
+	def all_expired(self):
+		return self.all().filter(expired=True)
 
 
 class ActiveRankManager(RankManager):
 	"""
-	Custom manager for Ranks, which returns only active (non-expired) ranks.
+	This custom rank manager will show only the non-expired Ranks.
 	"""
 	def get_queryset(self):
 		return super().get_queryset().filter(expired=False)
@@ -89,6 +103,7 @@ class Rank(models.Model):
 	assigned_date = models.DateField(default=datetime.date.today)
 	expired_date = models.DateField(blank=True, null=True)
 	
+	# Custom managers to help with quality of life
 	objects = RankManager()
 	active = ActiveRankManager()
 	
