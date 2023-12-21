@@ -84,14 +84,6 @@ class RankManager(models.Manager):
 		return self.all().filter(expired=True)
 
 
-class ActiveRankManager(RankManager):
-	"""
-	This custom rank manager will show only the non-expired Ranks.
-	"""
-	def get_queryset(self):
-		return super().get_queryset().filter(expired=False)
-
-
 class Rank(models.Model):
 	"""
 	Stores a rank for a Member, for granting permission and such.
@@ -105,9 +97,8 @@ class Rank(models.Model):
 	assigned_date = models.DateField(default=datetime.date.today)
 	expired_date = models.DateField(blank=True, null=True)
 	
-	# Custom managers to help with quality of life
+	# Custom manager to help with quality of life
 	objects = RankManager()
-	active = ActiveRankManager()
 	
 	@property
 	def is_expired(self):
