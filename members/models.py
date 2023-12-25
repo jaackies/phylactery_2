@@ -116,10 +116,15 @@ class Rank(models.Model):
 	# Custom manager to help with quality of life
 	objects = RankManager()
 	
+	def __str__(self):
+		return f"Rank: {RankChoices[self.rank_name].label} for {self.member.long_name} {'(EXPIRED)' if self.is_expired else ''}"
+	
 	@property
 	def is_expired(self):
 		# A rank is expired if the expiry date <= today
-		if datetime.date.today() >= self.expired_date:
+		if self.expired_date is None:
+			return False
+		elif datetime.date.today() >= self.expired_date:
 			return True
 		else:
 			return False
