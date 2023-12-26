@@ -10,7 +10,7 @@ class UnigamesUserAdmin(UserAdmin):
 	add_form = UnigamesUserCreationForm
 	form = UnigamesUserChangeForm
 	model = UnigamesUser
-	list_display = ['email', 'username', ]
+	list_display = ['email', '__str__', 'username', ]
 
 
 admin.site.register(UnigamesUser, UnigamesUserAdmin)

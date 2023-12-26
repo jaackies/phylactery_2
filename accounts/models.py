@@ -6,4 +6,7 @@ class UnigamesUser(AbstractUser):
 	pass
 	
 	def __str__(self):
-		return self.email
+		if self.member is None:
+			return self.email
+		else:
+			return self.member.long_name
