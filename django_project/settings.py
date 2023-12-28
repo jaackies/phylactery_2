@@ -1,4 +1,8 @@
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +29,8 @@ INSTALLED_APPS = [
 	# Third-party
 	"allauth",
 	"allauth.account",
+	"allauth.socialaccount",
+	"allauth.socialaccount.providers.discord",
 	"crispy_forms",
 	"crispy_bootstrap5",
 	"debug_toolbar",
@@ -180,3 +186,16 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+SOCIALACCOUNT_ADAPTER = "accounts.adapters.CustomSocialAccountAdapter"
+
+SOCIALACCOUNT_PROVIDERS = {
+	"discord": {
+		"APPS": [
+			{
+				"client_id": "934080121881649233",
+				"secret": env.str("DISCORD_SECRET"),
+			}
+		]
+	}
+}
