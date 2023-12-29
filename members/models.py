@@ -46,6 +46,19 @@ class Member(models.Model):
 			return True
 		else:
 			return False
+	
+	def has_rank(self, rank_name):
+		# Returns True if the member has a non-expired rank of the given type.
+		# Returns False otherwise.
+		return self.ranks.filter(expired=False, rank_name=rank_name).exists()
+	
+	def has_active_membership(self):
+		# Returns True if the member has a valid membership.
+		return self.memberships.filter(expired=False).exists()
+	
+	def is_valid_member(self):
+		# Returns True if the member has a valid membership and does not have the excluded rank.
+		return self.has_active_membership() and not self.has_rank(RankChoices.EXCLUDED)
 
 
 class Membership(models.Model):
