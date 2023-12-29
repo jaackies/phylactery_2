@@ -66,7 +66,6 @@ class Membership(models.Model):
 	Stores information about a single membership purchased for a single member.
 	"""
 	member = models.ForeignKey("Member", on_delete=models.SET_NULL, null=True, related_name="memberships")
-	phone_number = models.CharField(max_length=20)
 	date_purchased = models.DateField(default=timezone.now)
 	guild_member = models.BooleanField()
 	amount_paid = models.IntegerField()
