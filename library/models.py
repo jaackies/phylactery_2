@@ -10,6 +10,13 @@ def default_due_date():
 	return timezone.now() + datetime.timedelta(weeks=2)
 
 
+class ReservationStatus(models.TextChoices):
+	PENDING = "?", "Pending"
+	APPROVED = "A", "Approved"
+	DENIED = "X", "Denied"
+	COMPLETED = "!", "Completed"
+
+
 class ItemTaggableManager(_TaggableManager):
 	"""
 	A custom TaggableManager to help with Library tagging.
@@ -238,4 +245,46 @@ class BorrowRecord(models.Model):
 	verified_returned = models.BooleanField(default=False)
 	
 
+class Reservation(models.Model):
+	"""
+	Allows both internal and external entities to request to reserve items, for a later pickup.
+	"""
 	
+	# Details for the requestor
+	is_external = models.BooleanField(default=False)
+	internal_member = models.ForeignKey("members.Member", blank=True, null=True, on_delete=models.SET_NULL)
+	requestor_name = models.CharField(max_length=200, blank=True)
+	requestor_email = models.EmailField()
+	requestor_phone = models.CharField(max_length=20)
+	
+	# Which items they've asked for.
+	reserved_items = models.ManyToManyField("Item", related_name="reservations")
+	
+	# When they want to reserve them.
+	requested_date_to_borrow = models.DateField()
+	requested_date_to_return = models.DateField()
+	
+	# Any extra details from the requestor can be put in here.
+	additional_details = models.TextField(blank=True)
+	
+	# Automatically set when the reservation is created.
+	submitted_datetime = models.DateTimeField(auto_now_add=True)
+	
+	# All requests are started as Pending
+	approval_status = models.CharField(
+		max_length=1, choices=ReservationStatus.choices, default=ReservationStatus.PENDING
+	)
+	
+	# The timestamp of the last time the status of the reservation was updated.
+	status_update_datetime = models.DateTimeField(auto_now_add=True)
+	
+	# The librarian can put comments here.
+	librarian_comments = models.TextField(blank=True)
+	
+	# This control whether the reservation is 'active'. Defaults to False. Approval sets this to true.
+	# Reservations that are active are taken into account when determining whether an item is borrowable, etc.
+	is_active = models.BooleanField(default=False)
+	
+	# Once the items are borrowed, this links to the borrower details, which in turn links to the items borrowed.
+	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.SET_NULL, blank=True, null=True)
+
