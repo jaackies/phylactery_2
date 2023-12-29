@@ -39,7 +39,6 @@ class Member(models.Model):
 	def __str__(self):
 		return self.short_name
 	
-	@property
 	def is_fresher(self):
 		# Simple test - if they joined this year, they are a fresher.
 		if self.join_date.year == timezone.now().year:
