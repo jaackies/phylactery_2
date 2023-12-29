@@ -1,7 +1,13 @@
+import datetime
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
+
+
+def default_due_date():
+	return timezone.now() + datetime.timedelta(weeks=2)
 
 
 class ItemTaggableManager(_TaggableManager):
@@ -182,3 +188,54 @@ class Item(models.Model):
 		# Finally, we re-save any items with Tags that depend on this one.
 		if recursion:
 			self.item_tag.recompute_dependant_items()
+
+
+class BorrowerDetails(models.Model):
+	"""
+	Stores all the borrowers details for one borrowing transaction.
+	The same member borrowing again will create a new record here.
+	BorrowRecords link to this.
+	"""
+	
+	# Who are the items being borrowed by.
+	is_external = models.BooleanField(default=False)
+	internal_member = models.ForeignKey("members.Member", blank=True, null=True, on_delete=models.SET_NULL)
+	borrower_name = models.CharField(max_length=200, blank=True)
+	
+	borrower_address = models.TextField()
+	borrower_phone = models.CharField(max_length=20)
+	
+	def save(self, *args, **kwargs):
+		if self.is_external is False and self.internal_member is not None:
+			self.borrower_name = self.internal_member.long_name
+		super().save(*args, **kwargs)
+	
+
+class BorrowRecord(models.Model):
+	"""
+	Stores all information regarding one particular item being borrowed.
+	"""
+	# Which item, and who borrowed it?
+	item = models.ForeignKey("Item", on_delete=models.CASCADE)
+	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.CASCADE)
+	
+	# When was it borrowed?
+	borrowed_datetime = models.DateTimeField(default=timezone.now)
+	# Who authorised it being borrowed?
+	borrow_authorised_by = models.CharField(max_length=200)
+	
+	# The latest day the item can be returned on before being considered overdue.
+	due_date = models.DateField(default=default_due_date)
+	
+	# When was it returned, and who authorised its return?
+	returned_datetime = models.DateTimeField(blank=True, null=True, default=None)
+	return_authorised_by = models.CharField(max_length=200)
+	
+	# Any comments about anything (e.g. Damage) noticed on borrow or return can be documented here.
+	comments = models.TextField(blank=True)
+	
+	# Finally, the Librarian verifies that it is returned.
+	verified_returned = models.BooleanField(default=False)
+	
+
+	
