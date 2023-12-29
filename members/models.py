@@ -56,8 +56,29 @@ class Member(models.Model):
 		return self.memberships.filter(expired=False).exists()
 	
 	def is_valid_member(self):
-		# Returns True if the member has a valid membership and does not have the excluded rank.
-		return self.has_active_membership() and not self.has_rank(RankChoices.EXCLUDED)
+		# Returns True if the member has a valid membership (or is a life member) and does not have the excluded rank.
+		return (
+			(self.has_active_membership() or self.has_rank(RankChoices.LIFEMEMBER))
+			and not self.has_rank(RankChoices.EXCLUDED)
+		)
+	
+	# The following are convenience methods
+	def is_gatekeeper(self):
+		return self.is_valid_member() and self.has_rank(RankChoices.GATEKEEPER)
+	
+	def is_committee(self):
+		return self.is_valid_member() and self.has_rank(RankChoices.COMMITTEE)
+	
+	def is_exec(self):
+		return (
+			self.is_valid_member() and
+			self.ranks.filter(
+				expired=False, rank_name__in=[
+					RankChoices.PRESIDENT, RankChoices.VICEPRESIDENT,
+					RankChoices.TREASURER, RankChoices.LIBRARIAN, RankChoices.SECRETARY
+				]
+			).exists()
+		)
 
 
 class Membership(models.Model):
