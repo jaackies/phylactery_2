@@ -288,3 +288,12 @@ class Reservation(models.Model):
 	# Once the items are borrowed, this links to the borrower details, which in turn links to the items borrowed.
 	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.SET_NULL, blank=True, null=True)
 
+
+class LibraryStrike(models.Model):
+	"""
+	If a Library-related offense occurs, the Librarian can issue a Library strike to the offending member.
+	Accumulating enough strikes prohibits a member from borrowing until the strikes expire.
+	"""
+	member = models.ForeignKey("members.Member", on_delete=models.CASCADE, related_name="strikes")
+	reason = models.TextField()
+	is_expired = models.BooleanField(default=False)
