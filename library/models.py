@@ -8,6 +8,7 @@ from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
 
 
+# Misc functions to help with date-related functions
 def default_due_date() -> datetime:
 	# Returns the default due date. Currently, two weeks from now.
 	return timezone.now() + timedelta(weeks=2)
@@ -24,6 +25,25 @@ def next_weekday() -> datetime:
 def tomorrow() -> date:
 	# Returns tomorrow's date.
 	return (timezone.now() + timedelta(days=1)).date()
+
+
+def dates_between(from_date: date, to_date: date) -> set[date]:
+	# Returns all dates between from_date and to_date, inclusive.
+	difference = (to_date - from_date).days + 1
+	return {(from_date + timedelta(days=i)) for i in range(difference)}
+
+
+def get_invalid_dates(borrow_records, reservations) -> set[date]:
+	# Given the active borrow_records and active reservations for an item, return all invalid dates.
+	invalid_dates = set()
+	for record in borrow_records:
+		invalid_dates |= dates_between(record.borrowed_datetime.date, record.due_date)
+	for reservation in reservations:
+		invalid_dates |= dates_between(
+			reservation.requested_date_to_borrow - timedelta(days=1),
+			reservation.requested_date_to_return
+		)
+	return invalid_dates
 
 
 class ReservationStatus(models.TextChoices):
@@ -255,14 +275,40 @@ class Item(models.Model):
 		# - No current/active borrow records (that are unreturned) exist for the item.
 		# - The max_due_date is at least tomorrow.
 		
-		conditions = [
+		borrow_conditions = [
 			self.is_borrowable,
-			item_active_borrow_records.exists(),
+			item_active_borrow_records.exists() is False,
 			(item_availability_info["max_due_date"] is not None),
 			(item_availability_info["max_due_date"] >= tomorrow()),
 		]
-		item_availability_info["available_to_borrow"] = all(conditions)
+		item_availability_info["available_to_borrow"] = all(borrow_conditions)
 		
+		# in_clubroom is True if any of the following are True:
+		# - available_to_borrow is True
+		# - is_borrowable is False
+		# - No current/active borrow records (that are unreturned) exist for the item.
+		
+		clubroom_conditions = [
+			item_availability_info["available_to_borrow"],
+			self.is_borrowable is False,
+			item_active_borrow_records.exists() is False
+		]
+		item_availability_info["in_clubroom"] = any(clubroom_conditions)
+		
+		# expected_available_date is None if the item is already available.
+		# Otherwise, we calculate the next date (starting from today) that fits all the following criteria:
+		# - It doesn't fall within (inclusive) the borrow_date and due_date of an active borrow record.
+		# - It isn't the date before an active reservation of that item.
+		# - It doesn't fall within (inclusive) the borrow_date and return_date of an active Reservation.
+		
+		if item_availability_info["available_to_borrow"] is True:
+			item_availability_info["expected_available_date"] = None
+		else:
+			invalid_dates = get_invalid_dates(item_active_borrow_records, item_active_reservations)
+			available_date = timezone.now().date()
+			while available_date in invalid_dates:
+				available_date += timedelta(days=1)
+			item_availability_info["expected_available_date"] = available_date
 		
 		return item_availability_info
 
