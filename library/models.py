@@ -9,14 +9,14 @@ from taggit.models import TagBase, TaggedItemBase
 
 
 # Misc functions to help with date-related functions
-def default_due_date() -> datetime:
+def default_due_date() -> date:
 	# Returns the default due date. Currently, two weeks from now.
-	return timezone.now() + timedelta(weeks=2)
+	return timezone.now().date() + timedelta(weeks=2)
 
 
-def next_weekday() -> datetime:
+def next_weekday() -> date:
 	# Returns the next weekday. i.e. If this is called on a Fri, Sat, or Sun, returns the Monday.
-	new_date = timezone.now() + timedelta(days=1)
+	new_date = timezone.now().date() + timedelta(days=1)
 	while new_date.weekday() in {5, 6}:
 		new_date += timedelta(days=1)
 	return new_date
