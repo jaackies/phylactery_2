@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from typing import Any
 from django.db import models
 from django.db.models import Q, Case, When, Value
