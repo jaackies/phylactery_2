@@ -216,10 +216,42 @@ class Item(models.Model):
 				A bool that represents if the item is currently available to long-term borrow, overnight.
 			in_clubroom
 				An item may not be borrowable, but it might be in the clubroom for you to look at. This bool shows that.
-			expected_availability_date
+			expected_available_date
 				This shows the next date that an item should be available_to_borrow. Returns None if it is already.
 		"""
-		pass
+		item_availability_info = {
+			"max_due_date": None,
+			"available_to_borrow": None,
+			"in_clubroom": None,
+			"expected_available_date": None,
+		}
+		item_active_reservations = self.reservations.filter(active=True).order_by('-requested_date_to_borrow')
+		item_active_borrow_records = None
+		
+		# max_due_date is None if self.is_borrowable is False
+		# Otherwise max_due_date is the minimum of:
+		# 	- the date (minus 1) of the next active reservation
+		# 	- the date of the next week day if self.is_high_demand
+		# 	- the result of the default_due_date function
+		
+		if self.is_borrowable is False:
+			item_availability_info["max_due_date"] = None
+		else:
+			date_candidates = {default_due_date()}
+			if self.is_high_demand is True:
+				date_candidates.add(next_weekday())
+			if item_active_reservations.exists():
+				date_candidates.add(item_active_reservations.first().requested_date_to_borrow)
+			item_active_reservations["max_due_date"] = min(date_candidates)
+		
+		# available_to_borrow is True if ALL of the following are True:
+		# - self.is_borrowable is True
+		# - No current/active borrow records (that are unreturned) exist for the item.
+		# - The max_due_date is at least tomorrow.
+		
+		
+		
+		return item_availability_info
 
 
 class BorrowerDetails(models.Model):
