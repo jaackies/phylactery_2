@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 from typing import Any
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Case, When, Value
+from django.db.models.functions import Now
 from django.utils import timezone
 from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
@@ -275,6 +276,28 @@ class BorrowerDetails(models.Model):
 		super().save(*args, **kwargs)
 	
 
+class BorrowRecordManager(models.Manager):
+	"""
+	Custom Manager for Borrow Records. This will annotate all BorrowRecords with an easy to use "returned" field.
+	"""
+	def get_queryset(self):
+		# Annotates the default queryset.
+		return super().get_queryset().annotate(
+			returned=Case(
+				When(returned_datetime__lte=Now(), then=Value(True)),
+				default=Value(False),
+				output_field=models.BooleanField()
+			)
+		)
+	
+	# This lets you use BorrowRecords.objects.all_active/all_returned as a shortcut.
+	def all_active(self):
+		return self.all().filter(returned=False)
+	
+	def all_returned(self):
+		return self.all().filter(returned=True)
+
+
 class BorrowRecord(models.Model):
 	"""
 	Stores all information regarding one particular item being borrowed.
@@ -300,6 +323,9 @@ class BorrowRecord(models.Model):
 	
 	# Finally, the Librarian verifies that it is returned.
 	verified_returned = models.BooleanField(default=False)
+	
+	# This is the above custom manager to help with Quality of Life.
+	objects = BorrowRecordManager()
 	
 
 class Reservation(models.Model):
