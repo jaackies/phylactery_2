@@ -204,6 +204,21 @@ class Item(models.Model):
 		# Finally, we re-save any items with Tags that depend on this one.
 		if recursion:
 			self.item_tag.recompute_dependant_items()
+	
+	def get_availability_info(self):
+		"""
+		All in one method for getting availability information about the item.
+		Returns a dict with the following keys:
+			max_due_date
+				A date object representing the maximum due date for the item (i.e. how long it can be borrowed for.)
+			available_to_borrow
+				A bool that represents if the item is currently available to long-term borrow, overnight.
+			in_clubroom
+				An item may not be borrowable, but it might be in the clubroom for you to look at. This bool shows that.
+			expected_availability_date
+				This shows the next date that an item should be available_to_borrow. Returns None if it is already.
+		"""
+		pass
 
 
 class BorrowerDetails(models.Model):
