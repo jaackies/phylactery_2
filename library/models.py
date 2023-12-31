@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Any
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -205,7 +206,7 @@ class Item(models.Model):
 		if recursion:
 			self.item_tag.recompute_dependant_items()
 	
-	def get_availability_info(self):
+	def get_availability_info(self) -> dict[str, Any]:
 		"""
 		All in one method for getting availability information about the item.
 		Returns a dict with the following keys:
