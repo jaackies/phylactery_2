@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -6,8 +6,17 @@ from taggit.managers import TaggableManager, _TaggableManager
 from taggit.models import TagBase, TaggedItemBase
 
 
-def default_due_date():
-	return timezone.now() + datetime.timedelta(weeks=2)
+def default_due_date() -> datetime:
+	# Returns the default due date. Currently, two weeks from now.
+	return timezone.now() + timedelta(weeks=2)
+
+
+def next_weekday() -> datetime:
+	# Returns the next weekday. i.e. If this is called on a Fri, Sat, or Sun, returns the Monday.
+	new_date = timezone.now() + timedelta(days=1)
+	while new_date.weekday() in {5, 6}:
+		new_date += timedelta(days=1)
+	return new_date
 
 
 class ReservationStatus(models.TextChoices):
