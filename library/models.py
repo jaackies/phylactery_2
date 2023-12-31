@@ -247,8 +247,8 @@ class BorrowRecord(models.Model):
 	Stores all information regarding one particular item being borrowed.
 	"""
 	# Which item, and who borrowed it?
-	item = models.ForeignKey("Item", on_delete=models.CASCADE)
-	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.CASCADE)
+	item = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="borrow_records")
+	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.CASCADE, related_name="borrow_records")
 	
 	# When was it borrowed?
 	borrowed_datetime = models.DateTimeField(default=timezone.now)
