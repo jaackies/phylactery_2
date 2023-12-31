@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 from django.db import models
 from django.db.models import Q, Case, When, Value
@@ -19,6 +19,11 @@ def next_weekday() -> datetime:
 	while new_date.weekday() in {5, 6}:
 		new_date += timedelta(days=1)
 	return new_date
+
+
+def tomorrow() -> date:
+	# Returns tomorrow's date.
+	return (timezone.now() + timedelta(days=1)).date()
 
 
 class ReservationStatus(models.TextChoices):
@@ -220,14 +225,14 @@ class Item(models.Model):
 			expected_available_date
 				This shows the next date that an item should be available_to_borrow. Returns None if it is already.
 		"""
-		item_availability_info = {
+		item_availability_info: dict[str, None | date | bool] = {
 			"max_due_date": None,
 			"available_to_borrow": None,
 			"in_clubroom": None,
 			"expected_available_date": None,
 		}
 		item_active_reservations = self.reservations.filter(active=True).order_by('-requested_date_to_borrow')
-		item_active_borrow_records = None
+		item_active_borrow_records = self.borrow_records.filter(returned=False)
 		
 		# max_due_date is None if self.is_borrowable is False
 		# Otherwise max_due_date is the minimum of:
@@ -243,13 +248,20 @@ class Item(models.Model):
 				date_candidates.add(next_weekday())
 			if item_active_reservations.exists():
 				date_candidates.add(item_active_reservations.first().requested_date_to_borrow)
-			item_active_reservations["max_due_date"] = min(date_candidates)
+			item_availability_info["max_due_date"] = min(date_candidates).date()
 		
 		# available_to_borrow is True if ALL of the following are True:
 		# - self.is_borrowable is True
 		# - No current/active borrow records (that are unreturned) exist for the item.
 		# - The max_due_date is at least tomorrow.
 		
+		conditions = [
+			self.is_borrowable,
+			item_active_borrow_records.exists(),
+			(item_availability_info["max_due_date"] is not None),
+			(item_availability_info["max_due_date"] >= tomorrow()),
+		]
+		item_availability_info["available_to_borrow"] = all(conditions)
 		
 		
 		return item_availability_info
