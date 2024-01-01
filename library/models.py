@@ -251,7 +251,7 @@ class Item(models.Model):
 			"in_clubroom": None,
 			"expected_available_date": None,
 		}
-		item_active_reservations = self.reservations.filter(is_active=True).order_by('-requested_date_to_borrow')
+		item_active_reservations = self.reservations.filter(is_active=True).order_by('requested_date_to_borrow')
 		item_active_borrow_records = self.borrow_records.filter(returned=False)
 		
 		# max_due_date is None if self.is_borrowable is False
