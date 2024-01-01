@@ -37,7 +37,7 @@ def get_invalid_dates(borrow_records, reservations) -> set[date]:
 	# Given the active borrow_records and active reservations for an item, return all invalid dates.
 	invalid_dates = set()
 	for record in borrow_records:
-		invalid_dates |= dates_between(record.borrowed_datetime.date, record.due_date)
+		invalid_dates |= dates_between(record.borrowed_datetime.date(), record.due_date)
 	for reservation in reservations:
 		invalid_dates |= dates_between(
 			reservation.requested_date_to_borrow - timedelta(days=1),
@@ -251,7 +251,7 @@ class Item(models.Model):
 			"in_clubroom": None,
 			"expected_available_date": None,
 		}
-		item_active_reservations = self.reservations.filter(active=True).order_by('-requested_date_to_borrow')
+		item_active_reservations = self.reservations.filter(is_active=True).order_by('-requested_date_to_borrow')
 		item_active_borrow_records = self.borrow_records.filter(returned=False)
 		
 		# max_due_date is None if self.is_borrowable is False
@@ -267,8 +267,8 @@ class Item(models.Model):
 			if self.is_high_demand is True:
 				date_candidates.add(next_weekday())
 			if item_active_reservations.exists():
-				date_candidates.add(item_active_reservations.first().requested_date_to_borrow)
-			item_availability_info["max_due_date"] = min(date_candidates).date()
+				date_candidates.add(item_active_reservations.first().requested_date_to_borrow - timedelta(days=1))
+			item_availability_info["max_due_date"] = min(date_candidates)
 		
 		# available_to_borrow is True if ALL of the following are True:
 		# - self.is_borrowable is True
