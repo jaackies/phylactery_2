@@ -28,10 +28,6 @@ body {
   margin-bottom: 40px; /* Margin bottom by footer height */
 }
 
-.container {
-  max-width: 960px;
-}
-
 .pricing-header {
   max-width: 700px;
 }
