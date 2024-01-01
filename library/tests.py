@@ -1,11 +1,14 @@
 from django.test import TestCase
-from .factories import ItemFactory, LibraryTagFactory
-from .models import Item, LibraryTag
+from .factories import ItemFactory, LibraryTagFactory, BorrowerDetailsFactory, BorrowRecordFactory, ReservationFactory
+from .models import default_due_date, ReservationStatus
+import factory.random
+from django.utils import timezone
+from datetime import date, timedelta
 
 
 class LibraryModelTests(TestCase):
 	def setUp(self):
-		pass
+		factory.random.reseed_random("it's testing time!!")
 	
 	def test_item_name(self):
 		item = ItemFactory()
@@ -91,3 +94,71 @@ class LibraryModelTests(TestCase):
 		
 		# This item should now have the tags "Star Wars", "RPG", "Aliens", "Droids", "Robots", "Sci-Fi"
 		self.assertEquals(set(new_item.all_tags), {star_wars, rpg, aliens, robots, droids, sci_fi})
+	
+	def test_base_availability(self):
+		new_item = ItemFactory()
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], default_due_date())
+		self.assertEquals(availability["available_to_borrow"], True)
+		self.assertEquals(availability["in_clubroom"], True)
+		self.assertEquals(availability["expected_available_date"], None)
+		
+	def test_borrowed_availability(self):
+		new_item = ItemFactory()
+		record = BorrowRecordFactory(item=new_item, borrowed_datetime=timezone.now())
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], default_due_date())
+		self.assertEquals(availability["available_to_borrow"], False)
+		self.assertEquals(availability["in_clubroom"], False)
+		self.assertEquals(availability["expected_available_date"], default_due_date()+timedelta(days=1))
+		
+	def test_borrowed_then_returned_availability(self):
+		new_item = ItemFactory()
+		record = BorrowRecordFactory(
+			item=new_item,
+			borrowed_datetime=timezone.now()-timedelta(days=3),
+			returned_datetime=timezone.now())
+		
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], default_due_date())
+		self.assertEquals(availability["available_to_borrow"], True)
+		self.assertEquals(availability["in_clubroom"], True)
+		self.assertEquals(availability["expected_available_date"], None)
+		
+	def test_unborrowed_item_inactive_reservation_availability(self):
+		new_item = ItemFactory()
+		
+		reservation = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now()+timedelta(days=2),
+			requested_date_to_return=timezone.now()+timedelta(days=3),
+		)
+		
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], default_due_date())
+		self.assertEquals(availability["available_to_borrow"], True)
+		self.assertEquals(availability["in_clubroom"], True)
+		self.assertEquals(availability["expected_available_date"], None)
+	
+	def test_unborrowed_item_active_reservation_availability(self):
+		new_item = ItemFactory()
+		
+		reservation = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now() + timedelta(days=2),
+			requested_date_to_return=timezone.now() + timedelta(days=3),
+			approval_status=ReservationStatus.APPROVED,
+			is_active=True
+		)
+		
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], timezone.now().date() + timedelta(days=1))
+		self.assertEquals(availability["available_to_borrow"], True)
+		self.assertEquals(availability["in_clubroom"], True)
+		self.assertEquals(availability["expected_available_date"], None)
+
