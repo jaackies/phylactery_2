@@ -16,4 +16,6 @@ media
 
 # Environment Variables
 /.env
+
+# Test coverage
 /.coverage
