@@ -161,4 +161,58 @@ class LibraryModelTests(TestCase):
 		self.assertEquals(availability["available_to_borrow"], True)
 		self.assertEquals(availability["in_clubroom"], True)
 		self.assertEquals(availability["expected_available_date"], None)
+	
+	def test_borrowed_item_active_reservation_availability(self):
+		new_item = ItemFactory()
+		record = BorrowRecordFactory(
+			item=new_item,
+			borrowed_datetime=timezone.now() - timedelta(days=10),
+			due_date=timezone.now() + timedelta(days=1)
+		)
+		reservation = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now() + timedelta(days=2),
+			requested_date_to_return=timezone.now() + timedelta(days=3),
+			approval_status=ReservationStatus.APPROVED,
+			is_active=True
+		)
+		
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], timezone.now().date() + timedelta(days=1))
+		self.assertEquals(availability["available_to_borrow"], False)
+		self.assertEquals(availability["in_clubroom"], False)
+		self.assertEquals(availability["expected_available_date"], timezone.now().date() + timedelta(days=4))
+	
+	def test_constant_reservations_availability(self):
+		new_item = ItemFactory()
+		reservation_1 = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now() + timedelta(days=1),
+			requested_date_to_return=timezone.now() + timedelta(days=3),
+			approval_status=ReservationStatus.APPROVED,
+			is_active=True
+		)
+		reservation_2 = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now() + timedelta(days=4),
+			requested_date_to_return=timezone.now() + timedelta(days=8),
+			approval_status=ReservationStatus.APPROVED,
+			is_active=True
+		)
+		reservation_3 = ReservationFactory(
+			reserved_items=[new_item],
+			requested_date_to_borrow=timezone.now() + timedelta(days=9),
+			requested_date_to_return=timezone.now() + timedelta(days=14),
+			approval_status=ReservationStatus.APPROVED,
+			is_active=True
+		)
+		
+		availability = new_item.get_availability_info()
+		
+		self.assertEquals(availability["max_due_date"], timezone.now().date())
+		self.assertEquals(availability["available_to_borrow"], False)
+		self.assertEquals(availability["in_clubroom"], True)
+		self.assertEquals(availability["expected_available_date"], timezone.now().date() + timedelta(days=15))
+		
 
