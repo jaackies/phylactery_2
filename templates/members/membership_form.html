@@ -1,0 +1,22 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block form_media %}
+	{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+	<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+	<form action="" method="POST">
+		{% csrf_token %}
+		{% if wizard.form.forms %}
+			{{ wizard.management_form }}
+			{% for form in wizard.form.forms %}
+				{% crispy form %}
+			{% endfor %}
+		{% else %}
+			{% crispy wizard.form %}
+		{% endif %}
+		<input type="submit" value="Submit">
+	</form>
+{% endblock %}
