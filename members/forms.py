@@ -9,7 +9,7 @@ class MembershipForm1(forms.Form):
 		required=True,
 		max_length=100,
 		help_text=
-		"The name you want to be called by others. Please don't dead-name yourself.<br>"
+		"The name you want to be called by others. <b>Please don't dead-name yourself.</b><br>"
 		"This is usually your first name, but it doesn't have to be.<br>"
 		"Examples: Alistair, Jackie, Winslade, Gozz"
 	)
@@ -18,12 +18,15 @@ class MembershipForm1(forms.Form):
 		max_length=200,
 		help_text=
 		"A longer version of your name, to distinguish between people who may share your shortname.<br>"
-		"This will usually your full name, but it doesn't have to be. Please don't dead-name yourself.<br>"
+		"This will usually your full name, but it doesn't have to be. <b>Please don't dead-name yourself.</b><br>"
 		"Examples: Alistair Langton, Jackie S, Matthew Winslade, Andrew Gozzard"
 	)
 	pronouns = forms.CharField(
 		required=True,
 		max_length=50,
+		widget=forms.TextInput(
+			attrs={"id": "pronounField", "placeholder": "Type your own here"}
+		)
 	)
 	is_guild = forms.BooleanField(
 		required=False,
@@ -55,23 +58,34 @@ class MembershipForm1(forms.Form):
 					'Become a member of Unigames!',
 					'short_name',
 					'long_name',
-					FieldWithButtons(
-						'pronouns',
+					'pronouns',
+					Div(
 						StrictButton(
 							"He / Him",
 							css_class="btn-outline-secondary",
-							onclick='$("#pronounField").val("He / Him")'
+							onclick='document.querySelector("#pronounField").setAttribute("value", "He / Him");'
 						),
 						StrictButton(
 							"She / Her",
 							css_class="btn-outline-secondary",
-							onclick='$("#pronounField").val("She / Her")'
+							onclick='document.querySelector("#pronounField").setAttribute("value", "She / Her");'
 						),
 						StrictButton(
 							"They / Them",
 							css_class="btn-outline-secondary",
-							onclick='$("#pronounField").val("They / Them")'
+							onclick='document.querySelector("#pronounField").setAttribute("value", "They / Them");'
 						),
+						StrictButton(
+							"It / Its",
+							css_class="btn-outline-secondary",
+							onclick='document.querySelector("#pronounField").setAttribute("value", "It / Its");'
+						),
+						StrictButton(
+							"Any",
+							css_class="btn-outline-secondary",
+							onclick='document.querySelector("#pronounField").setAttribute("value", "Any");'
+						),
+						css_class="btn-group"
 					),
 					'is_student',
 					'student_number',
