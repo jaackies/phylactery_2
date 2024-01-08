@@ -27,80 +27,81 @@
 </head>
 
 <body>
-<header>
-	<nav class="navbar navbar-expand-lg bg-light mb-3">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="{% url 'home' %}">
-				<span class="unigames-brand">Unigames</span>
-				<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
-					 loading="lazy">
-			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-					aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-							About Us
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">FAQ</a></li>
-							<li><a class="dropdown-item" href="#">Events</a></li>
-							<li><a class="dropdown-item" href="#">What are Role-Playing Games?</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">Our Committee</a></li>
-							<li><a class="dropdown-item" href="#">Life Members</a></li>
-							<li><a class="dropdown-item" href="#">Contact Us</a></li>
-						</ul>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">News</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">Our Library</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-							Operations
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Constitution</a></li>
-							<li><a class="dropdown-item" href="#">Regulations</a></li>
-							<li><a class="dropdown-item" href="#">Minutes</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="#">API</a></li>
-							<li><a class="dropdown-item" href="#">Archives</a></li>
-							<li><a class="dropdown-item" href="#">Webcams</a></li>
-						</ul>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-							Account
-						</a>
-						<ul class="dropdown-menu">
-							{% if user.is_authenticated %}
-								<li><span class="dropdown-item-text">Logged in as {{ user.member }}</span></li>
-								<li><a class="dropdown-item" href="#">Profile</a></li>
-								<li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-							{% else %}
-								<li><span class="dropdown-item disabled">You are not currently logged in.</span></li>
-								<li><a class="dropdown-item" href="{% url 'account_login' %}">Log In</a></li>
-							{% endif %}
-						</ul>
-					</li>
-				</ul>
+<div class="main-container">
+	<header>
+		<nav class="navbar navbar-expand-lg bg-light mb-3">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{% url 'home' %}">
+					<span class="unigames-brand">Unigames</span>
+					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
+						 loading="lazy">
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+								About Us
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">FAQ</a></li>
+								<li><a class="dropdown-item" href="#">Events</a></li>
+								<li><a class="dropdown-item" href="#">What are Role-Playing Games?</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">Our Committee</a></li>
+								<li><a class="dropdown-item" href="#">Life Members</a></li>
+								<li><a class="dropdown-item" href="#">Contact Us</a></li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">News</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Our Library</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+								Operations
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Constitution</a></li>
+								<li><a class="dropdown-item" href="#">Regulations</a></li>
+								<li><a class="dropdown-item" href="#">Minutes</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">API</a></li>
+								<li><a class="dropdown-item" href="#">Archives</a></li>
+								<li><a class="dropdown-item" href="#">Webcams</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+								Account
+							</a>
+							<ul class="dropdown-menu">
+								{% if user.is_authenticated %}
+									<li><span class="dropdown-item-text">Logged in as {{ user.member }}</span></li>
+									<li><a class="dropdown-item" href="#">Profile</a></li>
+									<li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+								{% else %}
+									<li><span class="dropdown-item disabled">You are not currently logged in.</span></li>
+									<li><a class="dropdown-item" href="{% url 'account_login' %}">Log In</a></li>
+								{% endif %}
+							</ul>
+						</li>
+					</ul>
+				</div>
+			
 			</div>
-		
-		</div>
-	</nav>
-</header>
+		</nav>
+	</header>
 
 <!--<header class="p-3 mb-3 border-bottom">
 	<div class="container">
@@ -140,15 +141,16 @@
 	</div>
 </header>-->
 
-<div class="container">
-	{% if messages %}
-		{% for message in messages %}
-			<div class="alert {% if message.tags %}alert-{{ message.level_tag }} {{ message.extra_tags }}{% endif %}">{{ message }}</div>
-		{% endfor %}
-	{% endif %}
-	{% block content %}
-		<p>Default content...</p>
-	{% endblock content %}
+	<div class="container">
+		{% if messages %}
+			{% for message in messages %}
+				<div class="alert {% if message.tags %}alert-{{ message.level_tag }} {{ message.extra_tags }}{% endif %}">{{ message }}</div>
+			{% endfor %}
+		{% endif %}
+		{% block content %}
+			<p>Default content...</p>
+		{% endblock content %}
+	</div>
 </div>
 
 <footer class="footer">
