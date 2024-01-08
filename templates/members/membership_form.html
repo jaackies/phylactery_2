@@ -8,16 +8,43 @@
 {% block content %}
 	<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
 	{% if preview_data %}
-		<ul>
-			<li>Short Name: {{ preview_data.short_name }}</li>
-			<li>Long Name: {{ preview_data.long_name }}</li>
-			<li>Pronouns: {{ preview_data.pronouns }}</li>
-			<li>Email: {{ preview_data.email_address }}</li>
-			<li>Optional Emails: {{ preview_data.optional_emails|yesno:"Yes,No" }}</li>
-			<li>Is Guild?: {{ preview_data.is_guild|yesno:"Yes,No" }}</li>
-			<li>Is Student?: {{ preview_data.is_student|yesno:"Yes,No" }}</li>
-			<li>Student Number: {{ preview_data.student_number }}</li>
-		</ul>
+		<legend>Please make sure this information is correct:</legend>
+		<table class="table preview-data-table">
+			<tbody>
+				<tr>
+					<th scope="row">Short Name:</th>
+					<td>{{ preview_data.short_name }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Long Name:</th>
+					<td>{{ preview_data.long_name }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Pronouns:</th>
+					<td>{{ preview_data.pronouns }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Email:</th>
+					<td>{{ preview_data.email_address }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Optional Emails:</th>
+					<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Is Guild?:</th>
+					<td>{{ preview_data.is_guild|yesno:"Yes,No" }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Is Student?:</th>
+					<td>{{ preview_data.is_student|yesno:"Yes,No" }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Student Number:</th>
+					<td>{{ preview_data.student_number }}</td>
+				</tr>
+			</tbody>
+		</table>
 	{% endif %}
 	<form action="" method="POST">
 		{% csrf_token %}

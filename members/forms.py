@@ -123,7 +123,7 @@ class MembershipFormPreview(forms.Form):
 		self.helper.layout = Layout(
 			Div(
 				Fieldset(
-					'Please hand the device back!',
+					'Now please hand the device back',
 					'amount_paid',
 					'sticker_received',
 				)
