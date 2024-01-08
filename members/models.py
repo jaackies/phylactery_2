@@ -165,4 +165,27 @@ class Rank(models.Model):
 		# Set the expiry date to today.
 		self.expired_date = datetime.date.today()
 		self.save()
+
+
+class MailingListGroup(models.Model):
+	"""
+	Previously called MemberFlags - Members can self-assign these to "subscribe" to various mailing lists.
+	Blog Post writers can email them out to all Members in one or more of these lists.
+	"""
+	name = models.CharField(
+		max_length=20,
+		help_text="The name for this Mailing List Group. e.g. Magic, Wargaming, 2023 Freshers, etc."
+	)
+	description = models.CharField(
+		max_length=200,
+		help_text="This text will appear on the Membership forms. e.g. 'I want to receive news about MtG events.'"
+	)
+	is_active = models.BooleanField(
+		default=True,
+		help_text="This controls whether people are able to subscribe to this group."
+	)
 	
+	members = models.ManyToManyField(
+		to="Member",
+		related_name="mailing_list_groups",
+	)
