@@ -70,7 +70,6 @@ class MembershipForm1(forms.Form):
 						),
 						css_class="btn-group w-100 mb-3"
 					),
-					Submit(name="submit", value="submit"),
 				),
 			)
 		)
@@ -98,7 +97,27 @@ class MembershipForm2(forms.Form):
 	optional_emails = forms.BooleanField(
 		required=False,
 		label="Would you like to receive email from Unigames about news and events?",
-		help_text="(We will still send you transactional email regardless. For example, we will send you emails reminding you to return library items.)",
+		help_text=
+		"(We will still send you transactional email regardless. "
+		"For example, we will send you emails reminding you to return library items.)",
 	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		# noinspection PyTypeChecker
+		self.helper.layout = Layout(
+			Div(
+				Fieldset(
+					'Become a member of Unigames!',
+					'email_address',
+					'is_guild',
+					'is_student',
+					'student_number',
+					'optional_emails',
+				),
+			)
+		)
 
 
