@@ -17,6 +17,21 @@
 		{% else %}
 			{% crispy wizard.form %}
 		{% endif %}
-		<input type="submit" value="Submit" class="btn btn-primary">
+		<div class="d-flex flex-row justify-content-between">
+			<div class="p-2">
+				{% if wizards.steps.prev %}
+					<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-secondary">Back</button>
+				{% else %}
+					<button type="button" class="btn btn-secondary" disabled>Back</button>
+				{% endif %}
+			</div>
+			<div class="p-2">
+				{% if wizard.steps.next %}
+					<input type="submit" value="Next" class="btn btn-primary">
+				{% else %}
+					<input type="submit" value="Submit" class="btn btn-primary">
+				{% endif %}
+			</div>
+		</div>
 	</form>
 {% endblock %}
