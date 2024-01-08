@@ -24,27 +24,10 @@ class MembershipForm1(forms.Form):
 	pronouns = forms.CharField(
 		required=True,
 		max_length=50,
+		label="Pronouns (type your own, or use one of the options below)",
 		widget=forms.TextInput(
 			attrs={"id": "pronounField", "placeholder": "Type your own here"}
-		)
-	)
-	is_guild = forms.BooleanField(
-		required=False,
-		label="Are you a current UWA Student Guild member?"
-	)
-	is_student = forms.BooleanField(
-		required=False,
-		label="Are you a current UWA Student?"
-	)
-	student_number = forms.CharField(
-		required=False,
-		widget=forms.TextInput(attrs={"type": "tel"}),
-		max_length=10,
-		label="If so, please enter your student number."
-	)
-	optional_emails = forms.BooleanField(
-		required=False,
-		label="Would you like to receive email from Unigames about news and events?"
+		),
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -85,13 +68,37 @@ class MembershipForm1(forms.Form):
 							css_class="btn-outline-secondary",
 							onclick='document.querySelector("#pronounField").setAttribute("value", "Any");'
 						),
-						css_class="btn-group"
+						css_class="btn-group w-100 mb-3"
 					),
-					'is_student',
-					'student_number',
-					'is_guild',
-					'email',
-					'receive_emails',
+					Submit(name="submit", value="submit"),
 				),
 			)
 		)
+
+
+class MembershipForm2(forms.Form):
+	email_address = forms.EmailField(
+		required=True,
+		help_text="Please enter a non-student email address."
+	)
+	is_guild = forms.BooleanField(
+		required=False,
+		label="Are you a current UWA Student Guild member?"
+	)
+	is_student = forms.BooleanField(
+		required=False,
+		label="Are you a current UWA Student?"
+	)
+	student_number = forms.CharField(
+		required=False,
+		widget=forms.TextInput(attrs={"type": "tel"}),
+		max_length=10,
+		label="If so, please enter your student number."
+	)
+	optional_emails = forms.BooleanField(
+		required=False,
+		label="Would you like to receive email from Unigames about news and events?",
+		help_text="(We will still send you transactional email regardless. For example, we will send you emails reminding you to return library items.)",
+	)
+
+
