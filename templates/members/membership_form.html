@@ -19,17 +19,33 @@
 		{% endif %}
 		<div class="d-flex flex-row justify-content-between">
 			<div class="p-2">
-				{% if wizards.steps.prev %}
-					<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-secondary">Back</button>
+				{% if wizard.steps.prev %}
+					<button name="wizard_goto_step"
+							type="submit"
+							value="{{ wizard.steps.prev }}"
+							formnovalidate="formnovalidate"
+							class="btn btn-secondary">
+						<i class="bi-arrow-left"></i> Back
+					</button>
 				{% else %}
-					<button type="button" class="btn btn-secondary" disabled>Back</button>
+					<button type="button"
+							class="btn btn-secondary"
+							disabled>
+						<i class="bi-arrow-left"></i> Back
+					</button>
 				{% endif %}
 			</div>
 			<div class="p-2">
 				{% if wizard.steps.next %}
-					<input type="submit" value="Next" class="btn btn-primary">
+					<button type="submit"
+							class="btn btn-primary">
+						Next <i class="bi-arrow-right"></i>
+					</button>
 				{% else %}
-					<input type="submit" value="Submit" class="btn btn-primary">
+					<button type="submit"
+							class="btn btn-success">
+						Submit <i class="bi-check2"></i>
+					</button>
 				{% endif %}
 			</div>
 		</div>
