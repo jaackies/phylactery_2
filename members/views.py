@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from formtools.wizard.views import SessionWizardView
-from .forms import MembershipForm1, MembershipForm2, MembershipForm3
+from .forms import MembershipForm, MembershipFormPreview
 
 
 class MembershipWizard(SessionWizardView):
 	form_list = [
-		("0", MembershipForm1,),
-		("1", MembershipForm2,),
-		("preview", MembershipForm3,),
+		("0", MembershipForm,),
+		("preview", MembershipFormPreview,),
 	]
 	template_name = "members/membership_form.html"
 	
