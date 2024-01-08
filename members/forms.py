@@ -121,3 +121,27 @@ class MembershipForm2(forms.Form):
 		)
 
 
+class MembershipForm3(forms.Form):
+	amount_paid = forms.IntegerField(
+		min_value=0,
+		max_value=20,
+		required=True,
+	)
+	sticker_received = forms.BooleanField(
+		required=True,
+		label="Has this Member received their Membership Sticker?"
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			Div(
+				Fieldset(
+					'Please hand the device back!',
+					'amount_paid',
+					'sticker_received',
+				)
+			)
+		)

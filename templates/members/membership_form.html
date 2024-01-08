@@ -7,6 +7,18 @@
 
 {% block content %}
 	<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+	{% if preview_data %}
+		<ul>
+			<li>Short Name: {{ preview_data.short_name }}</li>
+			<li>Long Name: {{ preview_data.long_name }}</li>
+			<li>Pronouns: {{ preview_data.pronouns }}</li>
+			<li>Email: {{ preview_data.email_address }}</li>
+			<li>Optional Emails: {{ preview_data.optional_emails|yesno:"Yes,No" }}</li>
+			<li>Is Guild?: {{ preview_data.is_guild|yesno:"Yes,No" }}</li>
+			<li>Is Student?: {{ preview_data.is_student|yesno:"Yes,No" }}</li>
+			<li>Student Number: {{ preview_data.student_number }}</li>
+		</ul>
+	{% endif %}
 	<form action="" method="POST">
 		{% csrf_token %}
 		{{ wizard.management_form }}
