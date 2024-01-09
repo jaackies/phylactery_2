@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.contrib import messages
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
 from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
+from .models import Member, Membership
+from accounts.models import UnigamesUser
 from blog.models import MailingList
 
 
@@ -46,7 +50,58 @@ class FresherMembershipWizard(SessionWizardView):
 		return context
 	
 	def done(self, form_list, **kwargs):
-		print("Did the thing!")
+		"""
+		When the form is submitted entirely, we can create the new Member and all relevant details.
+		This involves:
+			- Creating a new Member object for them.
+			- Attaching them to the Mailing Lists they chose.
+			- Creating a new Membership object for them.
+			- Creating a new User object for them.
+		Then, send them a Welcome email.
+		"""
+		cleaned_data = self.get_all_cleaned_data()
+		
+		new_user = UnigamesUser.objects.create(
+			email=cleaned_data.get("email_address")
+		)
+		new_user.set_unusable_password()
+		new_user.save()
+		
+		new_member = Member.objects.create(
+			short_name=cleaned_data.get("short_name"),
+			long_name=cleaned_data.get("long_name"),
+			pronouns=cleaned_data.get("pronouns"),
+			student_number=cleaned_data.get("student_number"),
+			join_date=timezone.now(),
+			optional_emails=cleaned_data.get("optional_emails"),
+			user=new_user,
+		)
+		
+		new_member.save()
+		
+		if cleaned_data.get("is_guild") is True:
+			amount_paid = 5
+		else:
+			amount_paid = 7
+		
+		new_membership = Membership.objects.create(
+			member=new_member,
+			date_purchased=timezone.now(),
+			guild_member=cleaned_data.get("is_guild"),
+			amount_paid=amount_paid,
+			expired=False,
+			authorised_by=self.request.user.get_member
+		)
+		new_membership.save()
+		
+		# TODO: Email the new Member with a welcome email.
+	
+		messages.success(
+			self.request,
+			f"Membership for { cleaned_data.get('long_name')} was successfully created!"
+		)
+		
+		return redirect("home")
 
 
 class StaleMembershipWizard(FresherMembershipWizard):
