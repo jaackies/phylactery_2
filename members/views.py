@@ -34,8 +34,8 @@ class MembershipWizard(SessionWizardView):
 			context["preview_data"] = self.get_all_cleaned_data()
 			context["preview_data"]["mailing_lists"] = []
 			for mailing_list in MailingList.objects.filter(is_active=True):
-				if context["preview_data"][f"group_{mailing_list.pk}"] is True:
-					context["preview_data"]["mailing_groups"].append(mailing_list.name)
+				if context["preview_data"][f"mailing_list_{mailing_list.pk}"] is True:
+					context["preview_data"]["mailing_lists"].append(mailing_list.name)
 		return context
 	
 	def done(self, form_list, **kwargs):

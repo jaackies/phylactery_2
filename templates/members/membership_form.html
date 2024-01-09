@@ -43,13 +43,13 @@
 					<th scope="row">Optional Emails:</th>
 					<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
 				</tr>
-				
+
 				<th scope="row">Mailing Lists:</th>
 				<td>
-					{% if preview_data.mailing_groups %}
+					{% if preview_data.mailing_lists %}
 						<ul>
-							{% for group in preview_data.mailing_groups %}
-								<li>{{ group }}</li>
+							{% for list in preview_data.mailing_lists %}
+								<li>{{ list }}</li>
 							{% endfor %}
 						</ul>
 					{% else %}

@@ -59,7 +59,7 @@ class MembershipForm(forms.Form):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.mailing_list_pks = []
+		self.extra_fields = []
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		# noinspection PyTypeChecker
@@ -111,7 +111,7 @@ class MembershipForm(forms.Form):
 		for mailing_list in MailingList.objects.filter(is_active=True):
 			# Dynamically put each Mailing List group in the Membership Form.
 			field_name = f"mailing_list_{mailing_list.pk}"
-			self.mailing_list_pks.append(mailing_list.pk)
+			self.extra_fields.append(mailing_list.pk)
 			self.fields[field_name] = forms.BooleanField(
 				label=mailing_list.verbose_description,
 				required=False,
@@ -122,7 +122,6 @@ class MembershipForm(forms.Form):
 		cleaned_data = super().clean()
 		email_address: str = cleaned_data.get("email_address")
 		is_student = cleaned_data.get("is_student")
-		is_guild = cleaned_data.get("is_guild")
 		student_number = cleaned_data.get("student_number")
 		
 		if "@student." in email_address:
@@ -137,11 +136,6 @@ class MembershipForm(forms.Form):
 
 
 class MembershipFormPreview(forms.Form):
-	amount_paid = forms.IntegerField(
-		min_value=0,
-		max_value=20,
-		required=True,
-	)
 	sticker_received = forms.BooleanField(
 		required=True,
 		label="Has this Member received their Membership Sticker?"
@@ -155,7 +149,6 @@ class MembershipFormPreview(forms.Form):
 			Div(
 				Fieldset(
 					'Now please hand the device back',
-					'amount_paid',
 					'sticker_received',
 				)
 			)
