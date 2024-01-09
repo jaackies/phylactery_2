@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Case, When, Value
 from django.db.models.functions import Now
@@ -22,7 +23,6 @@ class Member(models.Model):
 	pronouns = models.CharField(max_length=50)
 	
 	student_number = models.CharField(max_length=10, blank=True)
-	email = models.EmailField(unique=True)
 	join_date = models.DateField()
 	
 	# Unigames Committee can use this field to store notes on a particular member.
@@ -45,6 +45,13 @@ class Member(models.Model):
 			return True
 		else:
 			return False
+	
+	@property
+	def email(self):
+		try:
+			return self.user.email
+		except ObjectDoesNotExist:
+			return None
 	
 	def has_rank(self, *rank_names):
 		# Returns True if the member has a non-expired rank with any of the given types.
