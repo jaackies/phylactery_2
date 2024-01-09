@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import MailingList
 
-# Register your models here.
+
+class MailingListAdmin(admin.ModelAdmin):
+	model = MailingList
+	exclude = ["members"]
+
+
+admin.site.register(MailingList, MailingListAdmin)

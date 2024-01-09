@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 	"pages",
 	"library",
 	"members",
+	"blog",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
