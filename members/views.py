@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
+from .decorators import gatekeeper_required
 from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
 from blog.models import MailingList
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class FresherMembershipWizard(SessionWizardView):
 	form_list = [
 		("0", FresherMembershipForm,),
