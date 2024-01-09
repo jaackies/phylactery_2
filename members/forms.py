@@ -6,7 +6,7 @@ from crispy_forms.bootstrap import FieldWithButtons, StrictButton, PrependedText
 from blog.models import MailingList
 
 
-class MembershipForm(forms.Form):
+class FresherMembershipForm(forms.Form):
 	short_name = forms.CharField(
 		required=True,
 		max_length=100,
