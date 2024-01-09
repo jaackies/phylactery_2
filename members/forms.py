@@ -3,6 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div
 from crispy_forms.bootstrap import StrictButton
 
+from accounts.models import UnigamesUser
 from blog.models import MailingList
 
 
@@ -135,6 +136,7 @@ class FresherMembershipForm(forms.Form):
 		This is the error-checking step.
 		Currently, this is checking for:
 			- any student emails (not allowed)
+			- the email isn't already being used
 			- making sure a student number is required if they are a student, and
 			- making sure the student number is blank if they aren't a student.
 		"""
@@ -143,6 +145,8 @@ class FresherMembershipForm(forms.Form):
 		is_student = cleaned_data.get("is_student")
 		student_number = cleaned_data.get("student_number")
 		
+		if email_address is not None and UnigamesUser.objects.filter(email=email_address).exists():
+			self.add_error('email_address', "This email is already in use. Are you sure you are a Fresher?")
 		if email_address is not None and "@student." in email_address:
 			self.add_error('email_address', 'Please enter a non-student email')
 		if is_student and not student_number:
