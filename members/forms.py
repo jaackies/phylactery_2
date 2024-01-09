@@ -59,7 +59,7 @@ class MembershipForm(forms.Form):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.mailing_group_pks = []
+		self.mailing_list_pks = []
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		# noinspection PyTypeChecker
@@ -110,10 +110,10 @@ class MembershipForm(forms.Form):
 		
 		for mailing_list in MailingList.objects.filter(is_active=True):
 			# Dynamically put each Mailing List group in the Membership Form.
-			field_name = f"group_{mailing_list.pk}"
-			self.mailing_group_pks.append(mailing_list.pk)
+			field_name = f"mailing_list_{mailing_list.pk}"
+			self.mailing_list_pks.append(mailing_list.pk)
 			self.fields[field_name] = forms.BooleanField(
-				label=mailing_list.description,
+				label=mailing_list.verbose_description,
 				required=False,
 			)
 			self.helper.layout[0][0][-1].append(field_name)
