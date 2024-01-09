@@ -27,3 +27,7 @@ class MailingList(models.Model):
 		to="members.Member",
 		related_name="mailing_lists",
 	)
+	
+	def __str__(self):
+		return f"{self.name} {'(inactive)' if self.is_active is False else ''}"
+	
