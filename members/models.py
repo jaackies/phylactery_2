@@ -46,10 +46,10 @@ class Member(models.Model):
 		else:
 			return False
 	
-	def has_rank(self, rank_name):
-		# Returns True if the member has a non-expired rank of the given type.
+	def has_rank(self, *rank_names):
+		# Returns True if the member has a non-expired rank with any of the given types.
 		# Returns False otherwise.
-		return self.ranks.filter(expired=False, rank_name=rank_name).exists()
+		return self.ranks.filter(expired=False, rank_name__in=rank_names).exists()
 	
 	def has_active_membership(self):
 		# Returns True if the member has a valid membership.
@@ -62,22 +62,25 @@ class Member(models.Model):
 			and not self.has_rank(RankChoices.EXCLUDED)
 		)
 	
-	# The following are convenience methods
+	# The following are the preferred methods of testing for privileges.
+	# Webkeepers get these privileges as well for debugging.
 	def is_gatekeeper(self):
-		return self.is_valid_member() and self.has_rank(RankChoices.GATEKEEPER)
+		return self.is_valid_member() and self.has_rank(RankChoices.GATEKEEPER, RankChoices.WEBKEEPER)
 	
 	def is_committee(self):
-		return self.is_valid_member() and self.has_rank(RankChoices.COMMITTEE)
+		return self.is_valid_member() and self.has_rank(RankChoices.COMMITTEE, RankChoices.WEBKEEPER)
 	
 	def is_exec(self):
 		return (
 			self.is_valid_member() and
-			self.ranks.filter(
-				expired=False, rank_name__in=[
-					RankChoices.PRESIDENT, RankChoices.VICEPRESIDENT,
-					RankChoices.TREASURER, RankChoices.LIBRARIAN, RankChoices.SECRETARY
-				]
-			).exists()
+			self.has_rank(
+				RankChoices.PRESIDENT,
+				RankChoices.VICEPRESIDENT,
+				RankChoices.TREASURER,
+				RankChoices.SECRETARY,
+				RankChoices.LIBRARIAN,
+				RankChoices.WEBKEEPER
+			)
 		)
 
 
