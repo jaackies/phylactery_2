@@ -3,6 +3,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div, Submit
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton, PrependedText
 
+from .models import MailingListGroup
+
 
 class MembershipForm(forms.Form):
 	short_name = forms.CharField(
@@ -57,6 +59,7 @@ class MembershipForm(forms.Form):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.extra_fields = []
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		# noinspection PyTypeChecker
@@ -100,9 +103,21 @@ class MembershipForm(forms.Form):
 					'is_student',
 					'student_number',
 					'optional_emails',
+					Div(css_class="ms-5"),
 				),
 			)
 		)
+		
+		for mailing_list_group in MailingListGroup.objects.filter(is_active=True):
+			# Dynamically put each Mailing List group in the Membership Form.
+			field_name = f"group_{mailing_list_group.pk}"
+			self.extra_fields.append(field_name)
+			self.fields[field_name] = forms.BooleanField(
+				label=mailing_list_group.description,
+				required=False,
+			)
+			self.helper.layout[0][0][-1].append(field_name)
+			
 
 
 class MembershipFormPreview(forms.Form):
