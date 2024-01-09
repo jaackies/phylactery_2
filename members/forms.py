@@ -153,10 +153,23 @@ class FresherMembershipForm(forms.Form):
 
 
 class StaleMembershipForm(FresherMembershipForm):
+	"""
+	If a member already has data on our system, and they want to purchase a new membership,
+	they would be using this form.
+	We dynamically pre-fill data in the form, which they can update if they wish.
+	Layout and fields are inherited from FresherMembershipForm
+	"""
 	pass
 
 
 class LegacyMembershipForm(FresherMembershipForm):
+	"""
+	If a member was previously a Unigames member, but hasn't given us data digitally before,
+	they would be using this form.
+	It's identical to the Fresher Form except that:
+		- The created member is not a fresher.
+		- A field is added to allow the member to give their approximate join date.
+	"""
 	pass
 
 
