@@ -147,10 +147,8 @@ class MembershipFormPreview(forms.Form):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.layout = Layout(
+			HTML("{% include 'members/membership_form_gatekeeper_snippet.html' %}"),
 			Div(
-				Fieldset(
-					'Now please hand the device back',
-					'sticker_received',
-				)
+				'sticker_received',
 			)
 		)
