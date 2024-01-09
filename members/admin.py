@@ -20,3 +20,4 @@ class MemberAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Member, MemberAdmin)
+admin.site.register(Membership)
