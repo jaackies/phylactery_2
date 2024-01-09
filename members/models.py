@@ -103,7 +103,10 @@ class Membership(models.Model):
 	authorised_by = models.ForeignKey("Member", on_delete=models.SET_NULL, null=True, related_name="authorised")
 	
 	def __str__(self):
-		return f"Membership: {self.member.long_name} ({self.date_purchased.year})"
+		if self.member is not None:
+			return f"Membership: {self.member.long_name} ({self.date_purchased.year})"
+		else:
+			return f"Membership: <deleted_member> ({self.date_purchased.year})"
 
 
 class RankChoices(models.TextChoices):
