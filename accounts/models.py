@@ -11,3 +11,13 @@ class UnigamesUser(AbstractUser):
 			return self.member.long_name
 		except ObjectDoesNotExist:
 			return self.email
+	
+	@property
+	def get_member(self):
+		# Convenience method - returns the Member if there is one.
+		# Otherwise, returns None.
+		try:
+			return self.member
+		except ObjectDoesNotExist:
+			return None
+	

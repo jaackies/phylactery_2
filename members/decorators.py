@@ -11,7 +11,7 @@ def gatekeeper_required(function=None):
 	
 	def gatekeeper_test(u):
 		if u.is_authenticated:
-			if u.member is not None and u.member.is_gatekeeper():
+			if u.get_member is not None and u.get_member.is_gatekeeper():
 				return True
 			else:
 				raise PermissionDenied
@@ -34,7 +34,7 @@ def committee_required(function=None):
 	
 	def committee_test(u):
 		if u.is_authenticated:
-			if u.member is not None and u.member.is_committee():
+			if u.get_member is not None and u.get_member.is_committee():
 				return True
 			else:
 				raise PermissionDenied
@@ -58,7 +58,7 @@ def exec_required(function=None):
 	
 	def exec_test(u):
 		if u.is_authenticated:
-			if u.member is not None and u.member.is_exec():
+			if u.get_member is not None and u.get_member.is_exec():
 				return True
 			else:
 				raise PermissionDenied
