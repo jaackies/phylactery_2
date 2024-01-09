@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from formtools.wizard.views import SessionWizardView
-from .forms import FresherMembershipForm, MembershipFormPreview
+from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
 from blog.models import MailingList
 
 
@@ -40,3 +40,17 @@ class FresherMembershipWizard(SessionWizardView):
 	
 	def done(self, form_list, **kwargs):
 		print("Did the thing!")
+
+
+class StaleMembershipWizard(FresherMembershipWizard):
+	form_list = [
+		("0", StaleMembershipForm,),
+		("preview", MembershipFormPreview,),
+	]
+
+
+class LegacyMembershipWizard(FresherMembershipWizard):
+	form_list = [
+		("0", LegacyMembershipForm,),
+		("preview", MembershipFormPreview,),
+	]
