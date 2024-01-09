@@ -117,7 +117,24 @@ class MembershipForm(forms.Form):
 				required=False,
 			)
 			self.helper.layout[0][0][-1].append(field_name)
-			
+	
+	def clean(self):
+		cleaned_data = super().clean()
+		email_address: str = cleaned_data.get("email_address")
+		is_student = cleaned_data.get("is_student")
+		is_guild = cleaned_data.get("is_guild")
+		student_number = cleaned_data.get("student_number")
+		
+		if "@student." in email_address:
+			self.add_error('email_address', 'Please enter a non-student email')
+		if is_student and not student_number:
+			self.add_error('student_number', 'If you are a current student, a student number is required.')
+		if not is_student and student_number != "":
+			self.add_error('is_student', '')
+			self.add_error(
+				'student_number', 'If you are not a student, then please leave the student number field blank.'
+			)
+		
 
 
 class MembershipFormPreview(forms.Form):
