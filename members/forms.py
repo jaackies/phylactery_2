@@ -1,12 +1,16 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Div, Submit
-from crispy_forms.bootstrap import FieldWithButtons, StrictButton, PrependedText
+from crispy_forms.layout import Layout, Fieldset, HTML, Div
+from crispy_forms.bootstrap import StrictButton
 
 from blog.models import MailingList
 
 
 class FresherMembershipForm(forms.Form):
+	"""
+	Base Membership Form, used when signing Freshers up to the club.
+	The form's layout is handled by `crispy_forms`, and is configured in the __init__ method.
+	"""
 	short_name = forms.CharField(
 		required=True,
 		max_length=100,
@@ -59,6 +63,11 @@ class FresherMembershipForm(forms.Form):
 	)
 	
 	def __init__(self, *args, **kwargs):
+		"""
+		This initialises the form with two major changes:
+		1) It uses `crispy_forms` to define the layout for the form.
+		2) It dynamically adds fields to the form to allow the member to sign up for any active mailing lists.
+		"""
 		super().__init__(*args, **kwargs)
 		self.extra_fields = []
 		self.helper = FormHelper()
@@ -120,6 +129,13 @@ class FresherMembershipForm(forms.Form):
 			self.helper.layout[0][0][-1].append(field_name)
 	
 	def clean(self):
+		"""
+		This is the error-checking step.
+		Currently, this is checking for:
+			- any student emails (not allowed)
+			- making sure a student number is required if they are a student, and
+			- making sure the student number is blank if they aren't a student.
+		"""
 		cleaned_data = super().clean()
 		email_address = cleaned_data.get("email_address")
 		is_student = cleaned_data.get("is_student")
