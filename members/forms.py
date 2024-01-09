@@ -21,7 +21,7 @@ class MembershipForm(forms.Form):
 		help_text=
 		"A longer version of your name, to distinguish between people who may share your shortname.<br>"
 		"This will usually be your <b>full name</b>, but it doesn't have to be. <b>Please don't dead-name yourself.</b><br>"
-		"Examples: Alistair Langton, Jackie S, Matthew Winslade, Andrew Gozzard"
+		"Examples: Alistair Langton, Jackie S, Matt Winslade, Andrew Gozzard"
 	)
 	pronouns = forms.CharField(
 		required=True,
