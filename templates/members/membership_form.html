@@ -28,10 +28,6 @@
 					<td>{{ preview_data.email_address }}</td>
 				</tr>
 				<tr>
-					<th scope="row">Optional Emails:</th>
-					<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
-				</tr>
-				<tr>
 					<th scope="row">Is Guild?:</th>
 					<td>{{ preview_data.is_guild|yesno:"Yes,No" }}</td>
 				</tr>
@@ -42,6 +38,10 @@
 				<tr>
 					<th scope="row">Student Number:</th>
 					<td>{{ preview_data.student_number }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Optional Emails:</th>
+					<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
 				</tr>
 			</tbody>
 		</table>
