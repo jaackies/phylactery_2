@@ -121,11 +121,11 @@ class MembershipForm(forms.Form):
 	
 	def clean(self):
 		cleaned_data = super().clean()
-		email_address: str = cleaned_data.get("email_address")
+		email_address = cleaned_data.get("email_address")
 		is_student = cleaned_data.get("is_student")
 		student_number = cleaned_data.get("student_number")
 		
-		if "@student." in email_address:
+		if email_address is not None and "@student." in email_address:
 			self.add_error('email_address', 'Please enter a non-student email')
 		if is_student and not student_number:
 			self.add_error('student_number', 'If you are a current student, a student number is required.')
