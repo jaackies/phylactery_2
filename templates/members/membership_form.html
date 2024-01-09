@@ -37,12 +37,25 @@
 				</tr>
 				<tr>
 					<th scope="row">Student Number:</th>
-					<td>{{ preview_data.student_number }}</td>
+					<td>{{ preview_data.student_number|default:"---" }}</td>
 				</tr>
 				<tr>
 					<th scope="row">Optional Emails:</th>
 					<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
 				</tr>
+				
+				<th scope="row">Mailing Lists:</th>
+				<td>
+					{% if preview_data.mailing_groups %}
+						<ul>
+							{% for group in preview_data.mailing_groups %}
+								<li>{{ group }}</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						None
+				</td>
+				{% endif %}
 			</tbody>
 		</table>
 	{% endif %}

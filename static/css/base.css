@@ -41,3 +41,8 @@
 .preview-data-table > tbody > tr > th {
     text-align: right;
 }
+
+.preview-data-table > tbody > tr > td > ul {
+    list-style-type: "- ";
+    padding-left: 1em;
+}
