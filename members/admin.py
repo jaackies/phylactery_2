@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Member, Membership, Rank
+from .models import Member, Membership, Rank, MailingListGroup
 
 
 class RankInline(admin.TabularInline):
@@ -19,6 +19,10 @@ class MemberAdmin(admin.ModelAdmin):
 	inlines = [RankInline, MembershipInline]
 
 
-admin.site.register(Member, MemberAdmin)
+class MailingListGroupAdmin(admin.ModelAdmin):
+	model = MailingListGroup
+	exclude = ["members"]
 
-# Register your models here.
+
+admin.site.register(Member, MemberAdmin)
+admin.site.register(MailingListGroup, MailingListGroupAdmin)
