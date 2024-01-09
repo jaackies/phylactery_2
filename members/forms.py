@@ -11,8 +11,8 @@ class MembershipForm(forms.Form):
 		required=True,
 		max_length=100,
 		help_text=
-		"The name you want to be called by others. <b>Please don't dead-name yourself.</b><br>"
-		"This is usually your <b>first name</b>, but it doesn't have to be.<br>"
+		"The name you want to be called by others. <strong>Please don't dead-name yourself.</strong><br>"
+		"This is usually your <mark>first name</mark>, but it doesn't have to be.<br>"
 		"Examples: Alistair, Jackie, Winslade, Gozz"
 	)
 	long_name = forms.CharField(
@@ -20,7 +20,8 @@ class MembershipForm(forms.Form):
 		max_length=200,
 		help_text=
 		"A longer version of your name, to distinguish between people who may share your shortname.<br>"
-		"This will usually be your <b>full name</b>, but it doesn't have to be. <b>Please don't dead-name yourself.</b><br>"
+		"This will usually be your <mark>full name</mark>, but it doesn't have to be. "
+		"<strong>Please don't dead-name yourself.</strong><br>"
 		"Examples: Alistair Langton, Jackie S, Matt Winslade, Andrew Gozzard"
 	)
 	pronouns = forms.CharField(
