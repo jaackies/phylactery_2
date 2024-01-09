@@ -152,6 +152,14 @@ class FresherMembershipForm(forms.Form):
 			)
 
 
+class StaleMembershipForm(FresherMembershipForm):
+	pass
+
+
+class LegacyMembershipForm(FresherMembershipForm):
+	pass
+
+
 class MembershipFormPreview(forms.Form):
 	verified_correct = forms.BooleanField(
 		required=True,
