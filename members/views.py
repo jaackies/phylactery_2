@@ -8,6 +8,10 @@ from blog.models import MailingList
 
 @method_decorator(gatekeeper_required, name="dispatch")
 class FresherMembershipWizard(SessionWizardView):
+	"""
+	This view handles the Membership form in a "Wizard", which is multiple forms working together in one view.
+	This view is used to handle Fresher Memberships - people that haven't signed up to the club before ever.
+	"""
 	form_list = [
 		("0", FresherMembershipForm,),
 		("preview", MembershipFormPreview,),
