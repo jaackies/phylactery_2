@@ -192,6 +192,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_USER_DISPLAY = str
 
+ACCOUNT_ADAPTER = "accounts.adapters.CustomRegularAccountAdapter"
 SOCIALACCOUNT_ADAPTER = "accounts.adapters.CustomSocialAccountAdapter"
 
 SOCIALACCOUNT_PROVIDERS = {
