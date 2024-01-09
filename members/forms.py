@@ -62,6 +62,8 @@ class FresherMembershipForm(forms.Form):
 		"For example, we will send you emails reminding you to return library items.)",
 	)
 	
+	form_title = "Become a member of Unigames!"
+	
 	def __init__(self, *args, **kwargs):
 		"""
 		This initialises the form with two major changes:
@@ -76,7 +78,7 @@ class FresherMembershipForm(forms.Form):
 		self.helper.layout = Layout(
 			Div(
 				Fieldset(
-					'Become a member of Unigames!',
+					self.form_title,
 					'short_name',
 					'long_name',
 					'pronouns',
@@ -159,7 +161,7 @@ class StaleMembershipForm(FresherMembershipForm):
 	We dynamically pre-fill data in the form, which they can update if they wish.
 	Layout and fields are inherited from FresherMembershipForm
 	"""
-	pass
+	form_title = "Welcome back! Please verify/update your information:"
 
 
 class LegacyMembershipForm(FresherMembershipForm):
@@ -170,7 +172,7 @@ class LegacyMembershipForm(FresherMembershipForm):
 		- The created member is not a fresher.
 		- A field is added to allow the member to give their approximate join date.
 	"""
-	pass
+	form_title = "Welcome back to Unigames! We've missed you!"
 
 
 class MembershipFormPreview(forms.Form):
