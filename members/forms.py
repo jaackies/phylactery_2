@@ -137,9 +137,9 @@ class MembershipForm(forms.Form):
 
 
 class MembershipFormPreview(forms.Form):
-	sticker_received = forms.BooleanField(
+	verified_correct = forms.BooleanField(
 		required=True,
-		label="Has this Member received their Membership Sticker?"
+		label="I confirm that this information is correct to the best of my knowledge."
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -149,6 +149,6 @@ class MembershipFormPreview(forms.Form):
 		self.helper.layout = Layout(
 			HTML("{% include 'members/membership_form_gatekeeper_snippet.html' %}"),
 			Div(
-				'sticker_received',
+				'verified_correct',
 			)
 		)

@@ -1,14 +1,30 @@
 <legend>Now please pass the device back.</legend>
-<div class="card text-bg-warning mb-3">
-	<div class="card-header">
+<div class="card mb-3">
+	<div class="card-header text-bg-warning">
 		Gatekeeper!
 	</div>
-	<div class="card-body">
-		<p class="card-text">Based on the information above, this member should be paying:</p>
+	<div class="card-body text-center">
+		<p class="card-text ">
+			Based on the information above, this member should be paying
+		</p>
+		<p>
+			<span class="h1 align-middle my-1">
+				<mark>{{ preview_data.is_guild|yesno:"$5,$7" }}</mark>
+			</span>
+		</p>
+		<p>
+			for their membership.
+		</p>
+		<p class="card-text">
+			Please make sure that the following is true:
+		</p>
 	</div>
 	<ul class="list-group list-group-flush">
-		<li class="list-group-item">Blah</li>
-		<li class="list-group-item">Blah</li>
-		<li class="list-group-item">{{ preview_data.long_name }}</li>
+		<li class="list-group-item">
+			<i class="bi-check-circle"></i> The member's short name and long name are accurate and appropriate.<br />
+			<em>(i.e. {{ preview_data.long_name }} isn't mistakenly just their last name.)</em>
+		</li>
+		<li class="list-group-item"><i class="bi-check-circle"></i> The member has paid <mark>{{ preview_data.is_guild|yesno:"$5,$7" }}</mark>.</li>
+		<li class="list-group-item"><i class="bi-check-circle"></i> The member has been given a membership sticker.</li>
 	</ul>
 </div>
