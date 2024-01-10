@@ -1,3 +1,4 @@
+from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils import timezone
@@ -119,19 +120,27 @@ class StaleMembershipWizard(FresherMembershipWizard):
 	]
 	stale_member = None
 	
-	def dispatch(self, request, *args, **kwargs):
-		self.stale_member = get_object_or_404(Member, pk=self.kwargs['pk'])
+	def get(self, request, *args, **kwargs):
+		"""
+		This overrides the superclass GET method entirely.
+		Reasons:
+			- We call all the original GET code anyway.
+			- This allows us to hook up the requested stale member into internal storage.
+		We also override the POST method as well below.
+		"""
 		
-		if self.stale_member.has_purchased_membership_this_year():
+		stale_member = get_object_or_404(Member, pk=self.kwargs['pk'])
+		self.stale_member = stale_member
+		
+		if stale_member.has_purchased_membership_this_year():
 			# Protect members from purchasing a Membership they don't need.
 			messages.info(
 				request,
-				f"{self.stale_member.short_name} has already purchased a Membership this year"
+				f"{stale_member.short_name} has already purchased a Membership this year"
 				f" - no need to buy another!"
 			)
 			return redirect("home")
-		
-		most_recent_membership = self.stale_member.get_most_recent_membership()
+		most_recent_membership = stale_member.get_most_recent_membership()
 		if most_recent_membership is None or most_recent_membership.date_purchased.year < 2024:
 			# Give a warning to Members who have not updated details since the short/long name migration.
 			messages.warning(
@@ -139,8 +148,30 @@ class StaleMembershipWizard(FresherMembershipWizard):
 				f"Welcome back! Unigames has changed how we store names. "
 				f"Please pay particular attention to the Short name and Long name fields. Thanks!"
 			)
+		# Original GET code
+		self.storage.reset()
+		self.storage.current_step = self.steps.first
 		
-		return super().dispatch(request, *args, **kwargs)
+		# Put the pk of the member in storage for tamper detection.
+		self.storage.extra_data = {"stale_member": stale_member.pk}
+		return self.render(self.get_form())
+	
+	def post(self, *args, **kwargs):
+		"""
+		Overriding the POST method allows us to do a few extra checks:
+			- First, we pull the pk out of storage (it's put there in the GET).
+			- Second, if it's None or is different from the one in the URL, we raise a SuspiciousOperation.
+			- Third, we pull out the appropriate member and put it in self.stale_member
+			- Finally, we send it back to the original POST method.
+		"""
+		pk = self.storage.extra_data.get("stale_member")
+		
+		if pk is None or pk != self.kwargs["pk"]:
+			# Something has gone wrong, either Maliciously or otherwise.
+			raise SuspiciousOperation("Member data has been tampered with or is missing.")
+		
+		self.stale_member = get_object_or_404(Member, pk=pk)
+		return super().post(*args, **kwargs)
 	
 	def get_form_initial(self, step):
 		"""
