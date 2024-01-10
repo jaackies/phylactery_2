@@ -221,10 +221,13 @@ class LegacyMembershipForm(FresherMembershipForm):
 		approx_join_date = self.cleaned_data.get("approx_join_date")
 		today = timezone.now()
 		
-		if approx_join_date > today:
+		if approx_join_date > today.date():
 			self.add_error("approx_join_date", "You can't be a Legacy member from the future!")
 		elif approx_join_date.year == today.year:
 			self.add_error("approx_join_date", "If you joined this year, you are a Fresher.")
+		elif approx_join_date.year < 1983:
+			self.add_error("approx_join_date", "You can't have been a Member before the club existed!")
+		return approx_join_date
 
 
 class MembershipFormPreview(forms.Form):
