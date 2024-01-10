@@ -65,18 +65,19 @@
 				<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
 			{% endif %}
 		</tr>
-
-		<th scope="row">Mailing Lists:</th>
-		<td>
-			{% if preview_data.mailing_lists %}
-				<ul>
-					{% for list in preview_data.mailing_lists %}
-						<li>{{ list }}</li>
-					{% endfor %}
-				</ul>
-			{% else %}
-				None
-		</td>
-		{% endif %}
+		<tr>
+			<th scope="row">Mailing Lists:</th>
+			<td>
+				{% if preview_data.mailing_lists %}
+					<ul>
+						{% for list in preview_data.mailing_lists %}
+							<li>{{ list }}</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					None
+				{% endif %}
+			</td>
+		</tr>
 	</tbody>
 </table>
