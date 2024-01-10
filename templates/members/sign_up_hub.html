@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+
+{% block content %}
+	<div class="container-sm text-center">
+		<h3>New Membership</h3>
+		<p>Select the kind of member you are signing up:</p>
+		<div class="form-group mb-5">
+			<a href="{% url "signup-fresher" %}" class="btn btn-secondary w-100">Fresher</a>
+			<p class="mt-2">
+				Freshers are brand-new, first-time members to the club. <br>
+				Make sure to make them feel welcome!
+			</p>
+		</div>
+		<div class="form-group mb-5">
+			<a href="{% url "list" %}" class="btn btn-secondary w-100">Stale</a>
+			<p class="mt-2">
+				Stale members have been Members before recently. <br>
+				They're like Freshers, just not as fresh.
+				<br>
+				<em>Pick this option and search for them if they are unsure.</em>
+			</p>
+		</div>
+		<div class="form-group mb-5">
+			<a href="{% url "signup-legacy" %}" class="btn btn-secondary w-100">Legacy</a>
+			<p class="mt-2">
+				Legacy members were members at some point in the distant past, who haven't signed up with the website before.
+			</p>
+		</div>
+	</div>
+{% endblock %}

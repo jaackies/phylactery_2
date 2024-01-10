@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from .models import Member
 from .decorators import gatekeeper_required
 
@@ -26,3 +26,8 @@ class MemberListView(ListView):
 		context = super().get_context_data(*args, **kwargs)
 		context["search_query"] = self.search_query
 		return context
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class SignupHubView(TemplateView):
+	template_name = "members/sign_up_hub.html"
