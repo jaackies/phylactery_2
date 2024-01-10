@@ -56,17 +56,20 @@ class FresherMembershipWizard(SessionWizardView):
 			- Creating a new Member object for them.
 			- Attaching them to the Mailing Lists they chose.
 			- Creating a new Membership object for them.
-			- Creating a new User object for them.
+			- Creating a new UnigamesUser object for them.
 		Then, send them a Welcome email.
 		"""
 		cleaned_data = self.get_all_cleaned_data()
 		
+		# Create new UnigamesUser object
 		new_user = UnigamesUser.objects.create(
+			username=cleaned_data.get("email_address"),
 			email=cleaned_data.get("email_address")
 		)
 		new_user.set_unusable_password()
 		new_user.save()
 		
+		# Create new Member object
 		new_member = Member.objects.create(
 			short_name=cleaned_data.get("short_name"),
 			long_name=cleaned_data.get("long_name"),
@@ -76,13 +79,12 @@ class FresherMembershipWizard(SessionWizardView):
 			optional_emails=cleaned_data.get("optional_emails"),
 			user=new_user,
 		)
-		
 		new_member.save()
 		
+		# Create new Membership
+		amount_paid = 7
 		if cleaned_data.get("is_guild") is True:
 			amount_paid = 5
-		else:
-			amount_paid = 7
 		
 		new_membership = Membership.objects.create(
 			member=new_member,
@@ -93,6 +95,11 @@ class FresherMembershipWizard(SessionWizardView):
 			authorised_by=self.request.user.get_member
 		)
 		new_membership.save()
+		
+		# Attach to the chosen mailing lists.
+		for form_field, pk in form_list[0].extra_fields.items():
+			if cleaned_data.get(form_field) is True:
+				new_member.mailing_lists.add(pk)
 		
 		# TODO: Email the new Member with a welcome email.
 	
@@ -132,11 +139,6 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
 				initial[f"mailing_list_{mailing_list_pk}"] = True
 		return initial
-	
-	def get_form_kwargs(self, step=None):
-		kwargs = super().get_form_kwargs(step)
-		#kwargs['stale_member'] = self.stale_member
-		return kwargs
 
 
 class LegacyMembershipWizard(FresherMembershipWizard):

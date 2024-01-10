@@ -72,7 +72,7 @@ class FresherMembershipForm(forms.Form):
 		2) It dynamically adds fields to the form to allow the member to sign up for any active mailing lists.
 		"""
 		super().__init__(*args, **kwargs)
-		self.extra_fields = []
+		self.extra_fields = {}
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		# noinspection PyTypeChecker
@@ -124,7 +124,7 @@ class FresherMembershipForm(forms.Form):
 		for mailing_list in MailingList.objects.filter(is_active=True):
 			# Dynamically put each Mailing List group in the Membership Form.
 			field_name = f"mailing_list_{mailing_list.pk}"
-			self.extra_fields.append(mailing_list.pk)
+			self.extra_fields[field_name] = mailing_list.pk
 			self.fields[field_name] = forms.BooleanField(
 				label=mailing_list.verbose_description,
 				required=False,
