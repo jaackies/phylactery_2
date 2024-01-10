@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -104,11 +104,39 @@ class FresherMembershipWizard(SessionWizardView):
 		return redirect("home")
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class StaleMembershipWizard(FresherMembershipWizard):
 	form_list = [
 		("0", StaleMembershipForm,),
 		("preview", MembershipFormPreview,),
 	]
+	stale_member = None
+	
+	def dispatch(self, request, *args, **kwargs):
+		self.stale_member = get_object_or_404(Member, pk=self.kwargs['pk'])
+		return super().dispatch(request, *args, **kwargs)
+	
+	def get_form_initial(self, step):
+		initial = super().get_form_initial(step)
+		if self.stale_member is not None and step == "0":
+			initial["short_name"] = self.stale_member.short_name
+			initial["long_name"] = self.stale_member.long_name
+			initial["pronouns"] = self.stale_member.pronouns
+			initial["email_address"] = self.stale_member.user.email
+			initial["student_number"] = self.stale_member.student_number
+			initial["optional_emails"] = self.stale_member.optional_emails
+			if self.stale_member.student_number:
+				initial["is_student"] = True
+			if (recent_membership := self.stale_member.get_most_recent_membership()) is not None:
+				initial["is_guild"] = recent_membership.guild_member
+			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
+				initial[f"mailing_list_{mailing_list_pk}"] = True
+		return initial
+	
+	def get_form_kwargs(self, step=None):
+		kwargs = super().get_form_kwargs(step)
+		#kwargs['stale_member'] = self.stale_member
+		return kwargs
 
 
 class LegacyMembershipWizard(FresherMembershipWizard):
