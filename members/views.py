@@ -70,13 +70,19 @@ class FresherMembershipWizard(SessionWizardView):
 		new_user.set_unusable_password()
 		new_user.save()
 		
+		# Allowance for the Legacy form here:
+		if cleaned_data.get("approx_join_date") is not None:
+			join_date = cleaned_data.get("approx_join_date")
+		else:
+			join_date = timezone.now()
+		
 		# Create new Member object
 		new_member = Member.objects.create(
 			short_name=cleaned_data.get("short_name"),
 			long_name=cleaned_data.get("long_name"),
 			pronouns=cleaned_data.get("pronouns"),
 			student_number=cleaned_data.get("student_number"),
-			join_date=timezone.now(),
+			join_date=join_date,
 			optional_emails=cleaned_data.get("optional_emails"),
 			user=new_user,
 		)

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div
 from crispy_forms.bootstrap import StrictButton
@@ -203,6 +204,27 @@ class LegacyMembershipForm(FresherMembershipForm):
 		- A field is added to allow the member to give their approximate join date.
 	"""
 	form_title = "Welcome back to Unigames! We've missed you!"
+	
+	approx_join_date = forms.DateField(
+		required=True,
+		label="When did you first join Unigames? (approximately)",
+		widget=forms.DateInput(
+			attrs={"type": "date"}
+		)
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper.layout[0][0].append("approx_join_date")
+	
+	def clean_approx_join_date(self):
+		approx_join_date = self.cleaned_data.get("approx_join_date")
+		today = timezone.now()
+		
+		if approx_join_date > today:
+			self.add_error("approx_join_date", "You can't be a Legacy member from the future!")
+		elif approx_join_date.year == today.year:
+			self.add_error("approx_join_date", "If you joined this year, you are a Fresher.")
 
 
 class MembershipFormPreview(forms.Form):
