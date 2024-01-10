@@ -1,8 +1,11 @@
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from .models import Member
+from .decorators import gatekeeper_required
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class MemberListView(ListView):
 	model = Member
 	paginate_by = 50
