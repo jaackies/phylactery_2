@@ -15,16 +15,14 @@ class FresherMembershipForm(forms.Form):
 	short_name = forms.CharField(
 		required=True,
 		max_length=100,
-		help_text=
-		"The name you want to be called by others. <strong>Please don't dead-name yourself.</strong><br>"
+		help_text="The name you want to be called by others. <strong>Please don't dead-name yourself.</strong><br>"
 		"This is usually your <mark>first name</mark>, but it doesn't have to be.<br>"
 		"Examples: Alistair, Jackie, Winslade, Gozz"
 	)
 	long_name = forms.CharField(
 		required=True,
 		max_length=200,
-		help_text=
-		"A longer version of your name, to distinguish between people who may share your shortname.<br>"
+		help_text="A longer version of your name, to distinguish between people who may share your shortname.<br>"
 		"This will usually be your <mark>full name</mark>, but it doesn't have to be. "
 		"<strong>Please don't dead-name yourself.</strong><br>"
 		"Examples: Alistair Langton, Jackie S, Matt Winslade, Andrew Gozzard"
@@ -58,8 +56,7 @@ class FresherMembershipForm(forms.Form):
 	optional_emails = forms.BooleanField(
 		required=False,
 		label="Would you like to receive email from Unigames about news and events?",
-		help_text=
-		"(We will still send you transactional email regardless. "
+		help_text="(We will still send you transactional email regardless. "
 		"For example, we will send you emails reminding you to return library items.)",
 	)
 	
@@ -196,8 +193,6 @@ class StaleMembershipForm(FresherMembershipForm):
 			else:
 				return email_address
 				
-		
-
 
 class LegacyMembershipForm(FresherMembershipForm):
 	"""
