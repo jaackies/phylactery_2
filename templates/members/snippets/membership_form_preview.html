@@ -1,0 +1,50 @@
+<legend>Please make sure this information is correct:</legend>
+<table class="table preview-data-table">
+	<tbody>
+		<tr>
+			<th scope="row">Short Name:</th>
+			<td>{{ preview_data.short_name }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Long Name:</th>
+			<td>{{ preview_data.long_name }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Pronouns:</th>
+			<td>{{ preview_data.pronouns }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Email:</th>
+			<td>{{ preview_data.email_address }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Is Guild?:</th>
+			<td>{{ preview_data.is_guild|yesno:"Yes,No" }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Is Student?:</th>
+			<td>{{ preview_data.is_student|yesno:"Yes,No" }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Student Number:</th>
+			<td>{{ preview_data.student_number|default:"---" }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Optional Emails:</th>
+			<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
+		</tr>
+
+		<th scope="row">Mailing Lists:</th>
+		<td>
+			{% if preview_data.mailing_lists %}
+				<ul>
+					{% for list in preview_data.mailing_lists %}
+						<li>{{ list }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				None
+		</td>
+		{% endif %}
+	</tbody>
+</table>

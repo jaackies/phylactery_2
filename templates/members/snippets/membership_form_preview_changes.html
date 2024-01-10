@@ -1,0 +1,82 @@
+<legend>Please make sure this information is correct:</legend>
+<table class="table preview-data-table">
+	<tbody>
+		<tr>
+			<th scope="row">Short Name:</th>
+			{% if "short_name" in changes %}
+				<td><s>{{ initial.short_name }}</s> <i class="bi-arrow-right"></i> {{ preview_data.short_name }}</td>
+			{% else %}
+				<td>{{ preview_data.short_name }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Long Name:</th>
+			{% if "long_name" in changes %}
+				<td><s>{{ initial.long_name }}</s> <i class="bi-arrow-right"></i> {{ preview_data.long_name }}</td>
+			{% else %}
+				<td>{{ preview_data.long_name }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Pronouns:</th>
+			{% if "pronouns" in changes %}
+				<td><s>{{ initial.pronouns }}</s> <i class="bi-arrow-right"></i> {{ preview_data.pronouns }}</td>
+			{% else %}
+				<td>{{ preview_data.pronouns }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Email:</th>
+			{% if "email_address" in changes %}
+				<td><s>{{ initial.email_address }}</s> <i class="bi-arrow-right"></i> {{ preview_data.email_address }}</td>
+			{% else %}
+				<td>{{ preview_data.email_address }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Is Guild?:</th>
+			{% if "is_guild" in changes %}
+				<td><s>{{ initial.is_guild|yesno:"Yes,No" }}</s> <i class="bi-arrow-right"></i> {{ preview_data.is_guild|yesno:"Yes,No" }}</td>
+			{% else %}
+				<td>{{ preview_data.is_guild|yesno:"Yes,No" }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Is Student?:</th>
+			{% if "is_student" in changes %}
+				<td><s>{{ initial.is_student|yesno:"Yes,No" }}</s> <i class="bi-arrow-right"></i> {{ preview_data.is_student|yesno:"Yes,No" }}</td>
+			{% else %}
+				<td>{{ preview_data.is_student|yesno:"Yes,No" }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Student Number:</th>
+			{% if "student_number" in changes %}
+				<td>{{ initial.student_number|default:"---" }} <i class="bi-arrow-right"></i> {{ preview_data.student_number|default:"---" }}</td>
+			{% else %}
+				<td>{{ preview_data.student_number|default:"---" }}</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<th scope="row">Optional Emails:</th>
+			{% if "optional_emails" in changes %}
+				<td><s>{{ initial.optional_emails|yesno:"Yes,No" }}</s> <i class="bi-arrow-right"></i> {{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
+			{% else %}
+				<td>{{ preview_data.optional_emails|yesno:"Yes,No" }}</td>
+			{% endif %}
+		</tr>
+
+		<th scope="row">Mailing Lists:</th>
+		<td>
+			{% if preview_data.mailing_lists %}
+				<ul>
+					{% for list in preview_data.mailing_lists %}
+						<li>{{ list }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				None
+		</td>
+		{% endif %}
+	</tbody>
+</table>

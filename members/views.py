@@ -156,12 +156,38 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			initial["optional_emails"] = self.stale_member.optional_emails
 			if self.stale_member.student_number:
 				initial["is_student"] = True
+			else:
+				initial["is_student"] = False
 			if (recent_membership := self.stale_member.get_most_recent_membership()) is not None:
 				initial["is_guild"] = recent_membership.guild_member
+			else:
+				initial["is_guild"] = False
 			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
 				initial[f"mailing_list_{mailing_list_pk}"] = True
 		return initial
 	
+	def get_context_data(self, form, **kwargs):
+		"""
+		Add in the data that has changed to the context to show on the preview panel.
+		"""
+		context = super().get_context_data(form=form, **kwargs)
+		if self.steps.current == "preview":
+			initial_data = self.get_form_initial("0")
+			cleaned_data = self.get_cleaned_data_for_step("0")
+			changes = []
+			for field_name in [
+				"short_name", "long_name",
+				"pronouns", "email_address",
+				"student_number", "optional_emails",
+				"is_student", "is_guild"
+			]:
+				if initial_data[field_name] != cleaned_data.get(field_name):
+					changes.append(field_name)
+			if changes:
+				context["initial"] = initial_data
+				context["changes"] = changes
+		return context
+
 	def done(self, form_list, **kwargs):
 		"""
 		When the Stale membership form is submitted entirely, we need to:
@@ -175,7 +201,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		cleaned_data = self.get_all_cleaned_data()
 		
 		# Update email on their UnigamesUser
-		self.stale_member.user.email = cleaned_data.get("email")
+		self.stale_member.user.email = cleaned_data.get("email_address")
 		self.stale_member.user.save()
 		
 		# Update Member details
