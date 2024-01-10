@@ -69,6 +69,10 @@ class Member(models.Model):
 			and not self.has_rank(RankChoices.EXCLUDED)
 		)
 	
+	def get_most_recent_membership(self):
+		# Returns the most recent Membership object of this user, or None if they have none.
+		return self.memberships.order_by("-date_purchased").first()
+	
 	# The following are the preferred methods of testing for privileges.
 	# Webkeepers get these privileges as well for debugging.
 	def is_gatekeeper(self):
