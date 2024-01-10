@@ -221,7 +221,7 @@ class MembershipFormPreview(forms.Form):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.layout = Layout(
-			HTML("{% include 'members/membership_form_gatekeeper_snippet.html' %}"),
+			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder.html' %}"),
 			Div(
 				'verified_correct',
 			)
