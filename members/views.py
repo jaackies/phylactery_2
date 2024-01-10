@@ -57,7 +57,7 @@ class FresherMembershipWizard(SessionWizardView):
 			- Attaching them to the Mailing Lists they chose.
 			- Creating a new Membership object for them.
 			- Creating a new UnigamesUser object for them.
-		Then, send them a Welcome email.
+			- TODO: Send them a Welcome email.
 		"""
 		cleaned_data = self.get_all_cleaned_data()
 		
@@ -121,6 +121,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 	
 	def dispatch(self, request, *args, **kwargs):
 		self.stale_member = get_object_or_404(Member, pk=self.kwargs['pk'])
+		
 		if self.stale_member.has_purchased_membership_this_year():
 			# Protect members from purchasing a Membership they don't need.
 			messages.info(
@@ -129,11 +130,24 @@ class StaleMembershipWizard(FresherMembershipWizard):
 				f" - no need to buy another!"
 			)
 			return redirect("home")
+		
+		most_recent_membership = self.stale_member.get_most_recent_membership()
+		if most_recent_membership is not None and most_recent_membership.date_purchased.year < 2024:
+			# Give a warning to Members who have not updated details since the short/long name migration.
+			messages.warning(
+				request,
+				f"Welcome back! Unigames has changed how we store names. "
+				f"Please pay particular attention to the Short name and Long name fields. Thanks!"
+			)
+		
 		return super().dispatch(request, *args, **kwargs)
 	
 	def get_form_initial(self, step):
+		"""
+		Populates the initial data of the form with the Member's current data.
+		"""
 		initial = super().get_form_initial(step)
-		if self.stale_member is not None and step == "0":
+		if self.stale_member is not None:
 			initial["short_name"] = self.stale_member.short_name
 			initial["long_name"] = self.stale_member.long_name
 			initial["pronouns"] = self.stale_member.pronouns
@@ -147,6 +161,61 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
 				initial[f"mailing_list_{mailing_list_pk}"] = True
 		return initial
+	
+	def done(self, form_list, **kwargs):
+		"""
+		When the Stale membership form is submitted entirely, we need to:
+			- Updating their email on their UnigamesUser.
+			- Updating their Member details.
+			- Attaching them to the Mailing Lists they chose.
+			- Unattaching them from the Mailing Lists they didn't choose.
+			- Creating a new Membership object for them.
+			- TODO: Send them a receipt email.
+		"""
+		cleaned_data = self.get_all_cleaned_data()
+		
+		# Update email on their UnigamesUser
+		self.stale_member.user.email = cleaned_data.get("email")
+		self.stale_member.user.save()
+		
+		# Update Member details
+		self.stale_member.short_name = cleaned_data.get("short_name")
+		self.stale_member.long_name = cleaned_data.get("long_name")
+		self.stale_member.pronouns = cleaned_data.get("pronouns")
+		self.stale_member.student_number = cleaned_data.get("student_number")
+		self.stale_member.optional_emails = cleaned_data.get("optional_emails")
+		self.stale_member.save()
+		
+		# Attach / Unattach from mailing lists.
+		for form_field, pk in form_list[0].extra_fields.items():
+			if cleaned_data.get(form_field) is True:
+				self.stale_member.mailing_lists.add(pk)
+			else:
+				self.stale_member.mailing_lists.remove(pk)
+		
+		# Create a new Membership.
+		amount_paid = 7
+		if cleaned_data.get("is_guild") is True:
+			amount_paid = 5
+		
+		new_membership = Membership.objects.create(
+			member=self.stale_member,
+			date_purchased=timezone.now(),
+			guild_member=cleaned_data.get("is_guild"),
+			amount_paid=amount_paid,
+			expired=False,
+			authorised_by=self.request.user.get_member
+		)
+		new_membership.save()
+		
+		# TODO: Send receipt email
+		
+		messages.success(
+			self.request,
+			f"Membership for {cleaned_data.get('long_name')} was successfully created!"
+		)
+		
+		return redirect("home")
 
 
 class LegacyMembershipWizard(FresherMembershipWizard):
