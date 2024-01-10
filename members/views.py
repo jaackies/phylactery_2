@@ -132,7 +132,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			return redirect("home")
 		
 		most_recent_membership = self.stale_member.get_most_recent_membership()
-		if most_recent_membership is not None and most_recent_membership.date_purchased.year < 2024:
+		if most_recent_membership is None or most_recent_membership.date_purchased.year < 2024:
 			# Give a warning to Members who have not updated details since the short/long name migration.
 			messages.warning(
 				request,
