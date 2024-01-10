@@ -47,5 +47,11 @@
 				{% endif %}
 			</td>
 		</tr>
+		{% if preview_data.approx_join_date %}
+		<tr>
+			<th scope="row">Approx. Join Date</th>
+			<td>{{ preview_data.approx_join_date }}</td>
+		</tr>
+		{% endif %}
 	</tbody>
 </table>
