@@ -130,25 +130,33 @@ class FresherMembershipForm(forms.Form):
 				required=False,
 			)
 			self.helper.layout[0][0][-1].append(field_name)
+			
+	def clean_email_address(self):
+		"""
+		This method is called when form validation occurs.
+		Checks and validates the email field to ensure:
+			- any student emails (not allowed)
+			- the email isn't already being used
+		If no errors are detected, the email address is returned.
+		"""
+		email_address = self.cleaned_data.get("email_address")
+		if email_address is not None and "@student." in email_address:
+			self.add_error('email_address', 'Please enter a non-student email')
+		if email_address is not None and UnigamesUser.objects.filter(email=email_address).exists():
+			self.add_error('email_address', "This email is already in use. Are you sure you are a Fresher?")
+		return email_address
 	
 	def clean(self):
 		"""
-		This is the error-checking step.
+		This is the error-checking step for the whole form, enabling validation that depends on multiple fields.
 		Currently, this is checking for:
-			- any student emails (not allowed)
-			- the email isn't already being used
 			- making sure a student number is required if they are a student, and
 			- making sure the student number is blank if they aren't a student.
 		"""
 		cleaned_data = super().clean()
-		email_address = cleaned_data.get("email_address")
 		is_student = cleaned_data.get("is_student")
 		student_number = cleaned_data.get("student_number")
 		
-		if email_address is not None and UnigamesUser.objects.filter(email=email_address).exists():
-			self.add_error('email_address', "This email is already in use. Are you sure you are a Fresher?")
-		if email_address is not None and "@student." in email_address:
-			self.add_error('email_address', 'Please enter a non-student email')
 		if is_student and not student_number:
 			self.add_error('student_number', 'If you are a current student, a student number is required.')
 		if not is_student and student_number != "":
@@ -166,6 +174,29 @@ class StaleMembershipForm(FresherMembershipForm):
 	Layout and fields are inherited from FresherMembershipForm
 	"""
 	form_title = "Welcome back! Please verify/update your information:"
+	
+	def clean_email_address(self):
+		"""
+		Overrides the clean_email_address from the superclass form, since
+		we only need to do error-checking on the email address if it has changed.
+		"""
+		email_address = self.cleaned_data.get("email_address")
+		initial_email = self.initial.get("email_address")
+		
+		if email_address is not None and "@student." in email_address:
+			# Still need to check for student emails.
+			self.add_error('email_address', 'Please enter a non-student email')
+		if initial_email == email_address:
+			# Email has not changed - it's all good.
+			return email_address
+		else:
+			# Email has changed - do validation
+			if email_address is not None and UnigamesUser.objects.filter(email=email_address).exists():
+				self.add_error("email_address", "The email address you have entered is already in use.")
+			else:
+				return email_address
+				
+		
 
 
 class LegacyMembershipForm(FresherMembershipForm):
