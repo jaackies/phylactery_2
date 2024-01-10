@@ -1,5 +1,5 @@
 from django.urls import path
-from members.views import FresherMembershipWizard, StaleMembershipWizard, LegacyMembershipWizard
+from members.wizards import FresherMembershipWizard, StaleMembershipWizard, LegacyMembershipWizard
 
 urlpatterns = [
 	path("signup/fresher/", FresherMembershipWizard.as_view()),
