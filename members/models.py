@@ -73,6 +73,13 @@ class Member(models.Model):
 		# Returns the most recent Membership object of this user, or None if they have none.
 		return self.memberships.order_by("-date_purchased").first()
 	
+	def has_purchased_membership_this_year(self):
+		# Returns True if the most recent membership for this member was purchased this year.
+		if self.get_most_recent_membership().date_purchased.year == timezone.now().year:
+			return True
+		else:
+			return False
+	
 	# The following are the preferred methods of testing for privileges.
 	# Webkeepers get these privileges as well for debugging.
 	def is_gatekeeper(self):

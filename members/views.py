@@ -121,6 +121,14 @@ class StaleMembershipWizard(FresherMembershipWizard):
 	
 	def dispatch(self, request, *args, **kwargs):
 		self.stale_member = get_object_or_404(Member, pk=self.kwargs['pk'])
+		if self.stale_member.has_purchased_membership_this_year():
+			# Protect members from purchasing a Membership they don't need.
+			messages.info(
+				request,
+				f"{self.stale_member.short_name} has already purchased a Membership this year"
+				f" - no need to buy another!"
+			)
+			return redirect("home")
 		return super().dispatch(request, *args, **kwargs)
 	
 	def get_form_initial(self, step):
