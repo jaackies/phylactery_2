@@ -1,12 +1,16 @@
 {% extends "_base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block form_media %}
 	{{ wizard.form.media }}
 {% endblock %}
 
 {% block content %}
-	<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+	<div class="d-flex justify-content-between mb-3">
+		<a class="btn btn-outline-secondary" href="{% url "signup-hub" %}"><i class="bi-arrow-left"></i> Back to Signup Hub</a>
+		<span>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
+	</div>
 	{% if preview_data %}
 		{% if changes %}
 			{% include "members/snippets/membership_form_preview_changes.html" %}
@@ -57,4 +61,5 @@
 			</div>
 		</div>
 	</form>
+	<script src="{% static "js/prevent_unload.js" %}"></script>
 {% endblock %}
