@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 from .models import Member
 from .decorators import gatekeeper_required
 
@@ -31,3 +31,9 @@ class MemberListView(ListView):
 @method_decorator(gatekeeper_required, name="dispatch")
 class SignupHubView(TemplateView):
 	template_name = "members/sign_up_hub.html"
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class GatekeeperProfileView(DetailView):
+	model = Member
+	template_name = "members/gatekeeper_profile_view.html"

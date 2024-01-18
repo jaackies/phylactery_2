@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+
+{% block title %}Profile for {{ member.short_name }}{% endblock %}
+
+{% block content %}
+	<h3>{{ member.long_name }}</h3>
+	<div class="container" style="max-width: 576px;">
+		<div class="row row-cols-1">
+			<div class="col">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Library Items</h4>
+						<p class="card-text">{{ member.short_name }} has 0 items borrowed currently.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Memberships</h4>
+						<p class="card-text">{{ member.short_name }} is not a current member.</p>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Date paid</th>
+								<th scope="col">Guild?</th>
+								<th scope="col">Amount Paid</th>
+								<th scope="col">Gatekeeper</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="table-success">
+								<td>Today</td>
+								<td>Yes</td>
+								<td>$5</td>
+								<td>Donald</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="btn-group">
+						<a href="#" class="btn btn-light">Process new Membership for {{ member.short_name }}</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Discord</h4>
+						<p class="card-text">{{ member.short_name }} does not have a linked Discord account.</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+{% endblock %}
