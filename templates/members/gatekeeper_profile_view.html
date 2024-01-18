@@ -3,10 +3,10 @@
 {% block title %}Profile for {{ member.short_name }}{% endblock %}
 
 {% block content %}
-	<h3>{{ member.long_name }}</h3>
 	<div class="container" style="max-width: 576px;">
+		<h3>{{ member.long_name }}</h3>
 		<div class="row row-cols-1">
-			<div class="col">
+			<div class="col mb-3">
 				<div class="card h-100">
 					<div class="card-body">
 						<h4 class="card-title">Library Items</h4>
@@ -14,7 +14,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col mb-3">
 				<div class="card h-100">
 					<div class="card-body">
 						<h4 class="card-title">Memberships</h4>
@@ -43,7 +43,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col mb-3">
 				<div class="card h-100">
 					<div class="card-body">
 						<h4 class="card-title">Discord</h4>
