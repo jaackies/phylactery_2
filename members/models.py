@@ -81,6 +81,10 @@ class Member(models.Model):
 		else:
 			return False
 	
+	def is_life_member(self):
+		# Convenience alias function.
+		return self.has_rank(RankChoices.LIFEMEMBER)
+	
 	# The following are the preferred methods of testing for privileges.
 	# Webkeepers get these privileges as well for debugging.
 	def is_gatekeeper(self):

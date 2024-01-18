@@ -18,26 +18,41 @@
 				<div class="card h-100">
 					<div class="card-body">
 						<h4 class="card-title">Memberships</h4>
-						<p class="card-text">{{ member.short_name }} is not a current member.</p>
+						<p class="card-text">
+							{% if member.has_active_membership %}
+								{{ member.short_name }} is a current financial member.
+							{% else %}
+								{{ member.short_name }} is not a current financial member.
+							{% endif %}
+						</p>
+						{% if member.ha %}
+							<p>{{ member.short_name }} is an honorary life member.</p>
+						{% endif %}
 					</div>
+					{% if member.memberships.exists %}
 					<table class="table">
 						<thead>
 							<tr>
 								<th scope="col">Date paid</th>
 								<th scope="col">Guild?</th>
 								<th scope="col">Amount Paid</th>
-								<th scope="col">Gatekeeper</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="table-success">
-								<td>Today</td>
-								<td>Yes</td>
-								<td>$5</td>
-								<td>Donald</td>
-							</tr>
+							{% for membership in member.memberships.all %}
+								{% if membership.expired %}
+									<tr class="table-danger">
+								{% else %}
+									<tr class="table-success">
+								{% endif %}
+										<td>{{ membership.date_purchased }}</td>
+										<td>{{ membership.guild_member|yesno:"Yes,No" }}</td>
+										<td>${{ membership.amount_paid }}</td>
+									</tr>
+							{% endfor %}
 						</tbody>
 					</table>
+					{% endif %}
 					<div class="card-body">
 						<a href="#" class="btn btn-success w-100">Process new Membership for {{ member.short_name }}</a>
 					</div>
