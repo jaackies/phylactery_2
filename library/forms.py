@@ -4,8 +4,8 @@ from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div
 
-
 from .models import Item
+from members.models import Member
 
 
 class SelectLibraryItemsForm(forms.Form):
@@ -75,3 +75,41 @@ class ItemDueDateForm(forms.Form):
 				field="due_date",
 				error="Due date cannot be in the past."
 			)
+
+
+class InternalBorrowerDetailsForm(forms.Form):
+	member = forms.ModelChoiceField(
+		queryset=Member.objects.all(),
+	)
+	address = forms.CharField(
+		widget=forms.Textarea,
+		required=True,
+		attrs={
+			"rows": 3
+		}
+	)
+	phone_number = forms.CharField(
+		required=True,
+		max_length=20,
+		attrs={
+			"type": "tel"
+		},
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			Fieldset(
+				"Enter the Member details below:",
+				"member",
+				"address",
+				"phone_number",
+			)
+		)
+	
+	def clean_member(self):
+		member = self.cleaned_data["member"]
+		if not member.is_valid_member():
+			raise ValidationError("This member cannot borrow items.")
