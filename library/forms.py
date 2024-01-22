@@ -1,0 +1,77 @@
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils import timezone
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, HTML, Div
+
+
+from .models import Item
+
+
+class SelectLibraryItemsForm(forms.Form):
+	"""
+	Form to select library items, for the first step of the borrowing process.
+	"""
+	items = forms.ModelMultipleChoiceField(
+		queryset=Item.objects.all()
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper
+		self.helper.form_tag = False
+		# noinspection PyTypeChecker
+		self.helper.layout = Layout(
+			Fieldset(
+				"Borrow Items",
+				HTML("<p>Select items for the member to borrow. Member details will be filled out in the next step.</p>"),
+				"items",
+			)
+		)
+
+
+class ItemDueDateForm(forms.Form):
+	"""
+	Form to show and potentially change a due date when borrowing an item.
+	One of these forms are displayed for each item selected in the preview step.
+	"""
+	item = forms.ModelChoiceField(
+		widget=forms.HiddenInput,
+		required=True,
+		queryset=Item.objects.all(),
+	)
+	due_date = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		)
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.layout = Layout(
+			"item",
+			"due_date",
+		)
+	
+	def clean(self):
+		cleaned_data = super().clean()
+		item = cleaned_data["item"]
+		due_date = cleaned_data["due_date"]
+		item_availability = item.get_availability_info()
+		if not item_availability["available_to_borrow"]:
+			raise ValidationError(f"{item} is not available to borrow at the moment.")
+		if due_date > item_availability["max_due_date"]:
+			self.add_error(
+				field="due_date",
+				error=f"The due date can't be set beyond the maximum due date for this item. "
+				f"({item_availability['max_due_date']}"
+			)
+		if due_date < timezone.now().date():
+			self.add_error(
+				field="due_date",
+				error="Due date cannot be in the past."
+			)
