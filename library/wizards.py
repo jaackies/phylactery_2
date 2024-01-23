@@ -16,9 +16,9 @@ class InternalBorrowItemsWizard(SessionWizardView):
 	multiple forms working together in one view.
 	"""
 	form_list = [
-		("0", SelectLibraryItemsForm),
-		("1", ItemDueDateFormset),
-		("2", InternalBorrowerDetailsForm),
+		("select", SelectLibraryItemsForm),
+		("due_dates", ItemDueDateFormset),
+		("details", InternalBorrowerDetailsForm),
 	]
 	template_name = "library/library_borrow_wizard.html"
 	
@@ -33,6 +33,23 @@ class InternalBorrowItemsWizard(SessionWizardView):
 			self.storage.set_step_data(self.steps.current, self.process_step(form))
 			self.storage.set_step_files(self.steps.current, self.process_step_files(form))
 		return super().render_goto_step(*args, **kwargs)
+	
+	def get_form_initial(self, step):
+		"""
+		This method overrides the WizardView method.
+		Adds in the initial data to the formset in the second stop, allowing the gatekeeper to modify item due dates.
+		"""
+		if step == "due_dates":
+			cleaned_data = self.get_cleaned_data_for_step("select")
+			cleaned_items = cleaned_data["items"]
+			initial_form_data = []
+			for item in cleaned_items:
+				initial_form_data.append({
+					"item": item,
+					"due_date": item.get_availability_info()["max_due_date"]
+				})
+			return initial_form_data
+		return super().get_form_initial(step)
 	
 	def done(self, form_list, **kwargs):
 		"""
