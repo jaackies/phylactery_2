@@ -1,5 +1,6 @@
 {% extends "_base.html" %}
 {% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% load static %}
 
 {% block form_media %}
@@ -14,6 +15,7 @@
 		{% csrf_token %}
 		{{ wizard.management_form }}
 		{% if wizard.form.forms %}
+			{{ wizard.form.management_form|crispy }}
 			{% for form in wizard.form.forms %}
 				{% crispy form %}
 			{% endfor %}
