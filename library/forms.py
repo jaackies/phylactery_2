@@ -18,7 +18,7 @@ class SelectLibraryItemsForm(forms.Form):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		self.helper = FormHelper
+		self.helper = FormHelper()
 		self.helper.form_tag = False
 		# noinspection PyTypeChecker
 		self.helper.layout = Layout(

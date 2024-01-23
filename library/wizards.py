@@ -20,6 +20,7 @@ class InternalBorrowItemsWizard(SessionWizardView):
 		("1", ItemDueDateFormset),
 		("2", InternalBorrowerDetailsForm),
 	]
+	template_name = "library/library_borrow_wizard.html"
 	
 	def render_goto_step(self, *args, **kwargs):
 		"""

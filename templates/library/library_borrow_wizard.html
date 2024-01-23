@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block form_media %}
+	{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+	<div class="d-flex justify-content-between mb-3">
+		<span>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
+	</div>
+	<form action="" method="POST">
+		{% csrf_token %}
+		{{ wizard.management_form }}
+		{% if wizard.form.forms %}
+			{% for form in wizard.form.forms %}
+				{% crispy form %}
+			{% endfor %}
+		{% else %}
+			{% crispy wizard.form %}
+		{% endif %}
+		<div class="d-flex flex-row justify-content-between">
+			<div class="p-2">
+				{% if wizard.steps.prev %}
+					<button name="wizard_goto_step"
+							type="submit"
+							value="{{ wizard.steps.prev }}"
+							formnovalidate="formnovalidate"
+							class="btn btn-secondary">
+						<i class="bi-arrow-left"></i> Back
+					</button>
+				{% else %}
+					<button type="button"
+							class="btn btn-secondary"
+							disabled>
+						<i class="bi-arrow-left"></i> Back
+					</button>
+				{% endif %}
+			</div>
+			<div class="p-2">
+				{% if wizard.steps.next %}
+					<button type="submit"
+							class="btn btn-primary">
+						Next <i class="bi-arrow-right"></i>
+					</button>
+				{% else %}
+					<button type="submit"
+							class="btn btn-success">
+						Submit <i class="bi-check2"></i>
+					</button>
+				{% endif %}
+			</div>
+		</div>
+	</form>
+{% endblock %}
