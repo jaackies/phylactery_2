@@ -82,18 +82,21 @@ class InternalBorrowerDetailsForm(forms.Form):
 		queryset=Member.objects.all(),
 	)
 	address = forms.CharField(
-		widget=forms.Textarea,
+		widget=forms.Textarea(
+			attrs={
+				"rows": 3
+			}
+		),
 		required=True,
-		attrs={
-			"rows": 3
-		}
 	)
 	phone_number = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+				"type": "tel"
+			},
+		),
 		required=True,
 		max_length=20,
-		attrs={
-			"type": "tel"
-		},
 	)
 	
 	def __init__(self, *args, **kwargs):
