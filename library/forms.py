@@ -52,6 +52,7 @@ class ItemDueDateForm(forms.Form):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
+		self.helper.form_tag = False
 		self.helper.layout = Layout(
 			"item",
 			"due_date",
