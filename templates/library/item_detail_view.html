@@ -1,0 +1,89 @@
+{% extends "_base.html" %}
+
+{% block content %}
+	<h2>{{ item.name }}</h2>
+	<div class="row">
+		<div class="col-sm-12 col-md-4 col-lg-4 col-xl-5 order-1 order-2-sm">
+			<div class="card mb-3">
+				<img src="{{ item.image.url }}" class="card-img-top object-fit-contain" style="max-height: 400px;" alt="{{ item.name }}">
+				<table class="table table-sm mb-0 text-center">
+					<tbody>
+						<tr>
+							<td>
+								Type: INSERT_ITEM_TYPE_HERE
+								{% comment %}
+									TODO: Add Item type to detail view
+								{% endcomment %}
+							</td>
+						</tr>
+						{% if item.players_display %}
+							<tr>
+								<td>
+									<i class="bi-people-fill" role="img" aria-label="Players"></i><br />
+									{{ item.players_display }}
+								</td>
+							</tr>
+						{% endif %}
+						{% if item.play_time_display %}
+							<tr>
+								<td>
+									<i class="bi-clock" role="img" aria-label="Play Time"></i><br />
+									{{ item.play_time_display|safe }}
+								</td>
+							</tr>
+                    	{% endif %}
+					</tbody>	
+					<tbody>
+						<tr>
+							<td class="pl-2">Borrowing Status:</td>
+						</tr>
+						<tr>
+							{% if item.is_high_demand is True and item_info.available_to_borrow is True %}
+								<td class="table-success">
+									Available to Borrow! <br />
+									(High Demand Item)
+								</td>
+							{% elif item_info.available_to_borrow is True %}
+								<td class="table-success">
+									Available to Borrow!
+								</td>
+							{% else %}
+								<td class="table-danger">
+									Unavailable to Borrow
+								</td>
+							{% endif %}
+						</tr>
+						<tr>
+							<td class="pl-2">
+								Clubroom status:
+							</td>
+						</tr>
+						<tr>
+							{% if item_info.in_clubroom is True %}
+								<td class="table-success">
+									Available in the clubroom!
+								</td>
+							{% else %}
+								<td class="table-danger">
+									{% if available_str %}
+										Due back {{ available_str }}
+									{% else %}
+										Due back {{ item_info.expected_available_date|date:"jS M Y" }}
+									{% endif %}
+								</td>
+							{% endif %}
+						</tr>
+						<tr>
+							<td>
+								Permalink 
+								{% comment %}
+									TODO: Add permalink
+								{% endcomment %}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
