@@ -188,6 +188,36 @@ class Item(models.Model):
 		# The base case
 		return f"{self.min_players} - {self.max_players} players"
 	
+	@property
+	def play_time_display(self):
+		# Returns an HTML-safe representation of the play time.
+		def convert_minutes_to_hours(minutes):
+			hours = minutes // 60
+			plural_hours = "s" if hours != 1 else ""
+			minutes = minutes % 60
+			plural_minutes = "s" if minutes != 1 else ""
+			if hours == 0:
+				return f"{minutes} min{plural_minutes}."
+			elif minutes == 0:
+				return f"{hours} hour{plural_hours}"
+			else:
+				return f"{hours} hour{plural_hours} {minutes} min{plural_minutes}."
+		# If there's no average play time, then we don't display anything,
+		# as that implies the min and the max haven't been set either.
+		if not self.average_play_time:
+			return ""
+		else:
+			if self.min_play_time is not None and self.max_play_time is not None:
+				# All three are set, display all three.
+				min_time = convert_minutes_to_hours(self.min_play_time)
+				max_time = convert_minutes_to_hours(self.max_play_time)
+				avg_time = convert_minutes_to_hours(self.average_play_time)
+				return f"<i>{min_time}</i> to <i>{max_time}</i> <br /> Avg: ~<i>{avg_time}</i>"
+			else:
+				# Just display the average.
+				avg_time = convert_minutes_to_hours(self.average_play_time)
+				return f"~<i>{avg_time}</i>"
+	
 	# Methods
 	def save(self, *args, **kwargs):
 		# This method is called whenever the Item is saved.
