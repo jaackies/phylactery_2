@@ -85,5 +85,31 @@
 				</table>
 			</div>
 		</div>
+		<div class="col-sm-12 col-md-8 col-lg-8 col-xl-7 order-2 order-md-1">
+			<div class="card">
+				<h5 class="card-header">
+					Description
+				</h5>
+				<div class="card-body">
+					<p class="card-text">
+						{{ item.description }}
+						{% comment %}
+							TODO: Add Markdownify
+						{% endcomment %}
+					</p>
+				</div>
+				{% if item.notes %}
+					<h5 class="card-header">
+						Notes
+					</h5>
+					<div class="card-body">
+						{{ item.notes }}
+					</div>
+				{% endif %}
+				{% comment %}
+					TODO: Put Tags here
+				{% endcomment %}
+			</div>
+		</div>
 	</div>
 {% endblock %}
