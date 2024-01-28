@@ -221,9 +221,11 @@ class Item(models.Model):
 	# Methods
 	def save(self, *args, **kwargs):
 		# This method is called whenever the Item is saved.
-		# Before saving, we calculate the playtime.
+		# Before saving, we calculate the playtime, and create the Item's tag.
 		# After saving, we compute the full tags for the Item.
 		self.compute_play_time()
+		if self.item_tag is None:
+			self.item_tag, _ = LibraryTag.objects.get_or_create(name=f"Item: {self.name}")
 		super().save(*args, **kwargs)  # This actually does the saving.
 		self.compute_tags()
 	
@@ -248,19 +250,16 @@ class Item(models.Model):
 			tags_to_search = set(LibraryTag.objects.filter(children__in=tags_to_search))
 		self.computed_tags.set(already_searched, clear=True)
 		
-		# If the item doesn't have an associated "Item: <>" tag, create it.
-		# Then, set its parents to be this item's base tags.
-		if self.item_tag is None:
-			self.item_tag = LibraryTag.objects.create(name=f"Item: {self.name}")
-		else:
+		# Set the Item's "Item: <>" tag parents to be this item's base tags.
+		if self.item_tag is not None:
 			# Make sure the name of the Tag is updated.
 			if self.item_tag.name != f"Item: {self.name}":
 				self.item_tag.name = f"Item: {self.name}"
-		self.item_tag.parents.set(self.base_tags.all())
-		
-		# Finally, we re-save any items with Tags that depend on this one.
-		if recursion:
-			self.item_tag.recompute_dependant_items()
+			self.item_tag.parents.set(self.base_tags.all())
+			
+			# Finally, we re-save any items with Tags that depend on this one.
+			if recursion:
+				self.item_tag.recompute_dependant_items()
 	
 	def get_availability_info(self) -> dict[str, Any]:
 		"""
