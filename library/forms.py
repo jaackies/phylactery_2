@@ -52,7 +52,7 @@ class SelectLibraryItemsForm(forms.Form):
 				self.rejected_items.append(item)
 			else:
 				clean_items.append(item)
-				if item_info["due_date"] != default_due_date():
+				if item_info["max_due_date"] != default_due_date():
 					self.different_due = True
 		if len(clean_items) == 0:
 			raise ValidationError(
