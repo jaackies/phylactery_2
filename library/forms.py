@@ -49,7 +49,7 @@ class SelectLibraryItemsForm(forms.Form):
 		for item in submitted_items:
 			item_info = item.get_availability_info()
 			if not item_info["available_to_borrow"]:
-				self.rejected_items.append(item)
+				self.rejected_items.append(item.name)
 			else:
 				clean_items.append(item)
 				if item_info["max_due_date"] != default_due_date():
