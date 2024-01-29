@@ -1,3 +1,4 @@
+from dal import autocomplete
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -13,13 +14,17 @@ class SelectLibraryItemsForm(forms.Form):
 	Form to select library items, for the first step of the borrowing process.
 	"""
 	items = forms.ModelMultipleChoiceField(
-		queryset=Item.objects.all()
+		queryset=Item.objects.all(),
+		widget=autocomplete.ModelSelect2(
+			url="autocomplete-item",
+		)
 	)
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
+		self.helper.include_media = False
 		# noinspection PyTypeChecker
 		self.helper.layout = Layout(
 			Fieldset(

@@ -3,10 +3,6 @@
 {% load crispy_forms_filters %}
 {% load static %}
 
-{% block form_media %}
-	{{ wizard.form.media }}
-{% endblock %}
-
 {% block content %}
 	<div class="d-flex justify-content-between mb-3">
 		<span>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
@@ -55,4 +51,12 @@
 			</div>
 		</div>
 	</form>
+{% endblock %}
+
+{% block post_js_form_media %}
+	{% if not wizard.form.helper.include_media %}
+		<!-- JQuery -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+		{{ wizard.form.media }}
+	{% endif %}
 {% endblock %}
