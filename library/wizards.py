@@ -71,6 +71,7 @@ class InternalBorrowItemsWizard(SessionWizardView):
 					"One or more of the below items has a shorter due-date than the default (2 weeks). "
 					"They have been highlighted in Yellow. Please verify that this still suits the borrower."
 				)
+		return super().process_step(form)
 	
 	def done(self, form_list, **kwargs):
 		"""
