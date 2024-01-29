@@ -304,13 +304,15 @@ class Item(models.Model):
 		# - No current/active borrow records (that are unreturned) exist for the item.
 		# - The max_due_date is at least tomorrow.
 		
-		borrow_conditions = [
-			self.is_borrowable,
-			item_active_borrow_records.exists() is False,
-			(item_availability_info["max_due_date"] is not None),
-			(item_availability_info["max_due_date"] >= tomorrow()),
-		]
-		item_availability_info["available_to_borrow"] = all(borrow_conditions)
+		if (
+			self.is_borrowable and
+			(item_active_borrow_records.exists() is False) and
+			(item_availability_info["max_due_date"] is not None) and
+			(item_availability_info["max_due_date"] >= tomorrow())
+		):
+			item_availability_info["available_to_borrow"] = True
+		else:
+			item_availability_info["available_to_borrow"] = False
 		
 		# in_clubroom is True if any of the following are True:
 		# - available_to_borrow is True
