@@ -5,7 +5,7 @@ from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML
 
-from .models import Item
+from library.models import Item, default_due_date
 from members.models import Member
 
 
@@ -61,9 +61,33 @@ class ItemDueDateForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
+		if self.initial["due_date"] != default_due_date():
+			row_class = " text-bg-warning"
+		else:
+			row_class = ""
+		item_name = self.initial["item"].name
+		item_img = self.initial["item"].image.url
 		self.helper.layout = Layout(
+			HTML(
+				f"""
+				<div class="row{row_class}">
+					<div class="col-md-3 d-none d-md-block">
+						<img class="borrow-form-img" src="{item_img}">
+					</div>
+					<div class="col-9 col-md-6">
+						{item_name}
+					</div>
+					<div class="col-3">
+				"""
+			),
 			"item",
 			"due_date",
+			HTML(
+				"""
+					</div>
+				</div>
+				"""
+			)
 		)
 	
 	def clean(self):

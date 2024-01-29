@@ -46,3 +46,9 @@
     list-style-type: "- ";
     padding-left: 1em;
 }
+
+.borrow-form-img {
+    object-fit: contain;
+    max-height: 110px;
+    max-width: 150px;
+}
