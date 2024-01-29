@@ -17,6 +17,9 @@ class SelectLibraryItemsForm(forms.Form):
 		queryset=Item.objects.all(),
 		widget=autocomplete.ModelSelect2(
 			url="autocomplete-item",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
 		)
 	)
 	
