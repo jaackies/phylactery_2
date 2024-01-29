@@ -70,22 +70,22 @@ class ItemDueDateForm(forms.Form):
 		self.helper.layout = Layout(
 			HTML(
 				f"""
-				<div class="row{row_class}">
-					<div class="col-md-3 d-none d-md-block">
+				<tr class="{row_class}">
+					<td class="d-none d-md-block">
 						<img class="borrow-form-img" src="{item_img}">
-					</div>
-					<div class="col-9 col-md-6">
-						<span class="align-middle">{item_name}</span>
-					</div>
-					<div class="col-3">
+					</td>
+					<td class="align-middle" style="min-width: 60%;">
+						{item_name}
+					</td>
+					<td style="max-width: 40%;">
 				"""
 			),
 			"item",
 			"due_date",
 			HTML(
 				"""
-					</div>
-				</div>
+					</td>
+				</tr>
 				"""
 			)
 		)
