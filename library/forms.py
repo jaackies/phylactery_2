@@ -75,7 +75,7 @@ class ItemDueDateForm(forms.Form):
 						<img class="borrow-form-img" src="{item_img}">
 					</div>
 					<div class="col-9 col-md-6">
-						{item_name}
+						<span class="align-middle">{item_name}</span>
 					</div>
 					<div class="col-3">
 				"""
