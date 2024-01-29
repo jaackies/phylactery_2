@@ -170,6 +170,12 @@
 
 {% endblock javascript %}
 
+{% block post_js_form_media %}
+	{% comment %}
+		This is a block solely for form media that must be loaded after the other Java
+	{% endcomment %}
+{% endblock %}
+
 </body>
 
 </html>
