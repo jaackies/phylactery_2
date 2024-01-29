@@ -25,6 +25,8 @@ class SelectLibraryItemsForm(forms.Form):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+		self.rejected_items = []
+		self.different_due = False
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.include_media = False
@@ -36,6 +38,28 @@ class SelectLibraryItemsForm(forms.Form):
 				"items",
 			)
 		)
+	
+	def clean_items(self):
+		"""
+		Runs validation on the selected items,
+		making sure that they can be borrowed before continuing.
+		"""
+		submitted_items = self.cleaned_data["items"]
+		clean_items = []
+		for item in submitted_items:
+			item_info = item.get_availability_info()
+			if not item_info["available_to_borrow"]:
+				self.rejected_items.append(item)
+			else:
+				clean_items.append(item)
+				if item_info["due_date"] != default_due_date():
+					self.different_due = True
+		if len(clean_items) == 0:
+			raise ValidationError(
+				"""None of the items you selected were available to borrow. If you think this is wrong, contact the Librarian.""",
+				code="empty-items"
+			)
+		return clean_items
 
 
 class ItemDueDateForm(forms.Form):
