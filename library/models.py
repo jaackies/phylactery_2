@@ -319,12 +319,14 @@ class Item(models.Model):
 		# - is_borrowable is False
 		# - No current/active borrow records (that are unreturned) exist for the item.
 		
-		clubroom_conditions = [
-			item_availability_info["available_to_borrow"],
-			self.is_borrowable is False,
-			item_active_borrow_records.exists() is False
-		]
-		item_availability_info["in_clubroom"] = any(clubroom_conditions)
+		if (
+			(item_availability_info["available_to_borrow"] is True) or
+			(self.is_borrowable is False) or
+			(item_active_borrow_records.exists() is False)
+		):
+			item_availability_info["in_clubroom"] = True
+		else:
+			item_availability_info["in_clubroom"] = False
 		
 		# expected_available_date is None if the item is already available.
 		# Otherwise, we calculate the next date (starting from today) that fits all the following criteria:
