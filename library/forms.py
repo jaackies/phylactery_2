@@ -180,3 +180,4 @@ class InternalBorrowerDetailsForm(forms.Form):
 		member = self.cleaned_data["member"]
 		if not member.is_valid_member():
 			raise ValidationError("This member cannot borrow items.")
+		return member
