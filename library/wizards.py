@@ -1,10 +1,12 @@
 from django.contrib import messages
+from django.core.exceptions import SuspiciousOperation
 from django.forms import formset_factory
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from members.decorators import gatekeeper_required
 
 from library.forms import SelectLibraryItemsForm, ItemDueDateForm, InternalBorrowerDetailsForm
+from library.models import BorrowerDetails, BorrowRecord
 
 
 ItemDueDateFormset = formset_factory(ItemDueDateForm, extra=0)
@@ -75,10 +77,32 @@ class InternalBorrowItemsWizard(SessionWizardView):
 	
 	def done(self, form_list, **kwargs):
 		"""
-		When the form is submitted entirely, we create the BorrowingRecords and all related objects.
+		When the form is submitted entirely, we first validate that no manipulation has occurred.
+		Then we create the BorrowingRecords and all related objects.
 		This includes:
 			- Creating a new BorrowerDetails object
 			- Create a new BorrowRecord object for each Item being borrowed.
 			- TODO: Email the borrower a receipt.
 		"""
-		pass
+		cleaned_data = self.get_all_cleaned_data()
+		
+		# Validate the items from the form.
+		# We put the item data in Step 2 to easily track it,
+		# but we must make sure it hasn't been manipulated.
+		
+		try:
+			for item, item_due_date_form in zip(cleaned_data["items"], cleaned_data["formset-due_dates"], strict=True):
+				if item != item_due_date_form["item"]:
+					raise SuspiciousOperation("Item data has been tampered with or is missing.")
+		except ValueError:
+			raise SuspiciousOperation("Item data has been tampered with or is missing.")
+		
+		new_borrower_details = BorrowerDetails.objects.create(
+			is_external=False,
+			internal_member=cleaned_data["member"],
+			borrower_name=cleaned_data["member"].long_name,
+			borrower_address=cleaned_data["address"],
+			borrower_phone=cleaned_data["phone_number"],
+		)
+		
+		print(cleaned_data)
