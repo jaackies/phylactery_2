@@ -10,5 +10,5 @@ urlpatterns = [
 	path("signup/", SignupHubView.as_view(), name="signup-hub"),
 	path("list/", MemberListView.as_view(), name="list"),
 	path("profile/<int:pk>/", GatekeeperProfileView.as_view(), name="profile"),
-	path("autocomplete-member", MemberAutocomplete.as_view(), name="member-autocomplete"),
+	path("autocomplete-member", MemberAutocomplete.as_view(), name="autocomplete-member"),
 ]

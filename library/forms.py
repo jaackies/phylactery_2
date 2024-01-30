@@ -137,6 +137,12 @@ class ItemDueDateForm(forms.Form):
 class InternalBorrowerDetailsForm(forms.Form):
 	member = forms.ModelChoiceField(
 		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2(
+			url="autocomplete-member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
 	)
 	address = forms.CharField(
 		widget=forms.Textarea(
@@ -160,6 +166,7 @@ class InternalBorrowerDetailsForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
+		self.helper.include_media = False
 		self.helper.layout = Layout(
 			Fieldset(
 				"Enter the Member details below:",
