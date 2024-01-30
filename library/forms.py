@@ -86,7 +86,7 @@ class ItemDueDateForm(forms.Form):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		if self.initial["due_date"] != default_due_date():
-			row_class = " text-bg-warning"
+			row_class = "table-warning"
 		else:
 			row_class = ""
 		item_name = self.initial["item"].name
