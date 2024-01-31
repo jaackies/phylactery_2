@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import SuspiciousOperation
 from django.forms import formset_factory
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from members.decorators import gatekeeper_required
@@ -105,4 +106,15 @@ class InternalBorrowItemsWizard(SessionWizardView):
 			borrower_phone=cleaned_data["phone_number"],
 		)
 		
+		for item_due_date_form in cleaned_data["formset-due_dates"]:
+			BorrowRecord.objects.create(
+				item=item_due_date_form["item"],
+				borrower=new_borrower_details,
+				borrow_authorised_by=self.request.user.member.long_name,
+				due_date=item_due_date_form["due_date"],
+			)
+		
+		messages.success(self.request, "The items were successfully borrowed!")
 		print(cleaned_data)
+		
+		return redirect("home")
