@@ -45,6 +45,7 @@ class ItemModelForm(FutureModelForm):
 			),
 		}
 		help_texts = {
+			"base_tags": "",
 			"computed_tags": ""
 		}
 
@@ -52,6 +53,15 @@ class ItemModelForm(FutureModelForm):
 class ItemAdmin(admin.ModelAdmin):
 	form = ItemModelForm
 	prepopulated_fields = {"slug": ("name",)}
+	fields = [
+		"name", "slug",
+		"image",
+		"description", "condition", "notes",
+		("base_tags", "computed_tags"),
+		"min_players", "max_players",
+		"min_play_time", "max_play_time", "average_play_time",
+		"is_borrowable", "is_high_demand",
+	]
 	readonly_fields = ["computed_tags"]
 
 
