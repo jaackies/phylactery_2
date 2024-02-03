@@ -69,6 +69,7 @@ class LibraryTag(TagBase):
 	class Meta:
 		verbose_name = "Tag"
 		verbose_name_plural = "Tags"
+		ordering = ["name"]
 	
 	def recompute_dependant_items(self):
 		"""
