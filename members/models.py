@@ -37,7 +37,7 @@ class Member(models.Model):
 	
 	# Methods
 	def __str__(self):
-		return self.short_name
+		return self.long_name
 	
 	def is_fresher(self):
 		# Simple test - if they joined this year, they are a fresher.
