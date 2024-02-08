@@ -104,13 +104,13 @@ class InternalBorrowItemsWizard(SessionWizardView):
 			borrower_name=cleaned_data["member"].long_name,
 			borrower_address=cleaned_data["address"],
 			borrower_phone=cleaned_data["phone_number"],
+			borrow_authorised_by=self.request.user.member.long_name,
 		)
 		
 		for item_due_date_form in cleaned_data["formset-due_dates"]:
 			BorrowRecord.objects.create(
 				item=item_due_date_form["item"],
 				borrower=new_borrower_details,
-				borrow_authorised_by=self.request.user.member.long_name,
 				due_date=item_due_date_form["due_date"],
 			)
 		
