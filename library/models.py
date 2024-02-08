@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 from typing import Any
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q, Case, When, Value
 from django.db.models.functions import Now
@@ -66,10 +67,36 @@ class LibraryTag(TagBase):
 	"""
 	parents = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="children")
 	
+	# Checkboxes to mark special types of Tags
+	# Tags that are is_tag_category will be ignored by most logic. Their primary purpose is to categorise other Tags.
+	is_tag_category = models.BooleanField(
+		default=False,
+		help_text="Check this if this tag should be a category for other tags. "
+		"(e.g. Board Game Types, Settings, Card Game Mechanics, etc.)"
+	)
+	# Tags that are is_item_type are searchable, but otherwise ignored by logic.
+	# Their primary purpose is to divide items by type (e.g. Board Game, Book, Card Game, etc.)
+	is_item_type = models.BooleanField(
+		default=False,
+		help_text="Check this if this tag should be an Item Type. You shouldn't need to add these frequently. "
+		"(e.g. Board Game, Book, Card Game, etc.)"
+	)
+	
 	class Meta:
 		verbose_name = "Tag"
 		verbose_name_plural = "Tags"
 		ordering = ["name"]
+		
+	def __str__(self):
+		if self.is_tag_category:
+			return f"Tag Category: {self.name}"
+		if self.is_item_type:
+			return f"Item Type: {self.name}"
+		return self.name
+	
+	def clean(self):
+		if self.is_item_type and self.is_tag_category:
+			raise ValidationError("A tag cannot be both a Tag Category and a Item Type.")
 	
 	def recompute_dependant_items(self):
 		"""
@@ -241,14 +268,21 @@ class Item(models.Model):
 		# This method is called upon saving the Item or Tag.
 		
 		# Calculate the items computed tags by finding all parents, until there's none left.
-		tags_to_search = set(self.base_tags.all())
+		tags_to_search = set(self.base_tags.filter(
+			is_tag_category=False,
+			is_item_type=False,
+		))
 		already_searched = set()
 		while True:
 			tags_to_search -= already_searched
 			if len(tags_to_search) == 0:
 				break
 			already_searched |= tags_to_search
-			tags_to_search = set(LibraryTag.objects.filter(children__in=tags_to_search))
+			tags_to_search = set(LibraryTag.objects.filter(
+				children__in=tags_to_search,
+				is_tag_category=False,
+				is_item_type=False
+			))
 		self.computed_tags.set(already_searched, clear=True)
 		
 		# Set the Item's "Item: <>" tag parents to be this item's base tags.
