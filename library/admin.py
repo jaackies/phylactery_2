@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.db import models
 from django import forms
 from dal.forms import FutureModelForm
 from dal_select2_taggit.widgets import TaggitSelect2
 
-from .models import Item, LibraryTag
+from .models import Item, LibraryTag, BorrowerDetails, BorrowRecord
 
 
 class ItemModelForm(FutureModelForm):
@@ -65,5 +66,36 @@ class ItemAdmin(admin.ModelAdmin):
 	readonly_fields = ["computed_tags"]
 
 
+class BorrowRecordsInline(admin.TabularInline):
+	model = BorrowRecord
+	extra = 0
+	can_delete = False
+	
+	formfield_overrides = {
+		models.TextField: {
+			"widget": forms.Textarea(
+				attrs={
+					"cols": 40,
+					"rows": 3
+				}
+			)
+		}
+	}
+	
+	readonly_fields = [
+		"item", "borrower", "borrowed_datetime", "borrow_authorised_by",
+	]
+	
+	fields = [
+		"item", "borrower", "borrowed_datetime", "borrow_authorised_by",
+		"due_date", "returned_datetime", "return_authorised_by", "comments", "verified_returned"
+	]
+
+
+class BorrowerDetailsAdmin(admin.ModelAdmin):
+	inlines = [BorrowRecordsInline]
+
+
 admin.site.register(Item, ItemAdmin)
+admin.site.register(BorrowerDetails, BorrowerDetailsAdmin)
 admin.site.register(LibraryTag)
