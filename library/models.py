@@ -363,7 +363,7 @@ class BorrowerDetails(models.Model):
 	borrower_phone = models.CharField(max_length=20)
 	
 	# The details about when the item was borrowed will be shared by all items in the same transaction.
-	borrowed_datetime = models.DateTimeField(auto_now_add=True)
+	borrowed_datetime = models.DateTimeField(default=timezone.now)
 	borrow_authorised_by = models.CharField(max_length=200)
 	
 	def save(self, *args, **kwargs):
