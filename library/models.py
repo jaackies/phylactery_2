@@ -96,7 +96,12 @@ class LibraryTag(TagBase):
 		if self.is_tag_category:
 			if not self.name.startswith("Tag Category: "):
 				raise ValidationError("Tags that are Tag Categories must start with the phrase 'Tag Category: '.")
-				
+	
+	def get_raw_name(self):
+		if not (self.is_tag_category or self.is_item_type):
+			return self.name
+		else:
+			return self.name.split(sep=": ", maxsplit=1)[1]
 	
 	def recompute_dependant_items(self):
 		"""
