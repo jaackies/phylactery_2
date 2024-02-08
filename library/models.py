@@ -372,8 +372,7 @@ class BorrowerDetails(models.Model):
 		super().save(*args, **kwargs)
 	
 	def __str__(self):
-		count = self.borrow_records.count()
-		return f"{self.borrower_name} {'(external)' if self.is_external else ''} - {self.borrowed_datetime.date()} - {count} item{'' if count == 1 else 's'}"
+		return f"{self.borrower_name} {'(external)' if self.is_external else ''} - {self.borrowed_datetime.date()}"
 	
 	class Meta:
 		verbose_name = "Borrowing Transaction"
