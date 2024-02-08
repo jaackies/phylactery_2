@@ -83,11 +83,11 @@ class BorrowRecordsInline(admin.TabularInline):
 	}
 	
 	readonly_fields = [
-		"item", "borrower", "borrowed_datetime", "borrow_authorised_by",
+		"item", "borrower"
 	]
 	
 	fields = [
-		"item", "borrower", "borrowed_datetime", "borrow_authorised_by",
+		"item", "borrower",
 		"due_date", "returned_datetime", "return_authorised_by", "comments", "verified_returned"
 	]
 
