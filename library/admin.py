@@ -112,6 +112,10 @@ class BorrowerDetailsAdmin(admin.ModelAdmin):
 		return fields
 
 
+class LibraryTagAdmin(admin.ModelAdmin):
+	prepopulated_fields = {"slug": ("name",)}
+
+
 admin.site.register(Item, ItemAdmin)
 admin.site.register(BorrowerDetails, BorrowerDetailsAdmin)
-admin.site.register(LibraryTag)
+admin.site.register(LibraryTag, LibraryTagAdmin)
