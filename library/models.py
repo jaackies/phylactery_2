@@ -86,17 +86,17 @@ class LibraryTag(TagBase):
 		verbose_name = "Tag"
 		verbose_name_plural = "Tags"
 		ordering = ["name"]
-		
-	def __str__(self):
-		if self.is_tag_category:
-			return f"Tag Category: {self.name}"
-		if self.is_item_type:
-			return f"Item Type: {self.name}"
-		return self.name
 	
 	def clean(self):
 		if self.is_item_type and self.is_tag_category:
 			raise ValidationError("A tag cannot be both a Tag Category and a Item Type.")
+		if self.is_item_type:
+			if not self.name.startswith("Item Type: "):
+				raise ValidationError("Tags that are Item Types must start with the phrase 'Item Type: '.")
+		if self.is_tag_category:
+			if not self.name.startswith("Tag Category: "):
+				raise ValidationError("Tags that are Tag Categories must start with the phrase 'Tag Category: '.")
+				
 	
 	def recompute_dependant_items(self):
 		"""
