@@ -362,6 +362,10 @@ class BorrowerDetails(models.Model):
 	borrower_address = models.TextField()
 	borrower_phone = models.CharField(max_length=20)
 	
+	# The details about when the item was borrowed will be shared by all items in the same transaction.
+	borrowed_datetime = models.DateTimeField(auto_now_add=True)
+	borrow_authorised_by = models.CharField(max_length=200)
+	
 	def save(self, *args, **kwargs):
 		if self.is_external is False and self.internal_member is not None:
 			self.borrower_name = self.internal_member.long_name
