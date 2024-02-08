@@ -93,7 +93,23 @@ class BorrowRecordsInline(admin.TabularInline):
 
 
 class BorrowerDetailsAdmin(admin.ModelAdmin):
+	readonly_fields = [
+		"is_external", "borrower_name", "internal_member", "borrowed_datetime", "borrow_authorised_by"
+	]
 	inlines = [BorrowRecordsInline]
+	
+	def get_fields(self, request, obj=None):
+		fields = [
+			"is_external", "borrower_name",
+			"internal_member",
+			"borrower_address",
+			"borrower_phone",
+			"borrowed_datetime", "borrow_authorised_by"
+		]
+		if obj is not None:
+			if obj.is_external:
+				fields.remove("internal_member")
+		return fields
 
 
 admin.site.register(Item, ItemAdmin)
