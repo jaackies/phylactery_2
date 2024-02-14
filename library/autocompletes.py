@@ -25,3 +25,8 @@ class LibraryTagAutocomplete(autocomplete.Select2QuerySetView):
 		if self.q:
 			qs = qs.filter(name__istartswith=self.q)
 		return qs
+	
+	# Weird things happen if you don't override this - you'll end up with a bunch of tags that begin with "Create"
+	def get_create_option(self, context, q):
+		return []
+	
