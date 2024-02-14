@@ -96,6 +96,10 @@ class Command(BaseCommand):
 		if invalid_content_types:
 			self.stdout.write(f"Warning: {invalid_content_types=}")
 		
+		# Step 6: Save all Items to regenerate all Tag data properly.
+		for item in Item.objects.all():
+			item.save()
+			self.stdout.write(f"Re-saved {item.name}")
 	
 	def import_library_tag(self, pk, fields):
 		tag_data = {
