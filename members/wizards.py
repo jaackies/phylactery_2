@@ -63,7 +63,7 @@ class FresherMembershipWizard(SessionWizardView):
 		cleaned_data = self.get_all_cleaned_data()
 		
 		# Create new UnigamesUser object
-		create_fresh_unigames_user(email_address=cleaned_data.get("email_address"))
+		new_user = create_fresh_unigames_user(email_address=cleaned_data.get("email_address"))
 		
 		# Allowance for the Legacy form here:
 		if cleaned_data.get("approx_join_date") is not None:

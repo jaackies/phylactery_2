@@ -13,6 +13,7 @@ def create_fresh_unigames_user(email_address):
 	)
 	new_user.set_unusable_password()
 	new_user.save()
+	return new_user
 
 
 class UnigamesUser(AbstractUser):
