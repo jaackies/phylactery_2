@@ -77,10 +77,9 @@
 						</tr>
 						<tr>
 							<td style="border-bottom-width: 0; border-radius: var(--bs-card-border-radius);">
-								Permalink
-								{% comment %}
-									TODO: Add permalink
-								{% endcomment %}
+								<a href="{% url "library:item-detail" slug=item.slug %}">
+									Permalink
+								</a>
 							</td>
 						</tr>
 					</tbody>
