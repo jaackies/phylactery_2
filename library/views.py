@@ -1,4 +1,5 @@
-from django.db.models import Count
+from django.db.models import Count, Q
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from datetime import timedelta
@@ -50,3 +51,15 @@ class TagListView(ListView):
 
 class TagDetailView(ListView):
 	model = Item
+	template_name = "library/item_list_view.html"
+	context_object_name = "items_list"
+	
+	def get_queryset(self):
+		self.tag = get_object_or_404(LibraryTag, slug=self.kwargs["slug"])
+		qs = (
+			Item.objects.filter(
+				Q(base_tags__in=[self.tag]) | Q(computed_tags__in=[self.tag])
+			).distinct()
+		)
+		return qs
+		

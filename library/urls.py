@@ -7,7 +7,7 @@ from library.views import ItemDetailView, ItemListView, TagListView, TagDetailVi
 app_name = 'library'
 urlpatterns = [
 	path("item/<slug:slug>/", ItemDetailView.as_view(), name="item-detail"),
-	path("tag/<slug:slug>", TagDetailView.as_view(), name="tag-detail"),
+	path("tag/<slug:slug>/", TagDetailView.as_view(), name="tag-detail"),
 	path("items/", ItemListView.as_view(), name="item-list"),
 	path("tags/", TagListView.as_view(), name="tag-list"),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow"),
