@@ -159,11 +159,11 @@ STORAGES = {
 
 # Messages
 MESSAGE_TAGS = {
-    messages.INFO: 'alert-info',
-    messages.ERROR: 'alert-danger',
-    messages.WARNING: 'alert-warning',
-    messages.DEBUG: 'alert-warning',
-    messages.SUCCESS: 'alert-success',
+	messages.INFO: 'alert-info',
+	messages.ERROR: 'alert-danger',
+	messages.WARNING: 'alert-warning',
+	messages.DEBUG: 'alert-warning',
+	messages.SUCCESS: 'alert-success',
 }
 
 # django-crispy-forms
