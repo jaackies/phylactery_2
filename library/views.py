@@ -21,5 +21,6 @@ class ItemDetailView(DetailView):
 				context["available_str"] = "today"
 			elif context["item_info"]["expected_available_date"] == tomorrow:
 				context["available_str"] = "tomorrow"
+		context["item_types"] = self.object.base_tags.filter(is_item_type=True)
 		return context
 	

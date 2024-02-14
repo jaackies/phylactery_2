@@ -8,14 +8,16 @@
 				<img src="{{ item.image.url }}" class="card-img-top object-fit-contain" style="max-height: 400px;" alt="{{ item.name }}">
 				<table class="table table-sm mb-0 text-center">
 					<tbody>
-						<tr>
-							<td>
-								Type: INSERT_ITEM_TYPE_HERE
-								{% comment %}
-									TODO: Add Item type to detail view
-								{% endcomment %}
-							</td>
-						</tr>
+						{% if item_types %}
+							<tr>
+								<td>
+									Type: 
+									{% for item_type in item_types %}
+										{{ item_type.get_raw_name }}{% if not forloop.last %},{% endif %}
+									{% endfor %}
+								</td>
+							</tr>
+						{% endif %}
 						{% if item.players_display %}
 							<tr>
 								<td>
