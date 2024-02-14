@@ -6,7 +6,7 @@ from library.views import ItemDetailView
 
 app_name = 'library'
 urlpatterns = [
-	path("item/<slug:slug>/", ItemDetailView.as_view()),
+	path("item/<slug:slug>/", ItemDetailView.as_view(), name="item-detail"),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow"),
 	path("autocomplete-item", ItemAutocomplete.as_view(), name="autocomplete-item"),
 	path("autocomplete-tag", LibraryTagAutocomplete.as_view(), name="autocomplete-tag"),
