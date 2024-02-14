@@ -52,3 +52,12 @@
     max-height: 110px;
     max-width: 150px;
 }
+
+.list-card-image {
+    object-fit: scale-down;
+    object-position: left;
+    max-height: 220px;
+    max-width: 220px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}

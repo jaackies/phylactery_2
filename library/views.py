@@ -1,4 +1,4 @@
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from datetime import timedelta
 from .models import Item
@@ -23,4 +23,10 @@ class ItemDetailView(DetailView):
 				context["available_str"] = "tomorrow"
 		context["item_types"] = self.object.base_tags.filter(is_item_type=True)
 		return context
-	
+
+
+class ItemListView(ListView):
+	model = Item
+	template_name = "library/item_list_view.html"
+	context_object_name = "items_list"
+	paginate_by = 24
