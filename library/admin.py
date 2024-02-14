@@ -39,7 +39,7 @@ class ItemModelForm(FutureModelForm):
 				}
 			),
 			"base_tags": TaggitSelect2(
-				url="autocomplete-tag",
+				url="library:autocomplete-tag",
 				attrs={
 					"style": "width: 100%;",
 				}

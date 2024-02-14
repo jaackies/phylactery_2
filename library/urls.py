@@ -3,6 +3,8 @@ from library.autocompletes import ItemAutocomplete, LibraryTagAutocomplete
 from library.wizards import InternalBorrowItemsWizard
 from library.views import ItemDetailView
 
+
+app_name = 'library'
 urlpatterns = [
 	path("item/<slug:slug>/", ItemDetailView.as_view()),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow"),
