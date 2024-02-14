@@ -41,6 +41,8 @@ class BorrowerDetailsFactory(factory.django.DjangoModelFactory):
 	
 	borrower_address = factory.Faker("address")
 	borrower_phone = factory.Faker("phone_number")
+	
+	borrow_authorised_by = factory.Faker("name")
 
 
 class BorrowRecordFactory(factory.django.DjangoModelFactory):
