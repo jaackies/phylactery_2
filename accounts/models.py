@@ -3,6 +3,18 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+def create_fresh_unigames_user(email_address):
+	"""
+	Helper method - creates a new user with the specified email address, sets an unusable password on it, and saves it.
+	"""
+	new_user = UnigamesUser.objects.create(
+		username=email_address,
+		email=email_address
+	)
+	new_user.set_unusable_password()
+	new_user.save()
+
+
 class UnigamesUser(AbstractUser):
 	pass
 	

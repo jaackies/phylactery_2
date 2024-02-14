@@ -7,7 +7,7 @@ from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
 from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
 from .models import Member, Membership
-from accounts.models import UnigamesUser
+from accounts.models import UnigamesUser, create_fresh_unigames_user
 from blog.models import MailingList
 
 
@@ -63,12 +63,7 @@ class FresherMembershipWizard(SessionWizardView):
 		cleaned_data = self.get_all_cleaned_data()
 		
 		# Create new UnigamesUser object
-		new_user = UnigamesUser.objects.create(
-			username=cleaned_data.get("email_address"),
-			email=cleaned_data.get("email_address")
-		)
-		new_user.set_unusable_password()
-		new_user.save()
+		create_fresh_unigames_user(email_address=cleaned_data.get("email_address"))
 		
 		# Allowance for the Legacy form here:
 		if cleaned_data.get("approx_join_date") is not None:
