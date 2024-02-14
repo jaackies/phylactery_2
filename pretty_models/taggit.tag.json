@@ -1,0 +1,5970 @@
+[
+  {
+    "model": "taggit.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Item: Dungeons & Dragons 5th Edition Player's Handbook",
+      "slug": "item-dungeons-dragons-5th-edition-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Item: Junk Art",
+      "slug": "item-junk-art"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Simple",
+      "slug": "simple"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 5,
+    "fields": {
+      "name": "Item: Great Western Trail",
+      "slug": "item-great-western-trail"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 6,
+    "fields": {
+      "name": "Item: Tokyo Highway",
+      "slug": "item-tokyo-highway"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 7,
+    "fields": {
+      "name": "Steady Hands",
+      "slug": "steady-hands"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 8,
+    "fields": {
+      "name": "Network Building",
+      "slug": "network-building"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 9,
+    "fields": {
+      "name": "Objectives Race",
+      "slug": "objectives-race"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 10,
+    "fields": {
+      "name": "Item: Secret Hitler",
+      "slug": "item-secret-hitler"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 12,
+    "fields": {
+      "name": "No Rotation; Unrestricted",
+      "slug": "no-rotation-unrestricted"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 13,
+    "fields": {
+      "name": "No Rotation; Localised",
+      "slug": "no-rotation-localised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 14,
+    "fields": {
+      "name": "No Rotation; Card Driven",
+      "slug": "no-rotation-card-driven"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 15,
+    "fields": {
+      "name": "With Rotation; Unrestricted",
+      "slug": "rotation-unrestricted"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 16,
+    "fields": {
+      "name": "With Rotation; Localised",
+      "slug": "rotation-localised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 17,
+    "fields": {
+      "name": "With Rotation; Card-Driven",
+      "slug": "rotation-card-driven"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 18,
+    "fields": {
+      "name": "Spatial Placement",
+      "slug": "spatial-placement"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 19,
+    "fields": {
+      "name": "Item: Photosynthesis",
+      "slug": "item-photosynthesis"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 20,
+    "fields": {
+      "name": "Worker Placement",
+      "slug": "worker-placement"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 21,
+    "fields": {
+      "name": "Efficiency Engine",
+      "slug": "efficiency-engine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 22,
+    "fields": {
+      "name": "Competitive",
+      "slug": "competitive"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 23,
+    "fields": {
+      "name": "Cooperative",
+      "slug": "cooperative"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 24,
+    "fields": {
+      "name": "Coordinative",
+      "slug": "coordinative"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 25,
+    "fields": {
+      "name": "Semi-Cooperative",
+      "slug": "semi-cooperative"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 26,
+    "fields": {
+      "name": "Teams/Partnerships",
+      "slug": "teamspartnerships"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 27,
+    "fields": {
+      "name": "2v2",
+      "slug": "2v2"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 28,
+    "fields": {
+      "name": "Hidden Loyalties",
+      "slug": "hidden-loyalties"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 29,
+    "fields": {
+      "name": "Social Deduction",
+      "slug": "social-deduction"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 30,
+    "fields": {
+      "name": "Voting",
+      "slug": "voting"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 31,
+    "fields": {
+      "name": "Area Influence (Abstract)",
+      "slug": "area-influence-abstract"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 32,
+    "fields": {
+      "name": "Item: Salem 1692",
+      "slug": "item-salem-1692"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 33,
+    "fields": {
+      "name": "Binary Choice",
+      "slug": "binary-choice"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 34,
+    "fields": {
+      "name": "Item: Tortuga 1667",
+      "slug": "item-tortuga-1667"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 35,
+    "fields": {
+      "name": "Multi-Choice Cards",
+      "slug": "multi-choice-cards"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 36,
+    "fields": {
+      "name": "Advance Warning",
+      "slug": "advance-warning"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 37,
+    "fields": {
+      "name": "Spatial Movement (Single)",
+      "slug": "spatial-movement-single"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 38,
+    "fields": {
+      "name": "Area Majority",
+      "slug": "area-majority"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 39,
+    "fields": {
+      "name": "Item: Ticket to Ride: Europe",
+      "slug": "item-ticket-to-ride-europe"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 40,
+    "fields": {
+      "name": "Connection",
+      "slug": "connection"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 41,
+    "fields": {
+      "name": "Secret Objectives",
+      "slug": "secret-objectives"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 42,
+    "fields": {
+      "name": "Melding",
+      "slug": "melding"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 43,
+    "fields": {
+      "name": "Item: Dead of Winter: A Crossroads Game",
+      "slug": "item-dead-of-winter-a-crossroads-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 44,
+    "fields": {
+      "name": "Item: Deadwood: 1876",
+      "slug": "item-deadwood-1876"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 45,
+    "fields": {
+      "name": "Duel/Comparison",
+      "slug": "duelcomparison"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 47,
+    "fields": {
+      "name": "Item: Evolution: Climate",
+      "slug": "item-evolution-climate"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 48,
+    "fields": {
+      "name": "Item: Spirit Island",
+      "slug": "item-spirit-island"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 49,
+    "fields": {
+      "name": "Simultaneous Action Selection",
+      "slug": "simultaneous-action-selection"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 50,
+    "fields": {
+      "name": "Once-Around Auction",
+      "slug": "once-around-auction"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 51,
+    "fields": {
+      "name": "Tile Drafting",
+      "slug": "tile-drafting"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 52,
+    "fields": {
+      "name": "Item: Sheriff of Nottingham",
+      "slug": "item-sheriff-of-nottingham"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 53,
+    "fields": {
+      "name": "Item: Coup: Rebellion G54",
+      "slug": "item-coup-rebellion-g54"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 54,
+    "fields": {
+      "name": "Item: Catan",
+      "slug": "item-catan"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 55,
+    "fields": {
+      "name": "Item: One Night Ultimate Werewolf: Daybreak",
+      "slug": "item-one-night-ultimate-werewolf-daybreak"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 56,
+    "fields": {
+      "name": "Deal-Making Phase",
+      "slug": "deal-making-phase"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 57,
+    "fields": {
+      "name": "Item: One Night Ultimate Werewolf",
+      "slug": "item-one-night-ultimate-werewolf"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 58,
+    "fields": {
+      "name": "Item: Carcassonne",
+      "slug": "item-carcassonne"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 59,
+    "fields": {
+      "name": "Tile-Laying",
+      "slug": "tile-laying"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 60,
+    "fields": {
+      "name": "Item: Takenoko",
+      "slug": "item-takenoko"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 61,
+    "fields": {
+      "name": "Item: Call to Adventure",
+      "slug": "item-call-to-adventure"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 62,
+    "fields": {
+      "name": "Item: A Game of Thrones: The Board Game (Second Edition)",
+      "slug": "item-a-game-of-thrones-the-board-game-second-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 63,
+    "fields": {
+      "name": "Item: The Red Dragon Inn",
+      "slug": "item-the-red-dragon-inn"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 64,
+    "fields": {
+      "name": "Item: 5-Minute Dungeon",
+      "slug": "item-5-minute-dungeon"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 65,
+    "fields": {
+      "name": "Item: Pandemic",
+      "slug": "item-pandemic"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 66,
+    "fields": {
+      "name": "Item: Agricola",
+      "slug": "item-agricola"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 67,
+    "fields": {
+      "name": "Action Choice Drafting",
+      "slug": "action-choice-drafting"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 68,
+    "fields": {
+      "name": "Upkeep",
+      "slug": "upkeep"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 69,
+    "fields": {
+      "name": "Item: Galaxy Trucker",
+      "slug": "item-galaxy-trucker"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 70,
+    "fields": {
+      "name": "Puzzle Mat",
+      "slug": "puzzle-mat"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 71,
+    "fields": {
+      "name": "Item: Hive Pocket",
+      "slug": "item-hive-pocket"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 72,
+    "fields": {
+      "name": "Spatial Movement (Choice)",
+      "slug": "spatial-movement-choice"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 73,
+    "fields": {
+      "name": "Capture",
+      "slug": "capture"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 74,
+    "fields": {
+      "name": "Item: Bananagrams",
+      "slug": "item-bananagrams"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 75,
+    "fields": {
+      "name": "Creative",
+      "slug": "creative"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 76,
+    "fields": {
+      "name": "Item: Uno",
+      "slug": "item-uno"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 77,
+    "fields": {
+      "name": "Shedding",
+      "slug": "shedding"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 78,
+    "fields": {
+      "name": "Attribute Matching (Cards)",
+      "slug": "attribute-matching-cards"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 79,
+    "fields": {
+      "name": "Item: Banishment",
+      "slug": "item-banishment"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 80,
+    "fields": {
+      "name": "Item: Star Fluxx",
+      "slug": "item-star-fluxx"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 81,
+    "fields": {
+      "name": "Item: Cthulhu Fluxx",
+      "slug": "item-cthulhu-fluxx"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 82,
+    "fields": {
+      "name": "Item: Love Letter",
+      "slug": "item-love-letter"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 83,
+    "fields": {
+      "name": "Deduction (Elimination)",
+      "slug": "deduction-elimination"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 84,
+    "fields": {
+      "name": "Item: The Mind",
+      "slug": "item-the-mind"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 85,
+    "fields": {
+      "name": "Variable Turn Order",
+      "slug": "variable-turn-order"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 87,
+    "fields": {
+      "name": "Climbing",
+      "slug": "climbing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 88,
+    "fields": {
+      "name": "Item: Hanabi",
+      "slug": "item-hanabi"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 89,
+    "fields": {
+      "name": "Automatic Hand Refill",
+      "slug": "automatic-hand-refill"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 90,
+    "fields": {
+      "name": "Trivia",
+      "slug": "trivia"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 91,
+    "fields": {
+      "name": "Trivia/Word",
+      "slug": "triviaword"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 92,
+    "fields": {
+      "name": "Item: Mascarade",
+      "slug": "item-mascarade"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 93,
+    "fields": {
+      "name": "Item: Ultimate Werewolf",
+      "slug": "item-ultimate-werewolf"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 94,
+    "fields": {
+      "name": "Deduction (Signaling)",
+      "slug": "deduction-signaling"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 95,
+    "fields": {
+      "name": "Item: Gloom",
+      "slug": "item-gloom"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 96,
+    "fields": {
+      "name": "Item: Tiny Epic Galaxies",
+      "slug": "item-tiny-epic-galaxies"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 97,
+    "fields": {
+      "name": "Card Drafting",
+      "slug": "card-drafting"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 98,
+    "fields": {
+      "name": "Item: Saboteur",
+      "slug": "item-saboteur"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 99,
+    "fields": {
+      "name": "Item: Space Hulk: Death Angel \u2013 The Card Game",
+      "slug": "item-space-hulk-death-angel-the-card-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 100,
+    "fields": {
+      "name": "Item: Cards Against Humanity: First Expansion",
+      "slug": "item-cards-against-humanity-first-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 101,
+    "fields": {
+      "name": "Item: Cards Against Humanity: Second Expansion",
+      "slug": "item-cards-against-humanity-second-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 102,
+    "fields": {
+      "name": "Item: Cards Against Humanity: Third Expansion",
+      "slug": "item-cards-against-humanity-third-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 103,
+    "fields": {
+      "name": "Item: Cockroach Poker Royal",
+      "slug": "item-cockroach-poker-royal"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 104,
+    "fields": {
+      "name": "Item: Standard Playing Cards (Game of Thrones-themed)",
+      "slug": "item-standard-playing-cards-game-of-thrones-themed"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 105,
+    "fields": {
+      "name": "Item: Mille Bornes",
+      "slug": "item-mille-bornes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 106,
+    "fields": {
+      "name": "Item: Harbour",
+      "slug": "item-harbour"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 107,
+    "fields": {
+      "name": "Item: Back to the Future: The Card Game",
+      "slug": "item-back-to-the-future-the-card-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 108,
+    "fields": {
+      "name": "Item: Wizard",
+      "slug": "item-wizard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 109,
+    "fields": {
+      "name": "Item: Dungeon Mayhem",
+      "slug": "item-dungeon-mayhem"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 110,
+    "fields": {
+      "name": "Item: Blood Wars",
+      "slug": "item-blood-wars"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 111,
+    "fields": {
+      "name": "Item: Azul",
+      "slug": "item-azul"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 112,
+    "fields": {
+      "name": "Item: Wingspan",
+      "slug": "item-wingspan"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 113,
+    "fields": {
+      "name": "Item: Provincia Romana",
+      "slug": "item-provincia-romana"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 114,
+    "fields": {
+      "name": "Item: Roll for the Galaxy",
+      "slug": "item-roll-for-the-galaxy"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 115,
+    "fields": {
+      "name": "Item: Blood Bound",
+      "slug": "item-blood-bound"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 117,
+    "fields": {
+      "name": "Item: Love Letter Premium",
+      "slug": "item-love-letter-premium"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 118,
+    "fields": {
+      "name": "Item: Dicey Peaks",
+      "slug": "item-dicey-peaks"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 119,
+    "fields": {
+      "name": "Item: Tsuro",
+      "slug": "item-tsuro"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 120,
+    "fields": {
+      "name": "Item: Tsuro of the Seas",
+      "slug": "item-tsuro-of-the-seas"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 121,
+    "fields": {
+      "name": "Item: The Seafarers of Catan & Cities & Knights",
+      "slug": "item-the-seafarers-of-catan-cities-knights"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 122,
+    "fields": {
+      "name": "Item: Ta Y\u00fc",
+      "slug": "item-ta-yu"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 123,
+    "fields": {
+      "name": "Item: Sushi Go!",
+      "slug": "item-sushi-go"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 124,
+    "fields": {
+      "name": "Item: Exploding Kittens",
+      "slug": "item-exploding-kittens"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 125,
+    "fields": {
+      "name": "Item: Coup",
+      "slug": "item-coup"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 126,
+    "fields": {
+      "name": "Item: The Crew: The Quest for Planet Nine",
+      "slug": "item-the-crew-the-quest-for-planet-nine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 127,
+    "fields": {
+      "name": "Trick Taking",
+      "slug": "trick-taking"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 128,
+    "fields": {
+      "name": "Item: Boss Monster: The Dungeon Building Card Game",
+      "slug": "item-boss-monster-the-dungeon-building-card-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 129,
+    "fields": {
+      "name": "Item: The Resistance",
+      "slug": "item-the-resistance"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 130,
+    "fields": {
+      "name": "Item: Not Alone",
+      "slug": "item-not-alone"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 131,
+    "fields": {
+      "name": "Item: Aye, Dark Overlord! The Red Box",
+      "slug": "item-aye-dark-overlord-the-red-box"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 132,
+    "fields": {
+      "name": "Item: Citadels",
+      "slug": "item-citadels"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 133,
+    "fields": {
+      "name": "Item: Punderdome: A Card Game for Pun Lovers",
+      "slug": "item-punderdome-a-card-game-for-pun-lovers"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 134,
+    "fields": {
+      "name": "Item: Dominion: Base Cards",
+      "slug": "item-dominion-base-cards"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 135,
+    "fields": {
+      "name": "Developmental Action",
+      "slug": "developmental-action"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 136,
+    "fields": {
+      "name": "Item: Joking Hazard",
+      "slug": "item-joking-hazard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 137,
+    "fields": {
+      "name": "Item: Colt Express",
+      "slug": "item-colt-express"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 138,
+    "fields": {
+      "name": "Simultaneous Orders",
+      "slug": "simultaneous-orders"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 139,
+    "fields": {
+      "name": "Item: Dominion",
+      "slug": "item-dominion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 140,
+    "fields": {
+      "name": "Item: Dominion: Intrigue",
+      "slug": "item-dominion-intrigue"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 141,
+    "fields": {
+      "name": "Item: Dominion: Seaside",
+      "slug": "item-dominion-seaside"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 142,
+    "fields": {
+      "name": "Item: Dominion: Dark Ages",
+      "slug": "item-dominion-dark-ages"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 143,
+    "fields": {
+      "name": "Item: Dominion: Adventures",
+      "slug": "item-dominion-adventures"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 144,
+    "fields": {
+      "name": "Item: Dominion: Empires",
+      "slug": "item-dominion-empires"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 145,
+    "fields": {
+      "name": "Item: Monopoly",
+      "slug": "item-monopoly"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 146,
+    "fields": {
+      "name": "Negotiation (Trading)",
+      "slug": "negotiation-trading"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 147,
+    "fields": {
+      "name": "Movement/Action Dice",
+      "slug": "movementaction-dice"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 148,
+    "fields": {
+      "name": "Item: Eclipse",
+      "slug": "item-eclipse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 149,
+    "fields": {
+      "name": "Item: Stratego",
+      "slug": "item-stratego"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 150,
+    "fields": {
+      "name": "Customizable Deployment",
+      "slug": "customizable-deployment"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 151,
+    "fields": {
+      "name": "Item: Flames of War: Open Fire!",
+      "slug": "item-flames-of-war-open-fire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 152,
+    "fields": {
+      "name": "Item: Dixit",
+      "slug": "item-dixit"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 153,
+    "fields": {
+      "name": "Guessing",
+      "slug": "guessing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 154,
+    "fields": {
+      "name": "Psychological",
+      "slug": "psychological"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 155,
+    "fields": {
+      "name": "Item: 7 Wonders",
+      "slug": "item-7-wonders"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 156,
+    "fields": {
+      "name": "Item: Tokaido",
+      "slug": "item-tokaido"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 157,
+    "fields": {
+      "name": "Item: Mysterium",
+      "slug": "item-mysterium"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 158,
+    "fields": {
+      "name": "Dexterity",
+      "slug": "dexterity"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 159,
+    "fields": {
+      "name": "Item: Magic Maze",
+      "slug": "item-magic-maze"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 160,
+    "fields": {
+      "name": "Item: Forbidden Desert",
+      "slug": "item-forbidden-desert"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 161,
+    "fields": {
+      "name": "Item: Munchkin",
+      "slug": "item-munchkin"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 162,
+    "fields": {
+      "name": "Item: Splendor",
+      "slug": "item-splendor"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 163,
+    "fields": {
+      "name": "Item: Splendor: Cities of Splendor",
+      "slug": "item-splendor-cities-of-splendor"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 164,
+    "fields": {
+      "name": "Item: COGZ",
+      "slug": "item-cogz"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 165,
+    "fields": {
+      "name": "Item: Go Cuckoo!",
+      "slug": "item-go-cuckoo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 166,
+    "fields": {
+      "name": "Item: Classic Games Tumblin' Tower",
+      "slug": "item-classic-games-tumblin-tower"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 167,
+    "fields": {
+      "name": "Item: Chess",
+      "slug": "item-chess"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 168,
+    "fields": {
+      "name": "Item: Battle for Rokugan",
+      "slug": "item-battle-for-rokugan"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 169,
+    "fields": {
+      "name": "Item: Hamsterrolle",
+      "slug": "item-hamsterrolle"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 170,
+    "fields": {
+      "name": "Item: Bamboleo",
+      "slug": "item-bamboleo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 171,
+    "fields": {
+      "name": "Item: Fog of Love",
+      "slug": "item-fog-of-love"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 172,
+    "fields": {
+      "name": "Item: Deception: Murder in Hong Kong",
+      "slug": "item-deception-murder-in-hong-kong"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 173,
+    "fields": {
+      "name": "Item: Rush Hour",
+      "slug": "item-rush-hour"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 174,
+    "fields": {
+      "name": "Featured",
+      "slug": "featured"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 175,
+    "fields": {
+      "name": "Item: Ca$h 'n Guns (Second Edition)",
+      "slug": "item-cah-n-guns-second-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 176,
+    "fields": {
+      "name": "Item: Five Tribes",
+      "slug": "item-five-tribes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 177,
+    "fields": {
+      "name": "Item: Betrayal at House on the Hill",
+      "slug": "item-betrayal-at-house-on-the-hill"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 178,
+    "fields": {
+      "name": "Character Development (Adventure)",
+      "slug": "character-development-adventure"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 179,
+    "fields": {
+      "name": "Encounter",
+      "slug": "encounter"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 180,
+    "fields": {
+      "name": "Item: Betrayal at Baldur's Gate",
+      "slug": "item-betrayal-at-baldurs-gate"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 181,
+    "fields": {
+      "name": "Item: Arkham Horror",
+      "slug": "item-arkham-horror"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 182,
+    "fields": {
+      "name": "Item: King of New York",
+      "slug": "item-king-of-new-york"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 183,
+    "fields": {
+      "name": "Item: Cosmic Encounter",
+      "slug": "item-cosmic-encounter"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 184,
+    "fields": {
+      "name": "Negotiation (Diplomacy)",
+      "slug": "negotiation-diplomacy"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 185,
+    "fields": {
+      "name": "Item: Kodama: The Tree Spirits",
+      "slug": "item-kodama-the-tree-spirits"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 186,
+    "fields": {
+      "name": "Item: Codenames",
+      "slug": "item-codenames"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 187,
+    "fields": {
+      "name": "Item: What Do You Meme?",
+      "slug": "item-what-do-you-meme"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 188,
+    "fields": {
+      "name": "Item: Epic Spell Wars of the Battle Wizards: Duel at Mt. Skullzfyre",
+      "slug": "item-epic-spell-wars-of-the-battle-wizards-duel-at-mt-skullzfyre"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 189,
+    "fields": {
+      "name": "Item: Epic Spell Wars of the Battle Wizards: Rumble at Castle Tentakill",
+      "slug": "item-epic-spell-wars-of-the-battle-wizards-rumble-at-castle-tentakill"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 190,
+    "fields": {
+      "name": "Item: Talisman",
+      "slug": "item-talisman"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 191,
+    "fields": {
+      "name": "Item: Cards Against Humanity",
+      "slug": "item-cards-against-humanity"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 192,
+    "fields": {
+      "name": "Item: XCOM: The Board Game",
+      "slug": "item-xcom-the-board-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 193,
+    "fields": {
+      "name": "Item: Terraforming Mars",
+      "slug": "item-terraforming-mars"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 194,
+    "fields": {
+      "name": "Item: Wiz-War",
+      "slug": "item-wiz-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 195,
+    "fields": {
+      "name": "Item: Small World",
+      "slug": "item-small-world"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 196,
+    "fields": {
+      "name": "Item: Lords of Waterdeep",
+      "slug": "item-lords-of-waterdeep"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 197,
+    "fields": {
+      "name": "Item: Automobiles",
+      "slug": "item-automobiles"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 198,
+    "fields": {
+      "name": "Item: Scythe",
+      "slug": "item-scythe"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 199,
+    "fields": {
+      "name": "Item: Tactics II",
+      "slug": "item-tactics-ii"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 200,
+    "fields": {
+      "name": "Item: Necromunda: Underhive",
+      "slug": "item-necromunda-underhive"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 201,
+    "fields": {
+      "name": "Item: Dreadfleet",
+      "slug": "item-dreadfleet"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 202,
+    "fields": {
+      "name": "Item: Ikusa",
+      "slug": "item-ikusa"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 203,
+    "fields": {
+      "name": "Item: Smash Up",
+      "slug": "item-smash-up"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 204,
+    "fields": {
+      "name": "Item: Chaos in the Old World",
+      "slug": "item-chaos-in-the-old-world"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 205,
+    "fields": {
+      "name": "Item: Mansions of Madness",
+      "slug": "item-mansions-of-madness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 206,
+    "fields": {
+      "name": "Item: A Game of Thrones: The Board Game",
+      "slug": "item-a-game-of-thrones-the-board-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 207,
+    "fields": {
+      "name": "Item: Car Wars Deluxe Edition",
+      "slug": "item-car-wars-deluxe-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 208,
+    "fields": {
+      "name": "Item: Cityfight: Modern Combat in the Urban Environment",
+      "slug": "item-cityfight-modern-combat-in-the-urban-environment"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 209,
+    "fields": {
+      "name": "Item: Imperium: Empires in Conflict \u2013 Worlds in the Balance",
+      "slug": "item-imperium-empires-in-conflict-worlds-in-the-balance"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 210,
+    "fields": {
+      "name": "Item: Gallipoli: The Dardanelles Campaign, 1915",
+      "slug": "item-gallipoli-the-dardanelles-campaign-1915"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 211,
+    "fields": {
+      "name": "Wargames",
+      "slug": "wargames"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 212,
+    "fields": {
+      "name": "Item: Diplomacy",
+      "slug": "item-diplomacy"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 213,
+    "fields": {
+      "name": "Item: Axis & Allies",
+      "slug": "item-axis-allies"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 214,
+    "fields": {
+      "name": "Item: Risk: The Lord of the Rings",
+      "slug": "item-risk-the-lord-of-the-rings"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 215,
+    "fields": {
+      "name": "Item: HeroQuest",
+      "slug": "item-heroquest"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 216,
+    "fields": {
+      "name": "Item: Man O' War",
+      "slug": "item-man-o-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 217,
+    "fields": {
+      "name": "Item: Warhammer 40,000",
+      "slug": "item-warhammer-40000"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 218,
+    "fields": {
+      "name": "Area Influence (War)",
+      "slug": "area-influence-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 219,
+    "fields": {
+      "name": "Item: The Noble Game of Go",
+      "slug": "item-the-noble-game-of-go"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 220,
+    "fields": {
+      "name": "Item: Barbarian Kings",
+      "slug": "item-barbarian-kings"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 221,
+    "fields": {
+      "name": "Item: Fifth Frontier War",
+      "slug": "item-fifth-frontier-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 222,
+    "fields": {
+      "name": "Item: Belter: Mining the Asteroids, 2076",
+      "slug": "item-belter-mining-the-asteroids-2076"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 223,
+    "fields": {
+      "name": "Item: Kill Doctor Lucky",
+      "slug": "item-kill-doctor-lucky"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 224,
+    "fields": {
+      "name": "Item: The Guns of August",
+      "slug": "item-the-guns-of-august"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 225,
+    "fields": {
+      "name": "Supply and Demand",
+      "slug": "supply-and-demand"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 226,
+    "fields": {
+      "name": "Discard Pool",
+      "slug": "discard-pool"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 227,
+    "fields": {
+      "name": "Item: Ca$h 'n Guns",
+      "slug": "item-cah-n-guns"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 228,
+    "fields": {
+      "name": "Risk Valuation",
+      "slug": "risk-valuation"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 229,
+    "fields": {
+      "name": "Proposal/Judging",
+      "slug": "proposaljudging"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 230,
+    "fields": {
+      "name": "Item: Victory in the Pacific",
+      "slug": "item-victory-in-the-pacific"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 231,
+    "fields": {
+      "name": "Item: The Succession Wars",
+      "slug": "item-the-succession-wars"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 232,
+    "fields": {
+      "name": "Item: Amoeba Wars",
+      "slug": "item-amoeba-wars"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 233,
+    "fields": {
+      "name": "Item: Starship Troopers",
+      "slug": "item-starship-troopers"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 234,
+    "fields": {
+      "name": "Item: Babylon 5 Wars",
+      "slug": "item-babylon-5-wars"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 235,
+    "fields": {
+      "name": "Item: Feudal",
+      "slug": "item-feudal"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 236,
+    "fields": {
+      "name": "Item: Titan",
+      "slug": "item-titan"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 237,
+    "fields": {
+      "name": "Item: Panzer Leader: Game of Tactical Warfare on the Western Front",
+      "slug": "item-panzer-leader-game-of-tactical-warfare-on-the-western-front"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 238,
+    "fields": {
+      "name": "Item: Star Wars: Imperial Assault",
+      "slug": "item-star-wars-imperial-assault"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 239,
+    "fields": {
+      "name": "Item: Star Wars: Rebellion",
+      "slug": "item-star-wars-rebellion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 240,
+    "fields": {
+      "name": "Deck Stacking",
+      "slug": "deck-stacking"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 241,
+    "fields": {
+      "name": "Forced Move",
+      "slug": "forced-move"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 242,
+    "fields": {
+      "name": "Deduction (Cat/Mouse)",
+      "slug": "deduction-catmouse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 243,
+    "fields": {
+      "name": "Steering",
+      "slug": "steering"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 244,
+    "fields": {
+      "name": "Item: Obscurio",
+      "slug": "item-obscurio"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 245,
+    "fields": {
+      "name": "Item: Oceans",
+      "slug": "item-oceans"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 246,
+    "fields": {
+      "name": "Item: A Game of Thrones - Mother of Dragons Expansion",
+      "slug": "item-a-game-of-thrones-mother-of-dragons-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 247,
+    "fields": {
+      "name": "Item: Bristol 1350",
+      "slug": "item-bristol-1350"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 248,
+    "fields": {
+      "name": "Item: Between Two Cities",
+      "slug": "item-between-two-cities"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 249,
+    "fields": {
+      "name": "Item: A Game of Thrones - Mother of Dragons",
+      "slug": "item-a-game-of-thrones-mother-of-dragons"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 250,
+    "fields": {
+      "name": "Item: Cascadia",
+      "slug": "item-cascadia"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 251,
+    "fields": {
+      "name": "Item: Root",
+      "slug": "item-root"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 252,
+    "fields": {
+      "name": "Item: Here to Slay",
+      "slug": "item-here-to-slay"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 253,
+    "fields": {
+      "name": "Item: Dungeon Mayhem: Battle for Baldur's Gate",
+      "slug": "item-dungeon-mayhem-battle-for-baldurs-gate"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 254,
+    "fields": {
+      "name": "Item: Terraforming Mars: Turmoil",
+      "slug": "item-terraforming-mars-turmoil"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 255,
+    "fields": {
+      "name": "Item: Terraforming Mars: Prelude",
+      "slug": "item-terraforming-mars-prelude"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 256,
+    "fields": {
+      "name": "Item: Dungeon Mayhem: Monster Madness",
+      "slug": "item-dungeon-mayhem-monster-madness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 257,
+    "fields": {
+      "name": "Item: Root: The Riverfolk Expansion",
+      "slug": "item-root-the-riverfolk-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 258,
+    "fields": {
+      "name": "Item: 6 nimmt!",
+      "slug": "item-6-nimmt"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 259,
+    "fields": {
+      "name": "Item: Dune",
+      "slug": "item-dune"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 260,
+    "fields": {
+      "name": "Item: Inis",
+      "slug": "item-inis"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 261,
+    "fields": {
+      "name": "Item: Dead Men Tell No Tales",
+      "slug": "item-dead-men-tell-no-tales"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 262,
+    "fields": {
+      "name": "Item: Player's Handbook",
+      "slug": "item-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 263,
+    "fields": {
+      "name": "Dice: d20",
+      "slug": "dice-d20"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 264,
+    "fields": {
+      "name": "Dungeons & Dragons",
+      "slug": "dungeons-dragons"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 267,
+    "fields": {
+      "name": "Item: D&D Player\u2019s Handbook",
+      "slug": "item-dd-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 268,
+    "fields": {
+      "name": "Dungeons & Dragons: 5th Edition",
+      "slug": "dungeons-dragons-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 269,
+    "fields": {
+      "name": "Item: D&D 5e Player\u2019s Handbook",
+      "slug": "item-dd-5e-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 270,
+    "fields": {
+      "name": "Item: D&D 5e Monster Manual",
+      "slug": "item-dd-5e-monster-manual"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 271,
+    "fields": {
+      "name": "Item: D&D 5e Dungeon Master's Guide",
+      "slug": "item-dd-5e-dungeon-masters-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 272,
+    "fields": {
+      "name": "Item: Volo's Guide to Monsters",
+      "slug": "item-volos-guide-to-monsters"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 273,
+    "fields": {
+      "name": "Item: Hoard of the Dragon Queen",
+      "slug": "item-hoard-of-the-dragon-queen"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 274,
+    "fields": {
+      "name": "Item: Sword Coast Adventurer's Guide",
+      "slug": "item-sword-coast-adventurers-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 275,
+    "fields": {
+      "name": "Item: Curse of Strahd",
+      "slug": "item-curse-of-strahd"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 276,
+    "fields": {
+      "name": "Item: Mordenkainen's Tome of Foes",
+      "slug": "item-mordenkainens-tome-of-foes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 277,
+    "fields": {
+      "name": "Item: Tales from the Yawning Portal",
+      "slug": "item-tales-from-the-yawning-portal"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 278,
+    "fields": {
+      "name": "Item: Storm King's Thunder",
+      "slug": "item-storm-kings-thunder"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 279,
+    "fields": {
+      "name": "Item: Tasha's Cauldron of Everything",
+      "slug": "item-tashas-cauldron-of-everything"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 280,
+    "fields": {
+      "name": "Item: Eberron: Rising from the Last War",
+      "slug": "item-eberron-rising-from-the-last-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 281,
+    "fields": {
+      "name": "Item: Icewind Dale: Rime of the Frostmaiden",
+      "slug": "item-icewind-dale-rime-of-the-frostmaiden"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 282,
+    "fields": {
+      "name": "Item: Xanathar's Guide to Everything",
+      "slug": "item-xanathars-guide-to-everything"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 283,
+    "fields": {
+      "name": "Item: Guildmasters' Guide to Ravnica",
+      "slug": "item-guildmasters-guide-to-ravnica"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 284,
+    "fields": {
+      "name": "Item: Dream of the Djinn: A Roleplaying Adventure for the Unwary",
+      "slug": "item-dream-of-the-djinn-a-roleplaying-adventure-for-the-unwary"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 285,
+    "fields": {
+      "name": "Item: D&D 4e Player's Handbook",
+      "slug": "item-dd-4e-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 286,
+    "fields": {
+      "name": "Dungeons & Dragons: 4th Edition",
+      "slug": "dungeons-dragons-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 287,
+    "fields": {
+      "name": "Item: D&D 4e Dungeon Master's Guide",
+      "slug": "item-dd-4e-dungeon-masters-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 288,
+    "fields": {
+      "name": "Item: D&D 4e Monster Manual",
+      "slug": "item-dd-4e-monster-manual"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 289,
+    "fields": {
+      "name": "Item: D&D 3.5e Player's Handbook",
+      "slug": "item-dd-35e-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 290,
+    "fields": {
+      "name": "Dungeons & Dragons: 3.5th Edition",
+      "slug": "dungeons-dragons-35th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 291,
+    "fields": {
+      "name": "Item: D&D 3.5e Dungeon Master's Guide",
+      "slug": "item-dd-35e-dungeon-masters-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 292,
+    "fields": {
+      "name": "Item: Eberron Campaign Setting",
+      "slug": "item-eberron-campaign-setting"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 293,
+    "fields": {
+      "name": "Item: Frostburn",
+      "slug": "item-frostburn"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 294,
+    "fields": {
+      "name": "Dungeons & Dragons: 3rd Edition",
+      "slug": "dungeons-dragons-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 295,
+    "fields": {
+      "name": "Item: D&D 3e Player's Handbook",
+      "slug": "item-dd-3e-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 296,
+    "fields": {
+      "name": "Item: D&D 3e  Dungeon Master's Guide",
+      "slug": "item-dd-3e-dungeon-masters-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 297,
+    "fields": {
+      "name": "Item: D&D 3e Monster Manual",
+      "slug": "item-dd-3e-monster-manual"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 298,
+    "fields": {
+      "name": "Item: Manual of the Planes",
+      "slug": "item-manual-of-the-planes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 299,
+    "fields": {
+      "name": "Item: Psionics Handbook",
+      "slug": "item-psionics-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 300,
+    "fields": {
+      "name": "Item: AD&D 1e Dungeon Masters Guide",
+      "slug": "item-add-1e-dungeon-masters-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 301,
+    "fields": {
+      "name": "Dungeons & Dragons: AD&D 1st Edition",
+      "slug": "dungeons-dragons-add-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 302,
+    "fields": {
+      "name": "Item: Forgotten Realms Adventures",
+      "slug": "item-forgotten-realms-adventures"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 303,
+    "fields": {
+      "name": "Dungeons & Dragons: AD&D 2nd Edition",
+      "slug": "dungeons-dragons-add-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 304,
+    "fields": {
+      "name": "Item: D&D 3.5e Players Handbook II",
+      "slug": "item-dd-35e-players-handbook-ii"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 305,
+    "fields": {
+      "name": "Item: Book of Artifacts",
+      "slug": "item-book-of-artifacts"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 306,
+    "fields": {
+      "name": "Item: Tome of Magic",
+      "slug": "item-tome-of-magic"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 307,
+    "fields": {
+      "name": "Item: AD&D 2e Player's Handbook",
+      "slug": "item-add-2e-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 308,
+    "fields": {
+      "name": "Item: AD&D 2e Dungeon Master Guide",
+      "slug": "item-add-2e-dungeon-master-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 309,
+    "fields": {
+      "name": "Item: Spells & Magic",
+      "slug": "item-spells-magic"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 310,
+    "fields": {
+      "name": "Item: AD&D 2e Dungeon Masters Guide Revised",
+      "slug": "item-add-2e-dungeon-masters-guide-revised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 311,
+    "fields": {
+      "name": "Item: AD&D 2e Dungeon Master Guide Revised",
+      "slug": "item-add-2e-dungeon-master-guide-revised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 312,
+    "fields": {
+      "name": "Item: Monstrous Manual",
+      "slug": "item-monstrous-manual"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 313,
+    "fields": {
+      "name": "Item: Skills & Powers",
+      "slug": "item-skills-powers"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 314,
+    "fields": {
+      "name": "Item: The Complete Book of Dwarves",
+      "slug": "item-the-complete-book-of-dwarves"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 315,
+    "fields": {
+      "name": "Item: The Complete Priest's Handbook",
+      "slug": "item-the-complete-priests-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 316,
+    "fields": {
+      "name": "Item: The Complete Wizard's Handbook",
+      "slug": "item-the-complete-wizards-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 317,
+    "fields": {
+      "name": "Item: The Complete Thief's Handbook",
+      "slug": "item-the-complete-thiefs-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 318,
+    "fields": {
+      "name": "Item: The Complete Fighter's Handbook",
+      "slug": "item-the-complete-fighters-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 319,
+    "fields": {
+      "name": "Item: Hero Builder's Guidebook",
+      "slug": "item-hero-builders-guidebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 320,
+    "fields": {
+      "name": "Item: Dark Sun: The Wanderer's Journal",
+      "slug": "item-dark-sun-the-wanderers-journal"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 321,
+    "fields": {
+      "name": "Item: Dark Sun: Rules Book",
+      "slug": "item-dark-sun-rules-book"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 322,
+    "fields": {
+      "name": "Item: The Quintessential Cleric",
+      "slug": "item-the-quintessential-cleric"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 323,
+    "fields": {
+      "name": "System: d20 System",
+      "slug": "System-d20-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 324,
+    "fields": {
+      "name": "Item: The Quintessential Wizard",
+      "slug": "item-the-quintessential-wizard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 325,
+    "fields": {
+      "name": "Item: A Song of Ice and Fire Roleplaying: A Game of Thrones Edition",
+      "slug": "item-a-song-of-ice-and-fire-roleplaying-a-game-of-thrones-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 326,
+    "fields": {
+      "name": "Dice: d6 pool",
+      "slug": "dice-d6-pool"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 327,
+    "fields": {
+      "name": "A Song of Ice and Fire Roleplaying",
+      "slug": "a-song-of-ice-and-fire-roleplaying"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 328,
+    "fields": {
+      "name": "Item: Night's Watch",
+      "slug": "item-nights-watch"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 329,
+    "fields": {
+      "name": "Item: A Song of Ice and Fire Campaign Guide",
+      "slug": "item-a-song-of-ice-and-fire-campaign-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 330,
+    "fields": {
+      "name": "Item: Feng Shui",
+      "slug": "item-feng-shui"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 331,
+    "fields": {
+      "name": "Dice: d6",
+      "slug": "dice-d6"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 332,
+    "fields": {
+      "name": "Feng Shui",
+      "slug": "feng-shui"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 333,
+    "fields": {
+      "name": "Item: The Tingleverse: The Official Chuck Tingle Role-Playing Game",
+      "slug": "item-the-tingleverse-the-official-chuck-tingle-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 334,
+    "fields": {
+      "name": "The Tingleverse",
+      "slug": "the-tingleverse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 335,
+    "fields": {
+      "name": "Item: Houses of the Blooded",
+      "slug": "item-houses-of-the-blooded"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 336,
+    "fields": {
+      "name": "Item: The Zantabulous Zorcerer of Zo",
+      "slug": "item-the-zantabulous-zorcerer-of-zo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 337,
+    "fields": {
+      "name": "System: PDQ",
+      "slug": "system-pdq"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 338,
+    "fields": {
+      "name": "Item: Zorcerer of Zo",
+      "slug": "item-zorcerer-of-zo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 339,
+    "fields": {
+      "name": "Item: Hero Kids",
+      "slug": "item-hero-kids"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 340,
+    "fields": {
+      "name": "Item: Allansia",
+      "slug": "item-allansia"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 341,
+    "fields": {
+      "name": "Advanced Fighting Fantasy",
+      "slug": "advanced-fighting-fantasy"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 342,
+    "fields": {
+      "name": "Item: Blacksand!",
+      "slug": "item-blacksand"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 343,
+    "fields": {
+      "name": "Item: Dungeoneer",
+      "slug": "item-dungeoneer"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 344,
+    "fields": {
+      "name": "Item: Mistborn Adventure game: Alloy of law",
+      "slug": "item-mistborn-adventure-game-alloy-of-law"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 345,
+    "fields": {
+      "name": "Mistborn Adventure Game",
+      "slug": "mistborn-adventure-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 346,
+    "fields": {
+      "name": "Item: Alloy  of Law",
+      "slug": "item-alloy-of-law"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 348,
+    "fields": {
+      "name": "Item: Alloy of law",
+      "slug": "item-alloy-of-law_1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 349,
+    "fields": {
+      "name": "Item: Mistborn Adventure Game",
+      "slug": "item-mistborn-adventure-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 350,
+    "fields": {
+      "name": "Item: Mouse Guard",
+      "slug": "item-mouse-guard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 351,
+    "fields": {
+      "name": "Item: Burning Empires",
+      "slug": "item-burning-empires"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 352,
+    "fields": {
+      "name": "System: Burning Wheel",
+      "slug": "system-burning-wheel"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 353,
+    "fields": {
+      "name": "Item: Burning Wheel",
+      "slug": "item-burning-wheel"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 354,
+    "fields": {
+      "name": "Item: Warhammer Fantasy Roleplay",
+      "slug": "item-warhammer-fantasy-roleplay"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 356,
+    "fields": {
+      "name": "System: Warhammer System",
+      "slug": "system-warhammer-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 357,
+    "fields": {
+      "name": "Item: Eclipse Phase",
+      "slug": "item-eclipse-phase"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 358,
+    "fields": {
+      "name": "Dice: d100",
+      "slug": "dice-d100"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 360,
+    "fields": {
+      "name": "Item: Eclipse  Phase",
+      "slug": "item-eclipse-phase_1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 361,
+    "fields": {
+      "name": "Eclipse Phase",
+      "slug": "eclipse-phase"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 362,
+    "fields": {
+      "name": "Dice: d10",
+      "slug": "dice-d10"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 363,
+    "fields": {
+      "name": "Warhammer Fantasy Roleplay: 1st Edition",
+      "slug": "warhammer-fantasy-roleplay-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 364,
+    "fields": {
+      "name": "Warhammer Fantasy Roleplay",
+      "slug": "warhammer-fantasy-roleplay"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 365,
+    "fields": {
+      "name": "Mouse Guard",
+      "slug": "mouse-guard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 366,
+    "fields": {
+      "name": "Adeptus Evangelion",
+      "slug": "adeptus-evangelion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 367,
+    "fields": {
+      "name": "Dark Heresy: 1st Edition",
+      "slug": "dark-heresy-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 368,
+    "fields": {
+      "name": "Dark Heresy: 2nd Edition",
+      "slug": "dark-heresy-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 369,
+    "fields": {
+      "name": "Deathwatch",
+      "slug": "deathwatch"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 370,
+    "fields": {
+      "name": "Only War",
+      "slug": "only-war"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 371,
+    "fields": {
+      "name": "Rogue Trader",
+      "slug": "rogue-trader"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 372,
+    "fields": {
+      "name": "Black Crusade",
+      "slug": "black-crusade"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 373,
+    "fields": {
+      "name": "Warhammer 40,000 Roleplay",
+      "slug": "warhammer-40000-roleplay"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 375,
+    "fields": {
+      "name": "Item: Alloy of Law",
+      "slug": "item-alloy-of-law_2"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 376,
+    "fields": {
+      "name": "Hero Kids",
+      "slug": "hero-kids"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 377,
+    "fields": {
+      "name": "Houses of the Blooded",
+      "slug": "houses-of-the-blooded"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 378,
+    "fields": {
+      "name": "The Zorcerer of Zo",
+      "slug": "the-zorcerer-of-zo"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 379,
+    "fields": {
+      "name": "Item: Maid: The Role-Playing Game",
+      "slug": "item-maid-the-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 380,
+    "fields": {
+      "name": "Maid: The Role-Playing Game",
+      "slug": "maid-the-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 381,
+    "fields": {
+      "name": "DAMAGED!",
+      "slug": "damaged"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 382,
+    "fields": {
+      "name": "Item: Modern AGE Basic Rulebook",
+      "slug": "item-modern-age-basic-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 383,
+    "fields": {
+      "name": "Modern AGE",
+      "slug": "modern-age"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 384,
+    "fields": {
+      "name": "Item: Torchbearer",
+      "slug": "item-torchbearer"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 385,
+    "fields": {
+      "name": "Item: Blades in the Dark",
+      "slug": "item-blades-in-the-dark"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 386,
+    "fields": {
+      "name": "Blades in the Dark",
+      "slug": "blades-in-the-dark"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 387,
+    "fields": {
+      "name": "Item: ARC: Doom Tabletop RPG",
+      "slug": "item-arc-doom-tabletop-rpg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 388,
+    "fields": {
+      "name": "ARC: Doom Tabletop RPG",
+      "slug": "arc-doom-tabletop-rpg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 389,
+    "fields": {
+      "name": "Item: Flavour Thesaurus",
+      "slug": "item-flavour-thesaurus"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 390,
+    "fields": {
+      "name": "Item: Daemon Hunter",
+      "slug": "item-daemon-hunter"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 391,
+    "fields": {
+      "name": "Item: The Inquisitor's Handbook",
+      "slug": "item-the-inquisitors-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 392,
+    "fields": {
+      "name": "Item: Dark Heresy",
+      "slug": "item-dark-heresy"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 393,
+    "fields": {
+      "name": "Item: Ascension",
+      "slug": "item-ascension"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 394,
+    "fields": {
+      "name": "Item: Rogue Trader Core Rulebook",
+      "slug": "item-rogue-trader-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 395,
+    "fields": {
+      "name": "Item: Into the Storm",
+      "slug": "item-into-the-storm"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 396,
+    "fields": {
+      "name": "Item: Only War Core Rulebook",
+      "slug": "item-only-war-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 397,
+    "fields": {
+      "name": "Item: Hammer of the Emperor",
+      "slug": "item-hammer-of-the-emperor"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 398,
+    "fields": {
+      "name": "Item: Black Crusade Core Rulebook",
+      "slug": "item-black-crusade-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 400,
+    "fields": {
+      "name": "Item: D&D 3e Dungeon Master's Guide",
+      "slug": "item-dd-3e-dungeon-masters-guide_1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 401,
+    "fields": {
+      "name": "Item: Rites of Battle",
+      "slug": "item-rites-of-battle"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 402,
+    "fields": {
+      "name": "Item: The Emperor's Chosen",
+      "slug": "item-the-emperors-chosen"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 403,
+    "fields": {
+      "name": "Item: Deathwatch",
+      "slug": "item-deathwatch"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 404,
+    "fields": {
+      "name": "Call of Cthulhu: 7th Edition",
+      "slug": "call-of-cthulhu-7th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 405,
+    "fields": {
+      "name": "Call of Cthulhu",
+      "slug": "call-of-cthulhu"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 406,
+    "fields": {
+      "name": "Call of Cthulhu: 6th Edition",
+      "slug": "call-of-cthulhu-6th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 407,
+    "fields": {
+      "name": "Legend of the Five Rings: 4th Edition",
+      "slug": "legend-of-the-five-rings-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 408,
+    "fields": {
+      "name": "Legend of the Five Rings",
+      "slug": "legend-of-the-five-rings"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 409,
+    "fields": {
+      "name": "Dice: d10 pool",
+      "slug": "dice-d10-pool"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 410,
+    "fields": {
+      "name": "Legend of the Five Rings: 5th Edition",
+      "slug": "legend-of-the-five-rings-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 411,
+    "fields": {
+      "name": "13th Age",
+      "slug": "13th-age"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 412,
+    "fields": {
+      "name": "Numenera",
+      "slug": "numenera"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 413,
+    "fields": {
+      "name": "System: Cypher System",
+      "slug": "system-cypher-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 414,
+    "fields": {
+      "name": "HERO System: 6th Edition",
+      "slug": "hero-system-6th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 415,
+    "fields": {
+      "name": "HERO",
+      "slug": "hero"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 416,
+    "fields": {
+      "name": "HERO System: 5th Edition",
+      "slug": "hero-system-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 417,
+    "fields": {
+      "name": "Item: Dark Heresy Second Edition Core Rulebook",
+      "slug": "item-dark-heresy-second-edition-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 418,
+    "fields": {
+      "name": "Item: Unknown Armies",
+      "slug": "item-unknown-armies"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 419,
+    "fields": {
+      "name": "Unknown Armies",
+      "slug": "unknown-armies"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 420,
+    "fields": {
+      "name": "Item: Rolemaster Standard Rules",
+      "slug": "item-rolemaster-standard-rules"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 421,
+    "fields": {
+      "name": "Rolemaster",
+      "slug": "rolemaster"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 422,
+    "fields": {
+      "name": "Item: Spell Law",
+      "slug": "item-spell-law"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 423,
+    "fields": {
+      "name": "System: Rolemaster Game System",
+      "slug": "system-rolemaster-game-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 424,
+    "fields": {
+      "name": "Item: Arms Law",
+      "slug": "item-arms-law"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 425,
+    "fields": {
+      "name": "System: Basic Role-Playing",
+      "slug": "system-basic-role-playing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 426,
+    "fields": {
+      "name": "Nephilim",
+      "slug": "nephilim"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 427,
+    "fields": {
+      "name": "Delta Green: The Role-Playing Game",
+      "slug": "delta-green-the-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 428,
+    "fields": {
+      "name": "Spire",
+      "slug": "spire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 429,
+    "fields": {
+      "name": "Item: Islands of the Oracle",
+      "slug": "item-islands-of-the-oracle"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 430,
+    "fields": {
+      "name": "Item: Serpent Moon",
+      "slug": "item-serpent-moon"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 431,
+    "fields": {
+      "name": "Item: Call of Cthulhu (6th Edition)",
+      "slug": "item-call-of-cthulhu-6th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 432,
+    "fields": {
+      "name": "Item: The Grand Grimoire of Cthulhu Mythos Magic",
+      "slug": "item-the-grand-grimoire-of-cthulhu-mythos-magic"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 433,
+    "fields": {
+      "name": "Item: Pulp Cthulhu",
+      "slug": "item-pulp-cthulhu"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 434,
+    "fields": {
+      "name": "Item: Malleus Monstrorum: Cthulhu Mythos Bestiary Volume I",
+      "slug": "item-malleus-monstrorum-cthulhu-mythos-bestiary-volume-i"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 435,
+    "fields": {
+      "name": "Item: Malleus Monstrorum: Cthulhu Mythos Bestiary Volume II",
+      "slug": "item-malleus-monstrorum-cthulhu-mythos-bestiary-volume-ii"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 436,
+    "fields": {
+      "name": "Item: Keeper Rulebook",
+      "slug": "item-keeper-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 437,
+    "fields": {
+      "name": "Item: Investigator Handbook",
+      "slug": "item-investigator-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 438,
+    "fields": {
+      "name": "Item: Agent's Handbook",
+      "slug": "item-agents-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 439,
+    "fields": {
+      "name": "Item: Handler's Guide",
+      "slug": "item-handlers-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 440,
+    "fields": {
+      "name": "RuneQuest: Roleplaying in Glorantha",
+      "slug": "runequest-roleplaying-in-glorantha"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 441,
+    "fields": {
+      "name": "RuneQuest",
+      "slug": "runequest"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 442,
+    "fields": {
+      "name": "Item: RuneQuest: Roleplaying in Glorantha",
+      "slug": "item-runequest-roleplaying-in-glorantha"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 443,
+    "fields": {
+      "name": "Pendragon",
+      "slug": "pendragon"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 444,
+    "fields": {
+      "name": "Item: King Arthur Pendragon",
+      "slug": "item-king-arthur-pendragon"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 445,
+    "fields": {
+      "name": "Item: The Big Book of One Page RPGs",
+      "slug": "item-the-big-book-of-one-page-rpgs"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 446,
+    "fields": {
+      "name": "Dice: misc",
+      "slug": "dice-misc"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 447,
+    "fields": {
+      "name": "Item: Necromunda Community Edition Oct 2016",
+      "slug": "item-necromunda-community-edition-oct-2016"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 448,
+    "fields": {
+      "name": "Item: Dread",
+      "slug": "item-dread"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 449,
+    "fields": {
+      "name": "Dread",
+      "slug": "dread"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 450,
+    "fields": {
+      "name": "Item: How We Came to Live Here",
+      "slug": "item-how-we-came-to-live-here"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 451,
+    "fields": {
+      "name": "Dice: dF",
+      "slug": "dice-df"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 452,
+    "fields": {
+      "name": "How We Came to Live Here",
+      "slug": "how-we-came-to-live-here"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 453,
+    "fields": {
+      "name": "Item: Fiasco",
+      "slug": "item-fiasco"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 454,
+    "fields": {
+      "name": "GM-less",
+      "slug": "gm-less"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 455,
+    "fields": {
+      "name": "Fiasco Classic",
+      "slug": "fiasco-classic"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 456,
+    "fields": {
+      "name": "System: Savage Worlds",
+      "slug": "system-savage-worlds"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 457,
+    "fields": {
+      "name": "Dice: various",
+      "slug": "dice-various"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 458,
+    "fields": {
+      "name": "Savage Worlds",
+      "slug": "savage-worlds"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 459,
+    "fields": {
+      "name": "Deadlands: Reloaded",
+      "slug": "deadlands-reloaded"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 460,
+    "fields": {
+      "name": "Item: Savage Worlds Explorer's Edition",
+      "slug": "item-savage-worlds-explorers-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 461,
+    "fields": {
+      "name": "Item: Deadlands Player's Guide",
+      "slug": "item-deadlands-players-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 462,
+    "fields": {
+      "name": "Item: Marshal's Handbook",
+      "slug": "item-marshals-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 463,
+    "fields": {
+      "name": "Item: Microscope",
+      "slug": "item-microscope"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 464,
+    "fields": {
+      "name": "Dice: diceless",
+      "slug": "dice-diceless"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 465,
+    "fields": {
+      "name": "Microscope",
+      "slug": "microscope"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 466,
+    "fields": {
+      "name": "System: Powered by the Apocalypse",
+      "slug": "system-powered-by-the-apocalypse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 467,
+    "fields": {
+      "name": "Dungeon World",
+      "slug": "dungeon-world"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 468,
+    "fields": {
+      "name": "Item: Dungeon World Roleplaying Game",
+      "slug": "item-dungeon-world-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 469,
+    "fields": {
+      "name": "System: Kids on Bikes",
+      "slug": "system-kids-on-bikes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 470,
+    "fields": {
+      "name": "Kids on Bikes",
+      "slug": "kids-on-bikes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 471,
+    "fields": {
+      "name": "Item: Kids on Bikes",
+      "slug": "item-kids-on-bikes"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 472,
+    "fields": {
+      "name": "Dogs in the Vineyard",
+      "slug": "dogs-in-the-vineyard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 473,
+    "fields": {
+      "name": "Item: Dogs in the Vineyard",
+      "slug": "item-dogs-in-the-vineyard"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 474,
+    "fields": {
+      "name": "Item: A Guide to Taverns | A Slowquest Zine",
+      "slug": "item-a-guide-to-taverns-a-slowquest-zine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 475,
+    "fields": {
+      "name": "Item: Dragon Warriors",
+      "slug": "item-dragon-warriors"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 476,
+    "fields": {
+      "name": "Dragon Warriors",
+      "slug": "dragon-warriors"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 477,
+    "fields": {
+      "name": "Item: Golden Sky Stories",
+      "slug": "item-golden-sky-stories"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 478,
+    "fields": {
+      "name": "Item: Golden Sky Stories: Heart-Warming Role-Playing",
+      "slug": "item-golden-sky-stories-heart-warming-role-playing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 479,
+    "fields": {
+      "name": "Golden Sky Stories",
+      "slug": "golden-sky-stories"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 480,
+    "fields": {
+      "name": "Item: The Awesome System",
+      "slug": "item-the-awesome-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 481,
+    "fields": {
+      "name": "The Awesome System",
+      "slug": "the-awesome-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 482,
+    "fields": {
+      "name": "Item: The Ultimate Micro-RPG Book",
+      "slug": "item-the-ultimate-micro-rpg-book"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 483,
+    "fields": {
+      "name": "Resistance System",
+      "slug": "resistance-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 484,
+    "fields": {
+      "name": "Item: Strata: a Spire RPG Sourcebook",
+      "slug": "item-strata-a-spire-rpg-sourcebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 485,
+    "fields": {
+      "name": "System: Resistance System",
+      "slug": "system-resistance-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 486,
+    "fields": {
+      "name": "Item: Sin: A Spire RPG Sourcebook",
+      "slug": "item-sin-a-spire-rpg-sourcebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 487,
+    "fields": {
+      "name": "Item: Spire",
+      "slug": "item-spire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 488,
+    "fields": {
+      "name": "Item: Heart: The City Beneath",
+      "slug": "item-heart-the-city-beneath"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 489,
+    "fields": {
+      "name": "Heart: The City Beneath",
+      "slug": "heart-the-city-beneath"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 490,
+    "fields": {
+      "name": "Item: Stars Without Number: Revised Edition",
+      "slug": "item-stars-without-number-revised-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 491,
+    "fields": {
+      "name": "Stars Without Number",
+      "slug": "stars-without-number"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 492,
+    "fields": {
+      "name": "System: Stars Without Number",
+      "slug": "system-stars-without-number"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 493,
+    "fields": {
+      "name": "M\u00f6rk Borg",
+      "slug": "mork-borg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 494,
+    "fields": {
+      "name": "Item: M\u00f6rk Borg",
+      "slug": "item-mork-borg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 495,
+    "fields": {
+      "name": "Item: Star Wars: Edge of the Empire Core Rulebook",
+      "slug": "item-star-wars-edge-of-the-empire-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 496,
+    "fields": {
+      "name": "System: Narrative Dice System",
+      "slug": "narrative-dice-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 497,
+    "fields": {
+      "name": "System: Amber Diceless",
+      "slug": "system-amber-diceless"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 498,
+    "fields": {
+      "name": "Amber Diceless Role-Playing",
+      "slug": "amber-diceless-role-playing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 499,
+    "fields": {
+      "name": "Star Wars: Edge of the Empire",
+      "slug": "star-wars-edge-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 500,
+    "fields": {
+      "name": "Item: AMBER Diceless Role-Playing",
+      "slug": "item-amber-diceless-role-playing"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 501,
+    "fields": {
+      "name": "Star Wars (FFG)",
+      "slug": "star-wars-ffg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 502,
+    "fields": {
+      "name": "Item: Star Wars: Age of Rebellion Core Rulebook",
+      "slug": "item-star-wars-age-of-rebellion-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 503,
+    "fields": {
+      "name": "Star Wars: Age of Rebellion",
+      "slug": "star-wars-age-of-rebellion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 504,
+    "fields": {
+      "name": "Dice: proprietary",
+      "slug": "dice-proprietary"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 505,
+    "fields": {
+      "name": "Item: Star Wars: Force and Destiny Core Rulebook",
+      "slug": "item-star-wars-force-and-destiny-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 506,
+    "fields": {
+      "name": "Star Wars: Force and Destiny",
+      "slug": "star-wars-force-and-destiny"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 507,
+    "fields": {
+      "name": "Item: Path of Waves",
+      "slug": "item-path-of-waves"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 508,
+    "fields": {
+      "name": "Item: Better Angels",
+      "slug": "item-better-angels"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 509,
+    "fields": {
+      "name": "Item: Legend of the Five Rings Roleplaying Core Rulebook",
+      "slug": "item-legend-of-the-five-rings-roleplaying-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 510,
+    "fields": {
+      "name": "System: One-Roll Engine",
+      "slug": "one-roll-engine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 511,
+    "fields": {
+      "name": "Better Angels",
+      "slug": "better-angels"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 512,
+    "fields": {
+      "name": "Item: Emerald Empire (5th Edition)",
+      "slug": "item-emerald-empire-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 513,
+    "fields": {
+      "name": "Item: The Expanse Roleplaying Game",
+      "slug": "item-the-expanse-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 514,
+    "fields": {
+      "name": "System: AGE (Adventure Game Engine) System",
+      "slug": "age-adventure-game-engine-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 515,
+    "fields": {
+      "name": "The Expanse Roleplaying Game",
+      "slug": "the-expanse-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 516,
+    "fields": {
+      "name": "Firefly Role-Playing Game",
+      "slug": "firefly-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 517,
+    "fields": {
+      "name": "Cortex",
+      "slug": "cortex"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 518,
+    "fields": {
+      "name": "Serenity/Firefly",
+      "slug": "serenityfirefly"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 519,
+    "fields": {
+      "name": "Item: The Dresden Files, Volume 1: Your Story",
+      "slug": "item-the-dresden-files-volume-1-your-story"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 520,
+    "fields": {
+      "name": "System: Cortex Plus",
+      "slug": "system-cortex-plus"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 521,
+    "fields": {
+      "name": "System: Fate 3.0",
+      "slug": "fate-30"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 522,
+    "fields": {
+      "name": "The Dresden Files Roleplaying Game",
+      "slug": "the-dresden-files-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 523,
+    "fields": {
+      "name": "Dice: pool",
+      "slug": "dice-pool"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 524,
+    "fields": {
+      "name": "Item: The Dresden Files, Volume 2: Our World",
+      "slug": "item-the-dresden-files-volume-2-our-world"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 525,
+    "fields": {
+      "name": "Item: Lords of Gossamer & Shadow",
+      "slug": "item-lords-of-gossamer-shadow"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 526,
+    "fields": {
+      "name": "Lords of Gossamer & Shadow",
+      "slug": "lords-of-gossamer-shadow"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 527,
+    "fields": {
+      "name": "Item: Firefly Role-Playing Game",
+      "slug": "item-firefly-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 528,
+    "fields": {
+      "name": "Item: Killer: The Game of Assassination",
+      "slug": "item-killer-the-game-of-assassination"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 529,
+    "fields": {
+      "name": "Item: The War-Torn Kingdom",
+      "slug": "item-the-war-torn-kingdom"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 530,
+    "fields": {
+      "name": "Fabled Lands Gamebooks",
+      "slug": "fabled-lands-gamebooks"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 531,
+    "fields": {
+      "name": "Earthdawn: 1st Edition",
+      "slug": "earthdawn-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 532,
+    "fields": {
+      "name": "Earthdawn",
+      "slug": "earthdawn"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 533,
+    "fields": {
+      "name": "System: Earthdawn",
+      "slug": "system-earthdawn"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 534,
+    "fields": {
+      "name": "Item: Cities of Gold and Glory",
+      "slug": "item-cities-of-gold-and-glory"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 535,
+    "fields": {
+      "name": "Item: Earthdawn",
+      "slug": "item-earthdawn"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 536,
+    "fields": {
+      "name": "Item: Magic: A Manual of Mystic Secrets",
+      "slug": "item-magic-a-manual-of-mystic-secrets"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 537,
+    "fields": {
+      "name": "Item: Vampire: The Masquerade 2e",
+      "slug": "item-vampire-the-masquerade-2e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 538,
+    "fields": {
+      "name": "Vampire: The Masquerade",
+      "slug": "vampire-the-masquerade"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 539,
+    "fields": {
+      "name": "System: Storyteller",
+      "slug": "system-storyteller"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 540,
+    "fields": {
+      "name": "Item: Scion: Hero",
+      "slug": "item-scion-hero"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 541,
+    "fields": {
+      "name": "Scion",
+      "slug": "scion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 542,
+    "fields": {
+      "name": "Item: Mirrors",
+      "slug": "item-mirrors"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 543,
+    "fields": {
+      "name": "The World of Darkness",
+      "slug": "world-of-darkness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 545,
+    "fields": {
+      "name": "System: Storytelling",
+      "slug": "system-storytelling"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 546,
+    "fields": {
+      "name": "Paranoia: Mongoose Edition",
+      "slug": "paranoia-mongoose-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 547,
+    "fields": {
+      "name": "Paranoia",
+      "slug": "paranoia"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 548,
+    "fields": {
+      "name": "Item: Paranoia",
+      "slug": "item-paranoia"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 549,
+    "fields": {
+      "name": "Item: Geist: The Sin-Eaters",
+      "slug": "item-geist-the-sin-eaters"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 550,
+    "fields": {
+      "name": "Geist: The Sin-Eaters",
+      "slug": "geist-the-sin-eaters"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 551,
+    "fields": {
+      "name": "Item: The Vampire Players Guide 2e",
+      "slug": "item-the-vampire-players-guide-2e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 552,
+    "fields": {
+      "name": "Item: Storytellers Handbook to the Sabbat",
+      "slug": "item-storytellers-handbook-to-the-sabbat"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 553,
+    "fields": {
+      "name": "Item: Book of Spirits",
+      "slug": "item-book-of-spirits"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 554,
+    "fields": {
+      "name": "Item: Second Sight",
+      "slug": "item-second-sight"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 555,
+    "fields": {
+      "name": "Item: The Inquisition",
+      "slug": "item-the-inquisition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 556,
+    "fields": {
+      "name": "Item: Beast: The Primordial",
+      "slug": "item-beast-the-primordial"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 557,
+    "fields": {
+      "name": "Beast: The Primordial",
+      "slug": "beast-the-primordial"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 558,
+    "fields": {
+      "name": "Item: Promethean: The Created",
+      "slug": "item-promethean-the-created"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 559,
+    "fields": {
+      "name": "Item: World Of Darkness",
+      "slug": "item-world-of-darkness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 560,
+    "fields": {
+      "name": "Item: Demon: The Descent",
+      "slug": "item-demon-the-descent"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 561,
+    "fields": {
+      "name": "Demon: The Descent",
+      "slug": "demon-the-descent"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 562,
+    "fields": {
+      "name": "Promethean: The Created",
+      "slug": "promethean-the-created"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 563,
+    "fields": {
+      "name": "Chronicles of Darkness",
+      "slug": "chronicles-of-darkness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 564,
+    "fields": {
+      "name": "Item: Vampire: The Requiem",
+      "slug": "item-vampire-the-requiem"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 565,
+    "fields": {
+      "name": "Vampire: The Requiem",
+      "slug": "vampire-the-requiem"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 566,
+    "fields": {
+      "name": "Classic World of Darkness",
+      "slug": "classic-world-of-darkness"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 567,
+    "fields": {
+      "name": "Scion: Hero",
+      "slug": "scion-hero"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 568,
+    "fields": {
+      "name": "Item: Werewolf: The Apocalypse 2e",
+      "slug": "item-werewolf-the-apocalypse-2e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 569,
+    "fields": {
+      "name": "Werewolf: The Apocalypse",
+      "slug": "werewolf-the-apocalypse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 570,
+    "fields": {
+      "name": "Item: Werewolf: The Forsaken 2e",
+      "slug": "item-werewolf-the-forsaken-2e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 571,
+    "fields": {
+      "name": "Werewolf: The Forsaken",
+      "slug": "werewolf-the-forsaken"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 572,
+    "fields": {
+      "name": "Item: Chronicles of Darkness Revised Storytelling System Rulebook",
+      "slug": "item-chronicles-of-darkness-revised-storytelling-system-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 573,
+    "fields": {
+      "name": "Chronicles of Darkness Revised Storytelling System Rulebook",
+      "slug": "chronicles-of-darkness-revised-storytelling-system-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 574,
+    "fields": {
+      "name": "Item: Werewolf: The Forsaken 1e",
+      "slug": "item-werewolf-the-forsaken-1e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 575,
+    "fields": {
+      "name": "Item: Blood and Smoke: The Strix Chronicle",
+      "slug": "item-blood-and-smoke-the-strix-chronicle"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 576,
+    "fields": {
+      "name": "Vampire: The Requiem: 2nd Edition",
+      "slug": "vampire-the-requiem-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 577,
+    "fields": {
+      "name": "Item: Hunter: The Vigil",
+      "slug": "item-hunter-the-vigil"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 578,
+    "fields": {
+      "name": "Hunter: The Vigil",
+      "slug": "hunter-the-vigil"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 579,
+    "fields": {
+      "name": "Item: Changeling: The Lost",
+      "slug": "item-changeling-the-lost"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 580,
+    "fields": {
+      "name": "Changeling: The Lost",
+      "slug": "changeling-the-lost"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 581,
+    "fields": {
+      "name": "Item: Dragons of the East",
+      "slug": "item-dragons-of-the-east"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 582,
+    "fields": {
+      "name": "Mage: The Ascension",
+      "slug": "mage-the-ascension"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 583,
+    "fields": {
+      "name": "Item: Mage: The Ascension 2e",
+      "slug": "item-mage-the-ascension-2e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 584,
+    "fields": {
+      "name": "Item: Werewolf: The Apocalypse Revised Edition",
+      "slug": "item-werewolf-the-apocalypse-revised-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 585,
+    "fields": {
+      "name": "Item: Mage: The Awakening",
+      "slug": "item-mage-the-awakening"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 586,
+    "fields": {
+      "name": "Mage: The Awakening",
+      "slug": "mage-the-awakening"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 587,
+    "fields": {
+      "name": "Item: Mummy: The Curse",
+      "slug": "item-mummy-the-curse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 588,
+    "fields": {
+      "name": "Mummy: The Curse",
+      "slug": "mummy-the-curse"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 589,
+    "fields": {
+      "name": "Item: Legend of the Five Rings: Enemies of the Empire",
+      "slug": "item-legend-of-the-five-rings-enemies-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 590,
+    "fields": {
+      "name": "Legend of the Five Rings: Enemies of the Empire",
+      "slug": "legend-of-the-five-rings-enemies-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 591,
+    "fields": {
+      "name": "Item: Legend of the Five Rings: Emerald Empire",
+      "slug": "item-legend-of-the-five-rings-emerald-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 592,
+    "fields": {
+      "name": "Legend of the Five Rings: Emerald Empire",
+      "slug": "legend-of-the-five-rings-emerald-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 593,
+    "fields": {
+      "name": "Item: Legend of the Five Rings 4e",
+      "slug": "item-legend-of-the-five-rings-4e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 594,
+    "fields": {
+      "name": "Item: Legend of the Five Rings: Secrets of the Empire",
+      "slug": "item-legend-of-the-five-rings-secrets-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 595,
+    "fields": {
+      "name": "Legend of the Five Rings: Secrets of the Empire",
+      "slug": "legend-of-the-five-rings-secrets-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 596,
+    "fields": {
+      "name": "Item: Night's Black Agents",
+      "slug": "item-nights-black-agents"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 597,
+    "fields": {
+      "name": "System: GUMSHOE",
+      "slug": "system-gumshoe"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 598,
+    "fields": {
+      "name": "Night's Black Agents",
+      "slug": "nights-black-agents"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 599,
+    "fields": {
+      "name": "Item: Shadowrun 5e Core Rulebook",
+      "slug": "item-shadowrun-5e-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 600,
+    "fields": {
+      "name": "Item: Legend of the Five Rings 4e: Emerald Empire",
+      "slug": "item-legend-of-the-five-rings-4e-emerald-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 601,
+    "fields": {
+      "name": "Item: Legend of the Five Rings 4e: Enemies of the Empire",
+      "slug": "item-legend-of-the-five-rings-4e-enemies-of-the-empire"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 602,
+    "fields": {
+      "name": "System: Shadowrun 5th Edition",
+      "slug": "system-shadowrun-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 603,
+    "fields": {
+      "name": "Dice: Exploding",
+      "slug": "dice-exploding"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 604,
+    "fields": {
+      "name": "Shadowrun 5e Core Rulebook",
+      "slug": "shadowrun-5e-Core-Rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 605,
+    "fields": {
+      "name": "Shadowrun",
+      "slug": "shadowrun"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 606,
+    "fields": {
+      "name": "Item: Shadowrun Runner's Toolkit",
+      "slug": "item-shadowrun-runners-toolkit"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 607,
+    "fields": {
+      "name": "System: Shadowrun 4th & 20th Anniversary Editions",
+      "slug": "system-shadowrun-4th-20th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 608,
+    "fields": {
+      "name": "Shadowrun Runner's Toolkit",
+      "slug": "shadowrun-runners-toolkit"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 609,
+    "fields": {
+      "name": "Item: Shadowrun 20th Anniversary Core Rulebook",
+      "slug": "item-shadowrun-20th-anniversary-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 610,
+    "fields": {
+      "name": "Shadowrun 20th Anniversary Core Rulebook",
+      "slug": "shadowrun-20th-anniversary-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 611,
+    "fields": {
+      "name": "Item: HERO System Sixth Edition, Volume 2: Combat & Adventuring",
+      "slug": "item-hero-system-sixth-edition-volume-2-combat-adventuring"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 612,
+    "fields": {
+      "name": "Item: HERO System Fifth Edition",
+      "slug": "item-hero-system-fifth-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 613,
+    "fields": {
+      "name": "Item: Champions 4th Edition",
+      "slug": "item-champions-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 614,
+    "fields": {
+      "name": "HERO System: 4th Edition",
+      "slug": "hero-system-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 615,
+    "fields": {
+      "name": "Champions 4th Edition",
+      "slug": "champions-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 616,
+    "fields": {
+      "name": "Item: HERO System Sixth Edition, Volume 1: Character Creation",
+      "slug": "item-hero-system-sixth-edition-volume-1-character-creation"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 617,
+    "fields": {
+      "name": "Item: In Nomine",
+      "slug": "item-in-nomine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 618,
+    "fields": {
+      "name": "In Nomine",
+      "slug": "in-nomine"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 619,
+    "fields": {
+      "name": "System: D666",
+      "slug": "system-d666"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 620,
+    "fields": {
+      "name": "Item: GURPS Basic Set 3e",
+      "slug": "item-gurps-basic-set-3e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 621,
+    "fields": {
+      "name": "System: GURPS 3",
+      "slug": "system-gurps-3"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 622,
+    "fields": {
+      "name": "GURPS Basic Set 3e",
+      "slug": "gurps-basic-set-3e"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 623,
+    "fields": {
+      "name": "GURPS",
+      "slug": "gurps"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 624,
+    "fields": {
+      "name": "Item: GURPS Basic Set 3e Revised",
+      "slug": "item-gurps-basic-set-3e-revised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 625,
+    "fields": {
+      "name": "GURPS Basic Set 3e Revised",
+      "slug": "gurps-basic-set-3e-revised"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 626,
+    "fields": {
+      "name": "Item: GURPS Basic Set 4e: Characters",
+      "slug": "item-gurps-basic-set-4e-characters"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 627,
+    "fields": {
+      "name": "GURPS Basic Set 4e: Characters",
+      "slug": "gurps-basic-set-4e-characters"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 628,
+    "fields": {
+      "name": "System: GURPS 4",
+      "slug": "system-gurps-4"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 629,
+    "fields": {
+      "name": "Item: GURPS Basic Set 4e: Campaigns",
+      "slug": "item-gurps-basic-set-4e-campaigns"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 630,
+    "fields": {
+      "name": "GURPS Basic Set 4e: Campaigns",
+      "slug": "gurps-basic-set-4e-campaigns"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 631,
+    "fields": {
+      "name": "Item: GURPS Fantasy Folk 2nd Edition",
+      "slug": "item-gurps-fantasy-folk-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 632,
+    "fields": {
+      "name": "GURPS Fantasy Folk 2nd Edition",
+      "slug": "gurps-fantasy-folk-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 633,
+    "fields": {
+      "name": "Item: GURPS Y2K",
+      "slug": "item-gurps-y2k"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 634,
+    "fields": {
+      "name": "GURPS Y2K",
+      "slug": "gurps-y2k"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 635,
+    "fields": {
+      "name": "Item: Eoris Essence Book 1",
+      "slug": "item-eoris-essence-book-1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 636,
+    "fields": {
+      "name": "Eoris Essence Book 1",
+      "slug": "eoris-essence-book-1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 637,
+    "fields": {
+      "name": "System: Eoris Essence",
+      "slug": "system-eoris-essence"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 638,
+    "fields": {
+      "name": "Eoris Essence",
+      "slug": "eoris-essence"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 639,
+    "fields": {
+      "name": "Item: Eoris Essence Book 2",
+      "slug": "item-eoris-essence-book-2"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 640,
+    "fields": {
+      "name": "Eoris Essence Book 2",
+      "slug": "eoris-essence-book-2"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 641,
+    "fields": {
+      "name": "Item: Dark Heresy GM Screen",
+      "slug": "item-dark-heresy-gm-screen"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 642,
+    "fields": {
+      "name": "Item: Traveller: Science-Fiction Adventure in the Far Future",
+      "slug": "item-traveller-science-fiction-adventure-in-the-far-future"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 643,
+    "fields": {
+      "name": "Traveller: Science-Fiction Adventure in the Far Future",
+      "slug": "traveller-science-fiction-adventure-in-the-far-future"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 644,
+    "fields": {
+      "name": "System: Mongoose Traveller System",
+      "slug": "system-mongoose-traveller-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 645,
+    "fields": {
+      "name": "Pathfinder: 2nd Edition",
+      "slug": "pathfinder-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 646,
+    "fields": {
+      "name": "Pathfinder",
+      "slug": "pathfinder"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 647,
+    "fields": {
+      "name": "System: Pathfinder System",
+      "slug": "system-pathfinder-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 648,
+    "fields": {
+      "name": "Pathfinder: 1st Edition",
+      "slug": "pathfinder-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 649,
+    "fields": {
+      "name": "Item: GameMastery Guide",
+      "slug": "item-gamemastery-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 650,
+    "fields": {
+      "name": "Item: PF 2e Core Rulebook",
+      "slug": "item-pf-2e-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 651,
+    "fields": {
+      "name": "Item: PH 2e GameMastery Guide",
+      "slug": "item-ph-2e-gamemastery-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 652,
+    "fields": {
+      "name": "Item: PF 2e GameMastery Guide",
+      "slug": "item-pf-2e-gamemastery-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 653,
+    "fields": {
+      "name": "Item: PF 2e Bestiary",
+      "slug": "item-pf-2e-bestiary"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 654,
+    "fields": {
+      "name": "Item: Pathfinder Core Rulebook (2nd Edition)",
+      "slug": "item-pathfinder-core-rulebook-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 655,
+    "fields": {
+      "name": "Pathfinder Roleplaying Game (2nd Edition)",
+      "slug": "pathfinder-roleplaying-game-2nd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 656,
+    "fields": {
+      "name": "Item: Pathfinder Roleplaying Game Core Rulebook (1st Ed)",
+      "slug": "item-pathfinder-roleplaying-game-core-rulebook-1st-ed"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 657,
+    "fields": {
+      "name": "Pathfinder Roleplaying Game (1st Edition)",
+      "slug": "pathfinder-roleplaying-game-1st-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 658,
+    "fields": {
+      "name": "Item: Pathfinder Roleplaying Game Bestiary (1st Ed)",
+      "slug": "item-pathfinder-roleplaying-game-bestiary-1st-ed"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 659,
+    "fields": {
+      "name": "Item: Starfinder Core Rulebook",
+      "slug": "item-starfinder-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 660,
+    "fields": {
+      "name": "Starfinder Roleplaying Game",
+      "slug": "starfinder-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 661,
+    "fields": {
+      "name": "Item: 13 True Ways",
+      "slug": "item-13-true-ways"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 662,
+    "fields": {
+      "name": "System: 13th Age",
+      "slug": "system-13th-age"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 663,
+    "fields": {
+      "name": "Item: 13th Age Bestiary",
+      "slug": "item-13th-age-bestiary"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 664,
+    "fields": {
+      "name": "Item: 13th Age",
+      "slug": "item-13th-age"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 665,
+    "fields": {
+      "name": "Item: Bigger Bads",
+      "slug": "item-bigger-bads"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 666,
+    "fields": {
+      "name": "Monsters and Other Childish Things",
+      "slug": "monsters-and-other-childish-things"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 667,
+    "fields": {
+      "name": "Item: Ars Magica (4th Edition)",
+      "slug": "item-ars-magica-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 668,
+    "fields": {
+      "name": "System: Ars Magica (4th Edition)",
+      "slug": "system-ars-magica-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 669,
+    "fields": {
+      "name": "Item: Angel Roleplaying Game",
+      "slug": "item-angel-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 670,
+    "fields": {
+      "name": "System: Unisystem",
+      "slug": "system-unisystem"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 671,
+    "fields": {
+      "name": "Angel Role-playing Game",
+      "slug": "angel-role-playing-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 672,
+    "fields": {
+      "name": "Item: Monsternomicon: Volume 1: Denizens of the Iron Kingdoms V3.5",
+      "slug": "item-monsternomicon-volume-1-denizens-of-the-iron-kingdoms-v35"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 673,
+    "fields": {
+      "name": "d20 System / OGL Product (D&D 3.5 Compatible)",
+      "slug": "d20-system-ogl-product-dd-35-compatible"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 674,
+    "fields": {
+      "name": "Item: Monsters and Other Child",
+      "slug": "item-monsters-and-other-child"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 675,
+    "fields": {
+      "name": "Item: Star Wars Roleplaying Game: Revised Core Rulebook",
+      "slug": "item-star-wars-roleplaying-game-revised-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 676,
+    "fields": {
+      "name": "Star Wars (WotC Revised Edition)",
+      "slug": "star-wars-wotc-revised-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 677,
+    "fields": {
+      "name": "Item: d20 Modern Core Book",
+      "slug": "item-d20-modern-core-book"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 678,
+    "fields": {
+      "name": "d20 Modern",
+      "slug": "d20-modern"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 679,
+    "fields": {
+      "name": "System: d20 Modern System",
+      "slug": "system-d20-modern-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 680,
+    "fields": {
+      "name": "Item: Lord of the Rings",
+      "slug": "item-lord-of-the-rings"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 681,
+    "fields": {
+      "name": "Lord of the Rings Roleplaying Game",
+      "slug": "lord-of-the-rings-roleplaying-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 682,
+    "fields": {
+      "name": "System: CODA system",
+      "slug": "system-coda-system"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 683,
+    "fields": {
+      "name": "Item: BESM d20 Anime Role-Player's Handbook",
+      "slug": "item-besm-d20-anime-role-players-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 684,
+    "fields": {
+      "name": "BESM d20",
+      "slug": "besm-d20"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 685,
+    "fields": {
+      "name": "Item: Skyrealms of Jorune (3rd Edition)",
+      "slug": "item-skyrealms-of-jorune-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 686,
+    "fields": {
+      "name": "System: Skyrealms of Jorune (3rd Edition)",
+      "slug": "system-skyrealms-of-jorune-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 687,
+    "fields": {
+      "name": "Item: Iron Kingdoms World Guide: Full Metal Fantasy, Volume 2",
+      "slug": "item-iron-kingdoms-world-guide-full-metal-fantasy-volume-2"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 688,
+    "fields": {
+      "name": "Item: Iron Kingdoms Character Guide: Full Metal Fantasy, Volume 1",
+      "slug": "item-iron-kingdoms-character-guide-full-metal-fantasy-volume-1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 689,
+    "fields": {
+      "name": "Item: CthulhuTech",
+      "slug": "item-cthulhutech"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 690,
+    "fields": {
+      "name": "System: CthulhuTech",
+      "slug": "system-cthulhutech"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 691,
+    "fields": {
+      "name": "Item: Chill (3rd Edition)",
+      "slug": "item-chill-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 692,
+    "fields": {
+      "name": "System: Chill (3rd Edition)",
+      "slug": "system-chill-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 693,
+    "fields": {
+      "name": "Item: The Strange",
+      "slug": "item-the-strange"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 694,
+    "fields": {
+      "name": "The Strange",
+      "slug": "the-strange"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 695,
+    "fields": {
+      "name": "Item: Warhammer 40000 4th Edition",
+      "slug": "item-warhammer-40000-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 697,
+    "fields": {
+      "name": "Item: Warhammer 40,000 4th Edition",
+      "slug": "item-warhammer-40000-4th-edition_1"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 698,
+    "fields": {
+      "name": "System: Warhammer 40k 4th Edition",
+      "slug": "system-warhammer-40000-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 699,
+    "fields": {
+      "name": "000 4th Edition",
+      "slug": "000-4th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 700,
+    "fields": {
+      "name": "System: Warhammer 40",
+      "slug": "system-warhammer-40"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 701,
+    "fields": {
+      "name": "Item: Warhammer 40,000 5th Edition",
+      "slug": "item-warhammer-40000-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 702,
+    "fields": {
+      "name": "System: Warhammer 40k 5th Edition",
+      "slug": "system-warhammer-40k-5th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 703,
+    "fields": {
+      "name": "Item: Warhammer 40,000 3rd Edition",
+      "slug": "item-warhammer-40000-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 704,
+    "fields": {
+      "name": "System: Warhammer 40k 3rd Edition",
+      "slug": "system-warhammer-40k-3rd-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 705,
+    "fields": {
+      "name": "Item: Codex: Astra Militarum",
+      "slug": "item-codex-astra-militarum"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 706,
+    "fields": {
+      "name": "System: Warhammer 40k 8th Edition",
+      "slug": "system-warhammer-40k-8th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 707,
+    "fields": {
+      "name": "Item: Warhammer 40,000 9th Edition Rulebook",
+      "slug": "item-warhammer-40000-9th-edition-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 708,
+    "fields": {
+      "name": "System: Warhammer 40k 9th Edition",
+      "slug": "system-warhammer-40k-9th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 709,
+    "fields": {
+      "name": "System: Warhammer 40k 7th Edition",
+      "slug": "system-warhammer-40k-7th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 710,
+    "fields": {
+      "name": "Item: Codex: Necrons",
+      "slug": "item-codex-necrons"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 711,
+    "fields": {
+      "name": "System: Warhammer 40k 6th Edition",
+      "slug": "system-warhammer-40k-6th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 712,
+    "fields": {
+      "name": "Item: Warhammer 40,000 6th Edition",
+      "slug": "item-warhammer-40000-6th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 713,
+    "fields": {
+      "name": "Item: Warhammer 40,000 8th Edition",
+      "slug": "item-warhammer-40000-8th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 714,
+    "fields": {
+      "name": "Item: Gaslands: Refuelled",
+      "slug": "item-gaslands-refuelled"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 715,
+    "fields": {
+      "name": "Item: Mordheim",
+      "slug": "item-mordheim"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 716,
+    "fields": {
+      "name": "Item: Warhammer 40,000 7th Edition",
+      "slug": "item-warhammer-40000-7th-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 717,
+    "fields": {
+      "name": "Item: The Imperial Infrantryman's Uplifting Primer",
+      "slug": "item-the-imperial-infrantrymans-uplifting-primer"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 718,
+    "fields": {
+      "name": "Item: Root The RPG: Core Rulebook",
+      "slug": "item-root-the-rpg-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 719,
+    "fields": {
+      "name": "Root the RPG",
+      "slug": "root-the-rpg"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 720,
+    "fields": {
+      "name": "Item: Root the RPG: Travelers & Outsiders",
+      "slug": "item-root-the-rpg-travelers-outsiders"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 721,
+    "fields": {
+      "name": "Item: Root the RPG: GM Screen",
+      "slug": "item-root-the-rpg-gm-screen"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 722,
+    "fields": {
+      "name": "Item: Casting Shadows: Exclusive Edition",
+      "slug": "item-casting-shadows-exclusive-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 723,
+    "fields": {
+      "name": "Item: Casting Shadows: The Ice Storm Expansion",
+      "slug": "item-casting-shadows-the-ice-storm-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 724,
+    "fields": {
+      "name": "Item: Terran: A Game of Intellectual Skill",
+      "slug": "item-terran-a-game-of-intellectual-skill"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 725,
+    "fields": {
+      "name": "Avatar Legends",
+      "slug": "avatar-legends"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 726,
+    "fields": {
+      "name": "Item: Avatar Legends Core Rulebook",
+      "slug": "item-avatar-legends-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 727,
+    "fields": {
+      "name": "Item: Avatar Legends: Wan Shi Tong's Adventure Guide",
+      "slug": "item-avatar-legends-wan-shi-tongs-adventure-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 728,
+    "fields": {
+      "name": "Item: Avatar Legends: Combat Action Deck",
+      "slug": "item-avatar-legends-combat-action-deck"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 729,
+    "fields": {
+      "name": "Item: Codenames: Pictures",
+      "slug": "item-codenames-pictures"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 730,
+    "fields": {
+      "name": "Item: BANG!",
+      "slug": "item-bang"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 731,
+    "fields": {
+      "name": "Item: Just One",
+      "slug": "item-just-one"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 732,
+    "fields": {
+      "name": "Item: Busy Beaks",
+      "slug": "item-busy-beaks"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 733,
+    "fields": {
+      "name": "Item: Root: The Underworld Expansion",
+      "slug": "item-root-the-underworld-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 734,
+    "fields": {
+      "name": "Item: Mothership Player's Survival Guide",
+      "slug": "item-mothership-players-survival-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 735,
+    "fields": {
+      "name": "Mothership",
+      "slug": "mothership"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 736,
+    "fields": {
+      "name": "Item: Root: The Marauder Expansion",
+      "slug": "item-root-the-marauder-expansion"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 737,
+    "fields": {
+      "name": "Item: Blood on the Clocktower",
+      "slug": "item-blood-on-the-clocktower"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 738,
+    "fields": {
+      "name": "Item: Skull",
+      "slug": "item-skull"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 739,
+    "fields": {
+      "name": "Item: Call of Cthulhu Keeper Rulebook",
+      "slug": "item-call-of-cthulhu-keeper-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 740,
+    "fields": {
+      "name": "Item: Call of Cthulhu Investigator Handbook",
+      "slug": "item-call-of-cthulhu-investigator-handbook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 741,
+    "fields": {
+      "name": "Item: Breaking Bad: The Board Game",
+      "slug": "item-breaking-bad-the-board-game"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 742,
+    "fields": {
+      "name": "Item: Pathfinder 2e Core Rulebook",
+      "slug": "item-pathfinder-2e-core-rulebook"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 743,
+    "fields": {
+      "name": "Item: Pathfinder 2e GameMastery Guide",
+      "slug": "item-pathfinder-2e-gamemastery-guide"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 744,
+    "fields": {
+      "name": "Item: Pathfinder 2e Bestiary",
+      "slug": "item-pathfinder-2e-bestiary"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 745,
+    "fields": {
+      "name": "Item: Unigames Ruby Ball Guest Book",
+      "slug": "item-unigames-ruby-ball-guest-book"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 746,
+    "fields": {
+      "name": "Item: Head Trip",
+      "slug": "item-head-trip"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 747,
+    "fields": {
+      "name": "Item: The Big Red One (Bulge) (1979)",
+      "slug": "item-the-big-red-one-bulge-1979"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 748,
+    "fields": {
+      "name": "Item: Cyberpunk RED",
+      "slug": "item-cyberpunk-red"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 749,
+    "fields": {
+      "name": "System: Interlock",
+      "slug": "system-interlock"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 750,
+    "fields": {
+      "name": "Cyberpunk RED",
+      "slug": "cyberpunk-red"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 751,
+    "fields": {
+      "name": "Cyberpunk",
+      "slug": "cyberpunk"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 752,
+    "fields": {
+      "name": "Item: Twilight Imperium: Fourth Edition",
+      "slug": "item-twilight-imperium-fourth-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 753,
+    "fields": {
+      "name": "Item: Brass: Birmingham",
+      "slug": "item-brass-birmingham"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 754,
+    "fields": {
+      "name": "Item: Escape from the Aliens in Outer Space",
+      "slug": "item-escape-from-the-aliens-in-outer-space"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 755,
+    "fields": {
+      "name": "Item: Blood Bowl: Second Season Edition",
+      "slug": "item-blood-bowl-second-season-edition"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 756,
+    "fields": {
+      "name": "Item: The Night Cage",
+      "slug": "item-the-night-cage"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 757,
+    "fields": {
+      "name": "Action Points",
+      "slug": "action-points"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 758,
+    "fields": {
+      "name": "Blood Bowl",
+      "slug": "blood-bowl"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 759,
+    "fields": {
+      "name": "Item: Blood Bowl: Second Season Edition \u2013 The Official Rules",
+      "slug": "item-blood-bowl-second-season-edition-the-official-rules"
+    }
+  },
+  {
+    "model": "taggit.tag",
+    "pk": 760,
+    "fields": {
+      "name": "Item: Tic Tac K.O.: Dragons vs Unicorns",
+      "slug": "item-tic-tac-ko-dragons-vs-unicorns"
+    }
+  }
+]
