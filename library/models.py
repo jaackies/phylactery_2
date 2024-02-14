@@ -448,7 +448,10 @@ class BorrowRecord(models.Model):
 	item = models.ForeignKey("Item", on_delete=models.CASCADE, related_name="borrow_records")
 	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.CASCADE, related_name="borrow_records")
 	
-	# The details about when it was borrowed and who authorised the borrowing are stored with the BorrowerRecords object.
+	# Details about when the item were borrowed
+	# Even though this is a duplicate to the data in BorrowerDetails, it is still useful to have it here.
+	borrowed_datetime = models.DateTimeField(default=timezone.now)
+	borrow_authorised_by = models.CharField(max_length=200, default="")
 	
 	# The latest day the item can be returned on before being considered overdue.
 	due_date = models.DateField(default=default_due_date)
