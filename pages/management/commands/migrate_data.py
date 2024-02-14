@@ -15,7 +15,7 @@ We will skip:
 	
 """
 
-BASE_PATH = Path("pretty_models")
+BASE_PATH = Path("../../../pretty_models")
 
 
 def import_library():
