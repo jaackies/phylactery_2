@@ -124,7 +124,6 @@ class Command(BaseCommand):
 			"max_play_time": fields["max_play_time"],
 			"average_play_time": fields["average_play_time"],
 			"image": fields["image"],
-			# TODO: Item Type Tag
 		}
 		new_item = Item.objects.create(**item_data)
 		new_item.base_tags.add(self.item_types[fields["type"]])
