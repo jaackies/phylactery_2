@@ -33,11 +33,30 @@ class Command(BaseCommand):
 			5) Add the appropriate tags onto Library Items (only base tags)
 			At this point we will need to add Members, so that we can add BorrowRecords.
 		"""
+		
+		# Step 1:  Import all taggit tags into LibraryTags
 		with open(BASE_PATH / "taggit.tag.json", "r") as json_infile:
 			json_objects = json.load(json_infile)
 		for library_tag in json_objects:
 			self.import_library_tag(pk=library_tag["pk"], fields=library_tag["fields"])
 		
+		# Step 2: Import the tag parents
+		with open(BASE_PATH / "library.tagparent.json") as json_infile:
+			json_objects = json.load(json_infile)
+		for tag_parent in json_objects:
+			child_tag = LibraryTag.objects.get(pk=tag_parent["fields"]["child_tag"])
+			child_tag.parents.set(tag_parent["fields"]["parent_tag"])
+			self.stdout.write(f"Setting parents for {child_tag.name}")
+		
+		# Step 3: Add the Item-type tags.
+		self.item_types = {
+			"BK": LibraryTag.objects.create(name="Item Type: Book", is_item_type=True),
+			"BG": LibraryTag.objects.create(name="Item Type: Board Game", is_item_type=True),
+			"CG": LibraryTag.objects.create(name="Item Type: Card Game", is_item_type=True),
+			"??": LibraryTag.objects.create(name="Item Type: Other", is_item_type=True),
+		}
+		
+		# Step 4: Import the Items
 		with open(BASE_PATH / "library.item.json", "r") as json_infile:
 			json_objects = json.load(json_infile)
 		for library_item in json_objects:
@@ -69,4 +88,5 @@ class Command(BaseCommand):
 			# TODO: Item Type Tag
 		}
 		new_item = Item.objects.create(**item_data)
+		new_item.base_tags.add(self.item_types[fields["type"]])
 		self.stdout.write(f"Added library.item: {new_item.name}")
