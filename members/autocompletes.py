@@ -10,7 +10,7 @@ class MemberAutocomplete(autocomplete.Select2QuerySetView):
 	def get_queryset(self):
 		# Since our list of Members is private information,
 		# make sure we are logged in as a Gatekeeper.
-		if self.request.user.is_authenticated and self.request.user.member.has_rank(RankChoices.GATEKEEPER):
+		if not (self.request.user.is_authenticated and self.request.user.member.is_gatekeeper()):
 			return Member.objects.none()
 			
 		qs = Member.objects.all()
