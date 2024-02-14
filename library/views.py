@@ -1,7 +1,8 @@
+from django.db.models import Count
 from django.views.generic import DetailView, ListView
 from django.utils import timezone
 from datetime import timedelta
-from .models import Item
+from .models import Item, LibraryTag
 
 
 class ItemDetailView(DetailView):
@@ -30,3 +31,22 @@ class ItemListView(ListView):
 	template_name = "library/item_list_view.html"
 	context_object_name = "items_list"
 	paginate_by = 24
+	
+
+class TagListView(ListView):
+	model = LibraryTag
+	template_name = "library/tag_list_view.html"
+	context_object_name = "tags_list"
+	
+	def get_queryset(self):
+		qs = (
+			LibraryTag.objects.exclude(name__startswith="Item: ")
+			.annotate(num_items=Count('computed_items'))
+			.filter(num_items__gt=0, is_item_type=False, is_tag_category=False)
+			.order_by('-num_items', 'name')
+		)
+		return qs
+
+
+class TagDetailView(ListView):
+	model = Item
