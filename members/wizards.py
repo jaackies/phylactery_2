@@ -115,7 +115,7 @@ class FresherMembershipWizard(SessionWizardView):
 			f"Membership for {cleaned_data.get('long_name')} was successfully created!"
 		)
 		
-		return redirect("signup-hub")
+		return redirect("members:signup-hub")
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
@@ -145,7 +145,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 				f"{stale_member.short_name} has already purchased a Membership this year"
 				f" - no need to buy another!"
 			)
-			return redirect("signup-hub")
+			return redirect("members:signup-hub")
 		most_recent_membership = stale_member.get_most_recent_membership()
 		if most_recent_membership is None or most_recent_membership.date_purchased.year < 2024:
 			# Give a warning to Members who have not updated details since the short/long name migration.
@@ -278,7 +278,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			f"Membership for {cleaned_data.get('long_name')} was successfully created!"
 		)
 		
-		return redirect("signup-hub")
+		return redirect("members:signup-hub")
 
 
 class LegacyMembershipWizard(FresherMembershipWizard):

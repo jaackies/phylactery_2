@@ -58,7 +58,7 @@
 					</table>
 					{% endif %}
 					<div class="card-body">
-						<a href="{% url "signup-stale" pk=member.pk %}" class="btn btn-secondary w-100">Process new Membership for {{ member.short_name }}</a>
+						<a href="{% url "members:signup-stale" pk=member.pk %}" class="btn btn-secondary w-100">Process new Membership for {{ member.short_name }}</a>
 					</div>
 				</div>
 			</div>

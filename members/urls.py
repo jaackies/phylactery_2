@@ -3,6 +3,8 @@ from members.autocompletes import MemberAutocomplete
 from members.wizards import FresherMembershipWizard, StaleMembershipWizard, LegacyMembershipWizard
 from members.views import MemberListView, SignupHubView, GatekeeperProfileView
 
+
+app_name = "members"
 urlpatterns = [
 	path("signup/fresher/", FresherMembershipWizard.as_view(), name="signup-fresher"),
 	path("signup/stale/<int:pk>/", StaleMembershipWizard.as_view(), name="signup-stale"),
