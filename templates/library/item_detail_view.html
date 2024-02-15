@@ -100,16 +100,25 @@
 					</p>
 				</div>
 				{% if item.notes %}
-					<h5 class="card-header">
+					<h5 class="card-header card-mid-header">
 						Notes
 					</h5>
 					<div class="card-body">
 						{{ item.notes }}
 					</div>
 				{% endif %}
-				{% comment %}
-					TODO: Put Tags here
-				{% endcomment %}
+				{% if item.all_tags %}
+					<h5 class="card-header card-mid-header">
+						Tags
+					</h5>
+					<div class="card-body">
+						<p class="card-text" style="line-height: 2.8;">
+							{% for tag in item.all_tags %}
+								<a href="{% url 'library:tag-detail' tag.slug %}" class="btn btn-outline-dark">{{ tag }}</a>
+							{% endfor %}
+						</p>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
