@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from django.core.validators import validate_email
 from collections import defaultdict
+from datetime import datetime
 
 """
 This program will be used to import data from the old website into the new one.
@@ -22,6 +23,10 @@ We will skip:
 """
 
 BASE_PATH = settings.BASE_DIR / "pretty_models"
+
+
+def convert_to_date(date_str):
+	return datetime.strptime(date_str, "%Y-%m-%d")
 
 
 class Command(BaseCommand):
@@ -50,10 +55,10 @@ class Command(BaseCommand):
 			self.import_member(pk=member["pk"], fields=member["fields"])
 		
 		# Step 2: Import Memberships
-		with open(BASE_PATH / "members.member.json", "r") as json_infile:
+		with open(BASE_PATH / "members.membership.json", "r") as json_infile:
 			json_objects = json.load(json_infile)
-		for member in json_objects:
-			self.import_member(pk=member["pk"], fields=member["fields"])
+		for membership in json_objects:
+			self.import_membership(pk=membership["pk"], fields=membership["fields"])
 	
 	def import_initial_library(self):
 		"""
@@ -190,4 +195,21 @@ class Command(BaseCommand):
 		
 		new_member = Member.objects.create(**member_data)
 		self.stdout.write(f"Added members.member: {new_member.long_name}{' - skipped creating user' if make_user is False else ''}")
-		
+	
+	def import_membership(self, pk, fields):
+		member = Member.objects.filter(pk=fields["member"]).first()
+		auth_by = Member.objects.filter(pk=fields["authorising_gatekeeper"]).first()
+		membership_data = {
+			"pk": pk,
+			"member": member,
+			"date_purchased": convert_to_date(fields["date"]),
+			"guild_member": fields["guild_member"],
+			"amount_paid": fields["amount_paid"],
+			"expired": fields["expired"],
+			"authorised_by": auth_by
+		}
+		new_membership = Membership.objects.create(**membership_data)
+		self.stdout.write(f"Added members.membership: {new_membership}")
+	
+	def import_ranks(self, pk, fields):
+		pass
