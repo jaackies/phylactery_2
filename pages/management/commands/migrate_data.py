@@ -45,7 +45,6 @@ class Command(BaseCommand):
 				a) Create e member object for them
 				b) Create a blank user object for them.
 				c) In the event that their email is not valid (ie. a student email) then we don't create a user for them.
-				d) TODO: Implement logic in the stale member signup to create missing accounts.
 			2) Import memberships
 			3) Import rank assignments
 			3) Import mailing lists / memberflags

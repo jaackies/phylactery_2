@@ -7,7 +7,7 @@ from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
 from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
 from .models import Member, Membership
-from accounts.models import UnigamesUser, create_fresh_unigames_user
+from accounts.models import create_fresh_unigames_user
 from blog.models import MailingList
 
 
@@ -232,8 +232,12 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		"""
 		cleaned_data = self.get_all_cleaned_data()
 		
-		# Update email on their UnigamesUser
-		self.stale_member.user.email = cleaned_data.get("email_address")
+		if self.stale_member.user is None:
+			# Create a fresh UnigamesUser for them.
+			self.stale_member.user = create_fresh_unigames_user(cleaned_data["email_address"])
+		else:
+			# Else we update email on their UnigamesUser
+			self.stale_member.user.email = cleaned_data.get("email_address")
 		self.stale_member.user.save()
 		
 		# Update Member details
