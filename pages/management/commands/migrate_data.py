@@ -48,6 +48,7 @@ class Command(BaseCommand):
 			2) Import memberships
 			3) Import rank assignments
 			3) Import mailing lists / memberflags
+			4) Sync all member permissions
 			Then we can work on the rest of the Library stuff
 		"""
 		
@@ -90,6 +91,14 @@ class Command(BaseCommand):
 			json_objects = json.load(json_infile)
 		for mailing_list in json_objects:
 			self.import_mailing_list(pk=mailing_list["pk"], fields=mailing_list["fields"])
+		
+		# Step 5: Sync member permissions.
+		self.stdout.write("Syncing user permissions: ", ending="")
+		for member in Member.objects.all():
+			member.sync_permissions()
+			self.stdout.write(".", ending="")
+			self.stdout.flush()
+		self.stdout.write(" Done!")
 	
 	def import_initial_library(self):
 		"""
@@ -166,9 +175,12 @@ class Command(BaseCommand):
 			self.stdout.write(f"Warning: {invalid_content_types=}")
 		
 		# Step 6: Save all Items to regenerate all Tag data properly.
+		self.stdout.write("Re-saving all items: ", ending="")
 		for item in Item.objects.all():
 			item.save()
-			self.stdout.write(f"Re-saved {item.name}")
+			self.stdout.write(".", ending="")
+			self.stdout.flush()
+		self.stdout.write(" Done!")
 	
 	def import_library_tag(self, pk, fields):
 		tag_data = {

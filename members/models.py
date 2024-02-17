@@ -1,12 +1,20 @@
 import datetime
-
+from django.contrib.auth.models import Permission
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import Case, When, Value
+from django.db.models import Case, When, Value, Q
 from django.db.models.functions import Now
 from django.utils import timezone
 
 from accounts.models import UnigamesUser
+
+# Advanced models are models we shouldn't let anyone but Webkeepers touch.
+# For permission syncing.
+ADVANCED_MODELS = [
+	"logentry", "permission", "group", "contenttype", "session", "site",
+	"emailaddress", "emailconfirmation", "socialaccount", "socialapp", "socialtoken",
+	"unigamesuser"
+]
 
 
 class Member(models.Model):
@@ -105,6 +113,41 @@ class Member(models.Model):
 				RankChoices.WEBKEEPER
 			)
 		)
+	
+	def sync_permissions(self):
+		"""
+		This method is called every day, and whenever the member is saved.
+		Automatically keeps permissions for the admin site up-to-date, based on the ranks that the member has.
+		"""
+		if self.user is None:
+			# Can't do anything.
+			return False
+		
+		# is_staff controls whether the user can log into the admin site.
+		# Only committee and webkeepers get to do that.
+		is_staff = False
+		if self.is_committee():
+			is_staff = True
+		
+		is_superuser = False
+		if self.has_rank(RankChoices.WEBKEEPER) and self.is_valid_member():
+			is_superuser = True
+		
+		if not is_staff:
+			# If they can't log in to the admin site,
+			# might as well remove all permissions.
+			self.user.user_permissions.clear()
+		else:
+			# This should get fetch all permissions, except for those that add, change, or delete advanced models.
+			permissions_to_set = Permission.objects.filter(
+				Q(content_type__model__in=ADVANCED_MODELS, codename__startswith="view_") |
+				~Q(content_type__model__in=ADVANCED_MODELS)
+			)
+			self.user.user_permissions.set(permissions_to_set)
+		self.user.is_staff = is_staff
+		self.user.is_superuser = is_superuser
+		self.user.save()
+		return True
 
 
 class Membership(models.Model):
