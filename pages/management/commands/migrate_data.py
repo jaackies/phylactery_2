@@ -1,7 +1,11 @@
 import json
+from accounts.models import UnigamesUser, create_fresh_unigames_user
 from library.models import Item, LibraryTag
+from members.models import Member, Membership, Rank
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
+from django.core.validators import validate_email
 from collections import defaultdict
 
 """
@@ -23,6 +27,33 @@ BASE_PATH = settings.BASE_DIR / "pretty_models"
 class Command(BaseCommand):
 	def handle(self, *args, **options):
 		self.import_initial_library()
+		self.import_members()
+	
+	def import_members(self):
+		"""
+		Continuing on from import_initial_library
+		Steps:
+			1) Import members
+				a) Create e member object for them
+				b) Create a blank user object for them.
+				c) In the event that their email is not valid (ie. a student email) then we don't create a user for them.
+				d) TODO: Implement logic in the stale member signup to create missing accounts.
+			2) Import memberships
+			3) Import rank assignments
+			3) Import mailing lists / memberflags
+		"""
+		
+		# Step 1: Import Members
+		with open(BASE_PATH / "members.member.json", "r") as json_infile:
+			json_objects = json.load(json_infile)
+		for member in json_objects:
+			self.import_member(pk=member["pk"], fields=member["fields"])
+		
+		# Step 2: Import Memberships
+		with open(BASE_PATH / "members.member.json", "r") as json_infile:
+			json_objects = json.load(json_infile)
+		for member in json_objects:
+			self.import_member(pk=member["pk"], fields=member["fields"])
 	
 	def import_initial_library(self):
 		"""
@@ -128,3 +159,35 @@ class Command(BaseCommand):
 		new_item = Item.objects.create(**item_data)
 		new_item.base_tags.add(self.item_types[fields["type"]])
 		self.stdout.write(f"Added library.item: {new_item.name}")
+	
+	def import_member(self, pk, fields):
+		member_data = {
+			"pk": pk,
+			"short_name": fields["preferred_name"],
+			"long_name": f'{fields["preferred_name"]} {fields["last_name"]}',
+			"pronouns": fields["pronouns"],
+			"student_number": fields["student_number"],
+			"join_date": fields["join_date"],
+			"notes": fields["notes"],
+			"optional_emails": fields["receive_emails"]
+		}
+		email_address = fields["email_address"]
+		make_user = True
+		try:
+			validate_email(email_address)
+		except ValidationError:
+			make_user = False
+		if "@student" in email_address:
+			make_user = False
+		if UnigamesUser.objects.filter(email=email_address).exists():
+			make_user = False
+		
+		if make_user:
+			
+			member_data["user"] = create_fresh_unigames_user(email_address)
+		else:
+			member_data["user"] = None
+		
+		new_member = Member.objects.create(**member_data)
+		self.stdout.write(f"Added members.member: {new_member.long_name}{' - skipped creating user' if make_user is False else ''}")
+		
