@@ -14,12 +14,12 @@
 			{% else %}
 				{% if parent_tags %}
 					<div class="col mb-3">
-						<h5>Immediate parents: {% for tag in parent_tags %}<a href="{% url 'library:tag-list' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+						<h5>Immediate parents: {% for tag in parent_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
 					</div>
 				{% endif %}
 				{% if child_tags %}
 					<div class="col mb-3">
-						<h5>Immediate children: {% for tag in child_tags %}<a href="{% url 'library:tag-list' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+						<h5>Immediate children: {% for tag in child_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
 					</div>
 				{% endif %}
 			{% endif %}
