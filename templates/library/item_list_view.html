@@ -6,20 +6,20 @@
 		<div class="row">
 			{% if parent_tags.count and child_tags.count %}
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-3">
-					<h5>Immediate parents: {% for tag in parent_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+					{% include "library/snippets/parent_tags_snippet.html" %}
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-3">
-					<h5>Immediate children: {% for tag in child_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+					{% include "library/snippets/child_tags_snippet.html" %}
 				</div>
 			{% else %}
 				{% if parent_tags %}
 					<div class="col mb-3">
-						<h5>Immediate parents: {% for tag in parent_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+						{% include "library/snippets/parent_tags_snippet.html" %}
 					</div>
 				{% endif %}
 				{% if child_tags %}
 					<div class="col mb-3">
-						<h5>Immediate children: {% for tag in child_tags %}<a href="{% url 'library:tag-detail' tag.slug %}" role="button" class="btn btn-outline-dark mr-1">{{ tag }}</a>{% endfor %}</h5>
+						{% include "library/snippets/child_tags_snippet.html" %}
 					</div>
 				{% endif %}
 			{% endif %}
