@@ -251,6 +251,16 @@ class Item(models.Model):
 				avg_time = convert_minutes_to_hours(self.average_play_time)
 				return f"~<i>{avg_time}</i>"
 	
+	def get_type_display(self):
+		"""
+		Returns a string representation of the Item's types.
+		"""
+		item_types = []
+		for tag in self.base_tags.filter(is_item_type=True):
+			item_types.append(tag.get_raw_name())
+		return ", ".join(item_types)
+		
+	
 	# Methods
 	def save(self, *args, **kwargs):
 		# This method is called whenever the Item is saved.
