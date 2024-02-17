@@ -117,6 +117,8 @@ class Command(BaseCommand):
 			"CG": LibraryTag.objects.create(name="Item Type: Card Game", is_item_type=True),
 			"??": LibraryTag.objects.create(name="Item Type: Other", is_item_type=True),
 		}
+		for item_type in self.item_types.values():
+			item_type.full_clean()
 		
 		# Step 4: Import the Items
 		with open(BASE_PATH / "library.item.json", "r") as json_infile:
@@ -168,6 +170,7 @@ class Command(BaseCommand):
 			"slug": fields["slug"],
 		}
 		new_tag = LibraryTag.objects.create(**tag_data)
+		new_tag.full_clean()
 		self.stdout.write(f"Added library.librarytag: {new_tag.name}")
 	
 	def import_library_item(self, pk, fields):
@@ -186,6 +189,7 @@ class Command(BaseCommand):
 			"image": fields["image"],
 		}
 		new_item = Item.objects.create(**item_data)
+		new_item.full_clean()
 		new_item.base_tags.add(self.item_types[fields["type"]])
 		self.stdout.write(f"Added library.item: {new_item.name}")
 	
@@ -218,6 +222,7 @@ class Command(BaseCommand):
 			member_data["user"] = None
 		
 		new_member = Member.objects.create(**member_data)
+		new_member.full_clean(exclude=["pronouns"])
 		self.stdout.write(f"Added members.member: {new_member.long_name}{' - skipped creating user' if make_user is False else ''}")
 	
 	def import_membership(self, pk, fields):
@@ -233,10 +238,12 @@ class Command(BaseCommand):
 			"authorised_by": auth_by
 		}
 		new_membership = Membership.objects.create(**membership_data)
+		new_membership.full_clean(exclude=["authorised_by"])
 		self.stdout.write(f"Added members.membership: {new_membership}")
 	
 	def import_ranks(self, pk, fields):
 		rank_data = {
+			"pk": pk,
 			"member": Member.objects.get(pk=fields["member"]),
 			"rank_name": self.ranks[fields["rank"]],
 			"assigned_date": convert_to_date(fields["assignment_date"]),
