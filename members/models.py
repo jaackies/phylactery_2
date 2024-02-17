@@ -116,6 +116,7 @@ class Membership(models.Model):
 	guild_member = models.BooleanField()
 	amount_paid = models.IntegerField()
 	expired = models.BooleanField(default=False)
+	# TODO: Change blank to true on Authorised_by
 	authorised_by = models.ForeignKey("Member", on_delete=models.SET_NULL, null=True, related_name="authorised")
 	
 	def __str__(self):
