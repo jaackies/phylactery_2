@@ -1,7 +1,7 @@
 import json
 from accounts.models import UnigamesUser, create_fresh_unigames_user
 from library.models import Item, LibraryTag
-from members.models import Member, Membership, Rank
+from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
@@ -26,6 +26,8 @@ BASE_PATH = settings.BASE_DIR / "pretty_models"
 
 
 def convert_to_date(date_str):
+	if date_str is None:
+		return None
 	return datetime.strptime(date_str, "%Y-%m-%d")
 
 
@@ -59,6 +61,28 @@ class Command(BaseCommand):
 			json_objects = json.load(json_infile)
 		for membership in json_objects:
 			self.import_membership(pk=membership["pk"], fields=membership["fields"])
+		
+		# Step 3: Import Ranks
+		self.ranks = {
+			2: RankChoices.EXCLUDED,
+			3: RankChoices.GATEKEEPER,
+			4: RankChoices.WEBKEEPER,
+			5: RankChoices.COMMITTEE,
+			7: RankChoices.LIFEMEMBER,
+			8: RankChoices.PRESIDENT,
+			9: RankChoices.VICEPRESIDENT,
+			10: RankChoices.SECRETARY,
+			11: RankChoices.TREASURER,
+			12: RankChoices.LIBRARIAN,
+			13: RankChoices.FRESHERREP,
+			14: RankChoices.OCM,
+			15: RankChoices.IPP
+		}
+		
+		with open(BASE_PATH / "members.rankassignments.json", "r") as json_infile:
+			json_objects = json.load(json_infile)
+		for rank in json_objects:
+			self.import_ranks(pk=rank["pk"], fields=rank["fields"])
 	
 	def import_initial_library(self):
 		"""
@@ -212,4 +236,13 @@ class Command(BaseCommand):
 		self.stdout.write(f"Added members.membership: {new_membership}")
 	
 	def import_ranks(self, pk, fields):
-		pass
+		rank_data = {
+			"member": Member.objects.get(pk=fields["member"]),
+			"rank_name": self.ranks[fields["rank"]],
+			"assigned_date": convert_to_date(fields["assignment_date"]),
+			"expired_date": convert_to_date(fields["expired_date"]),
+		}
+		new_rank = Rank.objects.create(**rank_data)
+		new_rank.full_clean()
+		self.stdout.write(f"Added {new_rank}")
+		
