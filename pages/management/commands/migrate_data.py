@@ -1,5 +1,6 @@
 import json
 from accounts.models import UnigamesUser, create_fresh_unigames_user
+from blog.models import MailingList
 from library.models import Item, LibraryTag
 from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
@@ -48,6 +49,7 @@ class Command(BaseCommand):
 			2) Import memberships
 			3) Import rank assignments
 			3) Import mailing lists / memberflags
+			Then we can work on the rest of the Library stuff
 		"""
 		
 		# Step 1: Import Members
@@ -83,6 +85,12 @@ class Command(BaseCommand):
 			json_objects = json.load(json_infile)
 		for rank in json_objects:
 			self.import_ranks(pk=rank["pk"], fields=rank["fields"])
+		
+		# Step 4: Import mailing lists
+		with open(BASE_PATH / "members.memberflag.json", "r") as json_infile:
+			json_objects = json.load(json_infile)
+		for mailing_list in json_objects:
+			self.import_mailing_list(pk=mailing_list["pk"], fields=mailing_list["fields"])
 	
 	def import_initial_library(self):
 		"""
@@ -253,3 +261,15 @@ class Command(BaseCommand):
 		new_rank.full_clean()
 		self.stdout.write(f"Added {new_rank}")
 		
+	def import_mailing_list(self, pk, fields):
+		mailing_list_data = {
+			"pk": pk,
+			"name": fields["name"],
+			"description": "",
+			"verbose_description": fields["description"],
+			"is_active": fields["active"],
+		}
+		new_mailing_list = MailingList.objects.create(**mailing_list_data)
+		self.stdout.write(f"Added blog.mailinglist: {new_mailing_list.name}")
+		new_mailing_list.members.set(fields["member"])
+		self.stdout.write(f"  - set {len(fields['member'])} members for {new_mailing_list.name}")
