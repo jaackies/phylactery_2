@@ -12,9 +12,7 @@
 							<tr>
 								<td>
 									Type: 
-									{% for item_type in item_types %}
-										{{ item_type.get_raw_name }}{% if not forloop.last %},{% endif %}
-									{% endfor %}
+									{{ item.get_type_display }}
 								</td>
 							</tr>
 						{% endif %}
