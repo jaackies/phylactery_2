@@ -37,6 +37,16 @@ class Command(BaseCommand):
 		self.import_initial_library()
 		self.import_members()
 	
+	def import_final_library(self):
+		"""
+		Continuing on from import_members
+		Steps:
+			1) Convert external borrowing forms to reservations and borrowerdetails and import them.
+			2) Convert external borrowing item record into borrowrecords.
+			3) Attempt to group borrow records into borrowerdetails, and import them
+		"""
+		pass
+	
 	def import_members(self):
 		"""
 		Continuing on from import_initial_library
