@@ -1,7 +1,7 @@
 from django.urls import path
 from members.autocompletes import MemberAutocomplete
 from members.wizards import FresherMembershipWizard, StaleMembershipWizard, LegacyMembershipWizard
-from members.views import MemberListView, SignupHubView, GatekeeperProfileView
+from members.views import MemberListView, SignupHubView, GatekeeperProfileView, MyProfileView
 
 
 app_name = "members"
@@ -11,6 +11,7 @@ urlpatterns = [
 	path("signup/legacy/", LegacyMembershipWizard.as_view(), name="signup-legacy"),
 	path("signup/", SignupHubView.as_view(), name="signup-hub"),
 	path("list/", MemberListView.as_view(), name="list"),
+	path("profile/me/", MyProfileView.as_view(), name="my-profile"),
 	path("profile/<int:pk>/", GatekeeperProfileView.as_view(), name="profile"),
 	path("autocomplete-member", MemberAutocomplete.as_view(), name="autocomplete-member"),
 ]

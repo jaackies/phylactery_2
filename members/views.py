@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http.response import Http404
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView, DetailView
 from .models import Member
@@ -37,3 +39,14 @@ class SignupHubView(TemplateView):
 class GatekeeperProfileView(DetailView):
 	model = Member
 	template_name = "members/gatekeeper_profile_view.html"
+
+
+class MyProfileView(LoginRequiredMixin, DetailView):
+	model = Member
+	template_name = "members/my_profile_view.html"
+	
+	def get_object(self, queryset=None):
+		member = self.request.user.get_member
+		if member is None:
+			raise Http404("Something went wrong. Please contact committee.")
+		return member

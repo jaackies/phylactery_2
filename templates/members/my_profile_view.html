@@ -1,0 +1,69 @@
+{% extends '_base.html' %}
+
+{% block title %}Profile for {{ member.short_name }}{% endblock %}
+
+{% block content %}
+	<div class="container" style="max-width: 576px;">
+		<h3>{{ member.long_name }}</h3>
+		<div class="row row-cols-1">
+			<div class="col mb-3">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Library Items</h4>
+						<p class="card-text">You have 0 items borrowed currently.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col mb-3">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Memberships</h4>
+						<p class="card-text">
+							{% if member.has_active_membership %}
+								{{ member.short_name }} is a current financial member.
+							{% else %}
+								{{ member.short_name }} is not a current financial member.
+							{% endif %}
+						</p>
+						{% if member.is_life_member %}
+							<p>{{ member.short_name }} is an honorary life member.</p>
+						{% endif %}
+					</div>
+					{% if member.memberships.exists %}
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Date paid</th>
+								<th scope="col">Guild?</th>
+								<th scope="col">Amount Paid</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for membership in member.memberships.all %}
+								{% if membership.expired %}
+									<tr class="table-danger">
+								{% else %}
+									<tr class="table-success">
+								{% endif %}
+										<td>{{ membership.date_purchased }}</td>
+										<td>{{ membership.guild_member|yesno:"Yes,No" }}</td>
+										<td>${{ membership.amount_paid }}</td>
+									</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% endif %}
+				</div>
+			</div>
+			<div class="col mb-3">
+				<div class="card h-100">
+					<div class="card-body">
+						<h4 class="card-title">Discord</h4>
+						<p class="card-text">{{ member.short_name }} does not have a linked Discord account.</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+{% endblock %}
