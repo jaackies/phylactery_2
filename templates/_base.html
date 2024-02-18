@@ -87,7 +87,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								{% if user.is_authenticated %}
-									<li><span class="dropdown-item-text">Logged in as {{ user.member }}</span></li>
+									<li><span class="dropdown-item-text">Logged in as {{ user.member.short_name }}</span></li>
 									<li><a class="dropdown-item" href="#">Profile</a></li>
 									<li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
 								{% else %}
