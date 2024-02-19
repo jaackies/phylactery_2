@@ -1,4 +1,5 @@
 from dal import autocomplete
+from datetime import date
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -297,3 +298,18 @@ class ExternalReservationRequestForm(forms.Form):
 				"confirm"
 			)
 		)
+	
+	def clean(self):
+		# Performs additional validation on the form upon submission
+		borrow_date = self.cleaned_data.get("requested_borrow_date")
+		return_date = self.cleaned_data.get("requested_return_date")
+		
+		if borrow_date < date.today():
+			self.add_error("requested_borrow_date", "Borrow date must be in the future")
+		
+		if return_date < date.today():
+			self.add_error("requested_return_date", "Return date must be in the future")
+		
+		if return_date < borrow_date:
+			# People can't return items before they've borrowed them.
+			self.add_error("requested_return_date", "Return date cannot be before Borrow date")
