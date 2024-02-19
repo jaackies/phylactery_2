@@ -4,7 +4,7 @@ from django import forms
 from dal.forms import FutureModelForm
 from dal_select2_taggit.widgets import TaggitSelect2
 
-from .models import Item, LibraryTag, BorrowerDetails, BorrowRecord
+from .models import Item, LibraryTag, BorrowerDetails, BorrowRecord, Reservation
 
 
 class ItemModelForm(FutureModelForm):
@@ -114,8 +114,37 @@ class BorrowerDetailsAdmin(admin.ModelAdmin):
 
 class LibraryTagAdmin(admin.ModelAdmin):
 	prepopulated_fields = {"slug": ("name",)}
+	
+
+class ReservationAdmin(admin.ModelAdmin):
+	readonly_fields = [
+		"is_external", "requestor_name", "internal_member",
+		"submitted_datetime", "status_update_datetime"
+	]
+	
+	def get_fields(self, request, obj=None):
+		fields = [
+			"is_external", "internal_member",
+			"requestor_name",
+			"requestor_email",
+			"requestor_phone",
+			"requested_date_to_borrow",
+			"requested_date_to_return",
+			"additional_details",
+			"reserved_items",
+			"librarian_comments",
+			"approval_status",
+			"is_active",
+			"borrower",
+			("submitted_datetime", "status_update_datetime")
+		]
+		if obj is not None:
+			if obj.is_external:
+				fields.remove("internal_member")
+		return fields
 
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(BorrowerDetails, BorrowerDetailsAdmin)
 admin.site.register(LibraryTag, LibraryTagAdmin)
+admin.site.register(Reservation, ReservationAdmin)

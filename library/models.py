@@ -549,6 +549,10 @@ class Reservation(models.Model):
 	
 	# Once the items are borrowed, this links to the borrower details, which in turn links to the items borrowed.
 	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.SET_NULL, blank=True, null=True)
+	
+	def __str__(self):
+		name = f"{self.requestor_name} {'(external)' if self.is_external else ''}"
+		return f"[{self.get_approval_status_display()}] {self.requested_date_to_borrow} {name}"
 
 
 class LibraryStrike(models.Model):
