@@ -186,6 +186,109 @@ class InternalBorrowerDetailsForm(forms.Form):
 		return member
 
 
+class InternalReservationRequestForm(forms.Form):
+	name = forms.CharField(
+		max_length=200,
+		required=True,
+		label="Your Name",
+		disabled=True,
+	)
+	additional_details = forms.CharField(
+		widget=forms.Textarea(
+			attrs={
+				"rows": 4
+			}
+		),
+		required=True,
+		label="Please enter additional details as to why you would like to reserve these items."
+	)
+	contact_email = forms.EmailField(
+		required=True,
+		label="Contact Email",
+		disabled=True,
+	)
+	contact_phone = forms.CharField(
+		max_length=20,
+		required=True
+	)
+	requested_borrow_date = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		label="Requested borrow date"
+	)
+	requested_return_date = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		label="Requested return date"
+	)
+	items = forms.ModelMultipleChoiceField(
+		queryset=Item.objects.all(),
+		widget=autocomplete.ModelSelect2Multiple(
+			url="library:autocomplete-item",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		),
+		label="Requested items"
+	)
+	confirm = forms.BooleanField(
+		required=True,
+		initial=False,
+		label="I agree to the above"
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.include_media = False
+		# noinspection PyTypeChecker
+		self.helper.layout = Layout(
+			Fieldset(
+				"Internal Reservation Request Form",
+				HTML("{% include 'library/snippets/internal_reservation_disclaimer_1.html' %}"),
+				Div(
+					Div(
+						"name",
+						css_class="col-md"
+					),
+					Div(
+						"contact_email",
+						css_class="col-md"
+					),
+					css_class="row"
+				),
+				"additional_details",
+				Div(
+					Div(
+						"contact_phone",
+						css_class="col-md"
+					),
+					Div(
+						"requested_borrow_date",
+						css_class="col-md"
+					),
+					Div(
+						"requested_return_date",
+						css_class="col-md"
+					),
+					css_class="row"
+				),
+				"items",
+				HTML("{% include 'library/snippets/internal_reservation_disclaimer_2.html' %}"),
+				"confirm"
+			)
+		)
+
+
 class ExternalReservationRequestForm(forms.Form):
 	name = forms.CharField(
 		max_length=200,
