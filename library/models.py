@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from typing import Any
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q, Case, When, Value
+from django.db.models import Q, Case, When, Value, Count
 from django.db.models.functions import Now
 from django.utils import timezone
 from taggit.managers import TaggableManager, _TaggableManager
@@ -396,6 +396,31 @@ class Item(models.Model):
 		return item_availability_info
 
 
+class BorrowerDetailsManager(models.Manager):
+	"""
+	Custom manager for the BorrowerDetails model.
+	This will annotate all objects with a "completed" field,
+	which is true if none of the associated BorrowRecords need to be returned.
+	"""
+	def get_queryset(self):
+		# Annotates the default queryset.
+		return super().get_queryset().annotate(
+			pending_records=Count(
+				Case(
+					When(borrow_records__returned_datetime__lte=Now(), then=0),
+					default=1,
+					output_field=models.IntegerField()
+				)
+			)
+		).annotate(
+			completed=Case(
+				When(pending_records=0, then=Value(True)),
+				default=Value(False),
+				output_field=models.BooleanField()
+			)
+		)
+
+
 class BorrowerDetails(models.Model):
 	"""
 	Stores all the borrowers details for one borrowing transaction.
@@ -414,6 +439,8 @@ class BorrowerDetails(models.Model):
 	# The details about when the item was borrowed will be shared by all items in the same transaction.
 	borrowed_datetime = models.DateTimeField(default=timezone.now)
 	borrow_authorised_by = models.CharField(max_length=200)
+	
+	objects = BorrowerDetailsManager()
 	
 	def save(self, *args, **kwargs):
 		if self.is_external is False and self.internal_member is not None:
