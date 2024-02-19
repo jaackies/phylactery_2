@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 from django.utils import timezone
 from datetime import timedelta
-from library.models import Item, LibraryTag, BorrowerDetails
+from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
 from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm
 
 
@@ -15,9 +15,9 @@ class DashboardView(TemplateView):
 	
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context["unapproved"] = "UNSET"
-		context["to_be_verified"] = "UNSET"
-		context["pending"] = BorrowerDetails.objects.filter(completed=False)
+		context["unapproved_reservations"] = Reservation.objects.filter(approval_status=ReservationStatus.PENDING)
+		context["to_be_verified"] = BorrowRecord.objects.filter(returned=True, verified_returned=False)
+		context["outstanding_borrowers"] = BorrowerDetails.objects.filter(completed=False)
 		return context
 
 

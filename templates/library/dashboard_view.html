@@ -46,7 +46,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Unapproved Reservations</h5>
 							<p class="card-text">
-								There are currently {{ unapproved|default:"0" }} unapproved reservations.
+								There are currently {{ unapproved_reservations.count|default:"0" }} unapproved reservations.
 							</p>
 						</div>
 					</div>
@@ -56,7 +56,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Committee Specific stuff</h5>
 							<p class="card-text">
-								There are {{ to_be_verified|default:"0" }} items to be verified as returned.
+								There are {{ to_be_verified.count|default:"0" }} items to be verified as returned.
 							</p>
 						</div>
 					</div>
@@ -95,8 +95,8 @@
 					<div class="card">
 						<div class="card-body">
 							<p class="card-text">
-								{% for thing in pending %}
-									{{ thing }}
+								{% for borrower in outstanding_borrowers %}
+									{{ borrower }}
 								{% endfor %}
 							</p>
 						</div>
