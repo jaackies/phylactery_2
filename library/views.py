@@ -1,11 +1,13 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 from django.utils import timezone
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails
-from library.forms import ExternalReservationRequestForm
+from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm
 
 
 class DashboardView(TemplateView):
@@ -102,4 +104,23 @@ class ExternalReservationRequestView(FormView):
 		form.done()
 		messages.success(self.request, "Your form was successfully submitted! We will get in touch soon.")
 		return redirect("home")
-		
+
+
+class InternalReservationRequestView(LoginRequiredMixin, FormView):
+	"""
+	Renders the Internal Reservation Request form.
+	"""
+	form_class = InternalReservationRequestForm
+	template_name = "library/reservation_form.html"
+	
+	def get_initial(self):
+		initial = super().get_initial()
+		submitting_member = self.request.user.get_member
+		if submitting_member is None:
+			raise PermissionDenied
+		initial["name"] = submitting_member.long_name
+		initial["contact_email"] = submitting_member.user.email
+		return initial
+	
+	def form_valid(self, form):
+		pass

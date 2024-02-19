@@ -7,7 +7,8 @@ from library.views import (
 	TagListView,
 	TagDetailView,
 	DashboardView,
-	ExternalReservationRequestView
+	ExternalReservationRequestView,
+	InternalReservationRequestView
 )
 
 
@@ -15,6 +16,7 @@ app_name = 'library'
 urlpatterns = [
 	path("dashboard/", DashboardView.as_view(), name="dashboard"),
 	path("request/ext/", ExternalReservationRequestView.as_view(), name="reservation-external"),
+	path("request/int/", InternalReservationRequestView.as_view(), name="reservation-internal"),
 	path("item/<slug:slug>/", ItemDetailView.as_view(), name="item-detail"),
 	path("tag/<slug:slug>/", TagDetailView.as_view(), name="tag-detail"),
 	path("items/", ItemListView.as_view(), name="item-list"),
