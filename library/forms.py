@@ -287,6 +287,41 @@ class InternalReservationRequestForm(forms.Form):
 				"confirm"
 			)
 		)
+		
+	def clean(self):
+		# Performs additional validation on the form upon submission
+		borrow_date = self.cleaned_data.get("requested_borrow_date")
+		return_date = self.cleaned_data.get("requested_return_date")
+		
+		if borrow_date < date.today():
+			self.add_error("requested_borrow_date", "Borrow date must be in the future")
+		
+		if return_date < date.today():
+			self.add_error("requested_return_date", "Return date must be in the future")
+		
+		if return_date < borrow_date:
+			# People can't return items before they've borrowed them.
+			self.add_error("requested_return_date", "Return date cannot be before Borrow date")
+	
+	def done(self, member):
+		"""
+		Called by the view when the form is submitted and valid.
+		Creates the relevant objects in the database.
+		"""
+		reservation_data = {
+			"is_external": False,
+			"internal_member": member,
+			"requestor_name": self.cleaned_data["name"],
+			"requestor_email": self.cleaned_data["contact_email"],
+			"requestor_phone": self.cleaned_data["contact_phone"],
+			"requested_date_to_borrow": self.cleaned_data["requested_borrow_date"],
+			"requested_date_to_return": self.cleaned_data["requested_return_date"],
+			"additional_details": self.cleaned_data["additional_details"],
+			"librarian_comments": "",
+			"borrower": None,
+		}
+		new_reservation = Reservation.objects.create(**reservation_data)
+		new_reservation.reserved_items.set(self.cleaned_data["items"])
 
 
 class ExternalReservationRequestForm(forms.Form):

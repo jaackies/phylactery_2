@@ -115,12 +115,21 @@ class InternalReservationRequestView(LoginRequiredMixin, FormView):
 	
 	def get_initial(self):
 		initial = super().get_initial()
-		submitting_member = self.request.user.get_member
-		if submitting_member is None:
+		self.submitting_member = self.request.user.get_member
+		if self.submitting_member is None:
 			raise PermissionDenied
-		initial["name"] = submitting_member.long_name
-		initial["contact_email"] = submitting_member.user.email
+		initial["name"] = self.submitting_member.long_name
+		initial["contact_email"] = self.submitting_member.user.email
 		return initial
 	
 	def form_valid(self, form):
-		pass
+		"""
+		When the form is submitted and is valid:
+			1. Create the relevant objects in the database.
+			2. TODO: Send notification to the librarian.
+			3. TODO: Send email receipt to the submitter.
+			4. Redirect to the Library Home page with a success message.
+		"""
+		form.done(member=self.submitting_member)
+		messages.success(self.request, "Your form was successfully submitted! We will get in touch soon.")
+		return redirect("home")
