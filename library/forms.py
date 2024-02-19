@@ -204,7 +204,7 @@ class ExternalReservationRequestForm(forms.Form):
 			}
 		),
 		required=True,
-		label="Enter additional details about your event and organisation (if applicable) here"
+		label="Please enter additional details about your event and organisation (if applicable) here"
 	)
 	contact_email = forms.EmailField(
 		required=True,
@@ -331,5 +331,9 @@ class ExternalReservationRequestForm(forms.Form):
 			"librarian_comments": "",
 			"borrower": None,
 		}
+		if self.cleaned_data["organisation"]:
+			reservation_data["additional_details"] = (
+				f"Organisation: {self.cleaned_data['organisation']}\n-----\n{self.cleaned_data['additional_details']}"
+			)
 		new_reservation = Reservation.objects.create(**reservation_data)
 		new_reservation.reserved_items.set(self.cleaned_data["items"])
