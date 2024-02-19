@@ -1,12 +1,20 @@
 from django.urls import path
 from library.autocompletes import ItemAutocomplete, LibraryTagAutocomplete
 from library.wizards import InternalBorrowItemsWizard
-from library.views import ItemDetailView, ItemListView, TagListView, TagDetailView, DashboardView
+from library.views import (
+	ItemDetailView,
+	ItemListView,
+	TagListView,
+	TagDetailView,
+	DashboardView,
+	ExternalReservationRequestView
+)
 
 
 app_name = 'library'
 urlpatterns = [
 	path("dashboard/", DashboardView.as_view(), name="dashboard"),
+	path("request/ext/", ExternalReservationRequestView.as_view(), name="reservation-external"),
 	path("item/<slug:slug>/", ItemDetailView.as_view(), name="item-detail"),
 	path("tag/<slug:slug>/", TagDetailView.as_view(), name="tag-detail"),
 	path("items/", ItemListView.as_view(), name="item-list"),

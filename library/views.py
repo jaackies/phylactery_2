@@ -1,9 +1,10 @@
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, FormView
 from django.utils import timezone
 from datetime import timedelta
-from .models import Item, LibraryTag, BorrowerDetails
+from library.models import Item, LibraryTag, BorrowerDetails
+from library.forms import ExternalReservationRequestForm
 
 
 class DashboardView(TemplateView):
@@ -80,3 +81,8 @@ class TagDetailView(ListView):
 		context["parent_tags"] = self.tag.parents.exclude(name__startswith="Item: ")
 		context["child_tags"] = self.tag.children.exclude(name__startswith="Item: ")
 		return context
+
+
+class ExternalReservationRequestView(FormView):
+	form_class = ExternalReservationRequestForm
+	template_name = "library/reservation_form.html"

@@ -181,3 +181,73 @@ class InternalBorrowerDetailsForm(forms.Form):
 		if not member.is_valid_member():
 			raise ValidationError("This member cannot borrow items.")
 		return member
+
+
+class ExternalReservationRequestForm(forms.Form):
+	name = forms.CharField(
+		max_length=200,
+		required=True,
+		label="Your Name"
+	)
+	organisation = forms.CharField(
+		max_length=200,
+		required=False,
+		label="Your organisation name (optional)"
+	)
+	additional_details = forms.CharField(
+		widget=forms.Textarea(),
+		required=True,
+		label="Enter additional details about your event and organisation (if applicable) here"
+	)
+	contact_email = forms.EmailField(
+		required=True,
+		label="Contact Email"
+	)
+	contact_phone = forms.CharField(
+		max_length=20,
+		required=True,
+		label="Contact Phone"
+	)
+	requested_borrow_date = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		label="Requested borrow date"
+	)
+	items = forms.ModelMultipleChoiceField(
+		queryset=Item.objects.all(),
+		widget=autocomplete.ModelSelect2Multiple(
+			url="library:autocomplete-item",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		),
+		label="Requested items"
+	)
+	confirm = forms.BooleanField(
+		required=True,
+		initial=False,
+		label="I agree to the above"
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.include_media = False
+		self.helper.layout = Layout(
+			Fieldset(
+				"External Reservation Request Form",
+				"name",
+				"organisation",
+				"additional_details",
+				"contact_phone",
+				"contact_email",
+				"requested_borrow_date",
+				"items",
+				"confirm"
+			)
+		)
