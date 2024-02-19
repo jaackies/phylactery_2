@@ -34,7 +34,9 @@ class SelectLibraryItemsForm(forms.Form):
 		self.helper.layout = Layout(
 			Fieldset(
 				"Borrow Items",
-				HTML("<p>Select items for the member to borrow. Member details will be filled out in the next step.</p>"),
+				HTML(
+					"<p>Select items for the member to borrow. Member details will be filled out in the next step.</p>"
+				),
 				"items",
 			)
 		)
@@ -125,7 +127,7 @@ class ItemDueDateForm(forms.Form):
 			self.add_error(
 				field="due_date",
 				error=f"The due date can't be set beyond the maximum due date for this item. "
-				f"({item_availability['max_due_date']}"
+					  f"({item_availability['max_due_date']}"
 			)
 		if due_date < timezone.now().date():
 			self.add_error(
@@ -242,6 +244,7 @@ class ExternalReservationRequestForm(forms.Form):
 		self.helper.layout = Layout(
 			Fieldset(
 				"External Reservation Request Form",
+				HTML("{% include 'library/snippets/external_reservation_disclaimer_1.html' %}"),
 				Div(
 					Div(
 						"name",
@@ -270,6 +273,7 @@ class ExternalReservationRequestForm(forms.Form):
 					css_class="row"
 				),
 				"items",
+				HTML("{% include 'library/snippets/external_reservation_disclaimer_2.html' %}"),
 				"confirm"
 			)
 		)
