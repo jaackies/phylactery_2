@@ -1,0 +1,95 @@
+{% extends "_base.html" %}
+
+{% block content %}
+	<h2 class="text-center">Library Dashboard</h2>
+
+	<ul class="nav nav-tabs mb-3 justify-content-center fs-5" id="pills-tab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="pills-borrow-tab" data-bs-toggle="pill" data-bs-target="#pills-borrow"
+					type="button" role="tab" aria-controls="pills-borrow" aria-selected="true">
+				Borrow
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link active" id="pills-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-overview"
+					type="button" role="tab" aria-controls="pills-overview" aria-selected="false">
+				Overview
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="pills-return-tab" data-bs-toggle="pill" data-bs-target="#pills-return"
+					type="button" role="tab" aria-controls="pills-return" aria-selected="false">
+				Return
+			</button>
+		</li>
+	</ul>
+	<div class="tab-content" id="pills-tabContent">
+		<div class="tab-pane fade" id="pills-borrow" role="tabpanel" aria-labelledby="pills-borrow-tab" tabindex="0">
+			{% comment %}
+				1. If there are any active reservations for today, prominently display them / link to them.
+				2. Then just link to the borrow form.
+			{% endcomment %}
+		</div>
+		<div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab" tabindex="0">
+			{% comment %}
+				1. If they are committee, show librarian specific stuff
+					- Unapproved reservations
+					- Returns to verify
+				2. For gatekeepers, show:
+					- List of all items currently borrowed out, for easy checking.
+					- Upcoming active reservations
+			{% endcomment %}
+			{% if user.member.is_committee %}
+			<div class="row row-cols-sm-1 row-cols-md-2 bg-info-subtle pt-2 mb-2">
+				<div class="col mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Committee Specific stuff</h5>
+							<p class="card-text">
+								Unapproved reservations will go here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Committee Specific stuff</h5>
+							<p class="card-text">
+								Returns to verify will go here.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+			<div class="row row-cols-sm-1 row-cols-md-2">
+				<div class="col mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">All borrowed items</h5>
+							<p class="card-text">
+								All items borrowed out
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Upcoming reservations</h5>
+							<p class="card-text">
+								Upcoming reservations will go here
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab" tabindex="0">
+			{% comment %}
+				1. Show a list of borrower details, with a link to return items for them.
+			{% endcomment %}
+		</div>
+	</div>
+{% endblock %}

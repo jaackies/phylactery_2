@@ -1,9 +1,13 @@
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.utils import timezone
 from datetime import timedelta
 from .models import Item, LibraryTag
+
+
+class DashboardView(TemplateView):
+	template_name = "library/dashboard_view.html"
 
 
 class ItemDetailView(DetailView):
