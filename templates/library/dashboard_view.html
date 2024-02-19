@@ -90,6 +90,19 @@
 			{% comment %}
 				1. Show a list of borrower details, with a link to return items for them.
 			{% endcomment %}
+			<div class="row">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<p class="card-text">
+								{% for thing in pending %}
+									{{ thing }}
+								{% endfor %}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}

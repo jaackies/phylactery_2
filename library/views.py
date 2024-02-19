@@ -3,11 +3,18 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView, TemplateView
 from django.utils import timezone
 from datetime import timedelta
-from .models import Item, LibraryTag
+from .models import Item, LibraryTag, BorrowerDetails
 
 
 class DashboardView(TemplateView):
 	template_name = "library/dashboard_view.html"
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["unapproved"] = "UNSET"
+		context["to_be_verified"] = "UNSET"
+		context["pending"] = BorrowerDetails.objects.filter(completed=False)
+		return context
 
 
 class ItemDetailView(DetailView):
