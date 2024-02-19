@@ -197,7 +197,11 @@ class ExternalReservationRequestForm(forms.Form):
 		label="Your organisation name (optional)"
 	)
 	additional_details = forms.CharField(
-		widget=forms.Textarea(),
+		widget=forms.Textarea(
+			attrs={
+				"rows": 4
+			}
+		),
 		required=True,
 		label="Enter additional details about your event and organisation (if applicable) here"
 	)
@@ -218,6 +222,15 @@ class ExternalReservationRequestForm(forms.Form):
 			}
 		),
 		label="Requested borrow date"
+	)
+	requested_return_date = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		label="Requested return date"
 	)
 	items = forms.ModelMultipleChoiceField(
 		queryset=Item.objects.all(),
@@ -266,8 +279,15 @@ class ExternalReservationRequestForm(forms.Form):
 						"contact_email",
 						css_class="col-md"
 					),
+					css_class="row"
+				),
+				Div(
 					Div(
 						"requested_borrow_date",
+						css_class="col-md"
+					),
+					Div(
+						"requested_return_date",
 						css_class="col-md"
 					),
 					css_class="row"
