@@ -3,7 +3,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML
+from crispy_forms.layout import Layout, Fieldset, HTML, Div
 
 from library.models import Item, default_due_date
 from members.models import Member
@@ -238,15 +238,37 @@ class ExternalReservationRequestForm(forms.Form):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.include_media = False
+		# noinspection PyTypeChecker
 		self.helper.layout = Layout(
 			Fieldset(
 				"External Reservation Request Form",
-				"name",
-				"organisation",
+				Div(
+					Div(
+						"name",
+						css_class="col-md"
+					),
+					Div(
+						"organisation",
+						css_class="col-md"
+					),
+					css_class="row"
+				),
 				"additional_details",
-				"contact_phone",
-				"contact_email",
-				"requested_borrow_date",
+				Div(
+					Div(
+						"contact_phone",
+						css_class="col-md"
+					),
+					Div(
+						"contact_email",
+						css_class="col-md"
+					),
+					Div(
+						"requested_borrow_date",
+						css_class="col-md"
+					),
+					css_class="row"
+				),
 				"items",
 				"confirm"
 			)
