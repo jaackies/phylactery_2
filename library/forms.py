@@ -138,7 +138,7 @@ class InternalBorrowerDetailsForm(forms.Form):
 	member = forms.ModelChoiceField(
 		queryset=Member.objects.all(),
 		widget=autocomplete.ModelSelect2(
-			url="autocomplete-member",
+			url="members:autocomplete-member",
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
