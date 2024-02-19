@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db import models
 from django import forms
 from dal.forms import FutureModelForm
+from dal.autocomplete import ModelSelect2Multiple
 from dal_select2_taggit.widgets import TaggitSelect2
 
 from .models import Item, LibraryTag, BorrowerDetails, BorrowRecord, Reservation
@@ -48,6 +49,17 @@ class ItemModelForm(FutureModelForm):
 		help_texts = {
 			"base_tags": "",
 			"computed_tags": ""
+		}
+
+
+class ReservationModelForm(FutureModelForm):
+	class Meta:
+		model = Reservation
+		fields = "__all__"
+		widgets = {
+			"reserved_items": ModelSelect2Multiple(
+				url="library:autocomplete-item",
+			)
 		}
 
 
@@ -121,6 +133,8 @@ class ReservationAdmin(admin.ModelAdmin):
 		"is_external", "requestor_name", "internal_member",
 		"submitted_datetime", "status_update_datetime"
 	]
+	
+	form = ReservationModelForm
 	
 	def get_fields(self, request, obj=None):
 		fields = [
