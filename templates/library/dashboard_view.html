@@ -40,13 +40,13 @@
 					- Upcoming active reservations
 			{% endcomment %}
 			{% if user.member.is_committee %}
-			<div class="row row-cols-sm-1 row-cols-md-2 bg-info-subtle pt-2 mb-2">
+			<div class="row row-cols-1 row-cols-md-2 bg-info-subtle pt-2 mb-2">
 				<div class="col mb-2">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">Committee Specific stuff</h5>
+							<h5 class="card-title">Unapproved Reservations</h5>
 							<p class="card-text">
-								Unapproved reservations will go here.
+								There are currently {{ unapproved|default:"0" }} unapproved reservations.
 							</p>
 						</div>
 					</div>
@@ -56,14 +56,14 @@
 						<div class="card-body">
 							<h5 class="card-title">Committee Specific stuff</h5>
 							<p class="card-text">
-								Returns to verify will go here.
+								There are {{ to_be_verified|default:"0" }} items to be verified as returned.
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			{% endif %}
-			<div class="row row-cols-sm-1 row-cols-md-2">
+			<div class="row row-cols-1 row-cols-md-2">
 				<div class="col mb-2">
 					<div class="card">
 						<div class="card-body">
