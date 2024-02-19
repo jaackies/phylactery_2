@@ -84,5 +84,19 @@ class TagDetailView(ListView):
 
 
 class ExternalReservationRequestView(FormView):
+	"""
+	Renders the External Reservation Request form.
+	"""
 	form_class = ExternalReservationRequestForm
 	template_name = "library/reservation_form.html"
+	
+	def form_valid(self, form):
+		"""
+		When the form is submitted and is valid:
+			1. Create the relevant objects in the database.
+			2. TODO: Send notification to the librarian.
+			3. TODO: Send email receipt to the submitter.
+			4. Redirect to the Library Home page with a success message.
+		"""
+		pass
+		
