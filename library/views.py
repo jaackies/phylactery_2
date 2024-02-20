@@ -141,6 +141,7 @@ class InternalReservationRequestView(LoginRequiredMixin, FormView):
 		return redirect("home")
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class ReservationApprovalView(UpdateView):
 	"""
 	For the Librarian - renders the form for approving Reservations
@@ -167,9 +168,18 @@ class ReservationApprovalView(UpdateView):
 		context["normally_not_borrowable"] = normally_not_borrowable
 		return context
 	
+	def get_form_kwargs(self):
+		# If the viewer of the form is not Committee,
+		# then don't let them change anything.
+		kwargs = super().get_form_kwargs()
+		if not self.request.user.member.is_committee():
+			kwargs.update({"view_only": True})
+		return kwargs
+	
 	def form_valid(self, form):
 		"""
 		A couple of things to do here:
+			0. Gatekeepers are able to view. Make sure they can't change.
 			1. If the status is updated, update the status_updated timestamp
 			2. If the status is now approved, set is_active to True
 			3. If changes have been made, email the requestor.
@@ -177,7 +187,7 @@ class ReservationApprovalView(UpdateView):
 					- approval_status, reserved_items, librarian_comments
 					- requested_date_to_borrow, requested_date_to_return,
 		"""
-		if form.has_changed():
+		if form.has_changed() and self.request.user.member.is_committee():
 			if "approval_status" in form.changed_data:
 				form.instance.status_update_datetime = timezone.now()
 				if form.cleaned_data["approval_status"] == ReservationStatus.APPROVED:

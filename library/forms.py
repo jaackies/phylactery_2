@@ -528,7 +528,10 @@ class ReservationModelForm(FutureModelForm):
 		}
 	
 	def __init__(self, *args, **kwargs):
+		view_only = kwargs.pop("view_only", False)
 		super().__init__(*args, **kwargs)
+		if view_only:
+			self.Meta.disabled_fields = self.Meta.fields
 		for field_name in self.Meta.disabled_fields:
 			self.fields.get(field_name).disabled = True
 		self.helper = FormHelper()
