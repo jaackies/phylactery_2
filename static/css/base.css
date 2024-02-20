@@ -65,3 +65,12 @@
 .card-mid-header {
     border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
+
+td:has(> a) {
+    padding: 0 0 !important;
+}
+
+.clickable-row {
+    display: block;
+    padding: 0.5rem 0.5rem !important;
+}

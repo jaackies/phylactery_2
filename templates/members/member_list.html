@@ -28,9 +28,9 @@
 			</thead>
 			<tbody class="table-group-divider">
 				{% for member in object_list %}
-					<tr class="position-relative">
+					<tr>
 						<td>
-							<a href="{% url "members:profile" pk=member.pk %}" class="link-underline link-underline-opacity-0 stretched-link">{{ member.long_name }}</a>
+							<a href="{% url "members:profile" pk=member.pk %}" class="clickable-row link-underline link-underline-opacity-0">{{ member.long_name }}</a>
 						</td>
 					</tr>
 				{% endfor %}
