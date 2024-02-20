@@ -99,7 +99,7 @@
 							<div class="card-body">
 								<h5 class="card-title">Unapproved Reservations</h5>
 								<p class="card-text">
-									There are currently {{ unapproved_reservations.count|default:"no" }} unapproved reservations.
+									{{ unapproved_reservations.count|default:"No" }} unapproved reservations.
 								</p>
 							</div>
 							{% if unapproved_reservations %}
@@ -131,7 +131,7 @@
 							<div class="card-body">
 								<h5 class="card-title">Unverified Returns</h5>
 								<p class="card-text">
-									There are {{ to_be_verified.count|default:"no" }} items to be verified as returned.
+									{{ to_be_verified.count|default:"No" }} items to be verified as returned.
 								</p>
 								{% if to_be_verified %}
 									<a href="#" class="btn btn-success">Verify Returned Items</a>
@@ -147,7 +147,7 @@
 						<div class="card-body">
 							<h5 class="card-title">All borrowed items</h5>
 							<p class="card-text">
-								There are currently {{ currently_borrowed.count|default:"no" }} items borrowed.
+								{{ currently_borrowed.count|default:"No" }} items borrowed currently.
 							</p>
 						</div>
 					</div>
@@ -157,7 +157,7 @@
 						<div class="card-body">
 							<h5 class="card-title">Upcoming reservations</h5>
 							<p class="card-text">
-								There are {{ upcoming_reservations.count|default:"no" }} upcoming reservations.
+								{{ upcoming_reservations.count|default:"No" }} upcoming reservations.
 							</p>
 						</div>
 					</div>
