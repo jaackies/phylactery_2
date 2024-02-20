@@ -66,11 +66,11 @@
     border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 
-td:has(> a) {
+td:has(> a.clickable-cell) {
     padding: 0 0 !important;
 }
 
-.clickable-row {
+.clickable-cell {
     display: block;
     padding: 0.5rem 0.5rem !important;
 }
