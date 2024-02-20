@@ -21,7 +21,7 @@ urlpatterns = [
 	path("tag/<slug:slug>/", TagDetailView.as_view(), name="tag-detail"),
 	path("items/", ItemListView.as_view(), name="item-list"),
 	path("tags/", TagListView.as_view(), name="tag-list"),
-	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow"),
+	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow-wizard"),
 	path("autocomplete-item", ItemAutocomplete.as_view(), name="autocomplete-item"),
 	path("autocomplete-tag", LibraryTagAutocomplete.as_view(), name="autocomplete-tag"),
 ]

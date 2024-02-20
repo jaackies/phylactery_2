@@ -31,20 +31,54 @@
 			{% endcomment %}
 			<div class="row">
 				<div class="col">
-					<div class="card text-center border-danger">
-						<div class="card-header">
-							Active Reservations!
+					{% if reservations_today %}
+						<div class="card text-center border-danger">
+							<div class="card-header">
+								Active Reservations!
+							</div>
+							<div class="card-body">
+								<h5 class="card-title">There are active reservations today!</h5>
+								<p class="card-text">
+									If someone is wishing to check out a reservation for today, select it on the list below.
+								</p>
+							</div>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">Requestor Name</th>
+										<th scope="col"># of Items</th>
+										<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for reservation in reservations_today %}
+									<tr>
+										<td>{{ reservation.requestor_name }}</td>
+										<td>{{ reservation.reserved_items.count }}</td>
+										<td>
+											<a href="#" class="clickable-cell">Link</a>
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+							<div class="card-body">
+								<p class="card-text">
+									Otherwise, proceed as normal to the borrowing form.
+								</p>
+								<a href="{% url 'library:borrow-wizard' %}" class="btn btn-primary">Borrowing Form</a>
+							</div>
 						</div>
-						<div class="card-body">
-							<h5 class="card-title">There are active reservations today!</h5>
-							<p class="card-text">
-								If someone is wishing to check out a reservation for today, select it on the list below.
-							</p>
-							<p class="card-text">
-								Otherwise, proceed as normal to the borrowing form.
-							</p>
+					{% else %}
+						<div class="card text-center">
+							<div class="card-body">
+								<p class="card-text">
+									Click below to go to the borrowing form.
+								</p>
+								<a href="{% url 'library:borrow-wizard' %}" class="btn btn-primary">Borrowing Form</a>
+							</div>
 						</div>
-					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
