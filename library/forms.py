@@ -523,6 +523,9 @@ class ReservationModelForm(FutureModelForm):
 				}
 			)
 		}
+		labels = {
+			"reserved_items": "Requested items"
+		}
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
