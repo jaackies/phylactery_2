@@ -156,16 +156,18 @@ class ReservationApprovalView(UpdateView):
 		then we show an alert.
 		"""
 		context = super().get_context_data(**kwargs)
-		maybe_not_available = []
-		normally_not_borrowable = []
-		for item in self.object.reserved_items.all():
-			if not item.is_borrowable:
-				normally_not_borrowable.append(item.name)
-			expected_available_date = item.get_availability_info()["expected_available_date"]
-			if expected_available_date is not None and expected_available_date > self.object.requested_date_to_borrow:
-				maybe_not_available.append((item.name, expected_available_date))
-		context["maybe_not_available"] = maybe_not_available
-		context["normally_not_borrowable"] = normally_not_borrowable
+		if self.object.approval_status == ReservationStatus.PENDING:
+			# Don't show the warnings if the form is already approved.
+			maybe_not_available = []
+			normally_not_borrowable = []
+			for item in self.object.reserved_items.all():
+				if not item.is_borrowable:
+					normally_not_borrowable.append(item.name)
+				expected_available_date = item.get_availability_info()["expected_available_date"]
+				if expected_available_date is not None and expected_available_date > self.object.requested_date_to_borrow:
+					maybe_not_available.append((item.name, expected_available_date))
+			context["maybe_not_available"] = maybe_not_available
+			context["normally_not_borrowable"] = normally_not_borrowable
 		context["view_only"] = not self.request.user.member.is_committee()
 		return context
 	
