@@ -94,7 +94,7 @@
 			{% if user.member.is_committee %}
 			<div class="row row-cols-1 row-cols-md-2 bg-info-subtle pt-2 mb-2">
 				<div class="col mb-2">
-					<div class="card h-100">
+					<div class="card h-100 text-center">
 						<div class="card-body">
 							<h5 class="card-title">Unapproved Reservations</h5>
 							<p class="card-text">
@@ -105,8 +105,7 @@
 							<thead>
 								<tr>
 									<th scope="col">Name</th>
-									<th scope="col"><i class="bi-calendar"></i></th>
-									<th scope="col"><i class="bi-calendar-check"></i></th>
+									<th scope="col"><i class="bi-calendar-check"></i> Borrow</th>
 									<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
 								</tr>
 							</thead>
@@ -115,7 +114,6 @@
 								<tr>
 									<td>{{ reservation.requestor_name }}</td>
 									<td>{{ reservation.requested_date_to_borrow }}</td>
-									<td>{{ reservation.requested_date_to_return }}</td>
 									<td>
 										<a href="#" class="clickable-cell">Link</a>
 									</td>
@@ -126,12 +124,13 @@
 					</div>
 				</div>
 				<div class="col mb-2">
-					<div class="card h-100">
+					<div class="card h-100 text-center">
 						<div class="card-body">
 							<h5 class="card-title">Committee Specific stuff</h5>
 							<p class="card-text">
 								There are {{ to_be_verified.count|default:"0" }} items to be verified as returned.
 							</p>
+							<a href="#" class="btn btn-success">Verify Returned Items</a>
 						</div>
 					</div>
 				</div>
