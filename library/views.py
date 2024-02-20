@@ -161,6 +161,33 @@ class ReservationApprovalView(UpdateView):
 		context["maybe_not_available"] = maybe_not_available
 		context["normally_not_borrowable"] = normally_not_borrowable
 		return context
+	
+	def form_valid(self, form):
+		"""
+		A couple of things to do here:
+			1. If the status is updated, update the status_updated timestamp
+			2. If the status is now approved, set is_active to True
+			3. If changes have been made, email the requestor.
+				- Track changes in:
+					- approval_status, reserved_items, librarian_comments
+					- requested_date_to_borrow, requested_date_to_return,
+		"""
+		if form.has_changed():
+			if "approval_status" in form.changed_data:
+				form.instance.status_update_datetime = timezone.now()
+				if form.cleaned_data["approval_status"] == ReservationStatus.APPROVED:
+					form.instance.is_active = True
+			track_field_changes = {
+				"approval_status", "reserved_items", "librarian_comments",
+				"requested_date_to_borrow",	"requested_date_to_return"
+			}
+			if len(track_field_changes & set(form.changed_data)) >= 1:
+				# Any of the fields that we care about have been updated.
+				# TODO: Send an email to the requestor with the updated changes.
+				pass
+			form.save()
+			messages.success(self.request, "Reservation updated.")
+		return redirect("library:dashboard")
 
 
 class VerifyReturnsView(FormView):
