@@ -128,11 +128,13 @@
 					<div class="col-md mb-2">
 						<div class="card h-100 text-center">
 							<div class="card-body">
-								<h5 class="card-title">Committee Specific stuff</h5>
+								<h5 class="card-title">Unverified Returns</h5>
 								<p class="card-text">
 									There are {{ to_be_verified.count|default:"0" }} items to be verified as returned.
 								</p>
-								<a href="#" class="btn btn-success">Verify Returned Items</a>
+								{% if to_be_verified %}
+									<a href="#" class="btn btn-success">Verify Returned Items</a>
+								{% endif %}
 							</div>
 						</div>
 					</div>
