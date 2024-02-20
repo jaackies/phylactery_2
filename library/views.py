@@ -19,9 +19,11 @@ class DashboardView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["unapproved_reservations"] = Reservation.objects.filter(approval_status=ReservationStatus.PENDING)
+		context["upcoming_reservations"] = Reservation.objects.filter(requested_date_to_borrow__gt=timezone.now(), is_active=True)
 		context["reservations_today"] = Reservation.objects.filter(requested_date_to_borrow=timezone.now(), is_active=True)
 		context["to_be_verified"] = BorrowRecord.objects.filter(returned=True, verified_returned=False)
 		context["outstanding_borrowers"] = BorrowerDetails.objects.filter(completed=False)
+		context["currently_borrowed"] = Item.objects.filter(borrow_records__returned_datetime__isnull=False)
 		return context
 
 
