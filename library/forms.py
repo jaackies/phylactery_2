@@ -552,7 +552,8 @@ class ReservationModelForm(FutureModelForm):
 					css_class="row",
 				),
 				"additional_details", "approval_status",
-				"librarian_comments"
+				"librarian_comments",
+				HTML("{% include 'library/snippets/librarian_comment_warning.html' %}"),
 			)
 		)
 		if self.initial.get("is_external"):
