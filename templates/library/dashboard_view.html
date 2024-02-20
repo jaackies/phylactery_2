@@ -92,9 +92,10 @@
 					- Upcoming active reservations
 			{% endcomment %}
 			{% if user.member.is_committee %}
-				<div class="row bg-info-subtle pt-2 mb-2">
+				<div class="row bg-info-subtle pt-2 mb-2 text-center">
+					<h4>Committee Only</h4>
 					<div class="col-md mb-2">
-						<div class="card h-100 text-center">
+						<div class="card h-100">
 							<div class="card-body">
 								<h5 class="card-title">Unapproved Reservations</h5>
 								<p class="card-text">
@@ -126,7 +127,7 @@
 						</div>
 					</div>
 					<div class="col-md mb-2">
-						<div class="card h-100 text-center">
+						<div class="card h-100">
 							<div class="card-body">
 								<h5 class="card-title">Unverified Returns</h5>
 								<p class="card-text">
