@@ -545,6 +545,7 @@ class ReservationModelForm(FutureModelForm):
 				),
 				"requestor_email", "requestor_phone",
 				"reserved_items",
+				HTML("{% include 'library/snippets/problem_items_snippet.html' %}"),
 				Div(
 					Div("requested_date_to_borrow", css_class="col-md"),
 					Div("requested_date_to_return", css_class="col-md"),

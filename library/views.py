@@ -143,6 +143,24 @@ class ReservationApprovalView(UpdateView):
 	model = Reservation
 	form_class = ReservationModelForm
 	template_name = "library/reservation_form.html"
+	
+	def get_context_data(self, **kwargs):
+		"""
+		We check the requested items. If any of them might not be back in time,
+		then we show an alert.
+		"""
+		context = super().get_context_data(**kwargs)
+		maybe_not_available = []
+		normally_not_borrowable = []
+		for item in self.object.reserved_items.all():
+			if not item.is_borrowable:
+				normally_not_borrowable.append(item.name)
+			expected_available_date = item.get_availability_info()["expected_available_date"]
+			if expected_available_date is not None and expected_available_date > self.object.requested_date_to_borrow:
+				maybe_not_available.append((item.name, expected_available_date))
+		context["maybe_not_available"] = maybe_not_available
+		context["normally_not_borrowable"] = normally_not_borrowable
+		return context
 
 
 class VerifyReturnsView(FormView):

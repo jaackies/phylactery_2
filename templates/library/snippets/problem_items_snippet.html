@@ -1,0 +1,21 @@
+{% if maybe_not_available or normally_not_borrowable %}
+	<div class="alert alert-warning" role="alert">
+		<h4 class="alert-heading">There are some potential problems with some of the selected items</h4>
+		{% if maybe_not_available %}
+			<p class="mb-0">The following items might not be available by the requested borrow date:</p>
+			<ul>
+				{% for item, date in maybe_not_available %}
+					<li>{{ item }} (due back {{ date }})</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		{% if normally_not_borrowable %}
+			<p class="mb-0">The following items are normally not borrowable:</p>
+			<ul>
+				{% for item in normally_not_borrowable %}
+					<li>{{ item }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+{% endif %}
