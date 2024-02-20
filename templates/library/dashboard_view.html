@@ -152,6 +152,11 @@
 						</div>
 						{% if currently_borrowed %}
 							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">All Items</th>
+									</tr>
+								</thead>
 								<tbody>
 									{% for item in currently_borrowed %}
 									<tr>
