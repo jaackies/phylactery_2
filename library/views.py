@@ -3,11 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, ListView, TemplateView, FormView
+from django.views.generic import DetailView, ListView, TemplateView, FormView, UpdateView
 from django.utils import timezone
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
-from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm
+from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm
 
 
 class DashboardView(TemplateView):
@@ -136,11 +136,13 @@ class InternalReservationRequestView(LoginRequiredMixin, FormView):
 		return redirect("home")
 
 
-class ReservationApprovalView(FormView):
+class ReservationApprovalView(UpdateView):
 	"""
 	For the Librarian - renders the form for approving Reservations
 	"""
-	pass
+	model = Reservation
+	form_class = ReservationModelForm
+	template_name = "library/reservation_form.html"
 
 
 class VerifyReturnsView(FormView):

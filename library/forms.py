@@ -1,4 +1,5 @@
 from dal import autocomplete
+from dal.forms import FutureModelForm
 from datetime import date
 from django import forms
 from django.core.exceptions import ValidationError
@@ -477,64 +478,69 @@ class ExternalReservationRequestForm(forms.Form):
 		new_reservation.reserved_items.set(self.cleaned_data["items"])
 
 
-class ReservationApprovalForm(forms.Form):
-	is_external = forms.BooleanField(
-		disabled=True,
-	)
-	internal_member = forms.ModelChoiceField(
-		"members.Member",
-		disabled=True,
-	)
-	requestor_name = forms.CharField(
-		max_length=200,
-		disabled=True,
-	)
-	requestor_email = forms.EmailField(
-		disabled=True,
-	)
-	requestor_phone = forms.CharField(
-		max_length=20,
-		disabled=True,
-	)
-	reserved_items = forms.ModelMultipleChoiceField(
-		queryset=Item.objects.all(),
-		widget=autocomplete.ModelSelect2Multiple(
-			url="library:autocomplete-item",
-			attrs={
-				"data-theme": "bootstrap-5"
-			}
-		)
-	)
-	requested_date_to_borrow = forms.DateField(
-		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		)
-	)
-	requested_date_to_return = forms.DateField(
-		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		)
-	)
-	additional_details = forms.CharField(
-		widget=forms.Textarea(
-			attrs={
-				"rows": 4
-			}
-		),
-		disabled=True,
-	)
-	submitted_datetime = forms.DateTimeField(
-		disabled=True,
-		widget=forms.DateTimeInput(
-			attrs={
-				"type": "datetime-local"
-			}
-		)
-	)
+class ReservationModelForm(FutureModelForm):
+	class Meta:
+		model = Reservation
+		fields = [
+			"is_external", "internal_member",
+			"requestor_name", "requestor_email", "requestor_phone",
+			"reserved_items",
+			"requested_date_to_borrow", "requested_date_to_return",
+			"additional_details", "approval_status",
+			"librarian_comments"
+		]
+		disabled_fields = [
+			"is_external", "internal_member",
+			"requestor_name", "requestor_email", "requestor_phone",
+			"additional_details",
+		]
+		widgets = {
+			"reserved_items": autocomplete.ModelSelect2Multiple(
+				url="library:autocomplete-item",
+				attrs={
+					"data-theme": "bootstrap-5"
+				}
+			),
+			"requested_date_to_borrow": forms.DateInput(
+				attrs={
+					"type": "date"
+				}
+			),
+			"requested_date_to_return": forms.DateInput(
+				attrs={
+					"type": "date"
+				}
+			),
+			"additional_details": forms.Textarea(
+				attrs={
+					"rows": 4,
+				}
+			),
+			"librarian_comments": forms.Textarea(
+				attrs={
+					"rows": 4,
+				}
+			)
+		}
 	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		for field_name in self.Meta.disabled_fields:
+			self.fields.get(field_name).disabled = True
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.include_media = False
+		# noinspection PyTypeChecker
+		self.helper.layout = Layout(
+			Fieldset(
+				"Reservation",
+				"is_external", "internal_member",
+				"requestor_name", "requestor_email", "requestor_phone",
+				"reserved_items",
+				"requested_date_to_borrow", "requested_date_to_return",
+				"additional_details", "approval_status",
+				"librarian_comments"
+			)
+		)
+		
+		

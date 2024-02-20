@@ -115,7 +115,7 @@
 									<td>{{ reservation.requestor_name }}</td>
 									<td>{{ reservation.requested_date_to_borrow }}</td>
 									<td>
-										<a href="#" class="clickable-cell">Link</a>
+										<a href="{% url 'library:approve-reservation' pk=reservation.pk %}" class="clickable-cell">Link</a>
 									</td>
 								</tr>
 							{% endfor %}
