@@ -475,3 +475,66 @@ class ExternalReservationRequestForm(forms.Form):
 			)
 		new_reservation = Reservation.objects.create(**reservation_data)
 		new_reservation.reserved_items.set(self.cleaned_data["items"])
+
+
+class ReservationApprovalForm(forms.Form):
+	is_external = forms.BooleanField(
+		disabled=True,
+	)
+	internal_member = forms.ModelChoiceField(
+		"members.Member",
+		disabled=True,
+	)
+	requestor_name = forms.CharField(
+		max_length=200,
+		disabled=True,
+	)
+	requestor_email = forms.EmailField(
+		disabled=True,
+	)
+	requestor_phone = forms.CharField(
+		max_length=20,
+		disabled=True,
+	)
+	reserved_items = forms.ModelMultipleChoiceField(
+		queryset=Item.objects.all(),
+		widget=autocomplete.ModelSelect2Multiple(
+			url="library:autocomplete-item",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
+	)
+	requested_date_to_borrow = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		)
+	)
+	requested_date_to_return = forms.DateField(
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		)
+	)
+	additional_details = forms.CharField(
+		widget=forms.Textarea(
+			attrs={
+				"rows": 4
+			}
+		),
+		disabled=True,
+	)
+	submitted_datetime = forms.DateTimeField(
+		disabled=True,
+		widget=forms.DateTimeInput(
+			attrs={
+				"type": "datetime-local"
+			}
+		)
+	)
+	
