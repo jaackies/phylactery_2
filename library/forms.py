@@ -495,6 +495,7 @@ class ReservationModelForm(FutureModelForm):
 			"additional_details",
 		]
 		widgets = {
+			"is_external": forms.TextInput(),
 			"reserved_items": autocomplete.ModelSelect2Multiple(
 				url="library:autocomplete-item",
 				attrs={
@@ -534,13 +535,25 @@ class ReservationModelForm(FutureModelForm):
 		self.helper.layout = Layout(
 			Fieldset(
 				"Reservation",
-				"is_external", "internal_member",
-				"requestor_name", "requestor_email", "requestor_phone",
+				Div(
+					Div(css_class="col-md"),
+					Div("is_external", css_class="col-md"),
+					css_class="row",
+				),
+				"requestor_email", "requestor_phone",
 				"reserved_items",
-				"requested_date_to_borrow", "requested_date_to_return",
+				Div(
+					Div("requested_date_to_borrow", css_class="col-md"),
+					Div("requested_date_to_return", css_class="col-md"),
+					css_class="row",
+				),
 				"additional_details", "approval_status",
 				"librarian_comments"
 			)
 		)
-		
+		if self.initial.get("is_external"):
+			self.helper.layout[0][0][0].append("requestor_name")
+			self.helper.layout[0][0][1].css_class = "col-md border border-danger bg-danger-subtle"
+		else:
+			self.helper.layout[0][0][0].append("internal_member")
 		
