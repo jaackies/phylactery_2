@@ -92,49 +92,49 @@
 					- Upcoming active reservations
 			{% endcomment %}
 			{% if user.member.is_committee %}
-			<div class="row row-cols-1 row-cols-md-2 bg-info-subtle pt-2 mb-2">
-				<div class="col mb-2">
-					<div class="card h-100 text-center">
-						<div class="card-body">
-							<h5 class="card-title">Unapproved Reservations</h5>
-							<p class="card-text">
-								There are currently {{ unapproved_reservations.count|default:"0" }} unapproved reservations.
-							</p>
-						</div>
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th scope="col">Name</th>
-									<th scope="col"><i class="bi-calendar-check"></i> Borrow</th>
-									<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for reservation in unapproved_reservations %}
-								<tr>
-									<td>{{ reservation.requestor_name }}</td>
-									<td>{{ reservation.requested_date_to_borrow }}</td>
-									<td>
-										<a href="{% url 'library:approve-reservation' pk=reservation.pk %}" class="clickable-cell">Link</a>
-									</td>
-								</tr>
-							{% endfor %}
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="col mb-2">
-					<div class="card h-100 text-center">
-						<div class="card-body">
-							<h5 class="card-title">Committee Specific stuff</h5>
-							<p class="card-text">
-								There are {{ to_be_verified.count|default:"0" }} items to be verified as returned.
-							</p>
-							<a href="#" class="btn btn-success">Verify Returned Items</a>
+				<div class="row bg-info-subtle pt-2 mb-2">
+					<div class="col-md mb-2">
+						<div class="card h-100 text-center">
+							<div class="card-body">
+								<h5 class="card-title">Unapproved Reservations</h5>
+								<p class="card-text">
+									There are currently {{ unapproved_reservations.count|default:"0" }} unapproved reservations.
+								</p>
+							</div>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">Name</th>
+										<th scope="col"><i class="bi-calendar-check"></i> Borrow</th>
+										<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for reservation in unapproved_reservations %}
+									<tr>
+										<td>{{ reservation.requestor_name }}</td>
+										<td>{{ reservation.requested_date_to_borrow }}</td>
+										<td>
+											<a href="{% url 'library:approve-reservation' pk=reservation.pk %}" class="clickable-cell">Link</a>
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
 						</div>
 					</div>
+					<div class="col-md mb-2">
+						<div class="card h-100 text-center">
+							<div class="card-body">
+								<h5 class="card-title">Committee Specific stuff</h5>
+								<p class="card-text">
+									There are {{ to_be_verified.count|default:"0" }} items to be verified as returned.
+								</p>
+								<a href="#" class="btn btn-success">Verify Returned Items</a>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
 			{% endif %}
 			<div class="row row-cols-1 row-cols-md-2">
 				<div class="col mb-2">
