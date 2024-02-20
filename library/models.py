@@ -463,7 +463,10 @@ class BorrowRecordManager(models.Manager):
 		# Annotates the default queryset.
 		return super().get_queryset().annotate(
 			returned=Case(
-				When(returned_datetime__lte=Now(), then=Value(True)),
+				When(
+					borrowed_datetime__lte=Now(),
+					returned_datetime__lte=Now(),
+					then=Value(True)),
 				default=Value(False),
 				output_field=models.BooleanField()
 			)
