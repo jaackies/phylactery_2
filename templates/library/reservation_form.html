@@ -9,10 +9,12 @@
 		{% crispy form %}
 		<div class="d-flex flex-row justify-content-between">
 			<div class="p-2">
-				<button type="submit"
-						class="btn btn-success">
-					Submit <i class="bi-check2"></i>
-				</button>
+				{% if not view_only %}
+					<button type="submit"
+							class="btn btn-success">
+						Submit <i class="bi-check2"></i>
+					</button>
+				{% endif %}
 			</div>
 		</div>
 	</form>

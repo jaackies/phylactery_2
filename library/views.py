@@ -166,6 +166,7 @@ class ReservationApprovalView(UpdateView):
 				maybe_not_available.append((item.name, expected_available_date))
 		context["maybe_not_available"] = maybe_not_available
 		context["normally_not_borrowable"] = normally_not_borrowable
+		context["view_only"] = not self.request.user.member.is_committee()
 		return context
 	
 	def get_form_kwargs(self):
