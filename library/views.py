@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q
+from django.db.models.functions import Now
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, FormView, UpdateView
 from django.utils import timezone
@@ -19,11 +20,11 @@ class DashboardView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["unapproved_reservations"] = Reservation.objects.filter(approval_status=ReservationStatus.PENDING)
-		context["upcoming_reservations"] = Reservation.objects.filter(requested_date_to_borrow__gt=timezone.now(), is_active=True)
-		context["reservations_today"] = Reservation.objects.filter(requested_date_to_borrow=timezone.now(), is_active=True)
+		context["upcoming_reservations"] = Reservation.objects.filter(requested_date_to_borrow__gt=Now(), is_active=True)
+		context["reservations_today"] = Reservation.objects.filter(requested_date_to_borrow=Now(), is_active=True)
 		context["to_be_verified"] = BorrowRecord.objects.filter(returned=True, verified_returned=False)
 		context["outstanding_borrowers"] = BorrowerDetails.objects.filter(completed=False)
-		context["currently_borrowed"] = Item.objects.filter(borrow_records__returned_datetime__isnull=False)
+		context["currently_borrowed"] = Item.objects.filter(borrow_records__borrowed_datetime__lte=Now(), borrow_records__returned_datetime=None)
 		return context
 
 

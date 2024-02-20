@@ -143,23 +143,56 @@
 			{% endif %}
 			<div class="row text-center">
 				<div class="col-md mb-2">
-					<div class="card">
+					<div class="card h-100">
 						<div class="card-body">
 							<h5 class="card-title">All borrowed items</h5>
 							<p class="card-text">
 								{{ currently_borrowed.count|default:"No" }} item{{ currently_borrowed.count|pluralize }} borrowed currently.
 							</p>
 						</div>
+						{% if currently_borrowed %}
+							<table class="table table-hover">
+								<tbody>
+									{% for item in currently_borrowed %}
+									<tr>
+										<td>{{ item.name }}</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						{% endif %}
 					</div>
 				</div>
 				<div class="col-md mb-2">
-					<div class="card">
+					<div class="card h-100">
 						<div class="card-body">
 							<h5 class="card-title">Upcoming reservations</h5>
 							<p class="card-text">
 								{{ upcoming_reservations.count|default:"No" }} upcoming reservation{{ upcoming_reservations.count|pluralize }}.
 							</p>
 						</div>
+						{% if upcoming_reservations %}
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">Name</th>
+										<th scope="col"><i class="bi-calendar-check"></i> Borrow</th>
+										<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for reservation in upcoming_reservations %}
+									<tr>
+										<td>{{ reservation.requestor_name }}</td>
+										<td>{{ reservation.requested_date_to_borrow }}</td>
+										<td>
+											<a href="{% url 'library:approve-reservation' pk=reservation.pk %}" class="clickable-cell">Link</a>
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						{% endif %}
 					</div>
 				</div>
 			</div>
