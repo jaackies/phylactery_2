@@ -134,3 +134,21 @@ class InternalReservationRequestView(LoginRequiredMixin, FormView):
 		form.done(member=self.submitting_member)
 		messages.success(self.request, "Your form was successfully submitted! We will get in touch soon.")
 		return redirect("home")
+
+
+class ReservationApprovalView(FormView):
+	"""
+	For the Librarian - renders the form for approving Reservations
+	"""
+	pass
+
+
+class VerifyReturnsView(FormView):
+	"""
+	For the Librarian - renders the form for verifying returned items.
+	"""
+	pass
+
+
+class ReservationBorrowView(FormView):
+	pass

@@ -8,20 +8,26 @@ from library.views import (
 	TagDetailView,
 	DashboardView,
 	ExternalReservationRequestView,
-	InternalReservationRequestView
+	InternalReservationRequestView,
+	ReservationApprovalView,
+	VerifyReturnsView,
+	ReservationBorrowView,
 )
 
 
 app_name = 'library'
 urlpatterns = [
 	path("dashboard/", DashboardView.as_view(), name="dashboard"),
-	path("request/ext/", ExternalReservationRequestView.as_view(), name="reservation-external"),
-	path("request/int/", InternalReservationRequestView.as_view(), name="reservation-internal"),
+	path("request/external/", ExternalReservationRequestView.as_view(), name="reservation-external"),
+	path("request/internal/", InternalReservationRequestView.as_view(), name="reservation-internal"),
+	path("approve/<int:pk>/", ReservationApprovalView.as_view(), name="approve-reservation"),
+	path("verify/", VerifyReturnsView.as_view(), name="verify-returns"),
 	path("item/<slug:slug>/", ItemDetailView.as_view(), name="item-detail"),
 	path("tag/<slug:slug>/", TagDetailView.as_view(), name="tag-detail"),
 	path("items/", ItemListView.as_view(), name="item-list"),
 	path("tags/", TagListView.as_view(), name="tag-list"),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow-wizard"),
+	path("borrow/reservation/<int:pk>/", ReservationBorrowView.as_view(), name="borrow-reservation"),
 	path("autocomplete-item", ItemAutocomplete.as_view(), name="autocomplete-item"),
 	path("autocomplete-tag", LibraryTagAutocomplete.as_view(), name="autocomplete-tag"),
 ]
