@@ -5,11 +5,14 @@ from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, FormView, UpdateView
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
 from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm
+from members.decorators import gatekeeper_required
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class DashboardView(TemplateView):
 	template_name = "library/dashboard_view.html"
 	
