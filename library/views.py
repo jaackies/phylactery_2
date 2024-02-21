@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
 from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm
-from members.decorators import gatekeeper_required
+from members.decorators import gatekeeper_required, committee_required
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
@@ -209,6 +209,7 @@ class ReservationApprovalView(UpdateView):
 		return redirect("library:dashboard")
 
 
+@method_decorator(committee_required, name="dispatch")
 class VerifyReturnsView(FormView):
 	"""
 	For the Librarian - renders the form for verifying returned items.
@@ -216,5 +217,9 @@ class VerifyReturnsView(FormView):
 	pass
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
 class ReservationBorrowView(FormView):
+	"""
+	Renders a form that allows borrowing based on a Reservation.
+	"""
 	pass
