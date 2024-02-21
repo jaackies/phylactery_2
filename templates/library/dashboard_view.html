@@ -247,7 +247,7 @@
 													{% endif %}
 												</td>
 												<td>
-													<a href="#" class="clickable-cell">Return</a>
+													<a href="{% url 'library:return' pk=borrower.pk %}" class="clickable-cell">Return</a>
 												</td>
 										</tr>
 									{% endfor %}
