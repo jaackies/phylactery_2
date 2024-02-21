@@ -3,13 +3,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Q
 from django.db.models.functions import Now
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, FormView, UpdateView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
-from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm
+from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm, ReturnItemFormset
 from members.decorators import gatekeeper_required, committee_required
 
 
@@ -252,7 +253,24 @@ class ReturnItemsView(FormView):
 	If a Member has borrowed several items separately,
 	this form will have to be used more than once to return them all.
 	"""
-	pass
+	form_class = ReturnItemFormset
+	template_name = "library/return_items_view.html"
+	
+	def get_initial(self):
+		pk = self.kwargs.get("pk", None)
+		self.borrower_details = get_object_or_404(BorrowerDetails, pk=pk)
+		if self.borrower_details in BorrowerDetails.objects.filter(completed=True):
+			raise Http404
+		initial = []
+		for borrow_record in self.borrower_details.borrow_records.filter(
+			borrowed_datetime__lte=Now(),
+			returned_datetime=None,
+		):
+			initial.append({
+				"item": borrow_record.item
+			})
+		return initial
+		
 
 
 @method_decorator(committee_required, name="dispatch")

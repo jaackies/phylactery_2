@@ -576,7 +576,9 @@ class ReturnItemForm(forms.Form):
 		required=True,
 		queryset=Item.objects.all(),
 	)
-	returned = forms.BooleanField()
+	returned = forms.BooleanField(
+		required=False
+	)
 	comments = forms.CharField(
 		widget=forms.Textarea(
 			attrs={
@@ -593,13 +595,13 @@ class ReturnItemForm(forms.Form):
 		item_img = self.initial["item"].image.url
 		self.helper.layout = Layout(
 			HTML(
-				f"""
+				"""
 					<tr>
 						<td>
 				""",
 			),
 			"returned",
-			HTML("""
+			HTML(f"""
 						</td>
 						<td class="d-none d-md-block">
 							<img class="borrow-form-img" src="{item_img}">
@@ -619,3 +621,6 @@ class ReturnItemForm(forms.Form):
 				"""
 			)
 		)
+
+
+ReturnItemFormset = forms.formset_factory(ReturnItemForm, extra=0)
