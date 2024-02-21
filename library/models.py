@@ -556,6 +556,18 @@ class Reservation(models.Model):
 	def __str__(self):
 		name = f"{self.requestor_name} {'(external)' if self.is_external else ''}"
 		return f"[{self.get_approval_status_display()}] {self.requested_date_to_borrow} {name}"
+	
+	def set_status(self, status, is_active):
+		"""
+		Convenience method for updating the status.
+		"""
+		self.approval_status = status
+		self.is_active = is_active
+		self.status_update_datetime = timezone.now()
+		self.save()
+	
+	def set_completed(self):
+		self.set_status(ReservationStatus.COMPLETED, is_active=False)
 
 
 class LibraryStrike(models.Model):
