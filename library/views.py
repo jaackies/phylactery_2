@@ -272,7 +272,6 @@ class ReturnItemsView(FormView):
 		return initial
 		
 
-
 @method_decorator(committee_required, name="dispatch")
 class VerifyReturnsView(FormView):
 	"""
