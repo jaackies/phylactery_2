@@ -292,6 +292,8 @@ class ReturnItemsView(FormView):
 				returned += 1
 		if returned > 0:
 			messages.success(self.request, f"Successfully returned {returned} items.")
+			# TODO: Send email receipt to borrower that items have been returned.
+			# TODO: Send notification to the Librarian that items have been returned.
 		return redirect("library:dashboard")
 		
 
