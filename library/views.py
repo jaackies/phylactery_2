@@ -36,13 +36,29 @@ class DashboardView(TemplateView):
 		).annotate(
 			outstanding_count=Count(
 				"borrow_records",
-				borrow_records__borrowed_datetime__lte=Now(),
-				borrow_records__returned_datetime=None
+				filter=Q(
+					borrow_records__borrowed_datetime__lte=Now(),
+					borrow_records__returned_datetime=None
+				),
+			)
+		).annotate(
+			overdue_count=Count(
+				"borrow_records",
+				filter=Q(
+					borrow_records__borrowed_datetime__lte=Now(),
+					borrow_records__returned_datetime=None,
+					borrow_records__due_date__lt=Now(),
+				),
 			)
 		)
 		context["currently_borrowed"] = Item.objects.filter(
 			borrow_records__borrowed_datetime__lte=Now(),
 			borrow_records__returned_datetime=None
+		)
+		context["overdue_items"] = Item.objects.filter(
+			borrow_records__borrowed_datetime__lte=Now(),
+			borrow_records__returned_datetime=None,
+			borrow_records__due_date__lt=Now(),
 		)
 		return context
 

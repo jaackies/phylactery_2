@@ -148,6 +148,10 @@
 							<h5 class="card-title">All borrowed items</h5>
 							<p class="card-text">
 								{{ currently_borrowed.count|default:"No" }} item{{ currently_borrowed.count|pluralize }} borrowed currently.
+								{% if overdue_items %}
+									<br />
+									{{ overdue_items.count }} overdue item{{ overdue_items.count|pluralize }}.
+								{% endif %}
 							</p>
 						</div>
 						{% if currently_borrowed %}
@@ -159,10 +163,14 @@
 								</thead>
 								<tbody>
 									{% for item in currently_borrowed %}
-									<tr>
-										<td>{{ item.name }}</td>
-									</tr>
-								{% endfor %}
+										{% if item in overdue_items %}
+											<tr class="table-danger">
+										{% else %}
+											<tr>
+										{% endif %}
+												<td>{{ item.name }}</td>
+										</tr>
+									{% endfor %}
 								</tbody>
 							</table>
 						{% endif %}
@@ -226,14 +234,23 @@
 								</thead>
 								<tbody>
 									{% for borrower in outstanding_borrowers %}
-									<tr>
-										<td>{{ borrower.borrower_name }}</td>
-										<td>{{ borrower.outstanding_count }}</td>
-										<td>
-											<a href="#" class="clickable-cell">Link</a>
-										</td>
-									</tr>
-								{% endfor %}
+										{% if borrower.overdue_count > 0 %}
+											<tr class="table-danger">
+										{% else %}
+											<tr>
+										{% endif %}
+												<td>{{ borrower.borrower_name }}</td>
+												<td>
+													{{ borrower.outstanding_count }}
+													{% if borrower.overdue_count > 0 %}
+														({{ borrower.overdue_count }} overdue)
+													{% endif %}
+												</td>
+												<td>
+													<a href="#" class="clickable-cell">Return</a>
+												</td>
+										</tr>
+									{% endfor %}
 								</tbody>
 							</table>
 						{% endif %}
