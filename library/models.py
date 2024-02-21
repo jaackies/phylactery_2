@@ -498,7 +498,7 @@ class BorrowRecord(models.Model):
 	
 	# When was it returned, and who authorised its return?
 	returned_datetime = models.DateTimeField(blank=True, null=True, default=None)
-	return_authorised_by = models.CharField(max_length=200)
+	return_authorised_by = models.CharField(blank=True, max_length=200)
 	
 	# Any comments about anything (e.g. Damage) noticed on borrow or return can be documented here.
 	comments = models.TextField(blank=True)
