@@ -277,9 +277,22 @@ class ReturnItemsView(FormView):
 		return context
 	
 	def form_valid(self, form):
+		"""
+		Check for any forms that have the returned box checked, and process them.
+		"""
+		returned = 0
 		for sub_form in form.forms:
-			if sub_form.is_changed():
-				print(sub_form)
+			sub_form_data = sub_form.cleaned_data
+			if sub_form_data["returned"] is True:
+				borrow_record = sub_form_data["borrow_record"]
+				borrow_record.returned_datetime = timezone.now()
+				borrow_record.comments = sub_form_data["comments"]
+				borrow_record.return_authorised_by = self.request.user.member.long_name
+				borrow_record.save()
+				returned += 1
+		if returned > 0:
+			messages.success(self.request, f"Successfully returned {returned} items.")
+		return redirect("library:dashboard")
 		
 
 @method_decorator(committee_required, name="dispatch")
