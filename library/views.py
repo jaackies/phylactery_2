@@ -209,6 +209,17 @@ class ReservationApprovalView(UpdateView):
 		return redirect("library:dashboard")
 
 
+@method_decorator(gatekeeper_required, name="dispatch")
+class ReturnItemsView(FormView):
+	"""
+	Renders a form that allows returning of items.
+	Each form loads a single BorrowerDetails object.
+	If a Member has borrowed several items separately,
+	this form will have to be used more than once to return them all.
+	"""
+	pass
+
+
 @method_decorator(committee_required, name="dispatch")
 class VerifyReturnsView(FormView):
 	"""
