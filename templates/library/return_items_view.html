@@ -4,6 +4,8 @@
 {% load static %}
 
 {% block content %}
+	<h4>Select items to return</h4>
+	<p>If any items have noticeable damage that you think is new, or you have any other concerns, write it in the comments.</p>
 	<form action="" method="POST">
 		{% csrf_token %}
 		{{ form.management_form }}
@@ -12,5 +14,8 @@
 				{% crispy sub_form %}
 			{% endfor %}
 		</table>
+		<button type="submit" class="btn btn-success">
+			Submit <i class="bi-check2"></i>
+		</button>
 	</form>
 {% endblock %}

@@ -267,9 +267,12 @@ class ReturnItemsView(FormView):
 			returned_datetime=None,
 		):
 			initial.append({
-				"item": borrow_record.item
+				"borrow_record": borrow_record
 			})
 		return initial
+	
+	def form_valid(self, form):
+		print(form.forms)
 		
 
 @method_decorator(committee_required, name="dispatch")

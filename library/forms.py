@@ -7,7 +7,7 @@ from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div
 
-from library.models import Item, Reservation, default_due_date
+from library.models import Item, Reservation, BorrowRecord, default_due_date
 from members.models import Member
 
 
@@ -571,15 +571,16 @@ class ReturnItemForm(forms.Form):
 	Form for selecting items for returning (and also putting in comments.)
 	One of these forms are displayed for each item selected in the preview step.
 	"""
-	item = forms.ModelChoiceField(
+	borrow_record = forms.ModelChoiceField(
 		widget=forms.HiddenInput,
 		required=True,
-		queryset=Item.objects.all(),
+		queryset=BorrowRecord.objects.all(),
 	)
 	returned = forms.BooleanField(
 		required=False
 	)
 	comments = forms.CharField(
+		required=False,
 		widget=forms.Textarea(
 			attrs={
 				"rows": 2
@@ -591,8 +592,8 @@ class ReturnItemForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
-		item_name = self.initial["item"].name
-		item_img = self.initial["item"].image.url
+		item_name = self.initial["borrow_record"].item.name
+		item_img = self.initial["borrow_record"].item.image.url
 		self.helper.layout = Layout(
 			HTML(
 				"""
