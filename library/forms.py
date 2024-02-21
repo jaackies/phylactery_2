@@ -564,4 +564,58 @@ class ReservationModelForm(FutureModelForm):
 			self.helper.layout[0][0][1].css_class = "col-md border border-danger bg-danger-subtle"
 		else:
 			self.helper.layout[0][0][0].append("internal_member")
-		
+
+
+class ReturnItemForm(forms.Form):
+	"""
+	Form for selecting items for returning (and also putting in comments.)
+	One of these forms are displayed for each item selected in the preview step.
+	"""
+	item = forms.ModelChoiceField(
+		widget=forms.HiddenInput,
+		required=True,
+		queryset=Item.objects.all(),
+	)
+	returned = forms.BooleanField()
+	comments = forms.CharField(
+		widget=forms.Textarea(
+			attrs={
+				"rows": 2
+			}
+		)
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		item_name = self.initial["item"].name
+		item_img = self.initial["item"].image.url
+		self.helper.layout = Layout(
+			HTML(
+				f"""
+					<tr>
+						<td>
+				""",
+			),
+			"returned",
+			HTML("""
+						</td>
+						<td class="d-none d-md-block">
+							<img class="borrow-form-img" src="{item_img}">
+						</td>
+						<td class="align-middle" style="min-width: 60%;">
+							{item_name}
+						</td>
+						<td style="max-width: 40%;">
+					"""
+			),
+			"item",
+			"comments",
+			HTML(
+				"""
+					</td>
+				</tr>
+				"""
+			)
+		)
