@@ -208,14 +208,35 @@
 			{% endcomment %}
 			<div class="row">
 				<div class="col">
-					<div class="card">
+					<div class="card text-center">
 						<div class="card-body">
+							<h4 class="card-title">Borrowers with outstanding items</h4>
 							<p class="card-text">
-								{% for borrower in outstanding_borrowers %}
-									{{ borrower }}
-								{% endfor %}
+								{{ outstanding_borrowers.count|default:"No" }} borrower{{ outstanding_borrowers|pluralize }} with outstanding items.
 							</p>
 						</div>
+						{% if outstanding_borrowers %}
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th scope="col">Name</th>
+										<th scope="col"># outstanding items</th>
+										<th scope="col"><i class="bi-link-45deg" style="font-size: 1.25rem;"></i></th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for borrower in outstanding_borrowers %}
+									<tr>
+										<td>{{ borrower.borrower_name }}</td>
+										<td>{{ borrower.outstanding_count }}</td>
+										<td>
+											<a href="#" class="clickable-cell">Link</a>
+										</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						{% endif %}
 					</div>
 				</div>
 			</div>
