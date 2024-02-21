@@ -271,8 +271,15 @@ class ReturnItemsView(FormView):
 			})
 		return initial
 	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data()
+		context["borrower_name"] = self.borrower_details.borrower_name
+		return context
+	
 	def form_valid(self, form):
-		print(form.forms)
+		for sub_form in form.forms:
+			if sub_form.is_changed():
+				print(sub_form)
 		
 
 @method_decorator(committee_required, name="dispatch")

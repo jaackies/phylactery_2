@@ -5,7 +5,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Div
+from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field
 
 from library.models import Item, Reservation, BorrowRecord, default_due_date
 from members.models import Member
@@ -583,9 +583,11 @@ class ReturnItemForm(forms.Form):
 		required=False,
 		widget=forms.Textarea(
 			attrs={
-				"rows": 2
+				"rows": 4,
+				"placeholder": "Comments"
 			}
-		)
+		),
+		label="",
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -595,28 +597,31 @@ class ReturnItemForm(forms.Form):
 		item_name = self.initial["borrow_record"].item.name
 		item_img = self.initial["borrow_record"].item.image.url
 		self.helper.layout = Layout(
-			HTML(
-				"""
-					<tr>
-						<td>
-				""",
-			),
-			"returned",
 			HTML(f"""
+					<tr>
 						</td>
 						<td class="d-none d-md-block">
 							<img class="borrow-form-img" src="{item_img}">
 						</td>
-						<td class="align-middle" style="min-width: 60%;">
+						<td class="align-middle" style="max-width: 30%;">
 							{item_name}
+				"""
+			),
+			Field("returned", wrapper_class="mt-3"),
+			HTML("""
 						</td>
-						<td style="max-width: 40%;">
+						<td style="min-width: 70%;">
 					"""
 			),
-			"item",
+			"borrow_record",
 			"comments",
 			HTML(
 				"""
+					</td>
+					<td>
+				"""
+			),
+			HTML("""
 					</td>
 				</tr>
 				"""
