@@ -406,10 +406,10 @@ class BorrowerDetailsManager(models.Manager):
 		# Annotates the default queryset.
 		return super().get_queryset().annotate(
 			pending_records=Count(
-				Case(
-					When(borrow_records__returned_datetime__lte=Now(), then=0),
-					default=1,
-					output_field=models.IntegerField()
+				"borrow_records",
+				filter=Q(
+					borrow_records__borrowed_datetime__lte=Now(),
+					borrow_records__returned_datetime=None,
 				)
 			)
 		).annotate(
