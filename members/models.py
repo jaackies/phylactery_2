@@ -166,6 +166,9 @@ class Membership(models.Model):
 			return f"Membership: {self.member.long_name} ({self.date_purchased.year})"
 		else:
 			return f"Membership: <deleted_member> ({self.date_purchased.year})"
+	
+	class Meta:
+		ordering = ["-date_purchased"]
 
 
 class RankChoices(models.TextChoices):
