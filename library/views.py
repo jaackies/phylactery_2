@@ -315,3 +315,12 @@ class ReservationBorrowView(FormView):
 	Renders a form that allows borrowing based on a Reservation.
 	"""
 	pass
+
+
+class LibraryHomeView(TemplateView):
+	"""
+	Renders the Home page for the library.
+	Different from the Dashboard view.
+	"""
+	
+	template_name = "coming_soon.html"

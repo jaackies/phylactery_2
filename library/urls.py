@@ -13,6 +13,7 @@ from library.views import (
 	VerifyReturnsView,
 	ReservationBorrowView,
 	ReturnItemsView,
+	LibraryHomeView,
 )
 
 
@@ -32,4 +33,5 @@ urlpatterns = [
 	path("return/<int:pk>/", ReturnItemsView.as_view(), name="return"),
 	path("autocomplete-item", ItemAutocomplete.as_view(), name="autocomplete-item"),
 	path("autocomplete-tag", LibraryTagAutocomplete.as_view(), name="autocomplete-tag"),
+	path("", LibraryHomeView.as_view(), name="home"),
 ]
