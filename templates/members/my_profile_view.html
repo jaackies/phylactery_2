@@ -4,7 +4,7 @@
 
 {% block content %}
 	<div class="container" style="max-width: 576px;">
-		<h3>{{ member.long_name }}</h3>
+		<h3>Welcome {{ member.short_name }}!</h3>
 		<div class="row row-cols-1">
 			<div class="col mb-3">
 				<div class="card h-100">
@@ -20,13 +20,13 @@
 						<h4 class="card-title">Memberships</h4>
 						<p class="card-text">
 							{% if member.has_active_membership %}
-								{{ member.short_name }} is a current financial member.
+								You are a current financial member.
 							{% else %}
-								{{ member.short_name }} is not a current financial member.
+								You are not a current financial member.
 							{% endif %}
 						</p>
 						{% if member.is_life_member %}
-							<p>{{ member.short_name }} is an honorary life member.</p>
+							<p>You are an honorary life member.</p>
 						{% endif %}
 					</div>
 					{% if member.memberships.exists %}
