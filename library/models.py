@@ -1,3 +1,4 @@
+import datetime
 from datetime import date, timedelta
 from typing import Any
 from django.core.exceptions import ValidationError
@@ -508,6 +509,15 @@ class BorrowRecord(models.Model):
 	
 	# This is the above custom manager to help with Quality of Life.
 	objects = BorrowRecordManager()
+	
+	def is_overdue(self):
+		"""
+		Convenience method: Returns whether we are past the due date for this.
+		"""
+		if datetime.date.today() > self.due_date:
+			return True
+		else:
+			return False
 	
 
 class Reservation(models.Model):
