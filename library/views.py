@@ -321,6 +321,7 @@ class LibraryHomeView(TemplateView):
 	"""
 	Renders the Home page for the library.
 	Different from the Dashboard view.
+	TODO: Replace template
 	"""
 	
 	template_name = "coming_soon.html"
