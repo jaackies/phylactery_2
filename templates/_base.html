@@ -81,24 +81,53 @@
 								<li><a class="dropdown-item" href="#">Webcams</a></li>
 							</ul>
 						</li>
+					</ul>
+				</div>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+						{% if user.is_authenticated and user.member.is_gatekeeper %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									Actions
+								</a>
+								<ul class="dropdown-menu dropdown-menu-end">
+									{% if user.member.is_committee %}
+										<li><h6 class="dropdown-header">Committee Stuff</h6></li>
+										<li><a class="dropdown-item" href="{% url 'members:my-profile' %}">Admin Site</a></li>
+										<li><a class="dropdown-item" href="{% url 'account_logout' %}">Control Panel</a></li>
+										<li><hr class="dropdown-divider"></li>
+									{% endif %}
+									<li><h6 class="dropdown-header">Library</h6></li>
+									<li><a class="dropdown-item" href="{% url 'library:dashboard' %}">Library Dashboard</a></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><h6 class="dropdown-header">Members</h6></li>
+									<li><a class="dropdown-item" href="{% url 'members:signup-hub' %}">New Membership</a></li>
+									<li><a class="dropdown-item" href="{% url 'members:list' %}">Member List</a></li>
+								</ul>
+							</li>
+						{% endif %}
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-								Account
-							</a>
-							<ul class="dropdown-menu">
-								{% if user.is_authenticated %}
-									<li><span class="dropdown-item-text">Logged in as {{ user.member.short_name }}</span></li>
+							{% if user.is_authenticated %}
+								<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									{{ user.member.short_name }}
+								</a>
+								<ul class="dropdown-menu dropdown-menu-end">
+									<li><h6 class="dropdown-header">Logged in as {{ user.member.short_name }}</h6></li>
 									<li><a class="dropdown-item" href="{% url 'members:my-profile' %}">Profile</a></li>
 									<li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-								{% else %}
-									<li><span class="dropdown-item disabled">You are not currently logged in.</span></li>
+								</ul>
+							{% else %}
+								<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									Account
+								</a>
+								<ul class="dropdown-menu dropdown-menu-end">
+									<li><h6 class="dropdown-header">You are not currently logged in.</h6></li>
 									<li><a class="dropdown-item" href="{% url 'account_login' %}">Log In</a></li>
-								{% endif %}
-							</ul>
+								</ul>
+							{% endif %}
 						</li>
 					</ul>
 				</div>
-			
 			</div>
 		</nav>
 	</header>
