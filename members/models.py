@@ -43,6 +43,9 @@ class Member(models.Model):
 	# (they will still receive transactional emails and reminder emails, regardless)
 	optional_emails = models.BooleanField(default=True)
 	
+	class Meta:
+		ordering = ["long_name"]
+	
 	# Methods
 	def __str__(self):
 		return self.long_name
