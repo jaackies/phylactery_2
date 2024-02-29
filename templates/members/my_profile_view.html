@@ -8,10 +8,34 @@
 		<div class="row row-cols-1">
 			<div class="col mb-3">
 				<div class="card h-100">
-					<div class="card-body">
-						<h4 class="card-title">Library Items</h4>
-						<p class="card-text">You have 0 items borrowed currently.</p>
-					</div>
+					{% with active_records=member.get_active_borrow_records %}
+						<div class="card-body">
+							<h4 class="card-title">Library Items</h4>
+							<p class="card-text">You have {{ active_records.count }} item{{ active_records.count|pluralize }} borrowed currently.</p>
+						</div>
+						{% if active_records.exists %}
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">Item Name</th>
+										<th scope="col">Due Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for record in active_records %}
+										{% if record.is_overdue %}
+											<tr class="table-warning">
+										{% else %}
+											<tr>
+										{% endif %}
+											<td>{{ record.item }}</td>
+											<td>{{ record.due_date }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% endif %}
+					{% endwith %}
 				</div>
 			</div>
 			<div class="col mb-3">
