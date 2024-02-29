@@ -39,7 +39,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for membership in member.memberships.all %}
+							{% for membership in member.memberships.all|slice:":2" %}
 								{% if membership.expired %}
 									<tr class="table-danger">
 								{% else %}
@@ -50,6 +50,15 @@
 										<td>${{ membership.amount_paid }}</td>
 									</tr>
 							{% endfor %}
+							{% if member.memberships.count > 2 %}
+								<tr>
+									<td colspan="3" class="text-center">
+										{% with remaining=member.memberships.count|add:"-2" %}
+											{{ remaining }} previous membership{{ remaining|pluralize }} not shown
+										{% endwith %}
+									</td>
+								</tr>
+							{% endif %}
 						</tbody>
 					</table>
 					{% endif %}
