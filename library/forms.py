@@ -99,7 +99,7 @@ class ItemDueDateForm(forms.Form):
 			HTML(
 				f"""
 				<tr class="{row_class}">
-					<td class="d-none d-md-block">
+					<td class="d-none d-md-table-cell">
 						<img class="borrow-form-img" src="{item_img}">
 					</td>
 					<td class="align-middle" style="min-width: 60%;">
@@ -600,7 +600,7 @@ class ReturnItemForm(forms.Form):
 			HTML(f"""
 					<tr>
 						</td>
-						<td class="d-none d-md-block">
+						<td class="d-none d-md-table-cell">
 							<img class="borrow-form-img" src="{item_img}">
 						</td>
 						<td class="align-middle" style="max-width: 30%;">
