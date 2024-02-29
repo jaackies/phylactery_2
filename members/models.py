@@ -7,6 +7,7 @@ from django.db.models.functions import Now
 from django.utils import timezone
 
 from accounts.models import UnigamesUser
+from library.models import BorrowRecord
 
 # Advanced models are models we shouldn't let anyone but Webkeepers touch.
 # For permission syncing.
@@ -151,6 +152,20 @@ class Member(models.Model):
 		self.user.is_superuser = is_superuser
 		self.user.save()
 		return True
+	
+	def get_borrow_records(self):
+		"""
+		Convenience method - Fetches all internal borrow_records that
+		are linked to this Member.
+		"""
+		return BorrowRecord.objects.filter(borrower__internal_member=self)
+	
+	def get_active_borrow_records(self):
+		"""
+		Convenience method - Identical to the above except it only
+		shows unreturned records.
+		"""
+		return self.get_borrow_records().filter(returned=False)
 
 
 class Membership(models.Model):
