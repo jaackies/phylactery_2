@@ -661,37 +661,37 @@ class VerifyReturnForm(forms.Form):
 		self.helper.form_tag = False
 		item_name = self.initial["borrow_record"].item.name
 		item_img = self.initial["borrow_record"].item.image.url
+		due_date = self.initial["borrow_record"].due_date
+		returned_datetime = self.initial["borrow_record"].returned_datetime
 		self.helper.layout = Layout(
 			HTML(
 				f"""
 						<tr>
 							</td>
-							<td class="d-none d-md-table-cell">
+							<td class="d-none d-md-table-cell" rowspan=3>
 								<img class="borrow-form-img" src="{item_img}">
 							</td>
-							<td class="align-middle" style="max-width: 30%;">
-								{item_name}
+							<td class="align-middle" rowspan=3>
 					"""
 			),
 			Field("verified", wrapper_class="mt-3"),
 			HTML(
-				"""
+				f"""
 							</td>
-							<td style="min-width: 70%;">
+							<td>
+								{item_name}
+							</td>
+							<td rowspan=3>
 						"""
 			),
 			"borrow_record",
 			"comments",
 			HTML(
-				"""
-					</td>
-					<td>
-				"""
-			),
-			HTML(
-				"""
+				f"""
 						</td>
 					</tr>
+					<tr><td>{due_date}</td></tr>
+					<tr><td>{returned_datetime}</td></tr>
 					"""
 			)
 		)
