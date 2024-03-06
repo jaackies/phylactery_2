@@ -318,7 +318,8 @@ class VerifyReturnsView(FormView):
 		):
 			initial.append(
 				{
-					"borrow_record": borrow_record
+					"borrow_record": borrow_record,
+					"comments": borrow_record.comments
 				}
 			)
 		return initial
