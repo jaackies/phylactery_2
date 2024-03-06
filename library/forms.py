@@ -665,33 +665,49 @@ class VerifyReturnForm(forms.Form):
 		returned_datetime = self.initial["borrow_record"].returned_datetime
 		self.helper.layout = Layout(
 			HTML(
-				f"""
+				"""
 						<tr>
-							</td>
-							<td class="d-none d-md-table-cell" rowspan=3>
-								<img class="borrow-form-img" src="{item_img}">
-							</td>
-							<td class="align-middle" rowspan=3>
-					"""
-			),
-			Field("verified", wrapper_class="mt-3"),
-			HTML(
-				f"""
+							<td class="d-none d-md-table-cell" rowspan=6>
+								<img class="borrow-form-img" src="{{ sub_form.initial.borrow_record.item.image.url }}">
 							</td>
 							<td>
-								{item_name}
+								<strong>Item Name</strong>: {{ sub_form.initial.borrow_record.item.name }}
 							</td>
-							<td rowspan=3>
+							<td rowspan=6>
 						"""
 			),
 			"borrow_record",
+			Field("verified", wrapper_class="mt-3"),
 			"comments",
 			HTML(
-				f"""
+				"""
 						</td>
 					</tr>
-					<tr><td>{due_date}</td></tr>
-					<tr><td>{returned_datetime}</td></tr>
+					<tr>
+						<td>
+							<strong>Borrower</strong>: {{ sub_form.initial.borrow_record.borrower.borrower_name }}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>Borrowed</strong>: {{ sub_form.initial.borrow_record.borrowed_datetime }}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>Due Date</strong>: {{ sub_form.initial.borrow_record.due_date }}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>Returned</strong>: {{ sub_form.initial.borrow_record.returned_datetime }}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>Returning Gatekeeper</strong>: {{ sub_form.initial.borrow_record.return_authorised_by }}
+						</td>
+					</tr>
 					"""
 			)
 		)
