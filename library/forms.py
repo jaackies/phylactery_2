@@ -630,3 +630,71 @@ class ReturnItemForm(forms.Form):
 
 
 ReturnItemFormset = forms.formset_factory(ReturnItemForm, extra=0)
+
+
+class VerifyReturnForm(forms.Form):
+	"""
+	A form for the Librarian, to verify items as returned
+	"""
+	borrow_record = forms.ModelChoiceField(
+		widget=forms.HiddenInput,
+		required=True,
+		queryset=BorrowRecord.objects.all(),
+	)
+	verified = forms.BooleanField(
+		required=False
+	)
+	comments = forms.CharField(
+		required=False,
+		widget=forms.Textarea(
+			attrs={
+				"rows": 4,
+				"placeholder": "Comments"
+			}
+		),
+		label="",
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		item_name = self.initial["borrow_record"].item.name
+		item_img = self.initial["borrow_record"].item.image.url
+		self.helper.layout = Layout(
+			HTML(
+				f"""
+						<tr>
+							</td>
+							<td class="d-none d-md-table-cell">
+								<img class="borrow-form-img" src="{item_img}">
+							</td>
+							<td class="align-middle" style="max-width: 30%;">
+								{item_name}
+					"""
+			),
+			Field("verified", wrapper_class="mt-3"),
+			HTML(
+				"""
+							</td>
+							<td style="min-width: 70%;">
+						"""
+			),
+			"borrow_record",
+			"comments",
+			HTML(
+				"""
+					</td>
+					<td>
+				"""
+			),
+			HTML(
+				"""
+						</td>
+					</tr>
+					"""
+			)
+		)
+
+
+VerifyReturnFormset = forms.formset_factory(VerifyReturnForm, extra=0)

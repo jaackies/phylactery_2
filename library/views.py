@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
-from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm, ReturnItemFormset
+from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm, ReturnItemFormset, VerifyReturnFormset
 from members.decorators import gatekeeper_required, committee_required
 
 
@@ -306,7 +306,36 @@ class VerifyReturnsView(FormView):
 	"""
 	For the Librarian - renders the form for verifying returned items.
 	"""
-	pass
+	form_class = VerifyReturnFormset
+	template_name = "library/verify_returns_view.html"
+	
+	def get_initial(self):
+		initial = []
+		for borrow_record in BorrowRecord.objects.filter(
+				borrowed_datetime__lte=Now(),
+				returned_datetime__lte=Now(),
+				verified_returned=False
+		):
+			initial.append(
+				{
+					"borrow_record": borrow_record
+				}
+			)
+		return initial
+	
+	def form_valid(self, form):
+		verified = 0
+		for sub_form in form.forms:
+			sub_form_data = sub_form.cleaned_data
+			if sub_form_data["verified"] is True:
+				borrow_record = sub_form_data["borrow_record"]
+				borrow_record.verified_returned = True
+				borrow_record.comments = sub_form_data["comments"]
+				borrow_record.save()
+				verified += 1
+		if verified > 0:
+			messages.success(self.request, f"Successfully verified {verified} items.")
+		return redirect("library:dashboard")
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
