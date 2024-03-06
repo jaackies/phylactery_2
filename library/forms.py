@@ -659,21 +659,22 @@ class VerifyReturnForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
-		item_name = self.initial["borrow_record"].item.name
-		item_img = self.initial["borrow_record"].item.image.url
-		due_date = self.initial["borrow_record"].due_date
-		returned_datetime = self.initial["borrow_record"].returned_datetime
 		self.helper.layout = Layout(
 			HTML(
 				"""
 						<tr>
-							<td class="d-none d-md-table-cell" rowspan=6>
+							<td class="d-none d-md-table-cell">
 								<img class="borrow-form-img" src="{{ sub_form.initial.borrow_record.item.image.url }}">
 							</td>
 							<td>
-								<strong>Item Name</strong>: {{ sub_form.initial.borrow_record.item.name }}
+								<strong>Item Name</strong>: {{ sub_form.initial.borrow_record.item.name }}<br />
+								<strong>Borrower</strong>: {{ sub_form.initial.borrow_record.borrower.borrower_name }}<br />
+								<strong>Borrowed</strong>: {{ sub_form.initial.borrow_record.borrowed_datetime }}<br />
+								<strong>Due Date</strong>: {{ sub_form.initial.borrow_record.due_date }}<br />
+								<strong>Returned</strong>: {{ sub_form.initial.borrow_record.returned_datetime }}<br />
+								<strong>Returning Gatekeeper</strong>: {{ sub_form.initial.borrow_record.return_authorised_by }}
 							</td>
-							<td rowspan=6>
+							<td>
 						"""
 			),
 			"borrow_record",
@@ -681,31 +682,6 @@ class VerifyReturnForm(forms.Form):
 			"comments",
 			HTML(
 				"""
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Borrower</strong>: {{ sub_form.initial.borrow_record.borrower.borrower_name }}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Borrowed</strong>: {{ sub_form.initial.borrow_record.borrowed_datetime }}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Due Date</strong>: {{ sub_form.initial.borrow_record.due_date }}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Returned</strong>: {{ sub_form.initial.borrow_record.returned_datetime }}
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<strong>Returning Gatekeeper</strong>: {{ sub_form.initial.borrow_record.return_authorised_by }}
 						</td>
 					</tr>
 					"""
