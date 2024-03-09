@@ -134,7 +134,7 @@
 									{{ to_be_verified.count|default:"No" }} item{{ to_be_verified.count|pluralize }} to be verified as returned.
 								</p>
 								{% if to_be_verified %}
-									<a href="#" class="btn btn-success">Verify Returned Items</a>
+									<a href="{% url "library:verify-returns" %}" class="btn btn-success">Verify Returned Items</a>
 								{% endif %}
 							</div>
 						</div>
