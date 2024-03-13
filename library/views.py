@@ -340,14 +340,6 @@ class VerifyReturnsView(FormView):
 		return redirect("library:dashboard")
 
 
-@method_decorator(gatekeeper_required, name="dispatch")
-class ReservationBorrowView(FormView):
-	"""
-	Renders a form that allows borrowing based on a Reservation.
-	"""
-	pass
-
-
 class LibraryHomeView(TemplateView):
 	"""
 	Renders the Home page for the library.
