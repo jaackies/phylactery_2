@@ -288,7 +288,7 @@ class InternalReservationRequestForm(forms.Form):
 				"confirm"
 			)
 		)
-		
+	
 	def clean(self):
 		# Performs additional validation on the form upon submission
 		borrow_date = self.cleaned_data.get("requested_borrow_date")
@@ -597,7 +597,8 @@ class ReturnItemForm(forms.Form):
 		item_name = self.initial["borrow_record"].item.name
 		item_img = self.initial["borrow_record"].item.image.url
 		self.helper.layout = Layout(
-			HTML(f"""
+			HTML(
+				f"""
 					<tr>
 						</td>
 						<td class="d-none d-md-table-cell">
@@ -608,7 +609,8 @@ class ReturnItemForm(forms.Form):
 				"""
 			),
 			Field("returned", wrapper_class="mt-3"),
-			HTML("""
+			HTML(
+				"""
 						</td>
 						<td style="min-width: 70%;">
 					"""
@@ -621,7 +623,8 @@ class ReturnItemForm(forms.Form):
 					<td>
 				"""
 			),
-			HTML("""
+			HTML(
+				"""
 					</td>
 				</tr>
 				"""
@@ -664,7 +667,9 @@ class VerifyReturnForm(forms.Form):
 			Div(
 				Div(
 					Div(
-						HTML("""<img class="borrow-form-img" src="{{ sub_form.initial.borrow_record.item.image.url }}">"""),
+						HTML(
+							"""<img class="borrow-form-img" src="{{ sub_form.initial.borrow_record.item.image.url }}">"""
+						),
 						css_class="col-md-2 mb-1",
 					),
 					Div(
@@ -678,11 +683,13 @@ class VerifyReturnForm(forms.Form):
 						css_class="col-md mb-1",
 					),
 					Div(
-						HTML("""
+						HTML(
+							"""
 						<strong>Due Date</strong>: {{ sub_form.initial.borrow_record.due_date }}<br />
 						<strong>Returned</strong>: {{ sub_form.initial.borrow_record.returned_datetime }}<br />
 						<strong>Returning Gatekeeper</strong>: {{ sub_form.initial.borrow_record.return_authorised_by }}
-						"""),
+						"""
+						),
 						css_class="col-md mb-1",
 					),
 					Div(
