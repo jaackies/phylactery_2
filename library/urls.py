@@ -11,7 +11,6 @@ from library.views import (
 	InternalReservationRequestView,
 	ReservationApprovalView,
 	VerifyReturnsView,
-	ReservationBorrowView,
 	ReturnItemsView,
 	LibraryHomeView,
 )
