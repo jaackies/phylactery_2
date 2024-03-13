@@ -20,14 +20,15 @@ class DashboardView(TemplateView):
 	
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
+		today = timezone.now().date()
 		context["unapproved_reservations"] = Reservation.objects.filter(
 			approval_status=ReservationStatus.PENDING
 		)
 		context["upcoming_reservations"] = Reservation.objects.filter(
-			requested_date_to_borrow__gt=Now(), is_active=True
+			requested_date_to_borrow__gte=today, is_active=True
 		)
 		context["reservations_today"] = Reservation.objects.filter(
-			requested_date_to_borrow=Now(), is_active=True
+			requested_date_to_borrow=today, is_active=True
 		)
 		context["to_be_verified"] = BorrowRecord.objects.filter(
 			returned=True, verified_returned=False
@@ -48,7 +49,7 @@ class DashboardView(TemplateView):
 				filter=Q(
 					borrow_records__borrowed_datetime__lte=Now(),
 					borrow_records__returned_datetime=None,
-					borrow_records__due_date__lt=Now(),
+					borrow_records__due_date__lt=today,
 				),
 			)
 		)
@@ -59,7 +60,7 @@ class DashboardView(TemplateView):
 		context["overdue_items"] = Item.objects.filter(
 			borrow_records__borrowed_datetime__lte=Now(),
 			borrow_records__returned_datetime=None,
-			borrow_records__due_date__lt=Now(),
+			borrow_records__due_date__lt=today,
 		)
 		return context
 
