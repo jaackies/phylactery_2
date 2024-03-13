@@ -711,3 +711,62 @@ VerifyReturnFormset = forms.formset_factory(VerifyReturnForm, extra=0)
 
 class ExternalBorrowerDetailsForm(forms.Form):
 	pass
+
+
+class ReservationSelectItemForm(forms.Form):
+	"""
+	Form to show and select which items in the Reservation will actually be borrowed.
+	"""
+	item = forms.ModelChoiceField(
+		widget=forms.HiddenInput,
+		required=True,
+		queryset=Item.objects.all(),
+		disabled=True,
+	)
+	due_date = forms.DateField(
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		required=True,
+		disabled=True,
+	)
+	selected = forms.BooleanField(
+		required=False,
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			HTML(
+				"""
+				<tr>
+					<td class="d-none d-md-table-cell">
+						<img class="borrow-form-img" src="{{ sub_form.item.image.url }}">
+					</td>
+					<td>
+						{{ sub_form.item.name }}
+					</td>
+					<td>
+				"""
+			),
+			"item",
+			"due_date",
+			HTML(
+				"""
+					</td>
+					<td>
+				"""
+			),
+			"selected",
+			HTML(
+				"""
+					</td>
+				</tr>
+				"""
+			),
+		)
+

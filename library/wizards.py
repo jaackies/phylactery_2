@@ -9,11 +9,12 @@ from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from members.decorators import gatekeeper_required
 
-from library.forms import SelectLibraryItemsForm, ItemDueDateForm, InternalBorrowerDetailsForm, ExternalBorrowerDetailsForm
+from library.forms import SelectLibraryItemsForm, ItemDueDateForm, InternalBorrowerDetailsForm, ExternalBorrowerDetailsForm, ReservationSelectItemForm
 from library.models import BorrowerDetails, BorrowRecord, Reservation
 
 
 ItemDueDateFormset = formset_factory(ItemDueDateForm, extra=0)
+ReservationSelectItemsFormset = formset_factory(ReservationSelectItemForm, extra=0)
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
