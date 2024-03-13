@@ -129,7 +129,7 @@ class ItemDueDateForm(forms.Form):
 			self.add_error(
 				field="due_date",
 				error=f"The due date can't be set beyond the maximum due date for this item. "
-					  f"({item_availability['max_due_date']}"
+				f"({item_availability['max_due_date']}"
 			)
 		if due_date < timezone.now().date():
 			self.add_error(
