@@ -369,6 +369,7 @@ class Item(models.Model):
 		# - available_to_borrow is True
 		# - is_borrowable is False
 		# - No current/active borrow records (that are unreturned) exist for the item.
+		# TODO: Make the last condition mandatory.
 		
 		if (
 			(item_availability_info["available_to_borrow"] is True) or
