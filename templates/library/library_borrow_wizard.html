@@ -13,8 +13,8 @@
 		{% if wizard.form.forms %}
 			{{ wizard.form.management_form|crispy }}
 			<table class="table">
-				{% for form in wizard.form.forms %}
-					{% crispy form %}
+				{% for sub_form in wizard.form.forms %}
+					{% crispy sub_form %}
 				{% endfor %}
 			</table>
 		{% else %}
