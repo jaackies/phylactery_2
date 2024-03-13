@@ -1,13 +1,16 @@
+import datetime
+
 from django.contrib import messages
 from django.core.exceptions import SuspiciousOperation
 from django.forms import formset_factory
-from django.shortcuts import redirect
+from django.http import Http404
+from django.shortcuts import redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from members.decorators import gatekeeper_required
 
-from library.forms import SelectLibraryItemsForm, ItemDueDateForm, InternalBorrowerDetailsForm
-from library.models import BorrowerDetails, BorrowRecord
+from library.forms import SelectLibraryItemsForm, ItemDueDateForm, InternalBorrowerDetailsForm, ExternalBorrowerDetailsForm
+from library.models import BorrowerDetails, BorrowRecord, Reservation
 
 
 ItemDueDateFormset = formset_factory(ItemDueDateForm, extra=0)
@@ -118,3 +121,75 @@ class InternalBorrowItemsWizard(SessionWizardView):
 		print(cleaned_data)
 		
 		return redirect("home")
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class ReservationBorrowItemsWizard(SessionWizardView):
+	"""
+	In the same way as the above Wizard, this Wizard handles the
+	borrowing of items that have been reserved.
+	"""
+	form_list = [
+		("due_dates", ItemDueDateFormset),
+		("internal_details", InternalBorrowerDetailsForm),
+		("external_details", ExternalBorrowerDetailsForm),
+	]
+	template_name = "library/library_borrow_wizard.html"
+	
+	def get_reservation(self):
+		reservation = get_object_or_404(Reservation, pk=self.kwargs["pk"])
+		if not reservation.is_active:
+			raise Http404("The requested reservation is not active.")
+		if reservation.requested_date_to_borrow != datetime.date.today():
+			raise Http404("The requested reservation is not for borrowing today.")
+		return reservation
+	
+	def render_goto_step(self, *args, **kwargs):
+		"""
+		This method overrides the WizardView Method.
+		When going back a step, it allows the form to validate data that you may have already entered.
+		If so, then it saves that data, so that when you return to that step, your data will be safe.
+		"""
+		form = self.get_form(data=self.request.POST, files=self.request.FILES)
+		if form.is_valid():
+			self.storage.set_step_data(self.steps.current, self.process_step(form))
+			self.storage.set_step_files(self.steps.current, self.process_step_files(form))
+		return super().render_goto_step(*args, **kwargs)
+	
+	def get_form_initial(self, step):
+		"""
+		This method overrides the WizardView method.
+		Initialises the due date information for the chosen reservation.
+		"""
+		if step == "due_dates":
+			initial_form_data = []
+			reservation = self.get_reservation()
+			for item in reservation.reserved_items.all():
+				availability_info = item.get_availability_info()
+				if availability_info["in_clubroom"]:
+					initial_form_data.append({
+						"item": item,
+						"due_date": reservation.requested_date_to_return
+					})
+			return initial_form_data
+		return super().get_form_initial(step)
+	
+	def get_context_data(self, form, **kwargs):
+		"""
+		For the due_dates step, let them know if any of the items are
+		not actually here.
+		"""
+		context = super().get_context_data(form, **kwargs)
+		if self.steps.current == "due_dates":
+			context["missing_items"] = []
+			reservation = self.get_reservation()
+			for item in reservation.reserved_items.all():
+				if not item.get_availability_info()["in_clubroom"]:
+					context["missing_items"].append(item)
+		return context
+	
+	def process_step(self, form):
+		"""
+		
+		"""
+		

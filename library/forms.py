@@ -706,3 +706,7 @@ class VerifyReturnForm(forms.Form):
 
 
 VerifyReturnFormset = forms.formset_factory(VerifyReturnForm, extra=0)
+
+
+class ExternalBorrowerDetailsForm(forms.Form):
+	pass
