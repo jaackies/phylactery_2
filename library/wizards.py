@@ -181,15 +181,17 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 		"""
 		context = super().get_context_data(form, **kwargs)
 		if self.steps.current == "due_dates":
-			context["missing_items"] = []
+			missing_items = []
 			reservation = self.get_reservation()
 			for item in reservation.reserved_items.all():
 				if not item.get_availability_info()["in_clubroom"]:
-					context["missing_items"].append(item)
+					missing_items.append(str(item))
+			if missing_items:
+				messages.error(
+					self.request,
+					f"The following items are not available at the moment: {', '.join(missing_items)}. "
+					"If you think this is incorrect, please contact the Librarian."
+				)
 		return context
 	
-	def process_step(self, form):
-		"""
-		
-		"""
-		
+	
