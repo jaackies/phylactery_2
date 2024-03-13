@@ -56,7 +56,7 @@
 										<td>{{ reservation.requestor_name }}</td>
 										<td>{{ reservation.reserved_items.count }}</td>
 										<td>
-											<a href="#" class="clickable-cell">Link</a>
+											<a href="{% url 'library:borrow-reservation' pk=reservation.pk %}" class="clickable-cell">Link</a>
 										</td>
 									</tr>
 								{% endfor %}
