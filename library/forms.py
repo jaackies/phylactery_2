@@ -696,36 +696,6 @@ class VerifyReturnForm(forms.Form):
 				css_class="card-body"
 			)
 		)
-		
-		# self.helper.layout = Layout(
-		#
-		# 	HTML(
-		# 		"""
-		# 				<tr>
-		# 					<td class="d-none d-md-table-cell">
-		# 						<img class="borrow-form-img" src="{{ sub_form.initial.borrow_record.item.image.url }}">
-		# 					</td>
-		# 					<td>
-		# 						<strong>Item Name</strong>: {{ sub_form.initial.borrow_record.item.name }}<br />
-		# 						<strong>Borrower</strong>: {{ sub_form.initial.borrow_record.borrower.borrower_name }}<br />
-		# 						<strong>Borrowed</strong>: {{ sub_form.initial.borrow_record.borrowed_datetime }}<br />
-		# 						<strong>Due Date</strong>: {{ sub_form.initial.borrow_record.due_date }}<br />
-		# 						<strong>Returned</strong>: {{ sub_form.initial.borrow_record.returned_datetime }}<br />
-		# 						<strong>Returning Gatekeeper</strong>: {{ sub_form.initial.borrow_record.return_authorised_by }}
-		# 					</td>
-		# 					<td>
-		# 				"""
-		# 	),
-		# 	"borrow_record",
-		# 	Field("verified", wrapper_class="mt-3"),
-		# 	"comments",
-		# 	HTML(
-		# 		"""
-		# 				</td>
-		# 			</tr>
-		# 			"""
-		# 	)
-		# )
 
 
 VerifyReturnFormset = forms.formset_factory(VerifyReturnForm, extra=0)
