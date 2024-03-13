@@ -75,6 +75,7 @@ class ItemDueDateForm(forms.Form):
 		widget=forms.HiddenInput,
 		required=True,
 		queryset=Item.objects.all(),
+		disabled=True,
 	)
 	due_date = forms.DateField(
 		required=True,
