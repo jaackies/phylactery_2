@@ -1,6 +1,6 @@
 from django.urls import path
 from library.autocompletes import ItemAutocomplete, LibraryTagAutocomplete
-from library.wizards import InternalBorrowItemsWizard
+from library.wizards import InternalBorrowItemsWizard, ReservationBorrowItemsWizard
 from library.views import (
 	ItemDetailView,
 	ItemListView,
@@ -29,7 +29,7 @@ urlpatterns = [
 	path("items/", ItemListView.as_view(), name="item-list"),
 	path("tags/", TagListView.as_view(), name="tag-list"),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow-wizard"),
-	path("borrow/reservation/<int:pk>/", ReservationBorrowView.as_view(), name="borrow-reservation"),
+	path("borrow/reservation/<int:pk>/", ReservationBorrowItemsWizard.as_view(), name="borrow-reservation"),
 	path("return/<int:pk>/", ReturnItemsView.as_view(), name="return"),
 	path("autocomplete-item", ItemAutocomplete.as_view(), name="autocomplete-item"),
 	path("autocomplete-tag", LibraryTagAutocomplete.as_view(), name="autocomplete-tag"),
