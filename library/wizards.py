@@ -131,7 +131,7 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 	borrowing of items that have been reserved.
 	"""
 	form_list = [
-		("due_dates", ReservationSelectItemsFormset),
+		("select", ReservationSelectItemsFormset),
 		("internal_details", InternalBorrowerDetailsForm),
 		("external_details", ExternalBorrowerDetailsForm),
 	]
@@ -162,7 +162,7 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 		This method overrides the WizardView method.
 		Initialises the due date information for the chosen reservation.
 		"""
-		if step == "due_dates":
+		if step == "select":
 			initial_form_data = []
 			reservation = self.get_reservation()
 			for item in reservation.reserved_items.all():
@@ -170,18 +170,19 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 				if availability_info["in_clubroom"]:
 					initial_form_data.append({
 						"item": item,
-						"due_date": reservation.requested_date_to_return
+						"due_date": reservation.requested_date_to_return,
+						"selected": False,
 					})
 			return initial_form_data
 		return super().get_form_initial(step)
 	
 	def get_context_data(self, form, **kwargs):
 		"""
-		For the due_dates step, let them know if any of the items are
+		For the select step, let them know if any of the items are
 		not actually here.
 		"""
 		context = super().get_context_data(form, **kwargs)
-		if self.steps.current == "due_dates":
+		if self.steps.current == "select":
 			missing_items = []
 			reservation = self.get_reservation()
 			for item in reservation.reserved_items.all():

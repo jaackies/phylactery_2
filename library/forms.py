@@ -745,10 +745,10 @@ class ReservationSelectItemForm(forms.Form):
 				"""
 				<tr>
 					<td class="d-none d-md-table-cell">
-						<img class="borrow-form-img" src="{{ sub_form.item.image.url }}">
+						<img class="borrow-form-img" src="{{ sub_form.initial.item.image.url }}">
 					</td>
 					<td>
-						{{ sub_form.item.name }}
+						{{ sub_form.initial.item.name }}
 					</td>
 					<td>
 				"""
