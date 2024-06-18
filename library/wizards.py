@@ -17,6 +17,15 @@ ItemDueDateFormset = formset_factory(ItemDueDateForm, extra=0)
 ReservationSelectItemsFormset = formset_factory(ReservationSelectItemForm, extra=0)
 
 
+def is_external_reservation(wizard):
+	reservation = wizard.get_reservation()
+	return reservation.is_external
+
+
+def is_internal_reservation(wizard):
+	return not is_external_reservation(wizard)
+
+
 @method_decorator(gatekeeper_required, name="dispatch")
 class InternalBorrowItemsWizard(SessionWizardView):
 	"""
@@ -136,6 +145,11 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 		("external_details", ExternalBorrowerDetailsForm),
 	]
 	template_name = "library/library_borrow_wizard.html"
+	
+	condition_dict = {
+		"internal_details": is_internal_reservation,
+		"external_details": is_external_reservation,
+	}
 	
 	def get_reservation(self):
 		reservation = get_object_or_404(Reservation, pk=self.kwargs["pk"])
