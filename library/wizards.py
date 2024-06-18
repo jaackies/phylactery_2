@@ -131,7 +131,7 @@ class ReservationBorrowItemsWizard(SessionWizardView):
 	borrowing of items that have been reserved.
 	"""
 	form_list = [
-		("due_dates", ItemDueDateFormset),
+		("due_dates", ReservationSelectItemsFormset),
 		("internal_details", InternalBorrowerDetailsForm),
 		("external_details", ExternalBorrowerDetailsForm),
 	]
