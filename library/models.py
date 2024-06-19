@@ -562,7 +562,7 @@ class Reservation(models.Model):
 	is_active = models.BooleanField(default=False)
 	
 	# Once the items are borrowed, this links to the borrower details, which in turn links to the items borrowed.
-	borrower = models.ForeignKey("BorrowerDetails", on_delete=models.SET_NULL, blank=True, null=True, related_name="reservation")
+	borrower = models.OneToOneField("BorrowerDetails", on_delete=models.SET_NULL, blank=True, null=True, related_name="reservation")
 	
 	def __str__(self):
 		name = f"{self.requestor_name} {'(external)' if self.is_external else ''}"
