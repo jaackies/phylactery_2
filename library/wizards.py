@@ -144,7 +144,7 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 		("select", ReservationSelectItemsFormset),
 		("internal_details", InternalBorrowerDetailsForm),
 	]
-	template_name = "library/library_borrow_wizard.html"
+	template_name = "library/library_reservation_borrow_wizard.html"
 	
 	def get_reservation(self):
 		reservation = get_object_or_404(Reservation, pk=self.kwargs["pk"])
@@ -255,7 +255,7 @@ class ExternalReservationBorrowItemsWizard(SessionWizardView):
 		("select", ReservationSelectItemsFormset),
 		("external_details", ExternalBorrowerDetailsForm),
 	]
-	template_name = "library/library_borrow_wizard.html"
+	template_name = "library/library_reservation_borrow_wizard.html"
 	
 	def get_reservation(self):
 		reservation = get_object_or_404(Reservation, pk=self.kwargs["pk"])
