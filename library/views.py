@@ -348,3 +348,18 @@ class LibraryHomeView(TemplateView):
 	"""
 	
 	template_name = "coming_soon.html"
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class ReservationBorrowRedirectView(DetailView):
+	"""
+	This view simply performs a redirect to the correct Wizard.
+	"""
+	
+	model = Reservation
+	
+	def dispatch(self, request, *args, **kwargs):
+		if self.object.is_external:
+			return redirect("library:borrow-external-reservation", pk=self.object.pk)
+		else:
+			return redirect("library:borrow-internal-reservation", pk=self.object.pk)
