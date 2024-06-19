@@ -186,6 +186,55 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 					})
 			return initial_form_data
 		return super().get_form_initial(step)
+	
+	def done(self, form_list, **kwargs):
+		"""
+		When the form is submitted entirely, we first validate that no manipulation has occurred.
+		Then we create the BorrowingRecords and all related objects.
+		This includes:
+			- Creating a new BorrowerDetails object
+			- Create a new BorrowRecord object for each Item being borrowed.
+			- TODO: Email the borrower a receipt.
+		"""
+		reservation = self.get_reservation()
+		cleaned_data = self.get_all_cleaned_data()
+		
+		# Verify that each item from Step 1 is actually part of the reservation,
+		# and determine which items are being borrowed now.
+		
+		selected_items = []
+		for selected_item_form in cleaned_data["formset-select"]:
+			if selected_item_form["item"] not in reservation.reserved_items.all():
+				raise SuspiciousOperation("Item data has been tampered with or is missing.")
+			else:
+				if selected_item_form["selected"] is True:
+					selected_items.append(selected_item_form["item"])
+		
+		# If no items are being borrowed, stop here.
+		if len(selected_items) == 0:
+			messages.error(self.request, "No items were selected for borrowing.")
+			return redirect("library:dashboard")
+		
+		# We are borrowing items: Create the new Borrower Details object
+		new_borrower_details = BorrowerDetails.objects.create(
+			is_external=False,
+			internal_member=cleaned_data["member"],
+			borrower_name=cleaned_data["member"].long_name,
+			borrower_address=cleaned_data["address"],
+			borrower_phone=cleaned_data["phone_number"],
+			borrow_authorised_by=self.request.user.member.long_name,
+		)
+		
+		# Create the Borrow Records for the items that are being borrowed.
+		for item in selected_items:
+			BorrowRecord.objects.create(
+				item=item,
+				borrower=new_borrower_details,
+				due_date=reservation.requested_date_to_return,
+			)
+		
+		messages.success(self.request, f"The items were successfully borrowed!")
+		return redirect("library:dashboard")
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
