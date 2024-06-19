@@ -155,7 +155,37 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 		if reservation.is_external:
 			raise Http404("The requested reservation is an external reservation.")
 		return reservation
-
+	
+	def render_goto_step(self, *args, **kwargs):
+		"""
+		This method overrides the WizardView Method.
+		When going back a step, it allows the form to validate data that you may have already entered.
+		If so, then it saves that data, so that when you return to that step, your data will be safe.
+		"""
+		form = self.get_form(data=self.request.POST, files=self.request.FILES)
+		if form.is_valid():
+			self.storage.set_step_data(self.steps.current, self.process_step(form))
+			self.storage.set_step_files(self.steps.current, self.process_step_files(form))
+		return super().render_goto_step(*args, **kwargs)
+	
+	def get_form_initial(self, step):
+		"""
+		This method overrides the WizardView method.
+		Initialises the due date information for the chosen reservation.
+		"""
+		if step == "select":
+			initial_form_data = []
+			reservation = self.get_reservation()
+			for item in reservation.reserved_items.all():
+				availability_info = item.get_availability_info()
+				if availability_info["in_clubroom"]:
+					initial_form_data.append({
+						"item": item,
+						"due_date": reservation.requested_date_to_return,
+						"selected": False,
+					})
+			return initial_form_data
+		return super().get_form_initial(step)
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
