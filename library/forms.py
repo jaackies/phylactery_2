@@ -710,7 +710,55 @@ VerifyReturnFormset = forms.formset_factory(VerifyReturnForm, extra=0)
 
 
 class ExternalBorrowerDetailsForm(forms.Form):
-	pass
+	"""
+	Form to collect details from an external borrower.
+	"""
+	borrower_name = forms.CharField(
+		required=True,
+		label="Borrower name"
+	)
+	address = forms.CharField(
+		widget=forms.Textarea(
+			attrs={
+				"rows": 3
+			}
+		),
+		required=True,
+		label="Borrower address"
+	)
+	phone_number = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+				"type": "tel"
+			},
+		),
+		required=True,
+		max_length=20,
+		label="Borrower phone number"
+	)
+	confirm = forms.BooleanField(
+		required=True,
+		initial=False,
+		label="I agree to the above"
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.include_media = False
+		
+		self.helper.layout = Layout(
+			Fieldset(
+				"Borrower Details",
+				"borrower_name",
+				"address",
+				"phone_number",
+				HTML(),
+				"confirm",
+			)
+		)
+	
 
 
 class ReservationSelectItemForm(forms.Form):
