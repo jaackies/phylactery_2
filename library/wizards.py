@@ -213,7 +213,7 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 		# If no items are being borrowed, stop here.
 		if len(selected_items) == 0:
 			messages.error(self.request, "No items were selected for borrowing.")
-			return redirect("library:dashboard")
+			return self.render_revalidation_failure("select", kwargs.get("form_dict")["select"])
 		
 		# We are borrowing items: Create the new Borrower Details object
 		new_borrower_details = BorrowerDetails.objects.create(
