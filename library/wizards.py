@@ -238,6 +238,20 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
+class ExternalReservationBorrowItemsWizard(SessionWizardView):
+	
+	"""
+	PLACEHOLDER
+	"""
+	
+	form_list = [
+		("select", ReservationSelectItemsFormset),
+		("internal_details", InternalBorrowerDetailsForm),
+		("external_details", ExternalBorrowerDetailsForm),
+	]
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
 class ReservationBorrowItemsWizard(SessionWizardView):
 	"""
 	In the same way as the above Wizard, this Wizard handles the
