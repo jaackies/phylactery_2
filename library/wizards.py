@@ -130,7 +130,7 @@ class InternalBorrowItemsWizard(SessionWizardView):
 		messages.success(self.request, "The items were successfully borrowed!")
 		print(cleaned_data)
 		
-		return redirect("home")
+		return redirect("library:dashboard")
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
