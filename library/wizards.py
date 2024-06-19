@@ -332,7 +332,7 @@ class ExternalReservationBorrowItemsWizard(SessionWizardView):
 		new_borrower_details = BorrowerDetails.objects.create(
 			is_external=True,
 			internal_member=None,
-			borrower_name=cleaned_data["member"].long_name,
+			borrower_name=cleaned_data["borrower_name"],
 			borrower_address=cleaned_data["address"],
 			borrower_phone=cleaned_data["phone_number"],
 			borrow_authorised_by=self.request.user.member.long_name,

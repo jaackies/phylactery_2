@@ -754,7 +754,7 @@ class ExternalBorrowerDetailsForm(forms.Form):
 				"borrower_name",
 				"address",
 				"phone_number",
-				HTML(),
+				HTML("{% include 'library/snippets/external_reservation_borrow_disclaimer.html' %}"),
 				"confirm",
 			)
 		)
