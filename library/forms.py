@@ -174,7 +174,7 @@ class InternalBorrowerDetailsForm(forms.Form):
 		self.helper.include_media = False
 		self.helper.layout = Layout(
 			Fieldset(
-				"Enter the Member details below:",
+				"Please enter the Borrowing Member's details below:",
 				"member",
 				"address",
 				"phone_number",
