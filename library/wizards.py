@@ -225,8 +225,11 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 			borrow_authorised_by=self.request.user.member.long_name,
 		)
 		
-		# Attach the new details to the reservation
+		# Attach the new details to the reservation,
+		# and is_active to False so that new items don't
+		# get borrowed with it.
 		reservation.borrower = new_borrower_details
+		reservation.is_active = False
 		reservation.save()
 		
 		# Create the Borrow Records for the items that are being borrowed.
