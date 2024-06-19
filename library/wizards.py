@@ -134,6 +134,31 @@ class InternalBorrowItemsWizard(SessionWizardView):
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
+class InternalReservationBorrowItemsWizard(SessionWizardView):
+	"""
+	This view handles the borrowing of Library Items in a "wizard", which is
+	multiple forms working together in one view.
+	This Wizard handles borrowing an Internal Reservation.
+	"""
+	form_list = [
+		("select", ReservationSelectItemsFormset),
+		("internal_details", InternalBorrowerDetailsForm),
+	]
+	template_name = "library/library_borrow_wizard.html"
+	
+	def get_reservation(self):
+		reservation = get_object_or_404(Reservation, pk=self.kwargs["pk"])
+		if not reservation.is_active:
+			raise Http404("The requested reservation is not active.")
+		if reservation.requested_date_to_borrow != datetime.date.today():
+			raise Http404("The requested reservation is not for borrowing today.")
+		if reservation.is_external:
+			raise Http404("The requested reservation is an external reservation.")
+		return reservation
+
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
 class ReservationBorrowItemsWizard(SessionWizardView):
 	"""
 	In the same way as the above Wizard, this Wizard handles the
