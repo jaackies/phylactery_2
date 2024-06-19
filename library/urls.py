@@ -2,7 +2,6 @@ from django.urls import path
 from library.autocompletes import ItemAutocomplete, LibraryTagAutocomplete
 from library.wizards import (
 	InternalBorrowItemsWizard,
-	ReservationBorrowItemsWizard,
 	InternalReservationBorrowItemsWizard,
 	ExternalReservationBorrowItemsWizard,
 )
