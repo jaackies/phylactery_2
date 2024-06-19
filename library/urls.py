@@ -18,6 +18,7 @@ from library.views import (
 	VerifyReturnsView,
 	ReturnItemsView,
 	LibraryHomeView,
+	ReservationBorrowRedirectView,
 )
 
 
@@ -33,7 +34,7 @@ urlpatterns = [
 	path("items/", ItemListView.as_view(), name="item-list"),
 	path("tags/", TagListView.as_view(), name="tag-list"),
 	path("borrow/", InternalBorrowItemsWizard.as_view(), name="borrow-wizard"),
-	path("borrow/reservation/<int:pk>/", ReservationBorrowItemsWizard.as_view(), name="borrow-reservation"),
+	path("borrow/reservation/<int:pk>/", ReservationBorrowRedirectView.as_view(), name="borrow-reservation"),
 	path("borrow/reservation/internal/<int:pk>/", InternalReservationBorrowItemsWizard.as_view(), name="borrow-internal-reservation"),
 	path("borrow/reservation/external/<int:pk>/", ExternalReservationBorrowItemsWizard.as_view(), name="borrow-external-reservation"),
 	path("return/<int:pk>/", ReturnItemsView.as_view(), name="return"),
