@@ -1,5 +1,27 @@
 from django.db import models
+from django.db.models import Case, When, Value
+from django.db.models.functions import Now
 from django.utils import timezone
+
+
+class BlogPostManager(models.Manager):
+	"""
+	Custom manager for the BlogPost model.
+	This will annotate all objects with a "published" field,
+	for convenience.
+	"""
+	def get_queryset(self):
+		# Annotates the default queryset.
+		return super().get_queryset().annotate(
+			published=Case(
+				When(
+					publish_on__lte=Now(),
+					then=Value(True)
+				),
+				default=Value(False),
+				output_field=models.BooleanField()
+			)
+		)
 
 
 class BlogPost(models.Model):
@@ -33,6 +55,9 @@ class BlogPost(models.Model):
 		blank=True,
 		help_text="The body of the post. Markdown enabled."
 	)
+	
+	# Apply custom manager above
+	objects = BlogPostManager()
 	
 	@property
 	def is_published(self) -> bool:
