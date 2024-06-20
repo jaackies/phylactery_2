@@ -1,6 +1,38 @@
 from django.db import models
 
 
+class BlogPost(models.Model):
+	"""
+	A model for Blog Posts.
+	Each one represents a single post.
+	"""
+	
+	title = models.CharField(
+		max_length=200,
+		help_text="The title of this Blog Post."
+	)
+	slug_title = models.SlugField(
+		max_length=200,
+		unique=True,
+		help_text="An automatically generated, URL-safe title. Generally you don't edit these once the post is created.",
+	)
+	author = models.CharField(
+		max_length=200,
+		help_text="The author of the post. (e.g. 'Donald Sutherland', or 'Unigames Committee')",
+	)
+	publish_on = models.DateTimeField(
+		blank=True,
+		null=True,
+		default=None,
+		help_text="The date and time at which the post will become published. "
+		"If this is set to a future date, the post will be hidden until then."
+	)
+	body = models.TextField(
+		blank=True,
+		help_text="The body of the post. Markdown enabled."
+	)
+	
+	
 class MailingList(models.Model):
 	"""
 	Previously called MemberFlags - Members can self-assign these to "subscribe" to various mailing lists.
