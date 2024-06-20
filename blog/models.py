@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class BlogPost(models.Model):
@@ -25,13 +26,57 @@ class BlogPost(models.Model):
 		null=True,
 		default=None,
 		help_text="The date and time at which the post will become published. "
-		"If this is set to a future date, the post will be hidden until then."
+		"If this is set to a future date, the post will be hidden until then. "
+		"If left blank, this will never be published (basically saved as a draft.)"
 	)
 	body = models.TextField(
 		blank=True,
 		help_text="The body of the post. Markdown enabled."
 	)
 	
+	@property
+	def is_published(self) -> bool:
+		"""
+		Returns True if the post is published. False otherwise.
+		"""
+		if self.publish_on is None:
+			return False
+		elif self.publish_on > timezone.now():
+			return False
+		else:
+			return True
+	
+	@property
+	def get_pretty_timestamp(self) -> str:
+		"""
+		Returns a nice string representation of when
+		this post was (or will be) published.
+		"""
+		if self.is_published:
+			now = timezone.now()
+			days_different = (now.date() - self.publish_on.date()).days
+			if days_different == 0:
+				# Was published today.
+				return "Today"
+			elif days_different == 1:
+				# Was published yesterday.
+				return "Yesterday"
+			elif (days_different > 1) and (days_different < 7):
+				return f"{days_different} days ago"
+			else:
+				return self.publish_on.date().strftime("%d/%m/%y")
+		else:
+			if self.publish_on is None:
+				return "Draft (Not published)"
+			else:
+				return self.publish_on.date().strftime("Set to be published: %d/%m/%y")
+	
+	def __str__(self):
+		if self.is_published:
+			return self.title
+		else:
+			return f"{self.title} (not published)"
+
 	
 class MailingList(models.Model):
 	"""
