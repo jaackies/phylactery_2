@@ -25,6 +25,9 @@
 			{% endif %}
 		</div>
 	{% endif %}
+	{% if page_obj %}
+		{% include "library/snippets/pagination_snippet.html" %}
+	{% endif %}
 	<div class="row">
 		{% for item in items_list %}
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 mb-3">
@@ -49,4 +52,7 @@
 			<h4>There are no results for your query.</h4>
 		{% endfor %}
 	</div>
+	{% if page_obj %}
+		{% include "library/snippets/pagination_snippet.html" %}
+	{% endif %}
 {% endblock %}
