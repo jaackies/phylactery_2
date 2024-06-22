@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import MailingList
+from .models import MailingList, BlogPost
+
+
+class BlogPostAdmin(admin.ModelAdmin):
+	model = BlogPost
 
 
 class MailingListAdmin(admin.ModelAdmin):
@@ -8,3 +12,4 @@ class MailingListAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MailingList, MailingListAdmin)
+admin.site.register(BlogPost, BlogPostAdmin)
