@@ -1,0 +1,20 @@
+{% if post.is_published %}
+	<a href="#" class="list-group-item list-group-item-action">
+		<div class="d-flex w-100 justify-content-between">
+			<h5>{{ post.title }}</h5>
+			<small>{{ post.get_pretty_timestamp }}</small>
+		</div>
+		<p>{{ post.short_description }}</p>
+		<small>by {{ post.author }}</small>
+	</a>
+{% else %}
+	<a href="#" class="list-group-item list-group-item-action list-group-item-light">
+		<div class="d-flex w-100 justify-content-between">
+			<h5>{{ post.title }}</h5>
+			<small class="text-danger">{{ post.get_pretty_timestamp }}</small>
+		</div>
+		<p>{{ post.short_description }}</p>
+		<small>by {{ post.author }}</small>
+	</a>
+
+{% endif %}
