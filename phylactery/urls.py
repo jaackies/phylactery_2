@@ -8,6 +8,7 @@ urlpatterns = [
 	path("accounts/", include("allauth.urls")),
 	path("members/", include("members.urls")),
 	path("library/", include("library.urls")),
+	path("blog/", include("blog.urls")),
 	path("", include("pages.urls")),
 ]
 
