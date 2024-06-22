@@ -1,9 +1,10 @@
 {% extends "_base.html" %}
 
 {% block content %}
+	<h2>Blog Posts:</h2>
 	<div class="list-group">
 		{% for post in blogpost_list %}
-			<a href="#" class="list-group-item">{{ post.title }}</a>
+			{% include "blog/snippets/blog_post_snippet.html" %}
 		{% endfor %}
 	</div>
 {% endblock %}
