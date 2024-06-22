@@ -39,6 +39,12 @@ class BlogPost(models.Model):
 		unique=True,
 		help_text="An automatically generated, URL-safe title. Generally you don't edit these once the post is created.",
 	)
+	short_description = models.CharField(
+		max_length=300,
+		default="",
+		help_text="A short summary of the post to serve as the preview of the contents. "
+		"Displayed on the ListView and in Emails. Markdown not enabled."
+	)
 	author = models.CharField(
 		max_length=200,
 		help_text="The author of the post. (e.g. 'Donald Sutherland', or 'Unigames Committee')",
