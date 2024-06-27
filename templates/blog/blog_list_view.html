@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 
 {% block content %}
-	<h2>Blog Posts:</h2>
+	<h2 class="mb-3">All News:</h2>
 	<div class="list-group">
 		{% for post in blogpost_list %}
 			{% include "blog/snippets/blog_post_snippet.html" %}
