@@ -26,7 +26,7 @@
 		</div>
 	{% endif %}
 	{% if page_obj %}
-		{% include "library/snippets/../phylactery/snippets/pagination_snippet.html" %}
+		{% include "phylactery/snippets/pagination_snippet.html" %}
 	{% endif %}
 	<div class="row">
 		{% for item in items_list %}
@@ -53,6 +53,6 @@
 		{% endfor %}
 	</div>
 	{% if page_obj %}
-		{% include "library/snippets/../phylactery/snippets/pagination_snippet.html" %}
+		{% include "phylactery/snippets/pagination_snippet.html" %}
 	{% endif %}
 {% endblock %}
