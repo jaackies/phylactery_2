@@ -1,5 +1,5 @@
 {% if post.is_published %}
-	<a href="#" class="list-group-item list-group-item-action">
+	<a href="{% url "blog:detail" slug=post.slug_title %}" class="list-group-item list-group-item-action">
 		<div class="d-flex w-100 justify-content-between">
 			<h5 class="mb-1">{{ post.title }}</h5>
 			<small>{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</small>
@@ -8,7 +8,7 @@
 		<small>by {{ post.author }}</small>
 	</a>
 {% else %}
-	<a href="#" class="list-group-item list-group-item-action list-group-item-warning">
+	<a href="{% url "blog:detail" slug=post.slug_title %}" class="list-group-item list-group-item-action list-group-item-warning">
 		<div class="d-flex w-100 justify-content-between">
 			<h5 class="mb-1">{{ post.title }}</h5>
 			<small class="text-danger">{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</small>
