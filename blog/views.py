@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import BlogPost
 
 
@@ -22,3 +22,12 @@ class AllBlogPostsView(ListView):
 			published=True,
 		).order_by("-publish_on")
 	
+class BlogPostDetailView(DetailView):
+	"""
+	View to show one specific BlogPost.
+	Doesn't allow non-Committee members to see non-published posts.
+	"""
+	model = BlogPost
+	template_name = "blog/blog_detail_view.html"
+	
+	pass
