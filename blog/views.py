@@ -13,3 +13,9 @@ class AllBlogPostsView(ListView):
 	model = BlogPost
 	paginate_by = 10
 	
+	def get_queryset(self):
+		return BlogPost.objects.filter(
+			published=True,
+		).order_by("-publish_on")
+	
+	
