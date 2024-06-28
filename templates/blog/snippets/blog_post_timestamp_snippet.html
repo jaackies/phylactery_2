@@ -1,0 +1,9 @@
+{% if post.is_published %}
+	{{ post.publish_on|date:"jS M Y" }}
+{% else %}
+	{% if post.publish_on %}
+		Will be published: {{ post.publish_on|date:"jS M" }} @ {{ post.publish_on|time:"g:iA" }}
+	{% else %}
+		Draft (Not Published)
+	{% endif %}
+{% endif %}
