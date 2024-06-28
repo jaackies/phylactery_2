@@ -2,9 +2,11 @@
 
 {% block content %}
 	<h2 class="mb-3">All News:</h2>
-	<div class="list-group">
+	{% include "phylactery/snippets/pagination_snippet.html" %}
+	<div class="list-group mb-3">
 		{% for post in blogpost_list %}
 			{% include "blog/snippets/blog_list_post_snippet.html" %}
 		{% endfor %}
 	</div>
+	{% include "phylactery/snippets/pagination_snippet.html" %}
 {% endblock %}
