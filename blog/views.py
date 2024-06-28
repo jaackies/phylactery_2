@@ -14,8 +14,11 @@ class AllBlogPostsView(ListView):
 	paginate_by = 10
 	
 	def get_queryset(self):
+		"""
+		Show only published posts by default,
+		ordered by most recent.
+		"""
 		return BlogPost.objects.filter(
 			published=True,
 		).order_by("-publish_on")
-	
 	
