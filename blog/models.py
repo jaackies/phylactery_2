@@ -77,31 +77,6 @@ class BlogPost(models.Model):
 		else:
 			return True
 	
-	@property
-	def get_pretty_timestamp(self) -> str:
-		"""
-		Returns a nice string representation of when
-		this post was (or will be) published.
-		"""
-		if self.is_published:
-			now = timezone.now()
-			days_different = (now.date() - self.publish_on.date()).days
-			if days_different == 0:
-				# Was published today.
-				return "Today"
-			elif days_different == 1:
-				# Was published yesterday.
-				return "Yesterday"
-			elif (days_different > 1) and (days_different < 7):
-				return f"{days_different} days ago"
-			else:
-				return self.publish_on.date().strftime("%d/%m/%y")
-		else:
-			if self.publish_on is None:
-				return "Draft (Not published)"
-			else:
-				return self.publish_on.date().strftime("Set to be published: %d/%m/%y")
-	
 	def __str__(self):
 		if self.is_published:
 			return self.title
