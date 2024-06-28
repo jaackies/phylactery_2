@@ -20,7 +20,8 @@ class AllBlogPostsView(ListView):
 		return BlogPost.objects.filter(
 			published=True,
 		).order_by("-publish_on")
-	
+
+
 class BlogPostDetailView(DetailView):
 	"""
 	View to show one specific BlogPost.
@@ -28,5 +29,6 @@ class BlogPostDetailView(DetailView):
 	"""
 	model = BlogPost
 	template_name = "blog/blog_detail_view.html"
+	slug_field = "slug_title"
 	
 	pass
