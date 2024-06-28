@@ -1,0 +1,19 @@
+{% extends "_base.html" %}
+
+{% block content %}
+	<div class="card mb-3">
+		<h1 class="card-header">{{ blogpost.title }}</h1>
+	</div>
+	{% if not blogpost.is_published %}
+		<h6 class="card-header text-bg-danger">NOT PUBLISHED - {% include "blog/snippets/blog_post_timestamp_snippet.html" %}</h6>
+	{% endif %}
+	<h6 class="card-header">
+		by {{ blogpost.author }}
+		<span class="float-end">{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</span>
+	</h6>
+	<div class="card-body">
+		<p class="card-text">
+			{{ blogpost.body }}
+		</p>
+	</div>
+{% endblock %}
