@@ -18,6 +18,8 @@ def render_markdown(raw_text: str):
 	{% load markdown_extras %}
 	{{ text_to_render|render_markdown }}
 	"""
-	markdown_renderer = Markdown()
+	markdown_renderer = Markdown(
+		safe_mode="escape"
+	)
 	output_html = markdown_renderer.convert(raw_text)
 	return mark_safe(output_html)
