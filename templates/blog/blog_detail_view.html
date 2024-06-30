@@ -1,5 +1,7 @@
 {% extends "_base.html" %}
 
+{% load markdown_extras %}
+
 {% block content %}
 	<div class="card mb-3">
 		<h1 class="card-header">{{ post.title }}</h1>
@@ -11,9 +13,7 @@
 			<span class="float-end">{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</span>
 		</h6>
 		<div class="card-body">
-			<p class="card-text">
-				{{ post.body }}
-			</p>
+			{{ post.body|render_markdown }}
 		</div>
 	</div>
 {% endblock %}
