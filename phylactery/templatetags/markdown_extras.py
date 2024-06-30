@@ -1,5 +1,8 @@
+from markdown2 import Markdown
+
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -15,4 +18,6 @@ def render_markdown(raw_text: str):
 	{% load markdown_extras %}
 	{{ text_to_render|render_markdown }}
 	"""
-	pass
+	markdown_renderer = Markdown()
+	output_html = markdown_renderer.convert(raw_text)
+	return mark_safe(output_html)
