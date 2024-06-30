@@ -18,7 +18,7 @@ class SelectLibraryItemsForm(forms.Form):
 	items = forms.ModelMultipleChoiceField(
 		queryset=Item.objects.all(),
 		widget=autocomplete.ModelSelect2Multiple(
-			url="library:autocomplete-item",
+			url="library:autocomplete_item",
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
@@ -143,7 +143,7 @@ class InternalBorrowerDetailsForm(forms.Form):
 	member = forms.ModelChoiceField(
 		queryset=Member.objects.all(),
 		widget=autocomplete.ModelSelect2(
-			url="members:autocomplete-member",
+			url="members:autocomplete_member",
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
@@ -234,7 +234,7 @@ class InternalReservationRequestForm(forms.Form):
 	items = forms.ModelMultipleChoiceField(
 		queryset=Item.objects.all(),
 		widget=autocomplete.ModelSelect2Multiple(
-			url="library:autocomplete-item",
+			url="library:autocomplete_item",
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
@@ -376,7 +376,7 @@ class ExternalReservationRequestForm(forms.Form):
 	items = forms.ModelMultipleChoiceField(
 		queryset=Item.objects.all(),
 		widget=autocomplete.ModelSelect2Multiple(
-			url="library:autocomplete-item",
+			url="library:autocomplete_item",
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
@@ -498,7 +498,7 @@ class ReservationModelForm(FutureModelForm):
 		widgets = {
 			"is_external": forms.TextInput(),
 			"reserved_items": autocomplete.ModelSelect2Multiple(
-				url="library:autocomplete-item",
+				url="library:autocomplete_item",
 				attrs={
 					"data-theme": "bootstrap-5"
 				}

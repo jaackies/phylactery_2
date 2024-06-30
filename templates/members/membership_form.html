@@ -8,7 +8,7 @@
 
 {% block content %}
 	<div class="d-flex justify-content-between mb-3">
-		<a class="btn btn-outline-secondary" href="{% url "members:signup-hub" %}"><i class="bi-arrow-left"></i> Back to Signup Hub</a>
+		<a class="btn btn-outline-secondary" href="{% url "members:signup_hub" %}"><i class="bi-arrow-left"></i> Back to Signup Hub</a>
 		<span>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
 	</div>
 	{% if preview_data %}

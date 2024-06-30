@@ -5,7 +5,7 @@
 	<ul>
 		{% for tag in tags_list %}
 			<li class="list-unstyled mb-3">
-				<a href="{% url 'library:tag-detail' tag.slug %}" class="btn btn-outline-dark position-relative">{{ tag.name }} <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{ tag.num_items }}</span></a>
+				<a href="{% url 'library:tag_detail' tag.slug %}" class="btn btn-outline-dark position-relative">{{ tag.name }} <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">{{ tag.num_items }}</span></a>
 			</li>
 		{% endfor %}
 	</ul>

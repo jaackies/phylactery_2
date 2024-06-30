@@ -75,7 +75,7 @@
 						</tr>
 						<tr>
 							<td style="border-bottom-width: 0; border-radius: var(--bs-card-border-radius);">
-								<a href="{% url "library:item-detail" slug=item.slug %}">
+								<a href="{% url "library:item_detail" slug=item.slug %}">
 									Permalink
 								</a>
 							</td>
@@ -112,7 +112,7 @@
 					<div class="card-body">
 						<p class="card-text" style="line-height: 2.8;">
 							{% for tag in item.all_tags %}
-								<a href="{% url 'library:tag-detail' tag.slug %}" class="btn btn-outline-dark">{{ tag }}</a>
+								<a href="{% url 'library:tag_detail' tag.slug %}" class="btn btn-outline-dark">{{ tag }}</a>
 							{% endfor %}
 						</p>
 					</div>

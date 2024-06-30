@@ -60,10 +60,10 @@
 							</ul>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'blog:all-posts' %}">News</a>
+							<a class="nav-link" href="{% url 'blog:all_posts' %}">News</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'library:item-list' %}">Our Library</a>
+							<a class="nav-link" href="{% url 'library:item_list' %}">Our Library</a>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,7 +93,7 @@
 								<ul class="dropdown-menu dropdown-menu-end">
 									{% if user.member.is_committee %}
 										<li><h6 class="dropdown-header">Committee Stuff</h6></li>
-										<li><a class="dropdown-item" href="{% url 'members:my-profile' %}">Admin Site</a></li>
+										<li><a class="dropdown-item" href="{% url 'members:my_profile' %}">Admin Site</a></li>
 										<li><a class="dropdown-item" href="#">Control Panel</a></li>
 										<li><hr class="dropdown-divider"></li>
 									{% endif %}
@@ -101,7 +101,7 @@
 									<li><a class="dropdown-item" href="{% url 'library:dashboard' %}">Library Dashboard</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><h6 class="dropdown-header">Members</h6></li>
-									<li><a class="dropdown-item" href="{% url 'members:signup-hub' %}">New Membership</a></li>
+									<li><a class="dropdown-item" href="{% url 'members:signup_hub' %}">New Membership</a></li>
 									<li><a class="dropdown-item" href="{% url 'members:list' %}">Member List</a></li>
 								</ul>
 							</li>
@@ -113,7 +113,7 @@
 								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
 									<li><h6 class="dropdown-header">Logged in as {{ user.member.short_name }}</h6></li>
-									<li><a class="dropdown-item" href="{% url 'members:my-profile' %}">My Profile</a></li>
+									<li><a class="dropdown-item" href="{% url 'members:my_profile' %}">My Profile</a></li>
 									<li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
 								</ul>
 							{% else %}

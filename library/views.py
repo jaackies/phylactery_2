@@ -361,6 +361,6 @@ class ReservationBorrowRedirectView(DetailView):
 	def dispatch(self, request, *args, **kwargs):
 		reservation = self.get_object()
 		if reservation.is_external:
-			return redirect("library:borrow-external-reservation", pk=reservation.pk)
+			return redirect("library:borrow_external_reservation", pk=reservation.pk)
 		else:
-			return redirect("library:borrow-internal-reservation", pk=reservation.pk)
+			return redirect("library:borrow_internal_reservation", pk=reservation.pk)

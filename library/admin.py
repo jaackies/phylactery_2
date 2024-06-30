@@ -40,7 +40,7 @@ class ItemModelForm(FutureModelForm):
 				}
 			),
 			"base_tags": TaggitSelect2(
-				url="library:autocomplete-tag",
+				url="library:autocomplete_tag",
 				attrs={
 					"style": "width: 100%;",
 				}
@@ -58,7 +58,7 @@ class ReservationModelForm(FutureModelForm):
 		fields = "__all__"
 		widgets = {
 			"reserved_items": ModelSelect2Multiple(
-				url="library:autocomplete-item",
+				url="library:autocomplete_item",
 			)
 		}
 
