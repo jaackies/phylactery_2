@@ -1,4 +1,6 @@
+from django.http import Http404
 from django.views.generic import ListView, DetailView
+
 from .models import BlogPost
 
 
@@ -32,4 +34,12 @@ class BlogPostDetailView(DetailView):
 	slug_field = "slug_title"
 	context_object_name = "post"
 	
-	pass
+	def get_object(self, queryset=None):
+		# If the post that's going to be viewed isn't published yet,
+		# and if the requesting user isn't committee, then 404.
+		blogpost = super().get_object(queryset=queryset)
+		if not blogpost.is_published:
+			if not (self.request.user.is_authenticated and self.request.user.member.is_committee()):
+				# Raise 404 instead of Forbidden, to prevent data leakage
+				raise Http404("No blog post found matching the query")
+		return blogpost
