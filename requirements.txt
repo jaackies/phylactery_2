@@ -18,6 +18,7 @@ factory-boy==3.3.0
 Faker==21.0.0
 gunicorn==21.2.0
 idna==3.4
+markdown2==2.4.13
 marshmallow==3.20.1
 oauthlib==3.2.2
 packaging==23.1
