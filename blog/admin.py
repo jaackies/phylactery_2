@@ -4,6 +4,7 @@ from .models import MailingList, BlogPost
 
 class BlogPostAdmin(admin.ModelAdmin):
 	model = BlogPost
+	prepopulated_fields = {"slug_title": ("title",)}
 
 
 class MailingListAdmin(admin.ModelAdmin):
