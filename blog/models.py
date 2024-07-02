@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Case, When, Value
 from django.db.models.functions import Now
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -82,6 +83,12 @@ class BlogPost(models.Model):
 			return self.title
 		else:
 			return f"{self.title} (not published)"
+	
+	def get_absolute_url(self):
+		"""
+		Returns the URL to view this post.
+		"""
+		return reverse("blog:detail", args=[self.slug_title])
 
 	
 class MailingList(models.Model):
