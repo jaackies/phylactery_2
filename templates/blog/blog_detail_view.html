@@ -6,14 +6,18 @@
 	<div class="card mb-3">
 		<h1 class="card-header">{{ post.title }}</h1>
 		{% if not post.is_published %}
-			<h6 class="card-header text-bg-danger">NOT PUBLISHED - {% include "blog/snippets/blog_post_timestamp_snippet.html" %}</h6>
+			<div class="card-header text-bg-danger">NOT PUBLISHED - {% include "blog/snippets/blog_post_timestamp_snippet.html" %}</div>
 		{% endif %}
-		<h6 class="card-header">
-			by {{ post.author }}
+		<div class="card-header">
+			<span>by {{ post.author }}</span>
 			<span class="float-end">{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</span>
-		</h6>
+		</div>
 		<div class="card-body">
 			{{ post.body|render_markdown }}
+		</div>
+		<div class="card-footer">
+			<span>by {{ post.author }}</span>
+			<span class="float-end">{% include "blog/snippets/blog_post_timestamp_snippet.html" %}</span>
 		</div>
 	</div>
 {% endblock %}
