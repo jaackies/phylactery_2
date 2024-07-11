@@ -96,12 +96,12 @@
 						<h4 class="card-title">Discord</h4>
 						{% get_social_accounts user as accounts %}
 						{% if accounts.discord %}
-							<p class="card-text">You have a linked Discord account!</p>
+							<p class="card-text">You have linked your Discord account.</p>
+							<p class="card-text"><strong>Discord username: </strong>{{ accounts.discord.0.extra_data.username }}</p>
 						{% else %}
-							<p class="card-text">You haven't linked a Discord account.</p>
+							<p class="card-text">You have not linked your Discord account.</p>
+							<a class="btn btn-primary" href="{% provider_login_url "discord" process="connect" %}">Connect your account</a>
 						{% endif %}
-						
-						<p class="card-text"><strong>Coming soon!</strong></p>
 					</div>
 				</div>
 			</div>
