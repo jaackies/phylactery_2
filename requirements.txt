@@ -11,6 +11,7 @@ django-allauth==0.63.4
 django-autocomplete-light==3.11.0rc1
 django-crispy-forms==2.0
 django-debug-toolbar==4.2.0
+django-extensions==3.2.3
 django-formtools==2.5.1
 django-taggit==5.0.1
 environs==10.0.0
