@@ -93,15 +93,15 @@
 			<div class="col mb-3">
 				<div class="card h-100">
 					<div class="card-body">
-						<h4 class="card-title">Discord</h4>
+						<h4 class="card-title">Linked Accounts</h4>
 						{% get_social_accounts user as accounts %}
-						{% if accounts.discord %}
-							<p class="card-text">You have linked your Discord account.</p>
-							<p class="card-text"><strong>Discord username: </strong>{{ accounts.discord.0.extra_data.username }}</p>
-						{% else %}
-							<p class="card-text">You have not linked your Discord account.</p>
-							<a class="btn btn-primary" href="{% provider_login_url "discord" process="connect" %}">Connect your account</a>
-						{% endif %}
+						{% for provider in accounts %}
+							<h5 class="card-title">{{ provider|title }}</h5>
+							<p class="card-text">You have linked your {{ provider|title }} account.</p>
+						{% empty %}
+							<p class="card-text">You have not linked any accounts.</p>
+						{% endfor %}
+						<a class="btn btn-primary" href="{% url "socialaccount_connections" %}">Manage your linked accounts</a>
 					</div>
 				</div>
 			</div>
