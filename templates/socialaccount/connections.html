@@ -11,7 +11,7 @@
 		<form action="" method="POST">
 			{% crispy form %}
 			<button type="submit" class="btn btn-danger">
-				Disconnect Selected Account <i class="bi-trash3"></i>
+				<i class="bi-trash3"></i> Disconnect Selected Account
 			</button>
 		</form>
 	{% else %}
@@ -22,6 +22,6 @@
 	<p>Linking accounts is currently only supported for Discord, which provides additional functionality when interacting with our Discord bot.</p>
 	{% get_providers as socialaccount_providers %}
 	{% for provider in socialaccount_providers %}
-		<a href="{% provider_login_url provider process="connect" %}" class="btn btn-secondary">Click to link a new {{ provider.name }} account</a>
+		<a href="{% provider_login_url provider process="connect" %}" class="btn btn-secondary"><i class="bi-{{ provider|lower }}"></i> Link a {{ provider.name }} account</a>
 	{% endfor %}
 {% endblock %}
