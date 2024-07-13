@@ -5,8 +5,9 @@
 {% block content %}
 	<a class="btn btn-secondary" href="{% url "members:my_profile" %}"><i class="bi-arrow-left"></i> Back to Profile</a>
 	<hr>
-	<h1>Linked Accounts</h1>
+	<h2>Linked Accounts</h2>
 	{% if form.accounts %}
+		<p>The following accounts are currently linked to your Unigames account:</p>
 		<form action="" method="POST">
 			{% crispy form %}
 			<button type="submit" class="btn btn-danger">
@@ -17,9 +18,10 @@
 		<p>You currently have no linked accounts.</p>
 	{% endif %}
 	<hr>
-	<h4>Link a new account</h4>
+	<h2>Link a new account</h2>
+	<p>Linking accounts is currently only supported for Discord, which provides additional functionality when interacting with our Discord bot.</p>
 	{% get_providers as socialaccount_providers %}
 	{% for provider in socialaccount_providers %}
-		<a href="{% provider_login_url provider process="connect" %}" class="btn btn-secondary">{{ provider.name }}</a>
+		<a href="{% provider_login_url provider process="connect" %}" class="btn btn-secondary">Click to link a new {{ provider.name }} account</a>
 	{% endfor %}
 {% endblock %}
