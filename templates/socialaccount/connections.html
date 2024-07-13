@@ -1,14 +1,15 @@
 {% extends "_base.html" %}
+{% load crispy_forms_tags %}
 {% load socialaccount %}
+
 {% block content %}
 	<h1>Linked Accounts</h1>
 	{% if form.accounts %}
-		<p>You have linked the following accounts:</p>
-		<form method="POST" action="">
-			{% csrf_token %}
-			{% for account in form.fields.account.choices %}
-				
-			{% endfor %}
+		<form action="" method="POST">
+			{% crispy form %}
+			<button type="submit" class="btn btn-danger">
+				Disconnect Selected Account <i class="bi-trash3"></i>
+			</button>
 		</form>
 	{% endif %}
 {% endblock %}

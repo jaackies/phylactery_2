@@ -222,3 +222,7 @@ SOCIALACCOUNT_PROVIDERS = {
 		]
 	}
 }
+
+SOCIALACCOUNT_FORMS = {
+	"disconnect": "accounts.forms.UnigamesDisconnectForm"
+}
