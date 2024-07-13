@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UnigamesUser
 from allauth.socialaccount.forms import DisconnectForm
+from allauth.socialaccount.models import SocialAccount
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset
 
@@ -18,7 +19,18 @@ class UnigamesUserChangeForm(UserChangeForm):
 		fields = ('email', 'username',)
 
 
+class SocialAccountModelChoiceField(forms.ModelChoiceField):
+	def label_from_instance(self, obj):
+		return f"{obj.get_provider_account().get_brand()['name']}: {obj.get_provider_account()}"
+
+
 class UnigamesDisconnectForm(DisconnectForm):
+	account = SocialAccountModelChoiceField(
+		queryset=SocialAccount.objects.none(),
+		widget=forms.RadioSelect,
+		required=True,
+	)
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
