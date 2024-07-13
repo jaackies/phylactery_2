@@ -11,5 +11,13 @@
 				Disconnect Selected Account <i class="bi-trash3"></i>
 			</button>
 		</form>
+	{% else %}
+		<p>You currently have no linked accounts.</p>
 	{% endif %}
+	<hr>
+	<h4>Link a new account</h4>
+	{% get_providers as socialaccount_providers %}
+	{% for provider in socialaccount_providers %}
+		<a href="{% provider_login_url provider process="connect" %}" class="btn btn-secondary">{{ provider.name }}</a>
+	{% endfor %}
 {% endblock %}
