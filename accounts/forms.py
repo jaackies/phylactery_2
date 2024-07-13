@@ -29,6 +29,7 @@ class UnigamesDisconnectForm(DisconnectForm):
 		queryset=SocialAccount.objects.none(),
 		widget=forms.RadioSelect,
 		required=True,
+		label="",
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -36,9 +37,6 @@ class UnigamesDisconnectForm(DisconnectForm):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.layout = Layout(
-			Fieldset(
-				"You have linked the following accounts:",
-				"account"
-			)
+			"account",
 		)
 		
