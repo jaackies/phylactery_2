@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load socialaccount %}
+{% block content %}
+	<h1>Linked Accounts</h1>
+	{% if form.accounts %}
+		<p>You have linked the following accounts:</p>
+		<form method="POST" action="">
+			{% csrf_token %}
+			{% for account in form.fields.account.choices %}
+				
+			{% endfor %}
+		</form>
+	{% endif %}
+{% endblock %}
