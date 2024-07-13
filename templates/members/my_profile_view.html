@@ -96,8 +96,8 @@
 						<h4 class="card-title">Linked Accounts</h4>
 						{% get_social_accounts user as accounts %}
 						{% for provider in accounts %}
-							<h5 class="card-title">{{ provider|title }}</h5>
-							<p class="card-text">You have linked your {{ provider|title }} account.</p>
+							<h5 class="card-title"><i class="bi-{{ provider }}"></i> {{ provider|title }}</h5>
+							<p class="card-text"><i class="text-success bi-check-circle-fill"></i> You have linked your {{ provider|title }} account.</p>
 						{% empty %}
 							<p class="card-text">You have not linked any accounts.</p>
 						{% endfor %}
