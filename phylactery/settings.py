@@ -223,6 +223,10 @@ SOCIALACCOUNT_PROVIDERS = {
 	}
 }
 
+ACCOUNT_FORMS = {
+	"add_email": "accounts.forms.UnigamesEmailChangeForm"
+}
+
 SOCIALACCOUNT_FORMS = {
 	"disconnect": "accounts.forms.UnigamesDisconnectForm"
 }
