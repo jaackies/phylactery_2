@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UnigamesUser
+from allauth.account.forms import AddEmailForm
 from allauth.socialaccount.forms import DisconnectForm
 from allauth.socialaccount.models import SocialAccount
 from crispy_forms.helper import FormHelper
@@ -39,4 +40,13 @@ class UnigamesDisconnectForm(DisconnectForm):
 		self.helper.layout = Layout(
 			"account",
 		)
-		
+
+
+class UnigamesEmailChangeForm(AddEmailForm):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			"email"
+		)
