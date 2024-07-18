@@ -1,7 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UnigamesUser
-from allauth.account.forms import AddEmailForm
+from allauth.account import app_settings
+from allauth.account.adapter import get_adapter
+from allauth.account.utils import filter_users_by_email
+from allauth.account.forms import AddEmailForm, UserForm
+from allauth.account.models import EmailAddress
 from allauth.socialaccount.forms import DisconnectForm
 from allauth.socialaccount.models import SocialAccount
 from crispy_forms.helper import FormHelper
@@ -40,6 +44,57 @@ class UnigamesDisconnectForm(DisconnectForm):
 		self.helper.layout = Layout(
 			"account",
 		)
+
+
+class PrototypeEmailChangeForm(UserForm):
+	current_email = forms.EmailField(
+		label="Current Email",
+		required=False,
+		disabled=True,
+		widget=forms.TextInput(
+			attrs={
+				"type": "email"
+			}
+		)
+	)
+	new_email = forms.EmailField(
+		label="New Email",
+		required=True,
+		widget=forms.TextInput(
+			attrs={
+				"type": "email",
+				"placeholder": "New Email Address"
+			}
+		)
+	)
+	
+	def clean_new_email(self):
+		from allauth.account import signals
+		
+		value = self.cleaned_data["new_email"].lower()
+		adapter = get_adapter()
+		value = adapter.clean_email(value)
+		users = filter_users_by_email(value)
+		on_this_account = [u for u in users if u.pk == self.user.pk]
+		on_diff_account = [u for u in users if u.pk != self.user.pk]
+		
+		if on_this_account:
+			raise adapter.validation_error("duplicate_email")
+		if on_diff_account:
+			raise adapter.validation_error("email_taken")
+		if not EmailAddress.objects.can_add_email(self.user):
+			raise adapter.validation_error(
+				"max_email_addresses", app_settings.MAX_EMAIL_ADDRESSES
+			)
+		
+		signals._add_email.send(
+			sender=self.user.__class__,
+			email=value,
+			user=self.user,
+		)
+		
+		return value
+		
 
 
 class UnigamesEmailChangeForm(AddEmailForm):
