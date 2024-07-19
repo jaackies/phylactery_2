@@ -96,8 +96,29 @@ class PrototypeEmailChangeForm(UserForm):
 		return value
 		
 
-
 class UnigamesEmailChangeForm(AddEmailForm):
+	current_email_address = forms.EmailField(
+		label="Current Email",
+		required=False,
+		disabled=True,
+		widget=forms.TextInput(
+			attrs={
+				"type": "email"
+			}
+		)
+	)
+	
+	email = forms.EmailField(
+		label="New Email Address",
+		required=True,
+		widget=forms.TextInput(
+			attrs={
+				"type": "email",
+				"placeholder": "New Email Address"
+			}
+		),
+	)
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
