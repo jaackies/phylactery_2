@@ -5,35 +5,61 @@
 	<h3>The Current Unigames Committee</h3>
 	
 	<dl class="row">
-		<dt class="col-sm-3">President</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.PRESIDENT %}
+			<dt class="col-sm-3">President</dt>
+			{% for committee_member in committee.PRESIDENT %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Vice President</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.VICEPRESIDENT %}
+			<dt class="col-sm-3">Vice President</dt>
+			{% for committee_member in committee.VICEPRESIDENT %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Treasurer</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.TREASURER %}
+			<dt class="col-sm-3">Treasurer</dt>
+			{% for committee_member in committee.TREASURER %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Secretary</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.SECRETARY %}
+			<dt class="col-sm-3">Secretary</dt>
+			{% for committee_member in committee.SECRETARY %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Librarian</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.LIBRARIAN %}
+			<dt class="col-sm-3">Librarian</dt>
+			{% for committee_member in committee.LIBRARIAN %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Fresher Rep</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.FRESHERREP %}
+			<dt class="col-sm-3">Fresher Rep</dt>
+			{% for committee_member in committee.FRESHERREP %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">OCM</dt>
-		<dd class="col-sm-9">
-			Test <br />
-			Test <br />
-			Test <br />
-			Test <br />
-			
-		</dd>
+		{% if committee.OCM %}
+			<dt class="col-sm-3">OCMs</dt>
+			{% for committee_member in committee.OCM %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 		
-		<dt class="col-sm-3">Immediate Past President</dt>
-		<dd class="col-sm-9">Test</dd>
+		{% if committee.IPP %}
+			<dt class="col-sm-3">IPP</dt>
+			{% for committee_member in committee.IPP %}
+				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
+			{% endfor %}
+		{% endif %}
 	</dl>
 	
 	<p>
