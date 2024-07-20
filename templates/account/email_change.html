@@ -7,7 +7,6 @@
 	<a class="btn btn-secondary" href="{% url "members:my_profile" %}"><i class="bi-arrow-left"></i> Back to Profile</a>
 	<hr>
 	<h2>Change Email Address</h2>
-	{{ form.current_email_address|as_crispy_field }}
 	<form method="POST" action="{% url "account_email" %}">
 		{% crispy form %}
 		<button class="btn btn-primary" type="submit">Change Email</button>
