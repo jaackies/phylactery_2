@@ -1,3 +1,4 @@
+from members.models import Rank
 from django.views.generic import TemplateView
 
 
@@ -19,3 +20,8 @@ class RolePlayingPageView(TemplateView):
 
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["committee"] = Rank.objects.get_committee()
+		return context
