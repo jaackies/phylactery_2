@@ -11,11 +11,11 @@
 		{% crispy form %}
 		<button class="btn btn-primary" type="submit" name="action_add">Change Email</button>
 	</form>
-	
+
 	{% if new_emailaddress %}
-		<form style="display: none" 
-			  id="pending-email" 
-			  method="POST"  
+		<form style="display: none"
+			  id="pending-email"
+			  method="POST"
 			  action="{% url "account_email" %}">
 			{% csrf_token %}
 			<input type="hidden" name="email" value="{{ new_emailaddress.email }}">

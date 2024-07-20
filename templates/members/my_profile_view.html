@@ -2,6 +2,7 @@
 
 {% block title %}Profile for {{ member.short_name }}{% endblock %}
 
+{% load account %}
 {% load socialaccount %}
 
 {% block content %}
@@ -101,15 +102,17 @@
 						{% empty %}
 							<p class="card-text">You have not linked any accounts.</p>
 						{% endfor %}
-						<a class="btn btn-primary" href="{% url "socialaccount_connections" %}">Manage your linked accounts</a>
+						<a class="btn btn-secondary" href="{% url "socialaccount_connections" %}">Manage your linked accounts <i class="bi-arrow-right"></i></a>
 					</div>
 				</div>
 			</div>
 			<div class="col mb-3">
 				<div class="card h-100">
 					<div class="card-body">
-						<h4 class="card-title">Email Preferences</h4>
-						<p class="card-text"><strong>Coming soon!</strong></p>
+						<h4 class="card-title">Email</h4>
+						<a class="btn btn-secondary mb-1" href="{% url "account_email" %}">Change your email address <i class="bi-arrow-right"></i></a>
+						<br>
+						<a class="btn btn-secondary" href="#">Manage your email preferences <i class="bi-arrow-right"></i></a>
 					</div>
 				</div>
 			</div>
