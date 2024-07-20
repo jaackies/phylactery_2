@@ -18,6 +18,10 @@ class RolePlayingPageView(TemplateView):
 	template_name = "pages/role_playing.html"
 
 
+class LifeMemberView(TemplateView):
+	template_name = "pages/life_members.html"
+
+
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
 	
