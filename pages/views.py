@@ -8,5 +8,10 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
 	template_name = "pages/about.html"
 
+
 class EventsPageView(TemplateView):
 	template_name = "pages/events.html"
+
+
+class RolePlayingPageView(TemplateView):
+	template_name = "pages/role_playing.html"
