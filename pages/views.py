@@ -15,3 +15,7 @@ class EventsPageView(TemplateView):
 
 class RolePlayingPageView(TemplateView):
 	template_name = "pages/role_playing.html"
+
+
+class CommitteeView(TemplateView):
+	template_name = "pages/committee.html"
