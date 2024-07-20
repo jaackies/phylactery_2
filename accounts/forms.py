@@ -1,16 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import UnigamesUser
-from allauth.account import app_settings
-from allauth.account.adapter import get_adapter
-from allauth.account.utils import filter_users_by_email
-from allauth.account.forms import AddEmailForm, UserForm
+from allauth.account.forms import AddEmailForm
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.forms import DisconnectForm
 from allauth.socialaccount.models import SocialAccount
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Div, HTML
-from crispy_forms.bootstrap import StrictButton, Alert
+from crispy_forms.bootstrap import StrictButton
 
 
 class UnigamesUserCreationForm(UserCreationForm):
@@ -106,7 +103,7 @@ class UnigamesEmailChangeForm(AddEmailForm):
 				StrictButton(
 					name="action_send",
 					content="Resend Verification",
-					input_type="submit",
+					type="submit",
 					form="pending-email",
 					css_class="btn-secondary"
 				)
@@ -116,7 +113,7 @@ class UnigamesEmailChangeForm(AddEmailForm):
 					StrictButton(
 						name="action_remove",
 						content="Cancel Change",
-						input_type="submit",
+						type="submit",
 						form="pending-email",
 						css_class="btn-danger"
 					)
