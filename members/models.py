@@ -223,6 +223,24 @@ class RankManager(models.Manager):
 	
 	def all_expired(self):
 		return self.all().filter(expired=True)
+	
+	def get_committee(self):
+		"""
+		Returns a dictionary that maps the committee ranks into QuerySets of the members that have them.
+		"""
+		committee_data = {}
+		for committee_rank in [
+			RankChoices.PRESIDENT,
+			RankChoices.VICEPRESIDENT,
+			RankChoices.TREASURER,
+			RankChoices.SECRETARY,
+			RankChoices.LIBRARIAN,
+			RankChoices.FRESHERREP,
+			RankChoices.OCM,
+			RankChoices.IPP,
+		]:
+			committee_data[committee_rank] = self.all_active().filter(rank_name=committee_rank)
+		return committee_data
 
 
 class Rank(models.Model):
