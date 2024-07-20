@@ -3,65 +3,81 @@
 {% block content %}
 	<h1>Committee</h1>
 	<h3>The Current Unigames Committee</h3>
-	
+
 	<dl class="row">
 		{% if committee.PRESIDENT %}
 			<dt class="col-sm-3">President</dt>
-			{% for committee_member in committee.PRESIDENT %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.PRESIDENT %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.VICEPRESIDENT %}
 			<dt class="col-sm-3">Vice President</dt>
-			{% for committee_member in committee.VICEPRESIDENT %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.VICEPRESIDENT %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.TREASURER %}
 			<dt class="col-sm-3">Treasurer</dt>
-			{% for committee_member in committee.TREASURER %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.TREASURER %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.SECRETARY %}
 			<dt class="col-sm-3">Secretary</dt>
-			{% for committee_member in committee.SECRETARY %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.SECRETARY %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.LIBRARIAN %}
 			<dt class="col-sm-3">Librarian</dt>
-			{% for committee_member in committee.LIBRARIAN %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.LIBRARIAN %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.FRESHERREP %}
 			<dt class="col-sm-3">Fresher Rep</dt>
-			{% for committee_member in committee.FRESHERREP %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dd class="col-sm-9">
+				{% for committee_member in committee.FRESHERREP %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.OCM %}
-			<dt class="col-sm-3">OCMs</dt>
-			{% for committee_member in committee.OCM %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dt class="col-sm-3">Ordinary Committee Members</dt>
+			<dd class="col-sm-9">
+				{% for committee_member in committee.OCM %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
-		
+
 		{% if committee.IPP %}
-			<dt class="col-sm-3">IPP</dt>
-			{% for committee_member in committee.IPP %}
-				<dd class="col-sm-9">{{ committee_member.member }}<br /></dd>
-			{% endfor %}
+			<dt class="col-sm-3">Immediate Past President</dt>
+			<dd class="col-sm-9">
+				{% for committee_member in committee.IPP %}
+					{{ committee_member.member }}<br />
+				{% endfor %}
+			</dd>
 		{% endif %}
 	</dl>
-	
+
 	<p>
 		To contact committee, email to <a href="mailto:uwaunigames@gmail.com">uwaunigames@gmail.com</a> (no spam please).
 	</p>
