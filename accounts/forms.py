@@ -9,8 +9,8 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.forms import DisconnectForm
 from allauth.socialaccount.models import SocialAccount
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, ButtonHolder
-from crispy_forms.bootstrap import StrictButton, FieldWithButtons
+from crispy_forms.layout import Layout, Field, Div, HTML
+from crispy_forms.bootstrap import StrictButton, Alert
 
 
 class UnigamesUserCreationForm(UserCreationForm):
@@ -67,8 +67,7 @@ class UnigamesEmailChangeForm(AddEmailForm):
 			attrs={
 				"type": "email"
 			}
-		),
-		help_text="Your email address is still pending verification."
+		)
 	)
 	
 	email = forms.EmailField(
@@ -94,29 +93,32 @@ class UnigamesEmailChangeForm(AddEmailForm):
 		
 		if verified_email_address:
 			self.initial.update({"display_verified_email_address": verified_email_address.email})
+			self.fields["display_pending_email_address"].label = "Changing to"
 			self.helper.layout.append(Field("display_verified_email_address"))
 		if pending_email_address:
 			self.initial.update({"display_pending_email_address": pending_email_address.email})
 			self.helper.layout.append(Field("display_pending_email_address"))
-			button_holder = ButtonHolder()
+			button_holder = Div(
+				HTML("This email address is still pending verification. <hr>"),
+				css_class="alert alert-warning"
+			)
 			button_holder.append(
 				StrictButton(
 					name="action_send",
 					content="Resend Verification",
 					input_type="submit",
 					form="pending-email",
-					css_class="btn-secondary btn-sm"
+					css_class="btn-secondary"
 				)
 			)
 			if verified_email_address:
-				self.fields["display_pending_email_address"].label = "Changing to"
 				button_holder.append(
 					StrictButton(
 						name="action_remove",
 						content="Cancel Change",
 						input_type="submit",
 						form="pending-email",
-						css_class="btn-danger btn-sm"
+						css_class="btn-danger"
 					)
 				)
 			self.helper.layout.append(button_holder)
