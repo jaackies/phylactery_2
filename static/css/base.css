@@ -11,6 +11,15 @@
     margin-right: -30px;
 }
 
+.btn-discord {
+    --bs-btn-bg: #5865F2;
+    --bs-btn-border-color: #5865F2;
+    --bs-btn-hover-bg: #454fc1;
+    --bs-btn-hover-border-color: #454fc1;
+    --bs-btn-active-bg: #3e47af;
+    --bs-btn-active-border-color: #3e47af;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 /*html {
