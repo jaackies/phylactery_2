@@ -11,6 +11,10 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 	"""
 	def is_open_for_signup(self, request):
 		return False
+	
+	def get_email_verification_redirect_url(self, email_address):
+		url = reverse("members:my_profile")
+		return url
 
 
 class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):

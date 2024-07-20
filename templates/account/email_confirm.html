@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+{% load account %}
+
+
+{% block content %}
+	<h1>Confirm Email Address</h1>
+	{% if confirmation %}
+		{% user_display confirmation.email_address.user as user_display %}
+		{% if can_confirm %}
+			<p>
+				Please verify that <strong>{{ confirmation.email_address.email }}</strong> 
+				is an email address for {{ user_display }}.
+			</p>
+			<form method="POST" action="{% url "account_confirm_email" confirmation.key %}">
+				{% csrf_token %}
+				{{ redirect_field }}
+				<button type="submit" class="btn btn-success">Verify</button>
+			</form>
+		{% else %}
+			<p>
+				Unable to verify {{ email }} because it is already a verified email for a different account.
+			</p>
+		{% endif %}
+	{% else %}
+		<p>
+			This email verification link is either invalid or has expired. <a href="{% url "account_email" %}">Please issue a new email verification request</a>.
+		</p>
+	{% endif %}
+{% endblock %}
