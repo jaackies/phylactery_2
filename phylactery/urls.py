@@ -16,6 +16,7 @@ urlpatterns = [
 	path("members/", include("members.urls")),
 	path("library/", include("library.urls")),
 	path("blog/", include("blog.urls")),
+	path("controlpanel/", include("control_panel.urls")),
 	path("", include("pages.urls")),
 ]
 
