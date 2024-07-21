@@ -15,6 +15,7 @@ class ControlPanelListView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data()
 		form_list = []
+		# TODO: Fix bug when logged out
 		for form_slug, form_class in FORM_CLASSES.items():
 			if self.request.user.member.has_rank(*form_class.form_allowed_ranks):
 				form_list.append({
@@ -44,6 +45,7 @@ class ControlPanelFormView(FormView):
 	
 	def dispatch(self, request, *args, **kwargs):
 		form_class = self.get_form_class()
+		# TODO: Fix bug when logged out
 		request_member = self.request.user.member
 		if not request_member.has_rank(*form_class.form_allowed_ranks):
 			raise PermissionDenied
