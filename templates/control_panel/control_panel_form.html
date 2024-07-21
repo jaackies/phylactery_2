@@ -4,12 +4,22 @@
 {% block content %}
 
 	{% if form %}
-		<h1>{{ form.form_name }}</h1>
-		<p>{{ form.form_long_description }}</p>
-		<form method="POST" action="">
-			{% crispy form %}
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+		<div class="container" style="max-width: 576px;">
+			<div class="card">
+				<div class="card-body">
+					<h1 class="card-title">{{ form.form_name }}</h1>
+					<p class="card-text">{{ form.form_long_description }}</p>
+				</div>
+				<div class="card-body border-top">
+					<form method="POST" action="" id="control-panel-form">
+						{% crispy form %}
+					</form>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary" form="control-panel-form">Submit</button>
+				</div>
+			</div>
+		</div>
 	{% endif %}
-	
+
 {% endblock %}
