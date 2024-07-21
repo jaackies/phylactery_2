@@ -94,7 +94,7 @@
 									{% if user.member.is_committee %}
 										<li><h6 class="dropdown-header">Committee Stuff</h6></li>
 										<li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin Site</a></li>
-										<li><a class="dropdown-item" href="#">Control Panel</a></li>
+										<li><a class="dropdown-item" href="{% url "control_panel:list" %}">Control Panel</a></li>
 										<li><hr class="dropdown-divider"></li>
 									{% endif %}
 									<li><h6 class="dropdown-header">Library</h6></li>

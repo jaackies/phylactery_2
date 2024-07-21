@@ -92,4 +92,8 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 		if self.is_valid():
 			# Expire the chosen ranks
 			pass
-		
+
+
+FORM_CLASSES = (
+	GatekeeperWebkeeperPurgeForm,
+)

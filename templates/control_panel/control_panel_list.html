@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+	<h1>Secret Control Panel</h1>
+	
+	{% for form_class in form_list %}
+		<p>{{ form_class.name }}: {{ form_class.description }} ({{ form_class.slug }})</p>
+	{% endfor %}
+
+{% endblock %}
