@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	{% if form %}
+		<h1>{{ form.form_name }}</h1>
+		<form method="POST" action="">
+			{% crispy form %}
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	{% endif %}
+	
+{% endblock %}
