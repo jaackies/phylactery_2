@@ -49,6 +49,8 @@ class ControlPanelForm(forms.Form):
 			self.form_long_description = self.form_short_description
 		
 		self.slug_name = slugify(self.form_name)
+		self.prefix = self.slug_name
+		
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.include_media = False
