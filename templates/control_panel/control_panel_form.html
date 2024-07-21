@@ -5,6 +5,7 @@
 
 	{% if form %}
 		<h1>{{ form.form_name }}</h1>
+		<p>{{ form.form_long_description }}</p>
 		<form method="POST" action="">
 			{% crispy form %}
 			<button type="submit" class="btn btn-primary">Submit</button>
