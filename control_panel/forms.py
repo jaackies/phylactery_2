@@ -3,7 +3,7 @@ from django import forms
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
-from members.models import RankChoices
+from members.models import RankChoices, Member
 
 
 class ControlPanelForm(forms.Form):
@@ -133,9 +133,94 @@ class ExpireMembershipsForm(ControlPanelForm):
 			print("Valid!")
 
 
+class MakeGatekeepersForm(ControlPanelForm):
+	form_name = "Promote Members to Gatekeepers"
+	form_short_description = "Promotes the selected members to Gatekeepers."
+	form_permissions = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+		RankChoices.SECRETARY,
+	]
+	
+	gatekeepers_to_add = forms.ModelMultipleChoiceField(
+		queryset=Member.objects.all(),
+	)
+	
+	def get_layout(self):
+		return Layout(
+			"gatekeepers_to_add"
+		)
+
+
+class MakeWebkeepersForm(ControlPanelForm):
+	form_name = "Promote Members to Webkeepers"
+	form_short_description = "Promotes the selected members to Webkeepers."
+	form_permissions = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+		RankChoices.SECRETARY,
+	]
+	
+	webkeepers_to_add = forms.ModelMultipleChoiceField(
+		queryset=Member.objects.all(),
+	)
+	
+	def get_layout(self):
+		return Layout(
+			"webkeepers_to_add"
+		)
+
+
+class AddRemoveRanksForm(ControlPanelForm):
+	form_name = "Selectively Add or Remove Ranks"
+	form_short_description = (
+		"Adds or Removes ranks for a single member. "
+		"Useful for removing the Gatekeeper rank or adding the Excluded rank to a single member."
+	)
+	form_long_description = (
+		"This form cannot be used for Committee Rank transferal. "
+		"Use the Committee Transfer Form for that."
+	)
+	form_allowed_ranks = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+		RankChoices.SECRETARY,
+	]
+	
+	def get_layout(self):
+		return Layout()
+
+
+class CommitteeTransferForm(ControlPanelForm):
+	form_name = "Committee Transfer"
+	form_short_description = "Freely transfer committee roles."
+	form_allowed_ranks = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+	]
+	
+	def get_layout(self):
+		return Layout()
+
+
+class GetMembershipInfoForm(ControlPanelForm):
+	form_name = "Get Membership CSV"
+	form_short_description = "Get a CSV of membership data for a particular date. Useful for O-Day information."
+	form_long_description = (
+		"This will output a CSV containing the name, student number, and guild status "
+		"of each membership purchased on the selected date."
+	)
+	
+	def get_layout(self):
+		return Layout()
+	
+	
+
 FORM_CLASSES = {}
 for form_class in (
 	GatekeeperWebkeeperPurgeForm,
 	ExpireMembershipsForm,
+	MakeGatekeepersForm,
+	MakeWebkeepersForm,
 ):
 	FORM_CLASSES[slugify(form_class.form_name)] = form_class
