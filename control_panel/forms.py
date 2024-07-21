@@ -38,6 +38,12 @@ class ControlPanelForm(forms.Form):
 	form_long_description: str | None = None
 	form_allowed_ranks: list = []
 	
+	form_confirm_field = forms.BooleanField(
+		label="I confirm I wish to perform this action.",
+		initial=False,
+		required=True,
+	)
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		

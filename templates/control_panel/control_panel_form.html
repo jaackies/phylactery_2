@@ -1,21 +1,22 @@
 {% extends "_base.html" %}
 {% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 
 	{% if form %}
 		<div class="container" style="max-width: 576px;">
+			<form method="POST" action="" id="control-panel-form">
 			<div class="card">
 				<div class="card-body">
 					<h1 class="card-title">{{ form.form_name }}</h1>
 					<p class="card-text">{{ form.form_long_description }}</p>
 				</div>
 				<div class="card-body border-top">
-					<form method="POST" action="" id="control-panel-form">
-						{% crispy form %}
-					</form>
+					{% crispy form %}
 				</div>
 				<div class="card-footer">
+					{{ form.form_confirm_field|as_crispy_field }}
 					<button type="submit" class="btn btn-primary" form="control-panel-form">Submit</button>
 				</div>
 			</div>
