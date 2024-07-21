@@ -14,7 +14,7 @@
 						<p class="card-text">{{ form_class.description }}</p>
 					</div>
 					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Open Form</a>
+						<a href="{% url "control_panel:form" slug=form_class.slug %}" class="btn btn-primary">Open Form</a>
 					</div>
 				</div>
 			</div>

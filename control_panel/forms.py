@@ -72,11 +72,11 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 		RankChoices.SECRETARY
 	]
 	
-	CHOICES = {
-		"gatekeeper": "Gatekeepers only",
-		"webkeeper": "Webkeepers only",
-		"both": "Both Gatekeepers and Webkeepers"
-	}
+	CHOICES = (
+		("gatekeeper", "Gatekeepers only"),
+		("webkeeper", "Webkeepers only"),
+		("both", "Both Gatekeepers and Webkeepers")
+	)
 	
 	purge_choice = forms.ChoiceField(
 		choices=CHOICES,
@@ -93,7 +93,7 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	def submit(self, request):
 		if self.is_valid():
 			# Expire the chosen ranks
-			pass
+			print("Valid!")
 
 
 class ExpireMembershipsForm(ControlPanelForm):
@@ -122,10 +122,13 @@ class ExpireMembershipsForm(ControlPanelForm):
 		)
 	
 	def submit(self, request):
-		pass
+		if self.is_valid():
+			print("Valid!")
 
 
-FORM_CLASSES = (
+FORM_CLASSES = {}
+for form_class in (
 	GatekeeperWebkeeperPurgeForm,
 	ExpireMembershipsForm,
-)
+):
+	FORM_CLASSES[slugify(form_class.form_name)] = form_class
