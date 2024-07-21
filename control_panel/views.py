@@ -15,11 +15,12 @@ class ControlPanelListView(TemplateView):
 		context = super().get_context_data()
 		form_list = []
 		for form_slug, form_class in FORM_CLASSES.items():
-			form_list.append({
-				"name": form_class.form_name,
-				"description": form_class.form_short_description,
-				"slug": form_slug
-			})
+			if self.request.user.member.has_rank(form_class.form_allowed_ranks):
+				form_list.append({
+					"name": form_class.form_name,
+					"description": form_class.form_short_description,
+					"slug": form_slug
+				})
 		context["form_list"] = form_list
 		return context
 		
