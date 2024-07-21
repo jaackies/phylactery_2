@@ -262,6 +262,13 @@ class Rank(models.Model):
 	def __str__(self):
 		return f"Rank: {RankChoices[self.rank_name].label} for {self.member.long_name} {'(EXPIRED)' if self.is_expired else ''}"
 	
+	def save(self, *args, **kwargs):
+		"""
+		Whenever a Rank is saved, sync the permissions of the appropriate member.
+		"""
+		super().save(*args, **kwargs)
+		self.member.sync_permissions()
+	
 	@property
 	def is_expired(self):
 		# A rank is expired if the expiry date <= today
