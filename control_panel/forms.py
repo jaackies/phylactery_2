@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
@@ -80,7 +81,8 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	purge_choice = forms.ChoiceField(
 		choices=CHOICES,
 		label="Purge the status of:",
-		widget=forms.RadioSelect()
+		widget=forms.RadioSelect(),
+		required=True,
 	)
 	
 	def get_layout(self):
@@ -94,6 +96,36 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 			pass
 
 
+class ExpireMembershipsForm(ControlPanelForm):
+	form_name = "Invalidate Memberships"
+	form_short_description = "Expires any active memberships purchased before a given date."
+	form_allowed_ranks = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+		RankChoices.SECRETARY,
+	]
+	
+	cut_off_date = forms.DateField(
+		label="Invalidate memberships purchased before:",
+		required=True,
+		widget=forms.DateInput(
+			attrs={
+				"type": "date"
+			}
+		),
+		initial=datetime.date.today().replace(day=1, month=1)
+	)
+	
+	def get_layout(self):
+		return Layout(
+			Field("cut_off_date"),
+		)
+	
+	def submit(self, request):
+		pass
+
+
 FORM_CLASSES = (
 	GatekeeperWebkeeperPurgeForm,
+	ExpireMembershipsForm,
 )
