@@ -3,7 +3,18 @@ from django import forms
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
-from members.models import RankChoices, Member
+from members.models import Member, Rank, RankChoices
+
+
+def expire_active_ranks(rank_to_expire, rank_to_exclude):
+	"""
+	Finds all ranks of the chosen type that are still active, and expires them.
+	Ignores all ranks belonging to members that also have rank_to_exclude.
+	"""
+	today = datetime.date.today()
+	members_to_exclude = Rank.objects.all_active().filter(rank_name=rank_to_exclude).values_list("member", flat=True)
+	ranks_to_expire = Rank.objects.all_active().filter(rank_name=rank_to_expire).exclude(member__in=members_to_exclude)
+	
 
 
 class ControlPanelForm(forms.Form):
