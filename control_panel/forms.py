@@ -222,5 +222,8 @@ for form_class in (
 	ExpireMembershipsForm,
 	MakeGatekeepersForm,
 	MakeWebkeepersForm,
+	AddRemoveRanksForm,
+	CommitteeTransferForm,
+	GetMembershipInfoForm,
 ):
 	FORM_CLASSES[slugify(form_class.form_name)] = form_class
