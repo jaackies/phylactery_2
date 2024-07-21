@@ -91,7 +91,8 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	form_allowed_ranks = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
-		RankChoices.SECRETARY
+		RankChoices.SECRETARY,
+		RankChoices.WEBKEEPER,
 	]
 	
 	CHOICES = (
@@ -156,6 +157,7 @@ class ExpireMembershipsForm(ControlPanelForm):
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
 		RankChoices.SECRETARY,
+		RankChoices.WEBKEEPER,
 	]
 	
 	cut_off_date = forms.DateField(
@@ -182,10 +184,11 @@ class ExpireMembershipsForm(ControlPanelForm):
 class MakeGatekeepersForm(ControlPanelForm):
 	form_name = "Promote Members to Gatekeepers"
 	form_short_description = "Promotes the selected members to Gatekeepers."
-	form_permissions = [
+	form_allowed_ranks = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
 		RankChoices.SECRETARY,
+		RankChoices.WEBKEEPER,
 	]
 	
 	gatekeepers_to_add = forms.ModelMultipleChoiceField(
@@ -201,10 +204,11 @@ class MakeGatekeepersForm(ControlPanelForm):
 class MakeWebkeepersForm(ControlPanelForm):
 	form_name = "Promote Members to Webkeepers"
 	form_short_description = "Promotes the selected members to Webkeepers."
-	form_permissions = [
+	form_allowed_ranks = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
 		RankChoices.SECRETARY,
+		RankChoices.WEBKEEPER,
 	]
 	
 	webkeepers_to_add = forms.ModelMultipleChoiceField(
@@ -231,6 +235,7 @@ class AddRemoveRanksForm(ControlPanelForm):
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
 		RankChoices.SECRETARY,
+		RankChoices.WEBKEEPER,
 	]
 	
 	def get_layout(self):
@@ -243,6 +248,7 @@ class CommitteeTransferForm(ControlPanelForm):
 	form_allowed_ranks = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
+		RankChoices.WEBKEEPER,
 	]
 	
 	def get_layout(self):
@@ -256,6 +262,10 @@ class GetMembershipInfoForm(ControlPanelForm):
 		"This will output a CSV containing the name, student number, and guild status "
 		"of each membership purchased on the selected date."
 	)
+	form_allowed_ranks = [
+		RankChoices.COMMITTEE,
+		RankChoices.WEBKEEPER,
+	]
 	
 	def get_layout(self):
 		return Layout()
