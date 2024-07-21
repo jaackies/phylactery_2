@@ -11,10 +11,13 @@ def expire_active_ranks(rank_to_expire, rank_to_exclude):
 	Finds all ranks of the chosen type that are still active, and expires them.
 	Ignores all ranks belonging to members that also have rank_to_exclude.
 	"""
-	today = datetime.date.today()
 	members_to_exclude = Rank.objects.all_active().filter(rank_name=rank_to_exclude).values_list("member", flat=True)
 	ranks_to_expire = Rank.objects.all_active().filter(rank_name=rank_to_expire).exclude(member__in=members_to_exclude)
-	
+	for rank in ranks_to_expire:
+		print(rank, rank.member_id)
+		# rank.set_expired()
+	for member in members_to_exclude:
+		print(member)
 
 
 class ControlPanelForm(forms.Form):
@@ -112,11 +115,12 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 		if self.is_valid():
 			purge_choice = self.cleaned_data["purge_choice"]
 			if purge_choice == "gatekeeper":
-				pass
+				expire_active_ranks(rank_to_expire=RankChoices.GATEKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
 			elif purge_choice == "webkeeper":
-				pass
+				expire_active_ranks(rank_to_expire=RankChoices.WEBKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
 			elif purge_choice == "both":
-				pass
+				expire_active_ranks(rank_to_expire=RankChoices.GATEKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
+				expire_active_ranks(rank_to_expire=RankChoices.WEBKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
 
 
 class ExpireMembershipsForm(ControlPanelForm):
