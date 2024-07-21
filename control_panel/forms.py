@@ -99,8 +99,13 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	
 	def submit(self, request):
 		if self.is_valid():
-			# Expire the chosen ranks
-			print("Valid!")
+			purge_choice = self.cleaned_data["purge_choice"]
+			if purge_choice == "gatekeeper":
+				pass
+			elif purge_choice == "webkeeper":
+				pass
+			elif purge_choice == "both":
+				pass
 
 
 class ExpireMembershipsForm(ControlPanelForm):
