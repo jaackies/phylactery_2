@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from django.shortcuts import reverse
 from django.views.generic import TemplateView, FormView
@@ -23,7 +24,6 @@ class ControlPanelListView(TemplateView):
 				})
 		context["form_list"] = form_list
 		return context
-		
 
 
 class ControlPanelFormView(FormView):
@@ -41,3 +41,10 @@ class ControlPanelFormView(FormView):
 	
 	def get_success_url(self):
 		return reverse("control_panel:list")
+	
+	def dispatch(self, request, *args, **kwargs):
+		form_class = self.get_form_class()
+		request_member = self.request.user.member
+		if not request_member.has_rank(*form_class.form_allowed_ranks):
+			raise PermissionDenied
+		return super().dispatch(request, *args, **kwargs)
