@@ -11,14 +11,14 @@ def expire_active_ranks(rank_to_expire, rank_to_exclude):
 	"""
 	Finds all ranks of the chosen type that are still active, and expires them.
 	Ignores all ranks belonging to members that also have rank_to_exclude.
-	Returns the Ranks expired this way.
+	Returns the names of Members with Ranks expired this way.
 	"""
 	members_to_exclude = Rank.objects.all_active().filter(rank_name=rank_to_exclude).values_list("member", flat=True)
 	ranks_to_expire = Rank.objects.all_active().filter(rank_name=rank_to_expire).exclude(member__in=members_to_exclude)
+	expired_members = list(ranks_to_expire.values_list("member__long_name", flat=True))
 	for rank in ranks_to_expire:
-		# rank.set_expired()
-		pass
-	return ranks_to_expire
+		rank.set_expired()
+	return expired_members
 
 
 class ControlPanelForm(forms.Form):
@@ -124,7 +124,7 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 					messages.success(
 						request,
 						message=f"Removed Gatekeeper from {len(purged_gate)} members: "
-						f"{', '.join(purged_gate.values_list('member__long_name', flat=True))}"
+						f"{', '.join(purged_gate)}"
 					)
 				else:
 					messages.warning(
@@ -140,7 +140,7 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 					messages.success(
 						request,
 						message=f"Removed Webkeeper from {len(purged_web)} members: "
-						f"{', '.join(purged_web.values_list('member__long_name', flat=True))}"
+						f"{', '.join(purged_web)}"
 					)
 				else:
 					messages.warning(
