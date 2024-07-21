@@ -66,8 +66,7 @@ class ControlPanelForm(forms.Form):
 
 class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	form_name = "Purge Gatekeepers / Webkeepers"
-	form_short_description = "Expire the Gatekeeper and/or Webkeeper rank of all non-Committee members"
-	form_long_description = ""
+	form_short_description = "Expire the Gatekeeper and/or Webkeeper rank of all non-Committee members."
 	form_allowed_ranks = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
