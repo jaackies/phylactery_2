@@ -1,5 +1,6 @@
 import datetime
 from django import forms
+from django.contrib import messages
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -10,14 +11,14 @@ def expire_active_ranks(rank_to_expire, rank_to_exclude):
 	"""
 	Finds all ranks of the chosen type that are still active, and expires them.
 	Ignores all ranks belonging to members that also have rank_to_exclude.
+	Returns the Ranks expired this way.
 	"""
 	members_to_exclude = Rank.objects.all_active().filter(rank_name=rank_to_exclude).values_list("member", flat=True)
 	ranks_to_expire = Rank.objects.all_active().filter(rank_name=rank_to_expire).exclude(member__in=members_to_exclude)
 	for rank in ranks_to_expire:
-		print(rank, rank.member_id)
 		# rank.set_expired()
-	for member in members_to_exclude:
-		print(member)
+		pass
+	return ranks_to_expire
 
 
 class ControlPanelForm(forms.Form):
@@ -114,13 +115,38 @@ class GatekeeperWebkeeperPurgeForm(ControlPanelForm):
 	def submit(self, request):
 		if self.is_valid():
 			purge_choice = self.cleaned_data["purge_choice"]
-			if purge_choice == "gatekeeper":
-				expire_active_ranks(rank_to_expire=RankChoices.GATEKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
-			elif purge_choice == "webkeeper":
-				expire_active_ranks(rank_to_expire=RankChoices.WEBKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
-			elif purge_choice == "both":
-				expire_active_ranks(rank_to_expire=RankChoices.GATEKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
-				expire_active_ranks(rank_to_expire=RankChoices.WEBKEEPER, rank_to_exclude=RankChoices.COMMITTEE)
+			if purge_choice in ["gatekeeper", "both"]:
+				purged_gate = expire_active_ranks(
+					rank_to_expire=RankChoices.GATEKEEPER,
+					rank_to_exclude=RankChoices.COMMITTEE
+				)
+				if len(purged_gate) > 0:
+					messages.success(
+						request,
+						message=f"Removed Gatekeeper from {len(purged_gate)} members: "
+						f"{', '.join(purged_gate.values_list('member__long_name', flat=True))}"
+					)
+				else:
+					messages.warning(
+						request,
+						message="No non-committee gatekeepers to remove."
+					)
+			if purge_choice in ["webkeeper", "both"]:
+				purged_web = expire_active_ranks(
+					rank_to_expire=RankChoices.WEBKEEPER,
+					rank_to_exclude=RankChoices.COMMITTEE
+				)
+				if len(purged_web) > 0:
+					messages.success(
+						request,
+						message=f"Removed Webkeeper from {len(purged_web)} members: "
+						f"{', '.join(purged_web.values_list('member__long_name', flat=True))}"
+					)
+				else:
+					messages.warning(
+						request,
+						message="No non-committee gatekeepers to remove."
+					)
 
 
 class ExpireMembershipsForm(ControlPanelForm):
