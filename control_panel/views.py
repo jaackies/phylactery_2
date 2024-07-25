@@ -14,18 +14,28 @@ class ControlPanelListView(TemplateView):
 	the user has access to.
 	"""
 	template_name = "control_panel/control_panel_list.html"
+	form_list = []
+	
+	def dispatch(self, request, *args, **kwargs):
+		self.form_list = []
+		for form_slug, form_class in FORM_CLASSES.items():
+			if self.request.is_unigames_member and self.request.unigames_member.has_rank(
+					*form_class.form_allowed_ranks
+			):
+				self.form_list.append(
+					{
+						"name": form_class.form_name,
+						"description": form_class.form_short_description,
+						"slug": form_slug
+					}
+				)
+		if len(self.form_list) == 0:
+			raise PermissionDenied
+		return super().dispatch(request, *args, **kwargs)
 	
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data()
-		form_list = []
-		for form_slug, form_class in FORM_CLASSES.items():
-			if self.request.is_unigames_member and self.request.unigames_member.has_rank(*form_class.form_allowed_ranks):
-				form_list.append({
-					"name": form_class.form_name,
-					"description": form_class.form_short_description,
-					"slug": form_slug
-				})
-		context["form_list"] = form_list
+		context["form_list"] = self.form_list
 		return context
 
 
