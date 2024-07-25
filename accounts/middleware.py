@@ -21,3 +21,6 @@ class UserToMemberMiddleware(object):
 		else:
 			request.is_unigames_member = False
 			request.unigames_member = None
+
+		response = self.get_response(request)
+		return response
