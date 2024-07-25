@@ -2,9 +2,12 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from django.shortcuts import reverse
 from django.views.generic import TemplateView, FormView
+from django.utils.decorators import method_decorator
 from control_panel.forms import FORM_CLASSES
+from members.decorators import staff_required
 
 
+@method_decorator(staff_required, name="dispatch")
 class ControlPanelListView(TemplateView):
 	"""
 	This view renders the list of control panel forms that
@@ -15,9 +18,8 @@ class ControlPanelListView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data()
 		form_list = []
-		# TODO: Fix bug when logged out
 		for form_slug, form_class in FORM_CLASSES.items():
-			if self.request.user.member.has_rank(*form_class.form_allowed_ranks):
+			if self.request.is_unigames_member and self.request.unigames_member.has_rank(*form_class.form_allowed_ranks):
 				form_list.append({
 					"name": form_class.form_name,
 					"description": form_class.form_short_description,
@@ -27,6 +29,7 @@ class ControlPanelListView(TemplateView):
 		return context
 
 
+@method_decorator(staff_required, name="dispatch")
 class ControlPanelFormView(FormView):
 	"""
 	This view renders the requested form.
@@ -45,8 +48,8 @@ class ControlPanelFormView(FormView):
 	
 	def dispatch(self, request, *args, **kwargs):
 		form_class = self.get_form_class()
-		# TODO: Fix bug when logged out
-		request_member = self.request.user.member
-		if not request_member.has_rank(*form_class.form_allowed_ranks):
+		if not self.request.is_unigames_member:
+			raise PermissionDenied
+		if not self.request.unigames_member.has_rank(*form_class.form_allowed_ranks):
 			raise PermissionDenied
 		return super().dispatch(request, *args, **kwargs)
