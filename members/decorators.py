@@ -70,3 +70,25 @@ def exec_required(function=None):
 	if function:
 		return actual_decorator(function)
 	return actual_decorator
+
+
+def staff_required(function=None):
+	"""
+	Decorator for views - requires the User to be staff (can access the admin)
+	and to have a linked Unigames member.
+	"""
+	
+	def is_member_test(u):
+		if u.is_authenticated:
+			if u.get_member is not None:
+				return True
+			else:
+				raise PermissionDenied
+		return False
+	
+	actual_decorator = user_passes_test(is_member_test)
+	
+	if function:
+		return actual_decorator(function)
+	return actual_decorator
+	
