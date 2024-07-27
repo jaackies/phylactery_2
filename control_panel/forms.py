@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
-from members.models import Member, Rank, RankChoices
+from members.models import Member, Rank, RankChoices, Membership
 
 
 def expire_active_ranks(rank_to_expire, rank_to_exclude):
@@ -176,9 +176,33 @@ class ExpireMembershipsForm(ControlPanelForm):
 			Field("cut_off_date"),
 		)
 	
+	def clean_cut_off_date(self):
+		today = datetime.date.today()
+		cut_off_date = self.cleaned_data["cut_off_date"]
+		if cut_off_date > today:
+			raise forms.ValidationError("Date cannot be in the future.")
+		return cut_off_date
+	
 	def submit(self, request):
 		if self.is_valid():
-			print("Valid!")
+			memberships_to_expire = Membership.objects.filter(
+				date_purchased__lt=self.cleaned_data["cut_off_date"],
+				expired=False
+			)
+			if memberships_to_expire.exists():
+				number_of_expired_memberships = memberships_to_expire.count()
+				for membership in memberships_to_expire:
+					membership.expired = True
+					membership.save()
+				messages.success(
+					request,
+					f"Successfully invalidated {number_of_expired_memberships} membership{'s' if number_of_expired_memberships > 1 else ''}."
+				)
+			else:
+				messages.warning(
+					request,
+					"No memberships to expire."
+				)
 
 
 class MakeGatekeepersForm(ControlPanelForm):
