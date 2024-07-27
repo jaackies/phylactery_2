@@ -64,6 +64,15 @@ class Member(models.Model):
 			return self.user.email
 		except ObjectDoesNotExist:
 			return None
+		
+	def add_rank(self, rank_name):
+		"""
+		Adds the chosen rank to this member.
+		"""
+		Rank.objects.create(
+			member=self,
+			rank_name=rank_name
+		)
 	
 	def has_rank(self, *rank_names):
 		# Returns True if the member has a non-expired rank with any of the given types.
