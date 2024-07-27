@@ -217,6 +217,7 @@ class MakeGatekeepersForm(ControlPanelForm):
 	]
 	
 	gatekeepers_to_add = forms.ModelMultipleChoiceField(
+		# TODO: Add autocomplete
 		queryset=Member.objects.all(),
 	)
 	
@@ -261,6 +262,7 @@ class MakeWebkeepersForm(ControlPanelForm):
 	]
 	
 	webkeepers_to_add = forms.ModelMultipleChoiceField(
+		# TODO: Add autocomplete
 		queryset=Member.objects.all(),
 	)
 	
@@ -268,6 +270,30 @@ class MakeWebkeepersForm(ControlPanelForm):
 		return Layout(
 			"webkeepers_to_add"
 		)
+	
+	def submit(self, request):
+		# TODO: Test this
+		if self.is_valid():
+			already_webkeepers = []
+			success_webkeepers = []
+			for member in self.cleaned_data["webkeepers_to_add"]:
+				if member.is_webkeeper():
+					already_webkeepers.append(member.long_name)
+				else:
+					member.add_rank(RankChoices.WEBKEEPER)
+					success_webkeepers.append(member.long_name)
+			if already_webkeepers:
+				messages.warning(
+					request,
+					f"The following members were already Webkeepers. "
+					f"They have been skipped: {', '.join(already_webkeepers)}"
+				)
+			if success_webkeepers:
+				messages.success(
+					request,
+					f"The following members were successfully made Webkeepers: "
+					f"{', '.join(success_webkeepers)}"
+				)
 
 
 class AddRemoveRanksForm(ControlPanelForm):
