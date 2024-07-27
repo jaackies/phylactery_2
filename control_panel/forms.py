@@ -184,6 +184,7 @@ class ExpireMembershipsForm(ControlPanelForm):
 		return cut_off_date
 	
 	def submit(self, request):
+		# TODO: Test this
 		if self.is_valid():
 			memberships_to_expire = Membership.objects.filter(
 				date_purchased__lt=self.cleaned_data["cut_off_date"],
@@ -223,6 +224,30 @@ class MakeGatekeepersForm(ControlPanelForm):
 		return Layout(
 			"gatekeepers_to_add"
 		)
+	
+	def submit(self, request):
+		# TODO: Test this
+		if self.is_valid():
+			already_gatekeepers = []
+			success_gatekeepers = []
+			for member in self.cleaned_data["gatekeepers_to_add"]:
+				if member.is_gatekeeper():
+					already_gatekeepers.append(member.long_name)
+				else:
+					member.add_rank(RankChoices.GATEKEEPER)
+					success_gatekeepers.append(member.long_name)
+			if already_gatekeepers:
+				messages.warning(
+					request,
+					f"The following members were already Gatekeepers. "
+					f"They have been skipped: {', '.join(already_gatekeepers)}"
+				)
+			if success_gatekeepers:
+				messages.success(
+					request,
+					f"The following members were successfully made Gatekeepers: "
+					f"{', '.join(success_gatekeepers)}"
+				)
 
 
 class MakeWebkeepersForm(ControlPanelForm):
