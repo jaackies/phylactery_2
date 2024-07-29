@@ -313,8 +313,55 @@ class AddRemoveRanksForm(ControlPanelForm):
 		RankChoices.WEBKEEPER,
 	]
 	
+	member_to_alter = forms.ModelChoiceField(
+		# TODO: Add autocomplete
+		queryset=Member.objects.all(),
+	)
+	operation = forms.ChoiceField(
+		choices=[
+			("ADD", "Add Rank"),
+			("REMOVE", "Remove Rank"),
+		],
+		widget=forms.RadioSelect
+	)
+	rank_to_alter = forms.ChoiceField(
+		choices=[
+			RankChoices.EXCLUDED,
+			RankChoices.GATEKEEPER,
+			RankChoices.WEBKEEPER,
+			RankChoices.LIFEMEMBER,
+		]
+	)
+	
 	def get_layout(self):
-		return Layout()
+		return Layout(
+			"member_to_alter",
+			"operation",
+			"rank_to_alter"
+		)
+	
+	def submit(self, request):
+		# TODO: Test this
+		if self.is_valid():
+			cleaned_member = self.cleaned_data["member_to_alter"]
+			cleaned_operation = self.cleaned_data["operation"]
+			cleaned_rank = self.cleaned_data["rank_to_alter"]
+			if cleaned_operation == "ADD":
+				if cleaned_member.has_rank(cleaned_rank):
+					messages.warning(
+						request,
+						f"{cleaned_member.long_name} is already {cleaned_rank}."
+					)
+				else:
+					cleaned_member.add_rank(cleaned_rank)
+					messages.success(
+						request,
+						f"{cleaned_member.long_name} was successfully made {cleaned_rank}."
+					)
+			elif cleaned_operation == "REMOVE":
+				# TODO: Complete
+				pass
+		
 
 
 class CommitteeTransferForm(ControlPanelForm):
