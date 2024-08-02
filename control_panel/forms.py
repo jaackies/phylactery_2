@@ -359,8 +359,22 @@ class AddRemoveRanksForm(ControlPanelForm):
 						f"{cleaned_member.long_name} was successfully made {cleaned_rank}."
 					)
 			elif cleaned_operation == "REMOVE":
-				# TODO: Complete
-				pass
+				ranks_to_expire = Rank.objects.all_active().filter(
+					member=cleaned_member,
+					rank_name=cleaned_rank,
+				)
+				if ranks_to_expire.count() > 0:
+					for rank in ranks_to_expire:
+						rank.set_expired()
+					messages.success(
+						request,
+						f"Successfully expired all {cleaned_rank} ranks from {cleaned_member.long_name}."
+					)
+				else:
+					messages.warning(
+						request,
+						f"{cleaned_member.long_name} does not have an active {cleaned_rank} rank."
+					)
 		
 
 
