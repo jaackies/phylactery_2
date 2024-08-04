@@ -184,7 +184,6 @@ class ExpireMembershipsForm(ControlPanelForm):
 		return cut_off_date
 	
 	def submit(self, request):
-		# TODO: Test this
 		if self.is_valid():
 			memberships_to_expire = Membership.objects.filter(
 				date_purchased__lt=self.cleaned_data["cut_off_date"],
