@@ -168,7 +168,7 @@ class ExpireMembershipsForm(ControlPanelForm):
 				"type": "date"
 			}
 		),
-		initial=datetime.date.today().replace(day=1, month=1)
+		initial=datetime.date.today().strftime("%Y-01-01"),
 	)
 	
 	def get_layout(self):
