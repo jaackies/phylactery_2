@@ -285,7 +285,6 @@ class MakeWebkeepersForm(ControlPanelForm):
 		)
 	
 	def submit(self, request):
-		# TODO: Test this
 		if self.is_valid():
 			already_webkeepers = []
 			success_webkeepers = []
