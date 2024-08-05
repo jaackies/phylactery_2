@@ -114,6 +114,9 @@ class Member(models.Model):
 	def is_committee(self):
 		return self.is_valid_member() and self.has_rank(RankChoices.COMMITTEE, RankChoices.WEBKEEPER)
 	
+	def is_webkeeper(self):
+		return self.is_valid_member() and self.has_rank(RankChoices.WEBKEEPER)
+	
 	def is_exec(self):
 		return (
 			self.is_valid_member() and
