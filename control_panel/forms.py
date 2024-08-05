@@ -1,4 +1,5 @@
 import datetime
+from dal import autocomplete
 from django import forms
 from django.contrib import messages
 from django.utils.text import slugify
@@ -52,6 +53,7 @@ class ControlPanelForm(forms.Form):
 	form_short_description: str | None = None
 	form_long_description: str | None = None
 	form_allowed_ranks: list = []
+	form_include_media = True
 	
 	form_confirm_field = forms.BooleanField(
 		label="I confirm I wish to perform this action.",
@@ -74,7 +76,7 @@ class ControlPanelForm(forms.Form):
 		
 		self.helper = FormHelper()
 		self.helper.form_tag = False
-		self.helper.include_media = False
+		self.helper.include_media = self.form_include_media
 		
 		self.helper.layout = self.get_layout()
 	
@@ -214,10 +216,16 @@ class MakeGatekeepersForm(ControlPanelForm):
 		RankChoices.SECRETARY,
 		RankChoices.WEBKEEPER,
 	]
+	form_include_media = False
 	
 	gatekeepers_to_add = forms.ModelMultipleChoiceField(
-		# TODO: Add autocomplete
 		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2Multiple(
+			url="members:autocomplete_member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
 	)
 	
 	def get_layout(self):
