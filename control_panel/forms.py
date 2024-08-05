@@ -438,6 +438,31 @@ class CommitteeTransferForm(ControlPanelForm):
 				field_names[position].append(f"options_{slugify(position)}")
 		return field_names
 	
+	def check_valid_for_position(self, field, member, position):
+		EXEC_POSITIONS = [
+			RankChoices.PRESIDENT,
+			RankChoices.VICEPRESIDENT,
+			RankChoices.TREASURER,
+			RankChoices.SECRETARY,
+			RankChoices.LIBRARIAN,
+		]
+		if member is None:
+			self.add_error(field, "You haven't selected anyone to elect to this position.")
+			return False
+		if not member.has_active_membership():
+			self.add_error(field, "This member doesn't have a valid membership.")
+			return False
+		if member.student_number == "" or member.student_number is None:
+			self.add_error(field, "This member doesn't appear to be a student. (No student number recorded.)")
+			return False
+		if member.has_rank(RankChoices.EXCLUDED):
+			self.add_error(field, "This member is currently excluded.")
+			return False
+		if position in EXEC_POSITIONS and member.get_most_recent_membership().guild_member is False:
+			self.add_error(field, "This member is not currently a Guild member.")
+			return False
+		return True
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		
