@@ -363,17 +363,18 @@ class AddRemoveRanksForm(ControlPanelForm):
 			cleaned_member = self.cleaned_data["member_to_alter"]
 			cleaned_operation = self.cleaned_data["operation"]
 			cleaned_rank = self.cleaned_data["rank_to_alter"]
+			cleaned_rank_label = dict(self.fields["rank_to_alter"].choices)[cleaned_rank]
 			if cleaned_operation == "ADD":
 				if cleaned_member.has_rank(cleaned_rank):
 					messages.warning(
 						request,
-						f"{cleaned_member.long_name} is already {cleaned_rank}."
+						f"{cleaned_member.long_name} is already {cleaned_rank_label}."
 					)
 				else:
 					cleaned_member.add_rank(cleaned_rank)
 					messages.success(
 						request,
-						f"{cleaned_member.long_name} was successfully made {cleaned_rank}."
+						f"{cleaned_member.long_name} was successfully made {cleaned_rank_label}."
 					)
 			elif cleaned_operation == "REMOVE":
 				ranks_to_expire = Rank.objects.all_active().filter(
@@ -385,12 +386,12 @@ class AddRemoveRanksForm(ControlPanelForm):
 						rank.set_expired()
 					messages.success(
 						request,
-						f"Successfully expired all {cleaned_rank} ranks from {cleaned_member.long_name}."
+						f"Successfully expired all {cleaned_rank_label} ranks from {cleaned_member.long_name}."
 					)
 				else:
 					messages.warning(
 						request,
-						f"{cleaned_member.long_name} does not have an active {cleaned_rank} rank."
+						f"{cleaned_member.long_name} does not have an active {cleaned_rank_label} rank."
 					)
 		
 
