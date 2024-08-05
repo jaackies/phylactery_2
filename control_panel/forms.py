@@ -442,11 +442,17 @@ class CommitteeTransferForm(ControlPanelForm):
 		super().__init__(*args, **kwargs)
 		
 		field_names = self.get_field_names()
+		current_ocm = 1
 		for position in field_names:
 			for field_name in field_names[position]:
 				if field_name.startswith("assigned"):
+					if position.label == "OCM":
+						field_label = f"Assigned {position.label} #{current_ocm}"
+						current_ocm += 1
+					else:
+						field_label = f"Assigned {position.label}"
 					self.fields[field_name] = forms.ModelChoiceField(
-						label=f"Assigned {position.label}",
+						label=field_label,
 						queryset=Member.objects.all(),
 						widget=autocomplete.ModelSelect2(
 							url="members:autocomplete_member",
