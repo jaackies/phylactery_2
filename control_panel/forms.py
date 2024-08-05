@@ -324,10 +324,16 @@ class AddRemoveRanksForm(ControlPanelForm):
 		RankChoices.SECRETARY,
 		RankChoices.WEBKEEPER,
 	]
+	form_include_media = False
 	
 	member_to_alter = forms.ModelChoiceField(
-		# TODO: Add autocomplete
 		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2(
+			url="members:autocomplete_member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
 	)
 	operation = forms.ChoiceField(
 		choices=[
@@ -338,10 +344,10 @@ class AddRemoveRanksForm(ControlPanelForm):
 	)
 	rank_to_alter = forms.ChoiceField(
 		choices=[
-			RankChoices.EXCLUDED,
-			RankChoices.GATEKEEPER,
-			RankChoices.WEBKEEPER,
-			RankChoices.LIFEMEMBER,
+			(RankChoices.GATEKEEPER.name, RankChoices.GATEKEEPER.label),
+			(RankChoices.WEBKEEPER.name, RankChoices.WEBKEEPER.label),
+			(RankChoices.EXCLUDED.name, RankChoices.EXCLUDED.label),
+			(RankChoices.LIFEMEMBER.name, RankChoices.LIFEMEMBER.label),
 		]
 	)
 	
@@ -353,7 +359,6 @@ class AddRemoveRanksForm(ControlPanelForm):
 		)
 	
 	def submit(self, request):
-		# TODO: Test this
 		if self.is_valid():
 			cleaned_member = self.cleaned_data["member_to_alter"]
 			cleaned_operation = self.cleaned_data["operation"]
