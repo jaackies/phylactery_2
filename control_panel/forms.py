@@ -442,14 +442,17 @@ class CommitteeTransferForm(ControlPanelForm):
 		super().__init__(*args, **kwargs)
 		
 		field_names = self.get_field_names()
-		current_ocm_number = 1
+		current_ocm_number = 0
+		current_committee = Rank.objects.get_committee()
 		for position in field_names:
 			for field_name in field_names[position]:
 				if field_name.startswith("assigned"):
 					if position.label == "OCM":
-						field_label = f"Assigned {position.label} #{current_ocm_number}"
+						position_initial = current_committee[position][current_ocm_number].member
+						field_label = f"Assigned {position.label} #{current_ocm_number+1}"
 						current_ocm_number += 1
 					else:
+						position_initial = current_committee[position][0].member
 						field_label = f"Assigned {position.label}"
 					self.fields[field_name] = forms.ModelChoiceField(
 						label=field_label,
@@ -459,7 +462,8 @@ class CommitteeTransferForm(ControlPanelForm):
 							attrs={
 								"data-theme": "bootstrap-5"
 							}
-						)
+						),
+						initial=position_initial
 					)
 				else:
 					self.fields[field_name] = forms.ChoiceField(
