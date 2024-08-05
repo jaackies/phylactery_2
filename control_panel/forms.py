@@ -403,6 +403,26 @@ class CommitteeTransferForm(ControlPanelForm):
 		RankChoices.VICEPRESIDENT,
 		RankChoices.WEBKEEPER,
 	]
+	form_include_media = False
+	
+	NUMBER_OF_OCMS = 4
+	
+	RADIO_CHOICES = [
+		("retain", "Retain previous committee member"),
+		("elect", "Elect new committee member"),
+		("remove", "Remove the committee member from this position, with no replacement"),
+	]
+	
+	COMMITTEE_POSITIONS = [
+		RankChoices.PRESIDENT,
+		RankChoices.VICEPRESIDENT,
+		RankChoices.TREASURER,
+		RankChoices.SECRETARY,
+		RankChoices.LIBRARIAN,
+		RankChoices.FRESHERREP,
+		RankChoices.OCM,
+		RankChoices.IPP,
+	]
 	
 	def get_layout(self):
 		return Layout()
