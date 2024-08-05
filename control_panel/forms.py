@@ -267,10 +267,16 @@ class MakeWebkeepersForm(ControlPanelForm):
 		RankChoices.SECRETARY,
 		RankChoices.WEBKEEPER,
 	]
+	form_include_media = False
 	
 	webkeepers_to_add = forms.ModelMultipleChoiceField(
-		# TODO: Add autocomplete
 		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2Multiple(
+			url="members:autocomplete_member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
 	)
 	
 	def get_layout(self):
