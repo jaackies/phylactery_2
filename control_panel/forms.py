@@ -393,7 +393,6 @@ class AddRemoveRanksForm(ControlPanelForm):
 						request,
 						f"{cleaned_member.long_name} does not have an active {cleaned_rank_label} rank."
 					)
-		
 
 
 class CommitteeTransferForm(ControlPanelForm):
