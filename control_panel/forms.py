@@ -424,8 +424,45 @@ class CommitteeTransferForm(ControlPanelForm):
 		RankChoices.IPP,
 	]
 	
+	def get_field_names(self):
+		field_names = []
+		for position in self.COMMITTEE_POSITIONS:
+			if position == "OCM":
+				repeats = self.NUMBER_OF_OCMS
+			else:
+				repeats = 1
+			
+			for i in range(repeats):
+				field_names.append(f"assigned_{slugify(position)}_{i}")
+				field_names.append(f"options_{slugify(position)}_{i}")
+		return field_names
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		
+		for field_name in self.get_field_names():
+			if field_name.startswith("assigned"):
+				self.fields[field_name] = forms.ModelChoiceField(
+					queryset=Member.objects.all(),
+					widget=autocomplete.ModelSelect2(
+						url="members:autocomplete_member",
+						attrs={
+							"data-theme": "bootstrap-5"
+						}
+					)
+				)
+			else:
+				self.fields[field_name] = forms.ChoiceField(
+					widget=forms.RadioSelect,
+					choices=self.RADIO_CHOICES,
+					label="",
+					initial="retain"
+				)
+		
 	def get_layout(self):
-		return Layout()
+		return Layout(*self.get_field_names())
+	
+	
 
 
 class GetMembershipInfoForm(ControlPanelForm):
