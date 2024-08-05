@@ -428,13 +428,14 @@ class CommitteeTransferForm(ControlPanelForm):
 	def get_field_names(self):
 		field_names = {}
 		for position in self.COMMITTEE_POSITIONS:
+			field_names[position] = []
 			if position == "OCM":
-				repeats = self.NUMBER_OF_OCMS
+				for i in range(self.NUMBER_OF_OCMS):
+					field_names[position].append(f"assigned_{slugify(position)}_{i+1}")
+					field_names[position].append(f"options_{slugify(position)}_{i+1}")
 			else:
-				repeats = 1
-			
-			for i in range(repeats):
-				field_names[position] = (f"assigned_{slugify(position)}_{i}", f"options_{slugify(position)}_{i}")
+				field_names[position].append(f"assigned_{slugify(position)}")
+				field_names[position].append(f"options_{slugify(position)}")
 		return field_names
 	
 	def __init__(self, *args, **kwargs):
