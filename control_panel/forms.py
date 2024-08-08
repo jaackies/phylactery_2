@@ -512,6 +512,54 @@ class CommitteeTransferForm(ControlPanelForm):
 			accordion
 		)
 	
+	def clean(self):
+		new_committee = {}
+		old_committee = Rank.objects.get_committee()
+		field_names = self.get_field_names()
+		
+		for position in self.COMMITTEE_POSITIONS:
+			if position != RankChoices.OCM:
+				assigned_field_name = field_names[position][0]
+				options_field_name = field_names[position][1]
+				cleaned_assigned_member = self.cleaned_data[assigned_field_name]
+				cleaned_options = self.cleaned_data[options_field_name]
+				
+				match cleaned_options:
+					case "retain":
+						# Check for a data entry error
+						if cleaned_assigned_member == old_committee[position][0]:
+							# Recheck eligibility - errors will be added if they aren't.
+							if self.check_valid_for_position(
+									assigned_field_name,
+									cleaned_assigned_member,
+									position
+							):
+								# They are eligible - add them in!
+								new_committee[position] = list(cleaned_assigned_member)
+						else:
+							# Warn the user of a potential data entry error.
+							self.add_error(assigned_field_name, "")
+							self.add_error(options_field_name, "You selected 'Retain', but also selected a different member for this position. Did you make a mistake?")
+					case "remove":
+						# No person is being assigned to this position.
+						new_committee[position] = list()
+					case "elect":
+						# Check eligibility
+						if self.check_valid_for_position(
+							assigned_field_name,
+							cleaned_assigned_member,
+							position,
+						):
+							# They are eligible, let them in
+							new_committee[position] = list(cleaned_assigned_member)
+				
+				
+				
+	
+	def submit(self, request):
+		if self.is_valid():
+			pass
+	
 	
 
 
