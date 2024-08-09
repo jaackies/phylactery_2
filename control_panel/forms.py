@@ -500,14 +500,13 @@ class CommitteeTransferForm(ControlPanelForm):
 
 	def get_layout(self):
 		accordion = Accordion()
-		field_names = self.get_field_names_by_position()
-		for position in field_names:
-			accordion.append(
-				AccordionGroup(
-					position.label,
-					*field_names[position]
-				)
-			)
+		field_names_by_position = self.get_field_names_by_position()
+		for position in field_names_by_position:
+			accordion_group = AccordionGroup(position.label)
+			for assigned_field, options_field in field_names_by_position[position]:
+				accordion_group.append(assigned_field)
+				accordion_group.append(options_field)
+			accordion.append(accordion_group)
 		return Layout(
 			accordion
 		)
