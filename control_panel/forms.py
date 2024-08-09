@@ -472,16 +472,15 @@ class CommitteeTransferForm(ControlPanelForm):
 		current_ocm_number = 0
 		current_committee = Rank.objects.get_committee()
 		for position in field_names_by_position:
-			for field_name in field_names_by_position[position]:
-				if field_name.startswith("assigned"):
-					if position.label == "OCM":
-						position_initial = current_committee[position][current_ocm_number].member
-						field_label = f"Assigned {position.label} #{current_ocm_number+1}"
-						current_ocm_number += 1
-					else:
-						position_initial = current_committee[position][0].member
-						field_label = f"Assigned {position.label}"
-					self.fields[field_name] = forms.ModelChoiceField(
+			for assigned_field_name, options_field_name in field_names_by_position[position]:
+				if position == RankChoices.OCM:
+					position_initial = current_committee[position][current_ocm_number].member
+					field_label = f"Assigned {position.label} #{current_ocm_number+1}"
+					current_ocm_number += 1
+				else:
+					position_initial = current_committee[position][0].member
+					field_label = f"Assigned {position.label}"
+				self.fields[assigned_field_name] = forms.ModelChoiceField(
 						label=field_label,
 						queryset=Member.objects.all(),
 						widget=autocomplete.ModelSelect2(
@@ -490,16 +489,15 @@ class CommitteeTransferForm(ControlPanelForm):
 								"data-theme": "bootstrap-5"
 							}
 						),
-						initial=position_initial
+						initial=position_initial,
 					)
-				else:
-					self.fields[field_name] = forms.ChoiceField(
-						widget=forms.RadioSelect,
-						choices=self.RADIO_CHOICES,
-						label="",
-						initial="retain"
-					)
-		
+				self.fields[options_field_name] = forms.ChoiceField(
+					widget=forms.RadioSelect,
+					choices=self.RADIO_CHOICES,
+					label="",
+					initial="retain"
+				)
+
 	def get_layout(self):
 		accordion = Accordion()
 		field_names = self.get_field_names_by_position()
