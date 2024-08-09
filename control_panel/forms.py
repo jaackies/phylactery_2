@@ -425,7 +425,7 @@ class CommitteeTransferForm(ControlPanelForm):
 		RankChoices.IPP,
 	]
 	
-	def get_field_names(self):
+	def get_field_names_by_position(self):
 		field_names = {}
 		for position in self.COMMITTEE_POSITIONS:
 			field_names[position] = []
@@ -468,11 +468,11 @@ class CommitteeTransferForm(ControlPanelForm):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		
-		field_names = self.get_field_names()
+		field_names_by_position = self.get_field_names_by_position()
 		current_ocm_number = 0
 		current_committee = Rank.objects.get_committee()
-		for position in field_names:
-			for field_name in field_names[position]:
+		for position in field_names_by_position:
+			for field_name in field_names_by_position[position]:
 				if field_name.startswith("assigned"):
 					if position.label == "OCM":
 						position_initial = current_committee[position][current_ocm_number].member
@@ -502,7 +502,7 @@ class CommitteeTransferForm(ControlPanelForm):
 		
 	def get_layout(self):
 		accordion = Accordion()
-		field_names = self.get_field_names()
+		field_names = self.get_field_names_by_position()
 		for position in field_names:
 			accordion.append(
 				AccordionGroup(
@@ -517,7 +517,7 @@ class CommitteeTransferForm(ControlPanelForm):
 	def clean(self):
 		new_committee = {}
 		old_committee = Rank.objects.get_committee()
-		field_names = self.get_field_names()
+		field_names = self.get_field_names_by_position()
 		
 		for position in self.COMMITTEE_POSITIONS:
 			if position != RankChoices.OCM:
