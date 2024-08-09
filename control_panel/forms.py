@@ -431,11 +431,13 @@ class CommitteeTransferForm(ControlPanelForm):
 			field_names[position] = []
 			if position == "OCM":
 				for i in range(self.NUMBER_OF_OCMS):
-					field_names[position].append(f"assigned_{slugify(position)}_{i+1}")
-					field_names[position].append(f"options_{slugify(position)}_{i+1}")
+					assigned_field_name = f"assigned_{slugify(position)}_{i+1}"
+					options_field_name = f"options_{slugify(position)}_{i+1}"
+					field_names[position].append((assigned_field_name, options_field_name))
 			else:
-				field_names[position].append(f"assigned_{slugify(position)}")
-				field_names[position].append(f"options_{slugify(position)}")
+				assigned_field_name = f"assigned_{slugify(position)}"
+				options_field_name = f"options_{slugify(position)}"
+				field_names[position].append((assigned_field_name, options_field_name))
 		return field_names
 	
 	def check_valid_for_position(self, field, member, position):
