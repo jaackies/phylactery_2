@@ -529,7 +529,7 @@ class CommitteeTransferForm(ControlPanelForm):
 		committee_to_remove = set()
 		old_committee_by_position = Rank.objects.get_committee()
 		old_committee_by_member = dict()
-		new_committee_by_position = dict()
+		new_committee_members = set()
 		for old_position in old_committee_by_position:
 			for member in old_committee_by_position[old_position]:
 				committee_to_remove.add(member)
@@ -545,18 +545,32 @@ class CommitteeTransferForm(ControlPanelForm):
 			for assigned_field_name, options_field_name in field_names_by_position[position]:
 				cleaned_assigned_member = self.cleaned_data[assigned_field_name]
 				cleaned_option = self.cleaned_data[options_field_name]
-				match cleaned_option:
-					case "retain":
-						# Check for a data entry error
-						if assigned_field_name in self.changed_data:
-							# Warn the user of a potential data entry error.
-							self.add_error(assigned_field_name, "")
-							self.add_error(
-								options_field_name,
-								"You selected 'Retain', but also selected a different member for this position. "
-								"Did you make a mistake?"
-							)
-						else:
+				if cleaned_assigned_member in new_committee_members:
+					# Committee can't have duplicate members.
+					self.add_error(assigned_field_name, f"Committee can't have duplicate members.")
+				else:
+					new_committee_members.add(cleaned_assigned_member)
+					match cleaned_option:
+						case "retain":
+							# Check for a data entry error
+							if assigned_field_name in self.changed_data:
+								# Warn the user of a potential data entry error.
+								self.add_error(assigned_field_name, "")
+								self.add_error(
+									options_field_name,
+									"You selected 'Retain', but also selected a different member for this position. "
+									"Did you make a mistake?"
+								)
+							else:
+								# Check if they're eligible. If not, then errors will be added automatically.
+								if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
+									# They're valid! Put them in!
+									committee_to_remove.remove(cleaned_assigned_member)
+									old_position = old_committee_by_member.get(cleaned_assigned_member, None)
+									committee_changes.append(
+										(cleaned_assigned_member, old_position, position)
+									)
+						case "elect":
 							# Check if they're eligible. If not, then errors will be added automatically.
 							if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 								# They're valid! Put them in!
@@ -565,18 +579,9 @@ class CommitteeTransferForm(ControlPanelForm):
 								committee_changes.append(
 									(cleaned_assigned_member, old_position, position)
 								)
-					case "elect":
-						# Check if they're eligible. If not, then errors will be added automatically.
-						if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
-							# They're valid! Put them in!
-							committee_to_remove.remove(cleaned_assigned_member)
-							old_position = old_committee_by_member.get(cleaned_assigned_member, None)
-							committee_changes.append(
-								(cleaned_assigned_member, old_position, position)
-							)
-					case "remove":
-						# Nothing to do here
-						pass
+						case "remove":
+							# Nothing to do here
+							pass
 		# Now, make sure all old committee members are removed.
 		for old_committee_member in committee_to_remove:
 			old_position = old_committee_by_member[old_committee_member]
