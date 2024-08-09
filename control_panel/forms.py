@@ -512,47 +512,78 @@ class CommitteeTransferForm(ControlPanelForm):
 		)
 	
 	def clean(self):
-		new_committee = {}
-		old_committee = Rank.objects.get_committee()
-		field_names = self.get_field_names_by_position()
+		"""
+		Steps:
+			1. Add all old committee members to a "committee to remove" set.
+			2. Obtain the old committee, and create a reversed {member: position} dict for the old committee
+			2. Create a list of changes.
+			3. Iterate through all the positions. For each position:
+				1. Iterate though each set of fields. For each:
+					1. Validate the (retain, elect, remove) options.
+					2. Check eligibility for position.
+					3. Remove the member from "committee to remove" (if they're there)
+					4.
+					
+		"""
+		field_names_by_position = self.get_field_names_by_position()
+		committee_to_remove = set()
+		old_committee_by_position = Rank.objects.get_committee()
+		old_committee_by_member = dict()
+		new_committee_by_position = dict()
+		for old_position in old_committee_by_position:
+			for member in old_committee_by_position[old_position]:
+				committee_to_remove.add(member)
+				old_committee_by_member[member] = old_position
 		
-		for position in self.COMMITTEE_POSITIONS:
-			if position != RankChoices.OCM:
-				assigned_field_name = field_names[position][0]
-				options_field_name = field_names[position][1]
+		# Each entry in committee changes will be a tuple in the form of
+		# (member, old_position, new_position)
+		# If old_position is None: They are new to committee.
+		# If new_position is None: They are leaving committee.
+		committee_changes = list()
+		
+		for position in field_names_by_position:
+			for assigned_field_name, options_field_name in field_names_by_position[position]:
 				cleaned_assigned_member = self.cleaned_data[assigned_field_name]
-				cleaned_options = self.cleaned_data[options_field_name]
-				
-				match cleaned_options:
+				cleaned_option = self.cleaned_data[options_field_name]
+				match cleaned_option:
 					case "retain":
 						# Check for a data entry error
-						if cleaned_assigned_member == old_committee[position][0]:
-							# Recheck eligibility - errors will be added if they aren't.
-							if self.check_valid_for_position(
-									assigned_field_name,
-									cleaned_assigned_member,
-									position
-							):
-								# They are eligible - add them in!
-								new_committee[position] = list(cleaned_assigned_member)
-						else:
+						if assigned_field_name in self.changed_data:
 							# Warn the user of a potential data entry error.
 							self.add_error(assigned_field_name, "")
-							self.add_error(options_field_name, "You selected 'Retain', but also selected a different member for this position. Did you make a mistake?")
-					case "remove":
-						# No person is being assigned to this position.
-						new_committee[position] = list()
+							self.add_error(
+								options_field_name,
+								"You selected 'Retain', but also selected a different member for this position. "
+								"Did you make a mistake?"
+							)
+						else:
+							# Check if they're eligible. If not, then errors will be added automatically.
+							if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
+								# They're valid! Put them in!
+								committee_to_remove.remove(cleaned_assigned_member)
+								old_position = old_committee_by_member.get(cleaned_assigned_member, None)
+								committee_changes.append(
+									(cleaned_assigned_member, old_position, position)
+								)
 					case "elect":
-						# Check eligibility
-						if self.check_valid_for_position(
-							assigned_field_name,
-							cleaned_assigned_member,
-							position,
-						):
-							# They are eligible, let them in
-							new_committee[position] = list(cleaned_assigned_member)
-				
-				
+						# Check if they're eligible. If not, then errors will be added automatically.
+						if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
+							# They're valid! Put them in!
+							committee_to_remove.remove(cleaned_assigned_member)
+							old_position = old_committee_by_member.get(cleaned_assigned_member, None)
+							committee_changes.append(
+								(cleaned_assigned_member, old_position, position)
+							)
+					case "remove":
+						# Nothing to do here
+						pass
+		# Now, make sure all old committee members are removed.
+		for old_committee_member in committee_to_remove:
+			old_position = old_committee_by_member[old_committee_member]
+			committee_changes.append(
+				(old_committee_member, old_position, None)
+			)
+		print(committee_changes)
 				
 	
 	def submit(self, request):
