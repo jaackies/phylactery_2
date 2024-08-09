@@ -251,7 +251,7 @@ class RankManager(models.Manager):
 			RankChoices.OCM,
 			RankChoices.IPP,
 		]:
-			committee_data[committee_rank] = self.all_active().filter(rank_name=committee_rank)
+			committee_data[committee_rank] = self.all_active().filter(rank_name=committee_rank).order_by("pk")
 		return committee_data
 
 
