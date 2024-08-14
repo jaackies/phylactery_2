@@ -63,6 +63,7 @@ class ControlPanelForm(forms.Form):
 	)
 	
 	def __init__(self, *args, **kwargs):
+		skip_layout = kwargs.pop("skip_layout", False)
 		super().__init__(*args, **kwargs)
 		
 		if self.form_name is None:
@@ -79,7 +80,8 @@ class ControlPanelForm(forms.Form):
 		self.helper.form_tag = False
 		self.helper.include_media = self.form_include_media
 		
-		self.helper.layout = self.get_layout()
+		if skip_layout is False:
+			self.helper.layout = self.get_layout()
 	
 	def get_layout(self):
 		raise NotImplemented
@@ -466,7 +468,7 @@ class CommitteeTransferForm(ControlPanelForm):
 		return True
 	
 	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
+		super().__init__(*args, skip_layout=True, **kwargs)
 		
 		field_names_by_position = self.get_field_names_by_position()
 		current_ocm_number = 0
@@ -497,6 +499,7 @@ class CommitteeTransferForm(ControlPanelForm):
 					label="",
 					initial="retain"
 				)
+		self.helper.layout = self.get_layout()
 
 	def get_layout(self):
 		accordion = Accordion()
