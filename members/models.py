@@ -79,6 +79,14 @@ class Member(models.Model):
 		# Returns False otherwise.
 		return self.ranks.filter(expired=False, rank_name__in=rank_names).exists()
 	
+	def remove_rank(self, *rank_names):
+		"""
+		Expires all active ranks of the chosen type from this member.
+		"""
+		ranks_to_expire = self.ranks.filter(expired=False, rank_name__in=rank_names)
+		for rank in ranks_to_expire:
+			rank.set_expired()
+	
 	def has_active_membership(self):
 		# Returns True if the member has a valid membership.
 		return self.memberships.filter(expired=False).exists()
