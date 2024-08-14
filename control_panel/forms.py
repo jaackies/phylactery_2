@@ -531,9 +531,9 @@ class CommitteeTransferForm(ControlPanelForm):
 		old_committee_by_member = dict()
 		new_committee_members = set()
 		for old_position in old_committee_by_position:
-			for member in old_committee_by_position[old_position]:
-				committee_to_remove.add(member)
-				old_committee_by_member[member] = old_position
+			for rank_object in old_committee_by_position[old_position]:
+				committee_to_remove.add(rank_object.member)
+				old_committee_by_member[rank_object.member] = old_position
 		
 		# Each entry in committee changes will be a tuple in the form of
 		# (member, old_position, new_position)
@@ -565,7 +565,7 @@ class CommitteeTransferForm(ControlPanelForm):
 								# Check if they're eligible. If not, then errors will be added automatically.
 								if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 									# They're valid! Put them in!
-									committee_to_remove.remove(cleaned_assigned_member)
+									committee_to_remove.discard(cleaned_assigned_member)
 									old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 									committee_changes.append(
 										(cleaned_assigned_member, old_position, position)
@@ -574,7 +574,7 @@ class CommitteeTransferForm(ControlPanelForm):
 							# Check if they're eligible. If not, then errors will be added automatically.
 							if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 								# They're valid! Put them in!
-								committee_to_remove.remove(cleaned_assigned_member)
+								committee_to_remove.discard(cleaned_assigned_member)
 								old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 								committee_changes.append(
 									(cleaned_assigned_member, old_position, position)
@@ -588,7 +588,6 @@ class CommitteeTransferForm(ControlPanelForm):
 			committee_changes.append(
 				(old_committee_member, old_position, None)
 			)
-		print(committee_changes)
 				
 	
 	def submit(self, request):
