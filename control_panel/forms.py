@@ -513,17 +513,12 @@ class CommitteeTransferForm(ControlPanelForm):
 	
 	def clean(self):
 		"""
-		Steps:
-			1. Add all old committee members to a "committee to remove" set.
-			2. Obtain the old committee, and create a reversed {member: position} dict for the old committee
-			2. Create a list of changes.
-			3. Iterate through all the positions. For each position:
-				1. Iterate though each set of fields. For each:
-					1. Validate the (retain, elect, remove) options.
-					2. Check eligibility for position.
-					3. Remove the member from "committee to remove" (if they're there)
-					4.
-					
+		Validates and compiles the committee changes into a list of changes.
+		Each item in the list will be a tuple in the form of
+		(<member>, <old_rank>, <new_rank>)
+		
+		If old_rank is None: They are new to committee.
+		If new_rank is None: They are leaving committee.
 		"""
 		field_names_by_position = self.get_field_names_by_position()
 		committee_to_remove = set()
@@ -535,10 +530,6 @@ class CommitteeTransferForm(ControlPanelForm):
 				committee_to_remove.add(rank_object.member)
 				old_committee_by_member[rank_object.member] = old_position
 		
-		# Each entry in committee changes will be a tuple in the form of
-		# (member, old_position, new_position)
-		# If old_position is None: They are new to committee.
-		# If new_position is None: They are leaving committee.
 		committee_changes = list()
 		
 		for position in field_names_by_position:
@@ -588,7 +579,7 @@ class CommitteeTransferForm(ControlPanelForm):
 			committee_changes.append(
 				(old_committee_member, old_position, None)
 			)
-				
+		
 	
 	def submit(self, request):
 		if self.is_valid():
