@@ -500,6 +500,7 @@ class CommitteeTransferForm(ControlPanelForm):
 					initial="retain"
 				)
 		self.helper.layout = self.get_layout()
+		self.cleaned_committee_changes = None
 
 	def get_layout(self):
 		accordion = Accordion()
@@ -584,10 +585,22 @@ class CommitteeTransferForm(ControlPanelForm):
 			committee_changes.append(
 				(old_committee_member, old_position, None)
 			)
+		self.cleaned_committee_changes = committee_changes
 
 	def submit(self, request):
+		self.clean()
 		if self.is_valid():
-			pass
+			for change in self.cleaned_committee_changes:
+				match change:
+					case (member, None, new_position):
+						print(f"{member} is entering committee: {new_position.label}")
+					case (member, old_position, None):
+						print(f"{member} is leaving committee")
+					case (member, old_position, new_position) if old_position == new_position:
+						print(f"{member} will continue to be {old_position.label}")
+					case (member, old_position, new_position):
+						print(f"{member} is moving from {old_position.label} to {new_position.label}")
+					
 	
 	
 
