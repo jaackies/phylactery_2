@@ -590,16 +590,29 @@ class CommitteeTransferForm(ControlPanelForm):
 	def submit(self, request):
 		self.clean()
 		if self.is_valid():
+			change_messages = []
 			for change in self.cleaned_committee_changes:
 				match change:
 					case (member, None, new_position):
-						print(f"{member} is entering committee: {new_position.label}")
+						# Add a committee rank, and their new position.
+						member.add_rank(RankChoices.COMMITTEE)
+						member.add_rank(new_position)
+						change_messages.append(f"Added {member.long_name} to {new_position.label}.")
 					case (member, old_position, None):
-						print(f"{member} is leaving committee")
+						# Expire their position and their committee rank.
+						member.remove_rank(RankChoices.COMMITTEE)
+						member.remove_rank(old_position)
+						change_messages.append(f"Removed {member.long_name}.")
 					case (member, old_position, new_position) if old_position == new_position:
-						print(f"{member} will continue to be {old_position.label}")
+						# Nothing we need to do.
+						change_messages.append(f"{member.long_name} will continue to be {old_position.label}.")
 					case (member, old_position, new_position):
-						print(f"{member} is moving from {old_position.label} to {new_position.label}")
+						# Leave the committee position, expire their old position rank, and add the new one.
+						member.remove_rank(old_position)
+						member.add_rank(new_position)
+						change_messages.append(f"{member.long_name} moved from {old_position.label} to {new_position.label}.")
+			if change_messages:
+				messages.success(request, "\n".join(change_messages))
 					
 	
 	
