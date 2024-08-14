@@ -507,6 +507,8 @@ class CommitteeTransferForm(ControlPanelForm):
 		for position in field_names_by_position:
 			accordion_group = AccordionGroup(position.label)
 			for assigned_field, options_field in field_names_by_position[position]:
+				if self.has_error(assigned_field) or self.has_error(options_field):
+					accordion_group.active = True
 				accordion_group.append(assigned_field)
 				accordion_group.append(options_field)
 			accordion.append(accordion_group)
@@ -582,8 +584,7 @@ class CommitteeTransferForm(ControlPanelForm):
 			committee_changes.append(
 				(old_committee_member, old_position, None)
 			)
-		
-	
+
 	def submit(self, request):
 		if self.is_valid():
 			pass
