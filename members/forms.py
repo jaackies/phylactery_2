@@ -271,10 +271,7 @@ class ChangeEmailPreferencesForm(forms.Form):
 		self.helper = FormHelper()
 		self.helper.form_tag = False
 		self.helper.layout = Layout(
-			Fieldset(
-				"Change Email Preferences",
-				"optional_emails",
-			)
+			"optional_emails",
 		)
 	
 		for mailing_list in MailingList.objects.filter(is_active=True):
@@ -285,7 +282,7 @@ class ChangeEmailPreferencesForm(forms.Form):
 				label=mailing_list.verbose_description,
 				required=False,
 			)
-			self.helper.layout[0].append(field_name)
+			self.helper.layout.append(field_name)
 	
 	def submit(self):
 		if self.member is not None:

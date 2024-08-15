@@ -55,6 +55,7 @@ class MyProfileView(LoginRequiredMixin, DetailView):
 
 class ChangeEmailPreferencesView(LoginRequiredMixin, FormView):
 	form_class = ChangeEmailPreferencesForm
+	template_name = "members/my_email_preferences.html"
 	
 	def get_form_kwargs(self):
 		kwargs = super().get_form_kwargs()
