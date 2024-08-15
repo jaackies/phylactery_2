@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
-
+from accounts.models import UnigamesUser
 
 def gatekeeper_required(function=None):
 	"""
@@ -70,3 +70,26 @@ def exec_required(function=None):
 	if function:
 		return actual_decorator(function)
 	return actual_decorator
+
+
+def staff_required(function=None):
+	"""
+	Decorator for views - requires the User to be staff (can access the admin)
+	and to have a linked Unigames member.
+	"""
+	
+	def is_member_test(u: UnigamesUser):
+		if u.is_authenticated:
+			if u.get_member is not None and u.is_staff:
+				return True
+			else:
+				raise PermissionDenied
+		else:
+			return False
+	
+	actual_decorator = user_passes_test(is_member_test)
+	
+	if function:
+		return actual_decorator(function)
+	return actual_decorator
+	

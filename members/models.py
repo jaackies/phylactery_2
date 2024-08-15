@@ -64,11 +64,28 @@ class Member(models.Model):
 			return self.user.email
 		except ObjectDoesNotExist:
 			return None
+		
+	def add_rank(self, rank_name):
+		"""
+		Adds the chosen rank to this member.
+		"""
+		Rank.objects.create(
+			member=self,
+			rank_name=rank_name
+		)
 	
 	def has_rank(self, *rank_names):
 		# Returns True if the member has a non-expired rank with any of the given types.
 		# Returns False otherwise.
 		return self.ranks.filter(expired=False, rank_name__in=rank_names).exists()
+	
+	def remove_rank(self, rank_name):
+		"""
+		Expires all active ranks of the chosen type from this member.
+		"""
+		ranks_to_expire = self.ranks.filter(expired=False, rank_name=rank_name)
+		for rank in ranks_to_expire:
+			rank.set_expired()
 	
 	def has_active_membership(self):
 		# Returns True if the member has a valid membership.
@@ -104,6 +121,9 @@ class Member(models.Model):
 	
 	def is_committee(self):
 		return self.is_valid_member() and self.has_rank(RankChoices.COMMITTEE, RankChoices.WEBKEEPER)
+	
+	def is_webkeeper(self):
+		return self.is_valid_member() and self.has_rank(RankChoices.WEBKEEPER)
 	
 	def is_exec(self):
 		return (
@@ -239,7 +259,7 @@ class RankManager(models.Manager):
 			RankChoices.OCM,
 			RankChoices.IPP,
 		]:
-			committee_data[committee_rank] = self.all_active().filter(rank_name=committee_rank)
+			committee_data[committee_rank] = self.all_active().filter(rank_name=committee_rank).order_by("pk")
 		return committee_data
 
 
@@ -261,6 +281,13 @@ class Rank(models.Model):
 	
 	def __str__(self):
 		return f"Rank: {RankChoices[self.rank_name].label} for {self.member.long_name} {'(EXPIRED)' if self.is_expired else ''}"
+	
+	def save(self, *args, **kwargs):
+		"""
+		Whenever a Rank is saved, sync the permissions of the appropriate member.
+		"""
+		super().save(*args, **kwargs)
+		self.member.sync_permissions()
 	
 	@property
 	def is_expired(self):
