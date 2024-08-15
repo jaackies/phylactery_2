@@ -630,7 +630,6 @@ class GetMembershipInfoForm(ControlPanelForm):
 	def get_layout(self):
 		return Layout()
 	
-	
 
 FORM_CLASSES = {}
 for form_class in (
