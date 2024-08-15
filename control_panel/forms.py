@@ -237,7 +237,6 @@ class MakeGatekeepersForm(ControlPanelForm):
 		)
 	
 	def submit(self, request):
-		# TODO: Test this
 		if self.is_valid():
 			already_gatekeepers = []
 			success_gatekeepers = []
