@@ -286,4 +286,4 @@ class ChangeEmailPreferencesForm(forms.Form):
 	
 	def submit(self):
 		if self.member is not None:
-			pass
+			print("Valid!")

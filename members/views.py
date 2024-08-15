@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http.response import Http404
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, TemplateView, DetailView, FormView
 from .models import Member
@@ -74,3 +76,8 @@ class ChangeEmailPreferencesView(LoginRequiredMixin, FormView):
 				}
 			)
 		return kwargs
+
+	def form_valid(self, form):
+		form.submit()
+		messages.success(self.request, "Email preferences saved.")
+		return redirect("members:my_profile")
