@@ -613,9 +613,6 @@ class CommitteeTransferForm(ControlPanelForm):
 						change_messages.append(f"{member.long_name} moved from {old_position.label} to {new_position.label}.")
 			if change_messages:
 				messages.success(request, "\n".join(change_messages))
-					
-	
-	
 
 
 class GetMembershipInfoForm(ControlPanelForm):
@@ -643,6 +640,6 @@ for form_class in (
 	MakeWebkeepersForm,
 	AddRemoveRanksForm,
 	CommitteeTransferForm,
-	GetMembershipInfoForm,
+	# GetMembershipInfoForm,
 ):
 	FORM_CLASSES[slugify(form_class.form_name)] = form_class
