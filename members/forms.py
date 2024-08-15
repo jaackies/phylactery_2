@@ -246,3 +246,47 @@ class MembershipFormPreview(forms.Form):
 				'verified_correct',
 			)
 		)
+
+
+class ChangeEmailPreferencesForm(forms.Form):
+	"""
+	Form for enabling members to change whether they receive optional emails,
+	and control which Mailing Lists they are subscribed to.
+	Note that members will always receive transactional emails.
+	(e.g. Library Borrow receipts, overdue reminders.)
+	"""
+	
+	optional_emails = forms.BooleanField(
+		required=False,
+		label="Would you like to receive email from Unigames about news and events?",
+		help_text="(We will still send you transactional email regardless. "
+		"For example, we will send you emails reminding you to return library items.)",
+	)
+	
+	def __init__(self, *args, **kwargs):
+		self.member = kwargs.pop("member", None)
+		super().__init__(*args, **kwargs)
+		
+		self.extra_fields = {}
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			Fieldset(
+				"Change Email Preferences",
+				"optional_emails",
+			)
+		)
+	
+		for mailing_list in MailingList.objects.filter(is_active=True):
+			# Dynamically put each Mailing List group in the Membership Form.
+			field_name = f"mailing_list_{mailing_list.pk}"
+			self.extra_fields[field_name] = mailing_list.pk
+			self.fields[field_name] = forms.BooleanField(
+				label=mailing_list.verbose_description,
+				required=False,
+			)
+			self.helper.layout[0].append(field_name)
+	
+	def submit(self):
+		if self.member is not None:
+			pass

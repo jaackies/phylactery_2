@@ -2,9 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http.response import Http404
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, FormView
 from .models import Member
 from .decorators import gatekeeper_required
+from .forms import ChangeEmailPreferencesForm
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
@@ -50,3 +51,25 @@ class MyProfileView(LoginRequiredMixin, DetailView):
 		if member is None:
 			raise Http404("Something went wrong. Please contact committee.")
 		return member
+
+
+class ChangeEmailPreferencesView(LoginRequiredMixin, FormView):
+	form_class = ChangeEmailPreferencesForm
+	
+	def get_form_kwargs(self):
+		kwargs = super().get_form_kwargs()
+		member = self.request.unigames_member
+		if member is None:
+			raise Http404("Something went wrong. Please contact committee.")
+		kwargs.update(
+			{
+				"member": member,
+			}
+		)
+		for mailing_list_pk in member.mailing_lists.filter(is_active=True).values_list("pk", flat=True):
+			kwargs["initial"].update(
+				{
+					f"mailing_list_{mailing_list_pk}": True,
+				}
+			)
+		return kwargs
