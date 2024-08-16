@@ -264,7 +264,7 @@ class ChangeEmailPreferencesForm(forms.Form):
 	)
 	
 	def __init__(self, *args, **kwargs):
-		self.member = kwargs.pop("member", None)
+		self.member = kwargs.pop("member")
 		super().__init__(*args, **kwargs)
 		
 		self.extra_fields = {}
@@ -273,6 +273,8 @@ class ChangeEmailPreferencesForm(forms.Form):
 		self.helper.layout = Layout(
 			"optional_emails",
 		)
+		
+		self.initial["optional_emails"] = self.member.optional_emails
 	
 		for mailing_list in MailingList.objects.filter(is_active=True):
 			# Dynamically put each Mailing List group in the Membership Form.
@@ -281,11 +283,14 @@ class ChangeEmailPreferencesForm(forms.Form):
 			self.fields[field_name] = forms.BooleanField(
 				label=mailing_list.verbose_description,
 				required=False,
+				initial=(mailing_list in self.member.mailing_lists.all())
 			)
 			self.helper.layout.append(field_name)
 	
 	def submit(self):
 		if self.member is not None:
+			self.member.optional_emails = self.cleaned_data.get("optional_emails")
+			self.member.save()
 			# Add / Remove from mailing lists as appropriate
 			for form_field, pk in self.extra_fields.items():
 				if self.cleaned_data.get(form_field) is True:

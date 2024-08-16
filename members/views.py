@@ -64,17 +64,7 @@ class ChangeEmailPreferencesView(LoginRequiredMixin, FormView):
 		member = self.request.unigames_member
 		if member is None:
 			raise Http404("Something went wrong. Please contact committee.")
-		kwargs.update(
-			{
-				"member": member,
-			}
-		)
-		for mailing_list_pk in member.mailing_lists.filter(is_active=True).values_list("pk", flat=True):
-			kwargs["initial"].update(
-				{
-					f"mailing_list_{mailing_list_pk}": True,
-				}
-			)
+		kwargs.update(member=member)
 		return kwargs
 
 	def form_valid(self, form):
