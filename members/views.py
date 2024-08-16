@@ -49,7 +49,7 @@ class MyProfileView(LoginRequiredMixin, DetailView):
 	template_name = "members/my_profile_view.html"
 	
 	def get_object(self, queryset=None):
-		member = self.request.user.get_member
+		member = self.request.unigames_member
 		if member is None:
 			raise Http404("Something went wrong. Please contact committee.")
 		return member
