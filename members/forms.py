@@ -286,4 +286,10 @@ class ChangeEmailPreferencesForm(forms.Form):
 	
 	def submit(self):
 		if self.member is not None:
-			print("Valid!")
+			# Add / Remove from mailing lists as appropriate
+			for form_field, pk in self.extra_fields.items():
+				if self.cleaned_data.get(form_field) is True:
+					self.member.mailing_lists.add(pk)
+				else:
+					self.member.mailing_lists.remove(pk)
+
