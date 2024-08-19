@@ -1,7 +1,9 @@
 {% extends "_base.html" %}
 
+{% block title %}{{ page_title|default:"All Items" }}{% endblock %}
+
 {% block content %}
-	<h2 class="mt-3">{{ page_title|default:"All items:" }}</h2>
+	<h2 class="mt-3">{{ page_title|default:"All Items" }}:</h2>
 	{% if parent_tags or child_tags %}
 		<div class="row">
 			{% if parent_tags.count and child_tags.count %}
