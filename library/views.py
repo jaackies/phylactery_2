@@ -124,7 +124,7 @@ class TagDetailView(ListView):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super().get_context_data(*args, **kwargs)
-		context["page_title"] = f"All items tagged with '{self.tag}':"
+		context["page_title"] = f"All items tagged with '{self.tag}'"
 		context["parent_tags"] = self.tag.parents.exclude(name__startswith="Item: ")
 		context["child_tags"] = self.tag.children.exclude(name__startswith="Item: ")
 		return context
