@@ -231,3 +231,6 @@ ACCOUNT_FORMS = {
 SOCIALACCOUNT_FORMS = {
 	"disconnect": "accounts.forms.UnigamesDisconnectForm"
 }
+
+# Import settings from Docker
+from .settings_override import *
