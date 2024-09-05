@@ -213,16 +213,6 @@ ACCOUNT_USER_DISPLAY = str
 ACCOUNT_ADAPTER = "accounts.adapters.CustomRegularAccountAdapter"
 SOCIALACCOUNT_ADAPTER = "accounts.adapters.CustomSocialAccountAdapter"
 
-SOCIALACCOUNT_PROVIDERS = {
-	"discord": {
-		"APPS": [
-			{
-				"client_id": "934080121881649233",
-				"secret": env.str("DISCORD_SECRET"),
-			}
-		]
-	}
-}
 
 ACCOUNT_FORMS = {
 	"add_email": "accounts.forms.UnigamesEmailChangeForm"
