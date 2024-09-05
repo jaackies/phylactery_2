@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir --upgrade get_docker_secret
 
 # Install utility for monitoring server perfomance
-RUN PIP install --no-cache-dir --upgrade uwsgitop
+RUN pip install --no-cache-dir --upgrade uwsgitop
 
 # Copy App
 COPY . .
