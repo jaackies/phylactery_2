@@ -14,13 +14,53 @@ from datetime import datetime
 This program will be used to import data from the old website into the new one.
 
 We will skip:
-	- admin logentries (possible, but not worth it)
-	- auth as a whole (people will need to reset passwords anyway)
-	- contenttypes
-	- celery stuff as a whole (can be easily re-added afterwards)
-	- sessions
-	- blog email orders
+	- Admin Log Entries
+		- admin.logentry.json
+	- Auth as a whole (people will need to reset passwords anyway)
+		- auth.group.json
+		- auth.permission.json
+		- auth.user.json
+	- Blog Email Orders (No need, except for archival purposes)
+		- blog.emailorder.json
+	- ContentTypes
+		- contenttypes.contenttypes.json
+	- Celery stuff as a whole (can be easily re-added afterwards)
+		- django_celery_beat.crontabschedule.json
+		- django_celery_beat.intervalschedule.json
+		- django_celery_beat.periodictask.json
+		- django_celery_beat.periodictasks.json
+	- Library Computed Tags (can re-compute them)
+		- library.itemcomputedtags.json
+	- Member Ranks (Previously, the ranks were objects in the database. Now they are not.)
+		- members.ranks.json
+	- Sessions (keeping these is dangerous)
+		- sessions.session.json
+	- Sites (easier to add manually)
+		- sites.site.json
 	
+	
+We will import:
+	- Blog Posts
+		- blog.blogpost.json
+	- Library (almost everything)
+		- library.borrowrecord.json
+		- library.externalborrowingform.json
+		- library.externalborrowingitemrecord.json
+		- library.item.json
+		- library.itembasetags.json
+		- library.tagparent.json
+	- Members
+		- members.member
+		- members.memberflag
+			- Reworked to be under Blog
+		- members.membership
+		- members.rankassignments
+			- Reworked to be "ranks"
+	- Taggit Tags
+		- taggit.tag.json
+		- taggit.taggeditem.json
+	
+
 """
 
 BASE_PATH = settings.BASE_DIR / "pretty_models"

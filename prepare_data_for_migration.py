@@ -3,11 +3,13 @@ from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
 
+base_directory = Path()
+
 
 # Helper utility - takes the old phylactery database, and converts it into a few json files so data can be migrated.
-def split_json(db_json_filename):
+def split_json(db_json_filename, output_directory):
 	models = defaultdict(list)
-	base_directory = Path()
+	output_directory.mkdir(parents=True, exist_ok=True)
 	
 	with open(db_json_filename, "r") as json_infile:
 		json_data = json.load(json_infile)
@@ -17,7 +19,7 @@ def split_json(db_json_filename):
 		models[model_type].append(entry)
 	
 	for model_type in models.keys():
-		with open(base_directory / "pretty_models" / "second" / f"{model_type}.json", "w") as json_outfile:
+		with open(output_directory / f"{model_type}.json", "w") as json_outfile:
 			json_outfile.write(f"// {datetime.today()} \n")
 			json.dump(
 				models[model_type],
@@ -27,4 +29,4 @@ def split_json(db_json_filename):
 
 
 if __name__ == "__main__":
-	split_json("dbcopy20240906.json")
+	split_json("dbcopy20240906.json", base_directory / "pretty_models")
