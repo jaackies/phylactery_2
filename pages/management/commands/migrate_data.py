@@ -74,8 +74,20 @@ def convert_to_date(date_str):
 
 class Command(BaseCommand):
 	def handle(self, *args, **options):
+		self.import_model_data()
 		self.import_initial_library()
 		self.import_members()
+	
+	def import_model_data(self):
+		old_db_data = input()
+		print(f"Received {len(old_db_data)} chars of input.")
+		old_db_data = json.loads(old_db_data)
+		
+		self.models = defaultdict(list)
+		for entry in old_db_data:
+			model_type = entry["model"]
+			self.models[model_type].append(entry)
+		
 	
 	def import_final_library(self):
 		"""
@@ -103,14 +115,12 @@ class Command(BaseCommand):
 		"""
 		
 		# Step 1: Import Members
-		with open(BASE_PATH / "members.member.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["members.member"]
 		for member in json_objects:
 			self.import_member(pk=member["pk"], fields=member["fields"])
 		
 		# Step 2: Import Memberships
-		with open(BASE_PATH / "members.membership.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["members.membership"]
 		for membership in json_objects:
 			self.import_membership(pk=membership["pk"], fields=membership["fields"])
 		
@@ -131,14 +141,12 @@ class Command(BaseCommand):
 			15: RankChoices.IPP
 		}
 		
-		with open(BASE_PATH / "members.rankassignments.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["members.rankassignments"]
 		for rank in json_objects:
 			self.import_ranks(pk=rank["pk"], fields=rank["fields"])
 		
 		# Step 4: Import mailing lists
-		with open(BASE_PATH / "members.memberflag.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["members.memberflag"]
 		for mailing_list in json_objects:
 			self.import_mailing_list(pk=mailing_list["pk"], fields=mailing_list["fields"])
 		
@@ -163,14 +171,12 @@ class Command(BaseCommand):
 		"""
 		
 		# Step 1:  Import all taggit tags into LibraryTags
-		with open(BASE_PATH / "taggit.tag.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["taggit.tag"]
 		for library_tag in json_objects:
 			self.import_library_tag(pk=library_tag["pk"], fields=library_tag["fields"])
 		
 		# Step 2: Import the tag parents
-		with open(BASE_PATH / "library.tagparent.json") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["library.tagparent"]
 		for tag_parent in json_objects:
 			child_tag = LibraryTag.objects.get(pk=tag_parent["fields"]["child_tag"])
 			child_tag.parents.set(tag_parent["fields"]["parent_tag"])
@@ -187,24 +193,22 @@ class Command(BaseCommand):
 			item_type.full_clean()
 		
 		# Step 4: Import the Items
-		with open(BASE_PATH / "library.item.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["library.item"]
 		for library_item in json_objects:
 			self.import_library_item(pk=library_item["pk"], fields=library_item["fields"])
 		
 		# Step 5: Apply base tags to Items.
 		# Because of the previous implementation, we have to look
 		# at two files simultaneously to figure out which tags should go where.
-		with open(BASE_PATH / "library.itembasetags.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["library.itembasetags"]
+		
 		# Construct a dictionary, mapping the pk of the "item_base_tags" object to the Item itself.
 		# (Yes, this system was stupid. In my defense, so was I.)
 		item_lookup = {}
 		for item_base_tags in json_objects:
 			item_lookup[item_base_tags["pk"]] = item_base_tags["fields"]["item"]
 		# Now we can continue.
-		with open(BASE_PATH / "taggit.taggeditem.json", "r") as json_infile:
-			json_objects = json.load(json_infile)
+		json_objects = self.models["taggit.taggeditem"]
 		invalid_content_types = defaultdict(list)
 		for tagged_item in json_objects:
 			tag_pk = tagged_item["fields"]["tag"]
