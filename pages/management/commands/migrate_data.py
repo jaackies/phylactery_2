@@ -15,40 +15,40 @@ This program will be used to import data from the old website into the new one.
 
 We will skip:
 	- Admin Log Entries
-		- admin.logentry.json
+		- admin.logentry
 	- Auth as a whole (people will need to reset passwords anyway)
-		- auth.group.json
-		- auth.permission.json
-		- auth.user.json
+		- auth.group
+		- auth.permission
+		- auth.user
 	- Blog Email Orders (No need, except for archival purposes)
-		- blog.emailorder.json
+		- blog.emailorder
 	- ContentTypes
-		- contenttypes.contenttypes.json
+		- contenttypes.contenttypes
 	- Celery stuff as a whole (can be easily re-added afterwards)
-		- django_celery_beat.crontabschedule.json
-		- django_celery_beat.intervalschedule.json
-		- django_celery_beat.periodictask.json
-		- django_celery_beat.periodictasks.json
+		- django_celery_beat.crontabschedule
+		- django_celery_beat.intervalschedule
+		- django_celery_beat.periodictask
+		- django_celery_beat.periodictasks
 	- Library Computed Tags (can re-compute them)
-		- library.itemcomputedtags.json
+		- library.itemcomputedtags
 	- Member Ranks (Previously, the ranks were objects in the database. Now they are not.)
-		- members.ranks.json
+		- members.ranks
 	- Sessions (keeping these is dangerous)
-		- sessions.session.json
+		- sessions.session
 	- Sites (easier to add manually)
-		- sites.site.json
+		- sites.site
 	
 	
 We will import:
 	- Blog Posts
-		- blog.blogpost.json
+		- blog.blogpost
 	- Library (almost everything)
-		- library.borrowrecord.json
-		- library.externalborrowingform.json
-		- library.externalborrowingitemrecord.json
-		- library.item.json
-		- library.itembasetags.json
-		- library.tagparent.json
+		- library.borrowrecord
+		- library.externalborrowingform
+		- library.externalborrowingitemrecord
+		- library.item
+		- library.itembasetags
+		- library.tagparent
 	- Members
 		- members.member
 		- members.memberflag
@@ -57,8 +57,8 @@ We will import:
 		- members.rankassignments
 			- Reworked to be "ranks"
 	- Taggit Tags
-		- taggit.tag.json
-		- taggit.taggeditem.json
+		- taggit.tag
+		- taggit.taggeditem
 	
 
 """
