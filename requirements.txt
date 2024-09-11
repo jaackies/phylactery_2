@@ -23,6 +23,7 @@ markdown2==2.4.13
 marshmallow==3.20.1
 oauthlib==3.2.2
 packaging==23.1
+parsy==2.1
 Pillow==10.1.0
 psycopg==3.1.12
 psycopg-binary==3.1.12
