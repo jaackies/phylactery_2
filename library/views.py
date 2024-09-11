@@ -91,6 +91,21 @@ class ItemListView(ListView):
 	template_name = "library/item_list_view.html"
 	context_object_name = "items_list"
 	paginate_by = 24
+
+
+class ItemSearchView(ItemListView):
+	"""
+	Identical to the ItemListView above,
+	except we also handle simple searches.
+	"""
+	
+	def get_queryset(self):
+		query = self.request.GET("q", "")
+		if not query:
+			# Nothing to search with.
+			return Item.objects.none()
+		else:
+			pass
 	
 
 class TagListView(ListView):
