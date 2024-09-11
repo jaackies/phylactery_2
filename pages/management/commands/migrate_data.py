@@ -6,7 +6,9 @@ from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
+from django.core.management.color import no_style
 from django.core.validators import validate_email
+from django.db import connection
 from collections import defaultdict
 from datetime import datetime
 
@@ -338,3 +340,16 @@ class Command(BaseCommand):
 		self.stdout.write(f"Added blog.mailinglist: {new_mailing_list.name}")
 		new_mailing_list.members.set(fields["member"])
 		self.stdout.write(f"  - set {len(fields['member'])} members for {new_mailing_list.name}")
+	
+	def fix_pk_sequence(self, app):
+		"""
+		When creating rows in Postgres, if you specify what their primary key is,
+		the sequence that auto-generates new primary keys gets out of sync.
+		
+		Using this function after manually adding rows will reset the sequence
+		for a given app and allow automatic PKs to work without conflicts again.
+		"""
+		sequence_sql = connection.ops.sequence_reset_sql(no_style(), [app])
+		with connection.cursor() as cursor:
+			for sql in sequence_sql:
+				cursor.execute(sql)
