@@ -120,11 +120,13 @@ class Command(BaseCommand):
 		json_objects = self.models["members.member"]
 		for member in json_objects:
 			self.import_member(pk=member["pk"], fields=member["fields"])
+		self.fix_pk_sequence(Member)
 		
 		# Step 2: Import Memberships
 		json_objects = self.models["members.membership"]
 		for membership in json_objects:
 			self.import_membership(pk=membership["pk"], fields=membership["fields"])
+		self.fix_pk_sequence(Membership)
 		
 		# Step 3: Import Ranks
 		self.ranks = {
@@ -146,11 +148,13 @@ class Command(BaseCommand):
 		json_objects = self.models["members.rankassignments"]
 		for rank in json_objects:
 			self.import_ranks(pk=rank["pk"], fields=rank["fields"])
+		self.fix_pk_sequence(Rank)
 		
 		# Step 4: Import mailing lists
 		json_objects = self.models["members.memberflag"]
 		for mailing_list in json_objects:
 			self.import_mailing_list(pk=mailing_list["pk"], fields=mailing_list["fields"])
+		self.fix_pk_sequence(MailingList)
 		
 		# Step 5: Sync member permissions.
 		self.stdout.write("Syncing user permissions: ", ending="")
@@ -176,6 +180,7 @@ class Command(BaseCommand):
 		json_objects = self.models["taggit.tag"]
 		for library_tag in json_objects:
 			self.import_library_tag(pk=library_tag["pk"], fields=library_tag["fields"])
+		self.fix_pk_sequence(LibraryTag)
 		
 		# Step 2: Import the tag parents
 		json_objects = self.models["library.tagparent"]
@@ -198,6 +203,7 @@ class Command(BaseCommand):
 		json_objects = self.models["library.item"]
 		for library_item in json_objects:
 			self.import_library_item(pk=library_item["pk"], fields=library_item["fields"])
+		self.fix_pk_sequence(Item)
 		
 		# Step 5: Apply base tags to Items.
 		# Because of the previous implementation, we have to look
