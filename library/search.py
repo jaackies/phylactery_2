@@ -1,4 +1,4 @@
-from parsy import generate, regex, string, fail, digit, seq
+from parsy import generate, regex, string, fail, digit, seq, eof
 from datetime import date
 
 
@@ -73,34 +73,70 @@ colon = string(":")
 keyword_expression_arguments = number | quoted_text | unquoted_text
 any_whitespace = regex(r"\s*")
 
-or_separator = regex(r"\s+or\s+")
-and_separator = regex(r"\s+and\s+") | regex(r"\s+")
+or_separator = regex(r"\s+or\s+").tag("OR")
+and_separator = (regex(r"\s+and\s+") | regex(r"\s+")).tag("AND")
 
 keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments).combine_dict(Filter)
 
-expression = quoted_text | keyword_expression | unquoted_text
+expression = (quoted_text | keyword_expression | unquoted_text).tag("EXPR")
+eol = eof.tag("EOF")
 
 any_expression = seq(expression << or_separator, expression).combine(AnyOf)
 
 @generate
 def parse_expression():
+	"""
+		Parse through the search string.
+		
+	"""
+	print("Starting")
+	current_operation = "AND"
+	current_tokens = []
+	current_expression = []
 	
-	@generate("group")
+	@generate("GROUP")
 	def group():
 		yield string("(")
+		print("\t\tEntered group")
 		yield any_whitespace
 		expressions = yield parse_expression
 		yield any_whitespace
 		yield string(")")
+		print("\t\tExited group")
 		return tuple(expressions)
 	
 	while True:
 		yield any_whitespace
-		next_element = yield group | expression
+		next_element_type, next_element = yield group | expression | eol
+		if next_element_type == "EOF":
+			# We have reached the end
+			break
+		else:
+			print(f"Encountered {next_element}")
+			if current_operation == "AND":
+				current_tokens.append(next_element)
+				print(f"\tAdded to current tokens: {current_tokens}")
+			elif current_operation == "OR":
+				current_expression.append(current_tokens.copy())
+				current_tokens = [next_element]
+				print(f"\tAdded current tokens to expression: {current_expression}")
+				print(f"\tCurrent tokens: {current_tokens}")
+				current_operation = "AND"
+		next_seperator_type, sep = yield or_separator | and_separator | eol
+		if next_seperator_type == "EOF":
+			break
+		elif next_seperator_type == "OR":
+			current_operation = "OR"
+	if current_tokens:
+		current_expression.append(current_tokens.copy())
+	
+	return current_expression
+		
+		
 	
 	
 
 
 if __name__ == "__main__":
-	print(keyword_expression.parse("is:book"))
+	print(parse_expression.parse("is:book or (is:boardgame and time:15) or players:4"))
 
