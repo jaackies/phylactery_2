@@ -1,4 +1,4 @@
-from parsy import generate, regex, string, fail, digit
+from parsy import generate, regex, string, fail, digit, seq
 from datetime import date
 
 
@@ -33,6 +33,13 @@ Search options:
 		time:15
 
 """
+
+double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
+single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
+quoted_text = single_quoted_text | double_quoted_text
+unquoted_text = regex(r"[^'\"\s]+")
+number = regex(r"[0-9]+")
+colon = string(":")
 
 
 year = regex(r"[0-9]{4}").map(int).desc("4 digit year")
