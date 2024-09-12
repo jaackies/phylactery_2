@@ -1,4 +1,4 @@
-from parsy import generate, regex, string, fail, digit, seq, eof
+from parsy import generate, regex, string, fail, digit, seq, eof, peek
 from datetime import date
 
 
@@ -79,7 +79,7 @@ and_separator = (regex(r"\s+and\s+") | regex(r"\s+")).tag("AND")
 keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments).combine_dict(Filter)
 
 expression = (quoted_text | keyword_expression | unquoted_text).tag("EXPR")
-eol = eof.tag("EOF")
+eol = (peek(regex(r"\s*\)")) | eof).tag("EOF")
 
 any_expression = seq(expression << or_separator, expression).combine(AnyOf)
 
@@ -96,14 +96,7 @@ def parse_expression():
 	
 	@generate("GROUP")
 	def group():
-		yield string("(")
-		print("\t\tEntered group")
-		yield any_whitespace
-		expressions = yield parse_expression
-		yield any_whitespace
-		yield string(")")
-		print("\t\tExited group")
-		return tuple(expressions)
+		return (yield string("(") >> parse_expression.tag("EXPR") << string(")"))
 	
 	while True:
 		yield any_whitespace
@@ -117,7 +110,7 @@ def parse_expression():
 				current_tokens.append(next_element)
 				print(f"\tAdded to current tokens: {current_tokens}")
 			elif current_operation == "OR":
-				current_expression.append(current_tokens.copy())
+				current_expression.append(AllOf(current_tokens))
 				current_tokens = [next_element]
 				print(f"\tAdded current tokens to expression: {current_expression}")
 				print(f"\tCurrent tokens: {current_tokens}")
@@ -128,9 +121,9 @@ def parse_expression():
 		elif next_seperator_type == "OR":
 			current_operation = "OR"
 	if current_tokens:
-		current_expression.append(current_tokens.copy())
+		current_expression.append(AllOf(current_tokens))
 	
-	return current_expression
+	return AnyOf(current_expression)
 		
 		
 	
