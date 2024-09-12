@@ -37,9 +37,15 @@ Search options:
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
-unquoted_text = regex(r"[^'\"\s]+")
-number = regex(r"[0-9]+")
+unquoted_text = regex(r"[a-z0-9_\-]+")  # Slug
+number = regex(r"[0-9]+").map(int)
 colon = string(":")
+keyword_expression_arguments = number | quoted_text | unquoted_text
+
+keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments)
+
+if __name__ == "__main__":
+	print(keyword_expression.parse("is:book"))
 
 
 year = regex(r"[0-9]{4}").map(int).desc("4 digit year")
