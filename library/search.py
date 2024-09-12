@@ -34,6 +34,36 @@ Search options:
 
 """
 
+
+class AnyOf:
+	# Handles OR
+	def __init__(self, *contents):
+		self.contents = list(contents)
+	
+	def __repr__(self):
+		return f"Any{self.contents}"
+
+
+class AllOf:
+	# Handles AND
+	def __init__(self, *contents):
+		self.contents = list(contents)
+	
+	def __repr__(self):
+		return f"All{self.contents}"
+
+
+class Filter:
+	def __init__(self, keyword, argument=None):
+		if argument is None:
+			self.parameter = f"{keyword}"
+		else:
+			self.parameter = f"{keyword}:{argument}"
+	
+	def __repr__(self):
+		return f"<filter {self.parameter}>"
+
+
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
@@ -42,7 +72,14 @@ number = regex(r"[0-9]+").map(int)
 colon = string(":")
 keyword_expression_arguments = number | quoted_text | unquoted_text
 
-keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments)
+or_separator = regex(r"\s+or\s+")
+and_separator = regex(r"\s+and\s+") | regex(r"\s+")
+
+keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments).combine_dict(Filter)
+
+expression = quoted_text | keyword_expression | unquoted_text
+
+any_expression = seq(expression << or_separator, expression).combine(AnyOf)
 
 if __name__ == "__main__":
 	print(keyword_expression.parse("is:book"))
