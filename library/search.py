@@ -71,6 +71,7 @@ unquoted_text = regex(r"[a-z0-9_\-]+")  # Slug
 number = regex(r"[0-9]+").map(int)
 colon = string(":")
 keyword_expression_arguments = number | quoted_text | unquoted_text
+any_whitespace = regex(r"\s*")
 
 or_separator = regex(r"\s+or\s+")
 and_separator = regex(r"\s+and\s+") | regex(r"\s+")
@@ -83,9 +84,8 @@ any_expression = seq(expression << or_separator, expression).combine(AnyOf)
 
 @generate
 def parse_expression():
-	any_whitespace = regex(r"\s*")
 	
-	@generate
+	@generate("group")
 	def group():
 		yield string("(")
 		yield any_whitespace
@@ -94,6 +94,9 @@ def parse_expression():
 		yield string(")")
 		return tuple(expressions)
 	
+	while True:
+		yield any_whitespace
+		next_element = yield group | expression
 	
 	
 
