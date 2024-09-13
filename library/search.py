@@ -110,7 +110,7 @@ def parse_expression():
 				current_tokens.append(next_element)
 				print(f"\tAdded to current tokens: {current_tokens}")
 			elif current_operation == "OR":
-				current_expression.append(AllOf(current_tokens))
+				current_expression.append(AllOf(*current_tokens))
 				current_tokens = [next_element]
 				print(f"\tAdded current tokens to expression: {current_expression}")
 				print(f"\tCurrent tokens: {current_tokens}")
@@ -121,9 +121,9 @@ def parse_expression():
 		elif next_seperator_type == "OR":
 			current_operation = "OR"
 	if current_tokens:
-		current_expression.append(AllOf(current_tokens))
+		current_expression.append(AllOf(*current_tokens))
 	
-	return AnyOf(current_expression)
+	return AnyOf(*current_expression)
 		
 		
 	
