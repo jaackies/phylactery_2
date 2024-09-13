@@ -110,7 +110,10 @@ def parse_expression():
 				current_tokens.append(next_element)
 				print(f"\tAdded to current tokens: {current_tokens}")
 			elif current_operation == "OR":
-				current_expression.append(AllOf(*current_tokens))
+				if len(current_expression) == 1:
+					current_expression.append(current_tokens[0])
+				else:
+					current_expression.append(AllOf(*current_tokens))
 				current_tokens = [next_element]
 				print(f"\tAdded current tokens to expression: {current_expression}")
 				print(f"\tCurrent tokens: {current_tokens}")
@@ -123,7 +126,12 @@ def parse_expression():
 	if current_tokens:
 		current_expression.append(AllOf(*current_tokens))
 	
-	return AnyOf(*current_expression)
+	if len(current_expression) > 1:
+		return AnyOf(*current_expression)
+	elif len(current_expression) == 1:
+		return current_expression[0]
+	else:
+		return None
 		
 		
 	
