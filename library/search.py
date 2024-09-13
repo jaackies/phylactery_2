@@ -89,7 +89,7 @@ def parse_expression():
 		Parse through the search string.
 		
 	"""
-	print("Starting")
+	#print("Starting")
 	current_operation = "AND"
 	current_tokens = []
 	current_expression = []
@@ -105,18 +105,18 @@ def parse_expression():
 			# We have reached the end
 			break
 		else:
-			print(f"Encountered {next_element}")
+			#print(f"Encountered {next_element}")
 			if current_operation == "AND":
 				current_tokens.append(next_element)
-				print(f"\tAdded to current tokens: {current_tokens}")
+				#print(f"\tAdded to current tokens: {current_tokens}")
 			elif current_operation == "OR":
-				if len(current_expression) == 1:
+				if len(current_tokens) == 1:
 					current_expression.append(current_tokens[0])
 				else:
 					current_expression.append(AllOf(*current_tokens))
 				current_tokens = [next_element]
-				print(f"\tAdded current tokens to expression: {current_expression}")
-				print(f"\tCurrent tokens: {current_tokens}")
+				#print(f"\tAdded current tokens to expression: {current_expression}")
+				#print(f"\tCurrent tokens: {current_tokens}")
 				current_operation = "AND"
 		next_seperator_type, sep = yield or_separator | and_separator | eol
 		if next_seperator_type == "EOF":
@@ -124,7 +124,10 @@ def parse_expression():
 		elif next_seperator_type == "OR":
 			current_operation = "OR"
 	if current_tokens:
-		current_expression.append(AllOf(*current_tokens))
+		if len(current_tokens) == 1:
+			current_expression.append(current_tokens[0])
+		else:
+			current_expression.append(AllOf(*current_tokens))
 	
 	if len(current_expression) > 1:
 		return AnyOf(*current_expression)
@@ -133,11 +136,15 @@ def parse_expression():
 	else:
 		return None
 		
-		
-	
-	
-
 
 if __name__ == "__main__":
-	print(parse_expression.parse("is:book or (is:boardgame and time:15) or players:4"))
+	test_queries = [
+		"is:book or is:boardgame",
+		"time:15 or time:20",
+		"time:15 or (time:15 or (time:15 or (time:15 or (time:15))))",
+		"time:15    or  ( time:15   or       ( time:15  or   (time:15  or (      time:15    )    )    ) )",
+		"hello and goodbye and(is:book)"
+	]
+	for query in test_queries:
+		print(parse_expression.parse(query))
 
