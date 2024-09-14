@@ -171,7 +171,7 @@ def parse_expression():
 				break
 			case "???":
 				# What the hell is this?
-				pass
+				print(f"??? {next_token} ???")
 			case "EXPR" | "GROUP":
 				# Process the token that we found.
 				if current_operation == "AND":
@@ -188,6 +188,8 @@ def parse_expression():
 				or_separator | and_separator | eol | something_else
 		)
 		match next_seperator_type:
+			case "???":
+				print(f"??? {next_seperator} ???")
 			case "ERROR":
 				# There's an unmatched bracket: raise Exception.
 				raise Exception("Unmatched Bracket")
@@ -216,7 +218,8 @@ if __name__ == "__main__":
 		"time:15 or (time:15 or (time:15 or (time:15 or (time:15))))",
 		"time:15    or  ( time:15   or       ( time:15  or   (time:15  or (      time:15    )    )    ) )",
 		"hello and goodbye and(is:book)",
-		"x or y or z or a or b or c"
+		"x or y or z or a or b or c",
+		"%8323jdf33"
 	]
 	for query in test_queries:
 		print(parse_expression.parse(query))
