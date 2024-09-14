@@ -53,16 +53,16 @@ class AllOf:
 
 
 class Filter:
-	def __init__(self, parameter):
+	def __init__(self, parameter, inverse=False):
 		self.parameter = f"{parameter}"
 	
 	@classmethod
-	def from_keyword_expression(cls, keyword, argument):
-		return cls(parameter=f"{keyword}:{argument}")
+	def from_keyword_expression(cls, keyword, argument, inverse=False):
+		return cls(parameter=f"{keyword}:{argument}", inverse=inverse)
 	
 	@classmethod
-	def from_text_expression(cls, argument):
-		return cls(parameter=f"text:{argument}")
+	def from_text_expression(cls, argument, inverse=False):
+		return cls(parameter=f"text:{argument}", inverse=inverse)
 	
 	def __repr__(self):
 		return f"<filter {self.parameter}>"
