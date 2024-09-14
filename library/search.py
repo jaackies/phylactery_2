@@ -55,6 +55,7 @@ class AllOf:
 class Filter:
 	def __init__(self, parameter, inverse=False):
 		self.parameter = f"{parameter}"
+		self.inverse = inverse
 	
 	@classmethod
 	def from_keyword_expression(cls, keyword, argument, inverse=False):
@@ -65,7 +66,7 @@ class Filter:
 		return cls(parameter=f"text:{argument}", inverse=inverse)
 	
 	def __repr__(self):
-		return f"<filter {self.parameter}>"
+		return f"<{'exclude' if self.inverse else 'filter'} {self.parameter}>"
 
 class SearchQueryException(Exception):
 	pass
@@ -76,6 +77,7 @@ single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
 number = regex(r"[0-9]+").map(int)
 colon = string(":")
+inverse_dash = string("-")
 slug_text = regex(r"[a-z0-9_\-]+")  # Slug
 keyword_expression_arguments = number | quoted_text | slug_text
 any_whitespace = regex(r"\s*")
@@ -84,15 +86,18 @@ or_separator = regex(r"(\s+|\b)or(\s+|\b)").tag("OR")
 and_separator = (regex(r"(\s+|\b)and(\s+|\b)") | regex(r"(\s+|\b)")).tag("AND")
 
 keyword_expression = seq(
+	inverse=inverse_dash.result(True).optional(False),
 	keyword=slug_text << colon,
 	argument=keyword_expression_arguments
 ).combine_dict(Filter.from_keyword_expression)
 
 quoted_text_expression = seq(
+	inverse=inverse_dash.result(True).optional(False),
 	argument=quoted_text
 ).combine_dict(Filter.from_text_expression)
 
 unquoted_text_expression = seq(
+	inverse=inverse_dash.result(True).optional(False),
 	argument=slug_text
 ).combine_dict(Filter.from_text_expression)
 
@@ -237,6 +242,10 @@ if __name__ == "__main__":
 		"%8323jdf33",
 		"(kw:equip or kw:reconfigure or kw:cycling or kw:transfigure or kw:unearth or kw:levelup or kw:outlast or kw:crew or kw:ninjutsu or kw:commanderninjutsu or kw:transmute or kw:forecast or kw:auraswap or kw:reinforce or kw:scavenge or kw:embalm or kw:eternalize or kw:fortify or kw:saddle or (t:land t:creature)) is:permanent",
 		'type:creature (type:cat or type:elemental or type:nightmare or type:dinosaur or type:beast or keyword:changeling or oracle:"~ is every creature type")',
+		"is:book or -is:boardgame",
+		"(is:book and -is:short) or (is:boardgame -time:15)",
+		"time:15 or time:20",
+		"time:15 or (-time:15 or (-time:15 or (-time:15 or (-time:15))))",
 	]
 	for query in test_queries:
 		print(evaluate_search_query(query))
