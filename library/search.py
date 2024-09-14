@@ -180,7 +180,7 @@ def evaluate_search_query(search_query):
 					break
 				case "???":
 					# What the hell is this?
-					warnings.append(f"??? {next_token} ???")
+					warnings.append(f"Unrecognised expression: {next_token}")
 				case "EXPR" | "GROUP":
 					# Process the token that we found.
 					if current_operation == "AND":
@@ -198,7 +198,7 @@ def evaluate_search_query(search_query):
 			)
 			match next_seperator_type:
 				case "???":
-					warnings.append(f"??? {next_seperator} ???")
+					warnings.append(f"Unrecognised expression: {next_seperator}")
 				case "ERROR":
 					# There's an unmatched bracket: raise Exception.
 					raise SearchQueryException("Unmatched Bracket")
