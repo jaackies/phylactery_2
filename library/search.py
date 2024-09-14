@@ -234,8 +234,9 @@ if __name__ == "__main__":
 		"time:15    or  ( time:15   or       ( time:15  or   (time:15  or (      time:15    )    )    ) )",
 		"hello and goodbye and(is:book)",
 		"x or y or z or a or b or c",
-		"%8323jdf33"
+		"%8323jdf33",
+		"(kw:equip or kw:reconfigure or kw:cycling or kw:transfigure or kw:unearth or kw:levelup or kw:outlast or kw:crew or kw:ninjutsu or kw:commanderninjutsu or kw:transmute or kw:forecast or kw:auraswap or kw:reinforce or kw:scavenge or kw:embalm or kw:eternalize or kw:fortify or kw:saddle or (t:land t:creature)) is:permanent",
+		'type:creature (type:cat or type:elemental or type:nightmare or type:dinosaur or type:beast or keyword:changeling or oracle:"~ is every creature type")',
 	]
 	for query in test_queries:
 		print(evaluate_search_query(query))
-
