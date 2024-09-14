@@ -142,13 +142,13 @@ def parse_expression():
 		# We are trying to process a group. First, check if the next character is an open bracket.
 		yield peek(string("("))
 		# Since it is, we'll see if we can capture the whole group.
-		group_inner_expression = yield regex(r"\((.*)\)", group=0).optional()
+		group_inner_expression = yield regex(r"\((.*)\)", group=1).optional()
 		if group_inner_expression is None:
 			# Bracket mismatch: Raise an Exception.
 			raise Exception("Mismatched brackets.")
 		else:
 			# Process the inner expression, and return the results.
-			return parse_expression.parse(group_inner_expression)
+			return parse_expression.tag("EXPR").parse(group_inner_expression)
 		
 	def add_processed_tokens_to_expression():
 		if len(processed_tokens) == 1:
