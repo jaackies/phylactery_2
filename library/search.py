@@ -209,6 +209,7 @@ def parse_expression():
 if __name__ == "__main__":
 	test_queries = [
 		"is:book or is:boardgame",
+		"(is:book and is:short) or (is:boardgame time:15)",
 		"time:15 or time:20",
 		"time:15 or (time:15 or (time:15 or (time:15 or (time:15))))",
 		"time:15    or  ( time:15   or       ( time:15  or   (time:15  or (      time:15    )    )    ) )",
