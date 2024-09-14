@@ -1,5 +1,4 @@
-from parsy import generate, regex, string, fail, digit, seq, eof, peek
-from datetime import date
+from parsy import generate, regex, string, seq, eof, peek
 
 
 """
