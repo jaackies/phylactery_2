@@ -164,7 +164,9 @@ def evaluate_search_query(search_query):
 		
 		@generate("GROUP")
 		def group():
-			# We are trying to process a group. First, check if the next character is an open bracket.
+			# We are trying to process a group. First, optionally, check if it should be inverted.
+			is_inverted = yield inverse_dash.result(True).optional(False)
+			# Then, check if the next character is an open bracket.
 			yield string("(")
 			# Since it is, we'll see if we can capture the whole group.
 			group_inner_expression = yield parse_expression.tag("EXPR")
@@ -175,6 +177,8 @@ def evaluate_search_query(search_query):
 				raise SearchQueryException("Mismatched brackets.")
 			else:
 				# Return the results of the processed inner expression.
+				#if is_inverted:
+				#	group_inner_expression.invert()
 				return group_inner_expression
 			
 		def add_processed_tokens_to_expression():
@@ -256,7 +260,7 @@ if __name__ == "__main__":
 		"is:book or -is:boardgame",
 		"(is:book and -is:short) or (is:boardgame -time:15)",
 		"time:15 or time:20",
-		"time:15 or (-time:15 or (-time:15 or (-time:15 or (-time:15))))",
+		"time:15 or -(-time:15 or (-time:15 or (-time:15 or (-time:15))))",
 	]
 	for query in test_queries:
 		print(evaluate_search_query(query))
