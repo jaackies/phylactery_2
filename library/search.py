@@ -140,15 +140,17 @@ def parse_expression():
 	@generate("GROUP")
 	def group():
 		# We are trying to process a group. First, check if the next character is an open bracket.
-		yield peek(string("("))
+		yield string("(")
 		# Since it is, we'll see if we can capture the whole group.
-		group_inner_expression = yield regex(r"\((.*)\)", group=1).optional()
-		if group_inner_expression is None:
+		group_inner_expression = yield parse_expression.tag("EXPR")
+		# Finally, catch the closing bracket.
+		closing_bracket = yield string(")").optional()
+		if closing_bracket is None:
 			# Bracket mismatch: Raise an Exception.
 			raise Exception("Mismatched brackets.")
 		else:
-			# Process the inner expression, and return the results.
-			return parse_expression.tag("EXPR").parse(group_inner_expression)
+			# Return the results of the processed inner expression.
+			return group_inner_expression
 		
 	def add_processed_tokens_to_expression():
 		if len(processed_tokens) == 1:
@@ -183,7 +185,7 @@ def parse_expression():
 					current_operation = "AND"
 		# Token processing done, now we look for the next seperator
 		next_seperator_type, next_seperator = yield (
-				unmatched_bracket | or_separator | and_separator | eol | something_else
+				or_separator | and_separator | eol | something_else
 		)
 		match next_seperator_type:
 			case "ERROR":
