@@ -38,18 +38,26 @@ class AnyOf:
 	# Handles OR
 	def __init__(self, *contents):
 		self.contents = list(contents)
+		self.inverse = False
+	
+	def invert(self):
+		self.inverse = not self.inverse
 	
 	def __repr__(self):
-		return f"Any{self.contents}"
+		return f"{'NoneOf' if self.inverse else 'Any'}{self.contents}"
 
 
 class AllOf:
 	# Handles AND
 	def __init__(self, *contents):
 		self.contents = list(contents)
+		self.inverse = False
+	
+	def invert(self):
+		self.inverse = not self.inverse
 	
 	def __repr__(self):
-		return f"All{self.contents}"
+		return f"{'ExcludeAllOf' if self.inverse else 'AllOf'}{self.contents}"
 
 
 class Filter:
@@ -57,6 +65,9 @@ class Filter:
 		self.parameter = f"{parameter}"
 		self.inverse = inverse
 	
+	def invert(self):
+		self.inverse = not self.inverse
+
 	@classmethod
 	def from_keyword_expression(cls, keyword, argument, inverse=False):
 		return cls(parameter=f"{keyword}:{argument}", inverse=inverse)
