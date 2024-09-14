@@ -72,17 +72,17 @@ class Filter:
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
-unquoted_text = regex(r"[a-z0-9_\-]+")  # Slug
 number = regex(r"[0-9]+").map(int)
 colon = string(":")
-keyword_expression_arguments = number | quoted_text | unquoted_text
+slug_text = regex(r"[a-z0-9_\-]+")  # Slug
+keyword_expression_arguments = number | quoted_text | slug_text
 any_whitespace = regex(r"\s*")
 
 or_separator = regex(r"(\s+|\b)or(\s+|\b)").tag("OR")
 and_separator = (regex(r"(\s+|\b)and(\s+|\b)") | regex(r"(\s+|\b)")).tag("AND")
 
 keyword_expression = seq(
-	keyword=unquoted_text << colon,
+	keyword=slug_text << colon,
 	argument=keyword_expression_arguments
 ).combine_dict(Filter.from_keyword_expression)
 
@@ -91,7 +91,7 @@ quoted_text_expression = seq(
 ).combine_dict(Filter.from_text_expression)
 
 unquoted_text_expression = seq(
-	argument=unquoted_text
+	argument=slug_text
 ).combine_dict(Filter.from_text_expression)
 
 expression = (quoted_text_expression | keyword_expression | unquoted_text_expression).tag("EXPR")
