@@ -54,11 +54,16 @@ class AllOf:
 
 
 class Filter:
-	def __init__(self, keyword, argument=None):
-		if argument is None:
-			self.parameter = f"{keyword}"
-		else:
-			self.parameter = f"{keyword}:{argument}"
+	def __init__(self, parameter):
+		self.parameter = f"{parameter}"
+	
+	@classmethod
+	def from_keyword_expression(cls, keyword, argument):
+		return cls(parameter=f"{keyword}:{argument}")
+	
+	@classmethod
+	def from_text_expression(cls, argument):
+		return cls(parameter=f"text:{argument}")
 	
 	def __repr__(self):
 		return f"<filter {self.parameter}>"
@@ -76,12 +81,21 @@ any_whitespace = regex(r"\s*")
 or_separator = regex(r"(\s+|\b)or(\s+|\b)").tag("OR")
 and_separator = (regex(r"(\s+|\b)and(\s+|\b)") | regex(r"(\s+|\b)")).tag("AND")
 
-keyword_expression = seq(keyword=unquoted_text << colon, argument=keyword_expression_arguments).combine_dict(Filter)
+keyword_expression = seq(
+	keyword=unquoted_text << colon,
+	argument=keyword_expression_arguments
+).combine_dict(Filter.from_keyword_expression)
 
-expression = (quoted_text | keyword_expression | unquoted_text).tag("EXPR")
+quoted_text_expression = seq(
+	argument=quoted_text
+).combine_dict(Filter.from_text_expression)
+
+unquoted_text_expression = seq(
+	argument=unquoted_text
+).combine_dict(Filter.from_text_expression)
+
+expression = (quoted_text_expression | keyword_expression | unquoted_text_expression).tag("EXPR")
 eol = (peek(regex(r"\s*\)")) | eof).tag("EOF")
-
-any_expression = seq(expression << or_separator, expression).combine(AnyOf)
 
 @generate
 def parse_expression():
