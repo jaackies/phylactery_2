@@ -264,6 +264,8 @@ class Command(BaseCommand):
 			"notes": fields["notes"],
 			"is_borrowable": fields["is_borrowable"],
 			"is_high_demand": fields["high_demand"],
+			"min_players": fields["min_players"],
+			"max_players": fields["max_players"],
 			"min_play_time": fields["min_play_time"],
 			"max_play_time": fields["max_play_time"],
 			"average_play_time": fields["average_play_time"],
