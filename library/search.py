@@ -398,7 +398,12 @@ class SearchQueryManager:
 			else:
 				return None
 		if self.resolved_query is None:
-			self.resolved_query = parse_expression.parse(self.query).resolve(manager=self)
+			parsed_expression = parse_expression.parse(self.query)
+			if parsed_expression is None:
+				self.add_error("All entered expressions were ignored.")
+				self.resolved_query = None
+			else:
+				self.resolved_query = parsed_expression.resolve(manager=self)
 
 
 
