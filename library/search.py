@@ -232,14 +232,28 @@ eol = (peek(regex(r"\s*\)")) | eof).tag("EOF")
 # End Parsy Expressions
 
 
-def evaluate_search_query(search_query):
+class SearchQueryManager:
 	"""
-	Expression parser is nested inside so that Warnings can be captured.
+	Manager for parsing a search query,
+	processing the results, and handling
+	any errors along the way.
 	"""
-	warnings: list[str | UnbalancedParenthesesException] = []
+	
+	def __init__(self, query=""):
+		self.warnings = []
+		self.errors = []
+		self.query = query.lower()
+		
+	def add_warning(self, warning):
+		# Adds a warning to the manager.
+		self.warnings.append(warning)
+	
+	def add_error(self, error):
+		# Adds an error to the manager.
+		self.errors.append(error)
 	
 	@generate("EXPR")
-	def parse_expression():
+	def parse_expression(self):
 		"""
 			Parse through the search string.
 			We do the following things in order:
@@ -281,7 +295,7 @@ def evaluate_search_query(search_query):
 			# Then, check if the next character is an open bracket.
 			yield string("(")
 			# Since it is, we'll see if we can capture the whole group.
-			inner_expression_type, inner_expression = yield parse_expression.tag("EXPR")
+			inner_expression_type, inner_expression = yield self.parse_expression.tag("EXPR")
 			# Finally, catch the closing bracket.
 			closing_bracket = yield string(")").optional()
 			if closing_bracket is None:
@@ -292,7 +306,7 @@ def evaluate_search_query(search_query):
 				if is_inverted:
 					inner_expression.invert()
 				return inner_expression_type, inner_expression
-			
+		
 		def add_processed_tokens_to_expression():
 			if len(processed_tokens) == 1:
 				# If there's only one processed token, append it as-is to the expression.
@@ -302,7 +316,7 @@ def evaluate_search_query(search_query):
 				resulting_expression.append(AllOf(*processed_tokens))
 			# Once that's done, empty the list of processed tokens.
 			processed_tokens.clear()
-	
+		
 		while True:
 			yield any_whitespace
 			next_token_type, next_token = yield group | expression | eol | something_else
@@ -312,7 +326,7 @@ def evaluate_search_query(search_query):
 					break
 				case "???":
 					# What the hell is this?
-					warnings.append(f"Unrecognised expression: {next_token}")
+					self.add_warning(f"Unrecognised expression: {next_token}")
 				case "EXPR" | "GROUP":
 					# Process the token that we found.
 					if current_operation == "AND":
@@ -330,10 +344,10 @@ def evaluate_search_query(search_query):
 			)
 			match next_seperator_type:
 				case "???":
-					warnings.append(f"Unrecognised expression: {next_seperator}")
+					self.add_warning(f"Unrecognised expression: {next_seperator}")
 				case "ERROR":
-					# There's an unmatched bracket: raise Exception.
-					raise UnbalancedParenthesesException("Unmatched Bracket")
+					# There's an unmatched bracket: Add Error.
+					self.add_error("Unbalanced Parentheses")
 				case "EOF":
 					# End of the line: stop processing.
 					break
@@ -349,6 +363,16 @@ def evaluate_search_query(search_query):
 			return resulting_expression[0]
 		else:
 			return None
+	
+
+
+def evaluate_search_query(search_query):
+	"""
+	Expression parser is nested inside so that Warnings can be captured.
+	"""
+	warnings: list[str | UnbalancedParenthesesException] = []
+	
+	
 	try:
 		search_query_results = parse_expression.parse(search_query)
 	except UnbalancedParenthesesException as e:
