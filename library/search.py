@@ -119,9 +119,9 @@ class Filter:
 				# Example: players:1 returns a game that can be played solo
 				# Will not match any item that doesn't have either a min or max player count.
 				resolved_q_object = (
-					Q(min_players__gte=self.argument, max_players__isnull=True)
-					| Q(min_players__isnull=True, max_players__lte=self.argument)
-					| Q(min_players__gte=self.argument, max_players__lte=self.argument)
+					Q(min_players__lte=self.argument, max_players__isnull=True)
+					| Q(min_players__isnull=True, max_players__gte=self.argument)
+					| Q(min_players__lte=self.argument, max_players__gte=self.argument)
 				)
 		
 		if resolved_q_object is not None:
