@@ -168,7 +168,7 @@ class Filter:
 				)
 			case _:
 				# Invalid expression - do something with it
-				pass
+				raise UnrecognisedExpressionException(f"{self.keyword}:{self.argument}")
 		if resolved_q_object is not None:
 			if self.inverse:
 				return ~resolved_q_object
@@ -184,8 +184,13 @@ class Filter:
 	def __repr__(self):
 		return f"<{'exclude' if self.inverse else 'filter'} {self.keyword}:{self.argument}>"
 
-class SearchQueryException(Exception):
+class UnbalancedParenthesesException(Exception):
 	pass
+
+class UnrecognisedExpressionException(Exception):
+	pass
+
+
 
 
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
@@ -229,7 +234,7 @@ def evaluate_search_query(search_query):
 	"""
 	Expression parser is nested inside so that Warnings can be captured.
 	"""
-	warnings: list[str | SearchQueryException] = []
+	warnings: list[str | UnbalancedParenthesesException] = []
 	
 	@generate("EXPR")
 	def parse_expression():
@@ -279,7 +284,7 @@ def evaluate_search_query(search_query):
 			closing_bracket = yield string(")").optional()
 			if closing_bracket is None:
 				# Bracket mismatch: Raise an Exception.
-				raise SearchQueryException("Mismatched brackets.")
+				raise UnbalancedParenthesesException("Mismatched brackets.")
 			else:
 				# Return the results of the processed inner expression.
 				if is_inverted:
@@ -326,7 +331,7 @@ def evaluate_search_query(search_query):
 					warnings.append(f"Unrecognised expression: {next_seperator}")
 				case "ERROR":
 					# There's an unmatched bracket: raise Exception.
-					raise SearchQueryException("Unmatched Bracket")
+					raise UnbalancedParenthesesException("Unmatched Bracket")
 				case "EOF":
 					# End of the line: stop processing.
 					break
@@ -344,7 +349,7 @@ def evaluate_search_query(search_query):
 			return None
 	try:
 		search_query_results = parse_expression.parse(search_query)
-	except SearchQueryException as e:
+	except UnbalancedParenthesesException as e:
 		# Do something with the error
 		search_query_results = None
 		warnings.append(e)
@@ -354,26 +359,20 @@ def evaluate_search_query(search_query):
 def test():
 	test_queries = [
 		"is:book or is:boardgame",
-		"(is:book and is:short) or (is:boardgame time:15)",
-		"time:15 or time:20",
-		"time:15 or (time:15 or (time:15 or (time:15 or (time:15))))",
-		"time:15    or  ( time:15   or       ( time:15  or   (time:15  or (      time:15    )    )    ) )",
-		"hello and goodbye and(is:book)",
-		"x or y or z or a or b or c",
-		"%8323jdf33",
-		"(kw:equip or kw:reconfigure or kw:cycling or kw:transfigure or kw:unearth or kw:levelup or kw:outlast or kw:crew or kw:ninjutsu or kw:commanderninjutsu or kw:transmute or kw:forecast or kw:auraswap or kw:reinforce or kw:scavenge or kw:embalm or kw:eternalize or kw:fortify or kw:saddle or (t:land t:creature)) is:permanent",
-		'type:creature (type:cat or type:elemental or type:nightmare or type:dinosaur or type:beast or keyword:changeling or oracle:"~ is every creature type")',
-		"is:book or -is:boardgame",
-		"(is:book and -is:short) or (is:boardgame -time:15)",
-		"time:15 or time:20",
-		"time:15 or -(-time:15 or (-time:15 or (-time:15 or (-time:15))))",
+		"is:bk or is:bg",
+		"time:15 time:15",
+		'magic maze',
+		'"magic" "maze"',
+		"name:magic name:maze"
 	]
 	for query in test_queries:
 		results, warnings = evaluate_search_query(query.lower())
 		if results is not None:
 			print(results)
-			print(results.resolve())
-			print(Item.objects.filter(results.resolve()))
+			resolved_results = results.resolve()
+			print(resolved_results)
+			if resolved_results is not None:
+				print(Item.objects.filter(resolved_results).distinct())
 			print()
 
 if __name__ == "__main__":
