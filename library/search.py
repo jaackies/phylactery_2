@@ -129,7 +129,6 @@ class Filter:
 					| Q(min_players__isnull=True, max_players__gte=self.argument)
 					| Q(min_players__lte=self.argument, max_players__gte=self.argument)
 				)
-		
 		if resolved_q_object is not None:
 			if self.inverse:
 				return ~resolved_q_object
