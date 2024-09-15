@@ -51,14 +51,14 @@ class AnyOf:
 	def invert(self):
 		self.inverse = not self.inverse
 	
-	def resolve(self):
+	def resolve(self, manager=None):
 		"""
 		Resolves this group into a single Q object.
 		"""
 		resolved_q_object = None
 		for element in self.contents:
 			if element is not None:
-				resolved_element = element.resolve()
+				resolved_element = element.resolve(manager)
 				if resolved_element is not None:
 					if resolved_q_object is None:
 						resolved_q_object = resolved_element
@@ -83,14 +83,14 @@ class AllOf:
 	def invert(self):
 		self.inverse = not self.inverse
 	
-	def resolve(self):
+	def resolve(self, manager=None):
 		"""
 		Resolves this group into a single Q object.
 		"""
 		resolved_q_object = None
 		for element in self.contents:
 			if element is not None:
-				resolved_element = element.resolve()
+				resolved_element = element.resolve(manager)
 				if resolved_element is not None:
 					if resolved_q_object is None:
 						resolved_q_object = resolved_element
@@ -124,7 +124,7 @@ class Filter:
 	def from_text_expression(cls, argument, inverse=False):
 		return cls(keyword="text", argument=argument, inverse=inverse)
 	
-	def resolve(self):
+	def resolve(self, manager=None):
 		"""
 		Resolves the filter into a Q object.
 		"""
@@ -146,8 +146,8 @@ class Filter:
 					resolved_q_object = Q(base_tags__slug__in=[self.argument]) | Q(computed_tags__slug__in=[self.argument])
 				else:
 					# It doesn't exist - raise a warning.
-					print(f"Tag doesn't exist: {self.argument}")
-					pass
+					if manager is not None:
+						manager.add_warning(f"Tag '{self.argument}' does not exist.")
 			case "name":
 				# Temporary measure - switch to Postgres FTS later
 				resolved_q_object = Q(name__icontains=self.argument)
@@ -177,7 +177,8 @@ class Filter:
 				)
 			case _:
 				# Invalid expression - do something with it
-				raise UnrecognisedExpressionException(f"{self.keyword}:{self.argument}")
+				if manager is not None:
+					manager.add_warning(f"Invalid expression '{self.keyword}:{self.argument}'")
 		if resolved_q_object is not None:
 			if self.inverse:
 				return ~resolved_q_object
@@ -397,7 +398,7 @@ class SearchQueryManager:
 			else:
 				return None
 		if self.resolved_query is None:
-			self.resolved_query = parse_expression.parse(self.query).resolve()
+			self.resolved_query = parse_expression.parse(self.query).resolve(manager=self)
 
 
 
