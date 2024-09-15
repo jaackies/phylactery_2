@@ -1,4 +1,6 @@
+from django.db.models import Q
 from parsy import generate, regex, string, seq, eof, peek
+from library.models import LibraryTag
 
 
 """
@@ -61,8 +63,9 @@ class AllOf:
 
 
 class Filter:
-	def __init__(self, parameter, inverse=False):
-		self.parameter = f"{parameter}"
+	def __init__(self, keyword, argument, inverse=False):
+		self.keyword = str(keyword)
+		self.argument = argument
 		self.inverse = inverse
 	
 	def invert(self):
@@ -70,14 +73,71 @@ class Filter:
 
 	@classmethod
 	def from_keyword_expression(cls, keyword, argument, inverse=False):
-		return cls(parameter=f"{keyword}:{argument}", inverse=inverse)
+		return cls(keyword=keyword, argument=argument, inverse=inverse)
 	
 	@classmethod
 	def from_text_expression(cls, argument, inverse=False):
-		return cls(parameter=f"text:{argument}", inverse=inverse)
+		return cls(keyword="text", argument=argument, inverse=inverse)
+	
+	def resolve(self):
+		"""
+		Resolves the filter into a Q object.
+		"""
+		resolved_q_object = None
+		match self.keyword:
+			case "is" | "tag":
+				# Both keywords point to the same thing, with a few aliases.
+				tag_aliases = {
+					"item-type-book": ["book", "bk"],
+					"item-type-board-game": ["boardgame", "board-game", "board_game", "bg"],
+					"item-type-card-game": ["cardgame", "card-game", "card_game", "cg"],
+				}
+				for real_tag, alias_list in tag_aliases.values():
+					if self.argument in alias_list:
+						self.argument = real_tag
+				# Check if the tag exists
+				if LibraryTag.objects.filter(name=self.argument).exists():
+					# It does - apply filter
+					resolved_q_object = Q(base_tags__in=[self.argument]) | Q(computed_tags__in=[self.argument])
+				else:
+					# It doesn't exist - raise a warning.
+					pass
+			case "name":
+				# Temporary measure - switch to Postgres FTS later
+				resolved_q_object = Q(name__icontains=self.argument)
+			case "desc":
+				# Temporary measure - switch to Postgres FTS later
+				resolved_q_object = Q(description__icontains=self.argument)
+			case "text":
+				# Temporary measure - switch to Postgres FTS later
+				resolved_q_object = Q(name__icontains=self.argument) | Q(description__icontains=self.argument)
+			case "time":
+				pass
+			case "players":
+				# Filter if an item supports a specific amount of players
+				# Example: players:4 returns a game that can be played by 4 players (2-5, 3+, 1-4, exactly 4, etc.)
+				# Example: players:1 returns a game that can be played solo
+				# Will not match any item that doesn't have either a min or max player count.
+				resolved_q_object = (
+					Q(min_players__gte=self.argument, max_players__isnull=True)
+					| Q(min_players__isnull=True, max_players__lte=self.argument)
+					| Q(min_players__gte=self.argument, max_players__lte=self.argument)
+				)
+		
+		if resolved_q_object is not None:
+			if self.inverse:
+				return ~resolved_q_object
+			else:
+				return resolved_q_object
+		else:
+			return None
+				
+				
+			
+			
 	
 	def __repr__(self):
-		return f"<{'exclude' if self.inverse else 'filter'} {self.parameter}>"
+		return f"<{'exclude' if self.inverse else 'filter'} {self.keyword}:{self.argument}>"
 
 class SearchQueryException(Exception):
 	pass
