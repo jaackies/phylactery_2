@@ -242,8 +242,10 @@ class SearchQueryManager:
 	def __init__(self, query=""):
 		self.warnings = []
 		self.errors = []
-		self.is_done = False
 		self.query = query.lower()
+		self.resolved_query = None
+		self.results = None
+		
 		
 	def add_warning(self, warning):
 		# Adds a warning to the manager.
@@ -252,6 +254,13 @@ class SearchQueryManager:
 	def add_error(self, error):
 		# Adds an error to the manager.
 		self.errors.append(error)
+	
+	def get_results(self):
+		if self.resolved_query is None:
+			self.evaluate()
+		if self.results is None:
+			self.results = Item.objects.filter(self.resolved_query).distinct()
+		return self.results
 	
 	def evaluate(self):
 		"""
@@ -376,7 +385,8 @@ class SearchQueryManager:
 				return resulting_expression[0]
 			else:
 				return None
-		return parse_expression.parse(self.query)
+		if self.resolved_query is None:
+			self.resolved_query = parse_expression.parse(self.query).resolve()
 
 
 
