@@ -414,18 +414,21 @@ def test():
 		"time:15 time:15",
 		'magic maze',
 		'"magic" "maze"',
-		"name:magic name:maze"
+		"name:magic name:maze",
+		"()",
+		"((is:book or is:boardgame)",
+		"is:book or"
 	]
 	for query in test_queries:
 		manager = SearchQueryManager(query=query)
-		results = manager.evaluate()
+		results = manager.get_results()
 		if results is not None:
+			print(query)
 			print(results)
-			resolved_results = results.resolve()
-			print(resolved_results)
-			if resolved_results is not None:
-				print(Item.objects.filter(resolved_results).distinct())
-			print()
+		if manager.has_warnings():
+			print(manager.warnings)
+		if manager.has_errors():
+			print(manager.errors)
 
 if __name__ == "__main__":
 	test()
