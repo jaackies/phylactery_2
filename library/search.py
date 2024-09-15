@@ -132,11 +132,12 @@ class Filter:
 					if self.argument in alias_list:
 						self.argument = real_tag
 				# Check if the tag exists
-				if LibraryTag.objects.filter(name=self.argument).exists():
+				if LibraryTag.objects.filter(slug=self.argument).exists():
 					# It does - apply filter
-					resolved_q_object = Q(base_tags__in=[self.argument]) | Q(computed_tags__in=[self.argument])
+					resolved_q_object = Q(base_tags__slug__in=[self.argument]) | Q(computed_tags__slug__in=[self.argument])
 				else:
 					# It doesn't exist - raise a warning.
+					print(f"Tag doesn't exist: {self.argument}")
 					pass
 			case "name":
 				# Temporary measure - switch to Postgres FTS later
@@ -152,8 +153,8 @@ class Filter:
 				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
 				# To do this, filter based on the max play time (if it exists), or the average play time.
 				resolved_q_object = (
-					Q(max_time__lte=self.argument)
-					| Q(max_time__isnull=True, avg_time__lte=self.argument)
+					Q(max_play_time__lte=self.argument)
+					| Q(max_play_time__isnull=True, average_play_time__lte=self.argument)
 				)
 			case "players":
 				# Filter if an item supports a specific amount of players
@@ -370,9 +371,9 @@ def test():
 	for query in test_queries:
 		results, warnings = evaluate_search_query(query.lower())
 		if results is not None:
-			print()
+			print(results)
 			print(results.resolve())
-			print(Item.objects.filter(results))
+			print(Item.objects.filter(results.resolve()))
 			print()
 
 if __name__ == "__main__":
