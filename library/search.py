@@ -124,7 +124,7 @@ def evaluate_search_query(search_query):
 	"""
 	Expression parser is nested inside so that Warnings can be captured.
 	"""
-	warnings = []
+	warnings: list[str | SearchQueryException] = []
 	
 	@generate("EXPR")
 	def parse_expression():
@@ -169,7 +169,7 @@ def evaluate_search_query(search_query):
 			# Then, check if the next character is an open bracket.
 			yield string("(")
 			# Since it is, we'll see if we can capture the whole group.
-			group_inner_expression = yield parse_expression.tag("EXPR")
+			inner_expression_type, inner_expression = yield parse_expression.tag("EXPR")
 			# Finally, catch the closing bracket.
 			closing_bracket = yield string(")").optional()
 			if closing_bracket is None:
@@ -177,9 +177,9 @@ def evaluate_search_query(search_query):
 				raise SearchQueryException("Mismatched brackets.")
 			else:
 				# Return the results of the processed inner expression.
-				#if is_inverted:
-				#	group_inner_expression.invert()
-				return group_inner_expression
+				if is_inverted:
+					inner_expression.invert()
+				return inner_expression_type, inner_expression
 			
 		def add_processed_tokens_to_expression():
 			if len(processed_tokens) == 1:
@@ -241,7 +241,8 @@ def evaluate_search_query(search_query):
 		search_query_results = parse_expression.parse(search_query)
 	except SearchQueryException as e:
 		# Do something with the error
-		return None
+		search_query_results = None
+		warnings.append(e)
 	return search_query_results, warnings
 		
 
