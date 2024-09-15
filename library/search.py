@@ -36,8 +36,16 @@ Search options:
 """
 
 
+class UnbalancedParenthesesException(Exception):
+	pass
+
+class UnrecognisedExpressionException(Exception):
+	pass
+
 class AnyOf:
-	# Handles OR
+	"""
+	Class that represents expressions that are ORd together.
+	"""
 	def __init__(self, *contents):
 		self.contents = list(contents)
 		self.inverse = False
@@ -68,7 +76,9 @@ class AnyOf:
 
 
 class AllOf:
-	# Handles AND
+	"""
+	Class that represents expressions that are ANDed together.
+	"""
 	def __init__(self, *contents):
 		self.contents = list(contents)
 		self.inverse = False
@@ -99,6 +109,9 @@ class AllOf:
 
 
 class Filter:
+	"""
+	Class that represents a singular base search expression.
+	"""
 	def __init__(self, keyword, argument, inverse=False):
 		self.keyword = str(keyword)
 		self.argument = argument
@@ -184,11 +197,7 @@ class Filter:
 	def __repr__(self):
 		return f"<{'exclude' if self.inverse else 'filter'} {self.keyword}:{self.argument}>"
 
-class UnbalancedParenthesesException(Exception):
-	pass
 
-class UnrecognisedExpressionException(Exception):
-	pass
 
 
 
