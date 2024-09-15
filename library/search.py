@@ -251,15 +251,26 @@ class SearchQueryManager:
 		# Adds a warning to the manager.
 		self.warnings.append(warning)
 	
+	def has_warnings(self):
+		# Returns whether warning(s) were generated.
+		return len(self.warnings) > 0
+	
 	def add_error(self, error):
 		# Adds an error to the manager.
 		self.errors.append(error)
+	
+	def has_errors(self):
+		# Returns whether error(s) were generated.
+		return len(self.errors) > 0
 	
 	def get_results(self):
 		if self.resolved_query is None:
 			self.evaluate()
 		if self.results is None:
-			self.results = Item.objects.filter(self.resolved_query).distinct()
+			if self.has_errors():
+				self.results = Item.objects.none()
+			else:
+				self.results = Item.objects.filter(self.resolved_query).distinct()
 		return self.results
 	
 	def evaluate(self):
