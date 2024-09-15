@@ -1,5 +1,5 @@
 from django.db.models import Q
-from parsy import generate, regex, string, seq, eof, peek
+from parsy import generate, regex, string, seq, eof, peek, fail
 from library.models import LibraryTag, Item
 
 
@@ -333,8 +333,9 @@ class SearchQueryManager:
 				# Finally, catch the closing bracket.
 				closing_bracket = yield string(")").optional()
 				if closing_bracket is None:
-					# Bracket mismatch: Raise an Exception.
-					raise UnbalancedParenthesesException("Mismatched brackets.")
+					# Bracket mismatch: Add an error.
+					self.add_error("Unbalanced Parentheses")
+					yield fail("")
 				else:
 					# Return the results of the processed inner expression.
 					if is_inverted:
