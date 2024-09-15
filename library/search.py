@@ -45,6 +45,23 @@ class AnyOf:
 	def invert(self):
 		self.inverse = not self.inverse
 	
+	def resolve(self):
+		"""
+		Resolves this group into a single Q object.
+		"""
+		resolved_q_object = None
+		for element in self.contents:
+			if element is not None:
+				resolved_element = element.resolve()
+				if resolved_q_object is None:
+					resolved_q_object = resolved_element
+				else:
+					resolved_q_object |= resolved_element
+		if resolved_q_object is not None and self.inverse is True:
+			return ~resolved_q_object
+		else:
+			return resolved_q_object
+	
 	def __repr__(self):
 		return f"{'NoneOf' if self.inverse else 'Any'}{self.contents}"
 
@@ -57,6 +74,23 @@ class AllOf:
 	
 	def invert(self):
 		self.inverse = not self.inverse
+	
+	def resolve(self):
+		"""
+		Resolves this group into a single Q object.
+		"""
+		resolved_q_object = None
+		for element in self.contents:
+			if element is not None:
+				resolved_element = element.resolve()
+				if resolved_q_object is None:
+					resolved_q_object = resolved_element
+				else:
+					resolved_q_object &= resolved_element
+		if resolved_q_object is not None and self.inverse is True:
+			return ~resolved_q_object
+		else:
+			return resolved_q_object
 	
 	def __repr__(self):
 		return f"{'ExcludeAllOf' if self.inverse else 'AllOf'}{self.contents}"
