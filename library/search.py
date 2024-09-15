@@ -72,7 +72,6 @@ class AnyOf:
 	def __repr__(self):
 		return f"{'NoneOf' if self.inverse else 'Any'}{self.contents}"
 
-
 class AllOf:
 	"""
 	Class that represents expressions that are ANDed together.
@@ -104,7 +103,6 @@ class AllOf:
 	
 	def __repr__(self):
 		return f"{'ExcludeAllOf' if self.inverse else 'AllOf'}{self.contents}"
-
 
 class Filter:
 	"""
@@ -195,11 +193,7 @@ class Filter:
 	def __repr__(self):
 		return f"<{'exclude' if self.inverse else 'filter'} {self.keyword}:{self.argument}>"
 
-
-
-
-
-
+# Parsy Expressions for parsing syntax
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
@@ -235,6 +229,7 @@ something_else = regex(r".+?(\s|$)").tag("???")
 unmatched_bracket = regex(r"\s*\)").tag("ERROR")
 
 eol = (peek(regex(r"\s*\)")) | eof).tag("EOF")
+# End Parsy Expressions
 
 
 def evaluate_search_query(search_query):
