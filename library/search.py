@@ -112,7 +112,13 @@ class Filter:
 				# Temporary measure - switch to Postgres FTS later
 				resolved_q_object = Q(name__icontains=self.argument) | Q(description__icontains=self.argument)
 			case "time":
-				pass
+				# By default, filter games with a playtime strictly contained within the argument.
+				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
+				# To do this, filter based on the max play time (if it exists), or the average play time.
+				resolved_q_object = (
+					Q(max_time__lte=self.argument)
+					| Q(max_time__isnull=True, avg_time__lte=self.argument)
+				)
 			case "players":
 				# Filter if an item supports a specific amount of players
 				# Example: players:4 returns a game that can be played by 4 players (2-5, 3+, 1-4, exactly 4, etc.)
