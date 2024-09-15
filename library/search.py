@@ -1,5 +1,5 @@
 from django.db.models import Q
-from parsy import generate, regex, string, seq, eof, peek, fail
+from parsy import generate, regex, string, seq, eof, peek, fail, ParseError
 from library.models import LibraryTag, Item
 
 
@@ -399,7 +399,10 @@ class SearchQueryManager:
 			else:
 				return None
 		if self.resolved_query is None:
-			parsed_expression = parse_expression.parse(self.query)
+			try:
+				parsed_expression = parse_expression.parse(self.query)
+			except ParseError:
+				parsed_expression = None
 			if parsed_expression is None:
 				self.add_error("All entered expressions were ignored.")
 				self.resolved_query = None
