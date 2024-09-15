@@ -1,6 +1,6 @@
 from django.db.models import Q
 from parsy import generate, regex, string, seq, eof, peek
-from library.models import LibraryTag
+from library.models import LibraryTag, Item
 
 
 """
@@ -53,10 +53,11 @@ class AnyOf:
 		for element in self.contents:
 			if element is not None:
 				resolved_element = element.resolve()
-				if resolved_q_object is None:
-					resolved_q_object = resolved_element
-				else:
-					resolved_q_object |= resolved_element
+				if resolved_element is not None:
+					if resolved_q_object is None:
+						resolved_q_object = resolved_element
+					else:
+						resolved_q_object |= resolved_element
 		if resolved_q_object is not None and self.inverse is True:
 			return ~resolved_q_object
 		else:
@@ -83,10 +84,11 @@ class AllOf:
 		for element in self.contents:
 			if element is not None:
 				resolved_element = element.resolve()
-				if resolved_q_object is None:
-					resolved_q_object = resolved_element
-				else:
-					resolved_q_object &= resolved_element
+				if resolved_element is not None:
+					if resolved_q_object is None:
+						resolved_q_object = resolved_element
+					else:
+						resolved_q_object &= resolved_element
 		if resolved_q_object is not None and self.inverse is True:
 			return ~resolved_q_object
 		else:
@@ -126,7 +128,7 @@ class Filter:
 					"item-type-board-game": ["boardgame", "board-game", "board_game", "bg"],
 					"item-type-card-game": ["cardgame", "card-game", "card_game", "cg"],
 				}
-				for real_tag, alias_list in tag_aliases.values():
+				for real_tag, alias_list in tag_aliases.items():
 					if self.argument in alias_list:
 						self.argument = real_tag
 				# Check if the tag exists
@@ -346,9 +348,9 @@ def evaluate_search_query(search_query):
 		search_query_results = None
 		warnings.append(e)
 	return search_query_results, warnings
-		
 
-if __name__ == "__main__":
+
+def test():
 	test_queries = [
 		"is:book or is:boardgame",
 		"(is:book and is:short) or (is:boardgame time:15)",
@@ -366,4 +368,12 @@ if __name__ == "__main__":
 		"time:15 or -(-time:15 or (-time:15 or (-time:15 or (-time:15))))",
 	]
 	for query in test_queries:
-		print(evaluate_search_query(query))
+		results, warnings = evaluate_search_query(query.lower())
+		if results is not None:
+			print()
+			print(results.resolve())
+			print(Item.objects.filter(results))
+			print()
+
+if __name__ == "__main__":
+	test()
