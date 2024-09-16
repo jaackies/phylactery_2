@@ -35,16 +35,17 @@
 	<header>
 		<nav class="navbar navbar-expand-lg mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="{% url 'home' %}">
-					<span class="unigames-brand">Unigames</span>
-					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
-						 loading="lazy">
-				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 						data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
+				<a class="navbar-brand" href="{% url 'home' %}">
+					<span class="unigames-brand">Unigames</span>
+					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
+						 loading="lazy">
+				</a>
+				<button class="btn btn-outline-contrast d-lg-none"><i class="bi-search"></i></button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item dropdown">
@@ -131,6 +132,7 @@
 							{% endif %}
 						</li>
 					</ul>
+					<button class="btn btn-outline-contrast d-none d-lg-block ms-1"><i class="bi-search"></i>&nbsp;&nbsp;Library</button>
 				</div>
 			</div>
 		</nav>
