@@ -45,7 +45,7 @@
 					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
 						 loading="lazy">
 				</a>
-				<button class="btn btn-outline-contrast d-lg-none"><i class="bi-search"></i></button>
+				<button class="btn btn-outline-contrast d-lg-none" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi-search"></i></button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item dropdown">
@@ -132,7 +132,7 @@
 							{% endif %}
 						</li>
 					</ul>
-					<button class="btn btn-outline-contrast d-none d-lg-block ms-1"><i class="bi-search"></i>&nbsp;&nbsp;Library</button>
+					<button class="btn btn-outline-contrast d-none d-lg-block ms-1" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi-search"></i>&nbsp;&nbsp;Library</button>
 				</div>
 			</div>
 		</nav>
@@ -158,6 +158,25 @@
 		</span>
 	</div>
 </footer>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="margin-top: 75px;">
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<h1 class="modal-title fs-5" id="searchModalLabel">Search our Library!</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				Stuff goes here.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <div class="offcanvas offcanvas-bottom" id="offcanvas-theme-selector" aria-labelledby="theme-selector-title">
 	<div class="offcanvas-header">
