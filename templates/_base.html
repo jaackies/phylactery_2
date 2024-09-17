@@ -162,12 +162,19 @@
 <div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="margin-top: 75px;">
 		<div class="modal-content">
-			<div class="modal-header text-center">
-				<h1 class="modal-title fs-5" id="searchModalLabel">Search our Library!</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
 			<div class="modal-body">
-				Stuff goes here.
+				<div class="input-group mb-2">
+					<input class="form-control form-control-lg" type="text" placeholder="Search our Library!">
+					<button class="btn btn-primary"><i class="bi-arrow-return-left"></i></button>
+				</div>
+				<div class="row gx-1">
+					<div class="col-6">
+						<button class="btn btn-outline-secondary btn-sm w-100">Syntax Guide</button>
+					</div>
+					<div class="col-6">
+						<button class="btn btn-outline-secondary btn-sm w-100">Advanced Search</button>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
