@@ -94,11 +94,15 @@ class ItemListView(ListView):
 	paginate_by = 24
 
 
-class ItemSearchView(ItemListView):
+class ItemSearchView(ListView):
 	"""
 	Identical to the ItemListView above,
 	except we also handle simple searches.
 	"""
+	model = Item
+	template_name = "library/item_search_view.html"
+	context_object_name = "items_list"
+	paginate_by = 24
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -111,16 +115,21 @@ class ItemSearchView(ItemListView):
 		if self.query:
 			self.manager = SearchQueryManager(query=self.query)
 			self.manager.evaluate()
-			for warning in self.manager.warnings:
-				messages.warning(request, warning)
-			for error in self.manager.errors:
-				messages.error(request, error)
 	
 	def get_queryset(self):
 		if self.manager:
 			return self.manager.get_results()
 		else:
 			return Item.objects.none()
+	
+	def get_context_data(self, *args, **kwargs):
+		context = super().get_context_data(*args, **kwargs)
+		if self.manager:
+			context["search_warnings"] = self.manager.warnings
+			context["search_errors"] = self.manager.errors
+		if self.query:
+			context["query"] = self.query
+		return context
 	
 
 class TagListView(ListView):
