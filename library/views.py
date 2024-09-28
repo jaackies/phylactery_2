@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
 from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm, ReturnItemFormset, VerifyReturnFormset
+from library.search import SearchQueryManager
 from members.decorators import gatekeeper_required, committee_required
 
 
@@ -93,19 +94,42 @@ class ItemListView(ListView):
 	paginate_by = 24
 
 
-class ItemSearchView(ItemListView):
+class ItemSearchView(ListView):
 	"""
 	Identical to the ItemListView above,
 	except we also handle simple searches.
 	"""
+	model = Item
+	template_name = "library/item_search_view.html"
+	context_object_name = "items_list"
+	paginate_by = 24
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.query = None
+		self.manager = None
+	
+	def setup(self, request, *args, **kwargs):
+		super().setup(request, *args, **kwargs)
+		self.query = self.request.GET.get("q", "")
+		if self.query:
+			self.manager = SearchQueryManager(query=self.query)
+			self.manager.evaluate()
 	
 	def get_queryset(self):
-		query = self.request.GET("q", "")
-		if not query:
-			# Nothing to search with.
-			return Item.objects.none()
+		if self.manager:
+			return self.manager.get_results()
 		else:
-			pass
+			return Item.objects.none()
+	
+	def get_context_data(self, *args, **kwargs):
+		context = super().get_context_data(*args, **kwargs)
+		if self.manager:
+			context["search_warnings"] = self.manager.warnings
+			context["search_errors"] = self.manager.errors
+		if self.query:
+			context["query"] = self.query
+		return context
 	
 
 class TagListView(ListView):

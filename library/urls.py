@@ -8,6 +8,7 @@ from library.wizards import (
 from library.views import (
 	ItemDetailView,
 	ItemListView,
+	ItemSearchView,
 	TagListView,
 	TagDetailView,
 	DashboardView,
@@ -37,6 +38,7 @@ urlpatterns = [
 	path("borrow/reservation/internal/<int:pk>/", InternalReservationBorrowItemsWizard.as_view(), name="borrow_internal_reservation"),
 	path("borrow/reservation/external/<int:pk>/", ExternalReservationBorrowItemsWizard.as_view(), name="borrow_external_reservation"),
 	path("return/<int:pk>/", ReturnItemsView.as_view(), name="return"),
+	path("search", ItemSearchView.as_view(), name="search"),
 	path("autocomplete_item", ItemAutocomplete.as_view(), name="autocomplete_item"),
 	path("autocomplete_tag", LibraryTagAutocomplete.as_view(), name="autocomplete_tag"),
 	path("", LibraryHomeView.as_view(), name="home"),

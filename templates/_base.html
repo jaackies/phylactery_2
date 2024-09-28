@@ -17,8 +17,12 @@
 			  rel="stylesheet" 
 			  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
 			  crossorigin="anonymous">
+		<!-- Bootstrap Icons -->
 		<link rel="stylesheet" 
 			  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<!-- Bootstrap Extensions - Contrast Buttons -->
+		<link rel="stylesheet"
+			  href="https://cdn.jsdelivr.net/npm/@ngblaylock/bootstrap-extensions@0.1.0-beta.18/dist/css/btn-contrast.min.css"/>
 		
 		<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	{% endblock %}
@@ -31,16 +35,17 @@
 	<header>
 		<nav class="navbar navbar-expand-lg mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="{% url 'home' %}">
-					<span class="unigames-brand">Unigames</span>
-					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
-						 loading="lazy">
-				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 						data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
+				<a class="navbar-brand" href="{% url 'home' %}">
+					<span class="unigames-brand">Unigames</span>
+					<img src="{% static "images/unigames-logo-2023.svg" %}" alt="Unigames Logo" width="69" height="45"
+						 loading="lazy">
+				</a>
+				<button class="btn btn-outline-contrast d-lg-none" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi-search"></i></button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item dropdown">
@@ -127,6 +132,7 @@
 							{% endif %}
 						</li>
 					</ul>
+					<button class="btn btn-outline-contrast d-none d-lg-block ms-1" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="bi-search"></i>&nbsp;&nbsp;Library</button>
 				</div>
 			</div>
 		</nav>
@@ -152,6 +158,37 @@
 		</span>
 	</div>
 </footer>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="margin-top: 75px;">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h6><span class="badge text-bg-warning rounded-pill">BETA</span> Library Search:</h6>
+				<form action="{% url "library:search" %}" method="get">
+					<div class="input-group mb-2">
+						<input class="form-control form-control-lg" type="text" placeholder="Search our Library!" id="searchInput" name="q">
+						<button class="btn btn-primary" type="submit">
+							<i class="bi-arrow-return-left d-none d-sm-inline"></i>
+							<i class="bi-search d-sm-none"></i>
+						</button>
+					</div>
+				</form>
+				<div class="row gx-1">
+					<div class="col-6">
+						<button class="btn btn-outline-secondary btn-sm w-100 disabled">Syntax Guide- WIP</button>
+					</div>
+					<div class="col-6">
+						<button class="btn btn-outline-secondary btn-sm w-100 disabled">Advanced Search - WIP</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <div class="offcanvas offcanvas-bottom" id="offcanvas-theme-selector" aria-labelledby="theme-selector-title">
 	<div class="offcanvas-header">
