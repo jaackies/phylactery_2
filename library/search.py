@@ -421,18 +421,24 @@ def test():
 		"name:magic name:maze",
 		"()",
 		"((is:book or is:boardgame)",
-		"is:book or"
+		"is:book or",
+		"is:book or think:hard"
 	]
 	for query in test_queries:
 		manager = SearchQueryManager(query=query)
 		results = manager.get_results()
-		if results is not None:
+		if results:
 			print(query)
+			print(manager.resolved_query)
 			print(results)
+		else:
+			print(query)
+			print("No results found")
 		if manager.has_warnings():
 			print(manager.warnings)
 		if manager.has_errors():
 			print(manager.errors)
+		print()
 
 if __name__ == "__main__":
 	test()
