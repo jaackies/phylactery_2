@@ -3,7 +3,7 @@
 {% block title %}{{ page_title|default:"All Items" }}{% endblock %}
 
 {% block content %}
-	<h6>Library Search:</h6>
+	<h6><span class="badge text-bg-warning rounded-pill">BETA</span> Library Search:</h6>
 	<form action="{% url "library:search" %}" method="get">
 		<div class="input-group mb-2">
 			<input class="form-control form-control-lg"
@@ -21,10 +21,10 @@
 	</form>
 	<div class="row gx-1 mb-2">
 		<div class="col-6">
-			<button class="btn btn-outline-secondary btn-sm w-100">Syntax Guide</button>
+			<button class="btn btn-outline-secondary btn-sm w-100 disabled">Syntax Guide - WIP</button>
 		</div>
 		<div class="col-6">
-			<button class="btn btn-outline-secondary btn-sm w-100">Advanced Search</button>
+			<button class="btn btn-outline-secondary btn-sm w-100 disabled">Advanced Search - WIP</button>
 		</div>
 	</div>
 	<div class="mb-2">
