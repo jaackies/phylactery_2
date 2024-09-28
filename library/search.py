@@ -404,10 +404,11 @@ class SearchQueryManager:
 			except ParseError:
 				parsed_expression = None
 			if parsed_expression is None:
-				self.add_error("All entered expressions were ignored.")
 				self.resolved_query = None
 			else:
 				self.resolved_query = parsed_expression.resolve(manager=self)
+			if self.resolved_query is None:
+				self.add_error("All entered expressions were ignored.")
 
 
 
