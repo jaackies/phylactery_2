@@ -147,7 +147,7 @@ class Filter:
 				else:
 					# It doesn't exist - raise a warning.
 					if manager is not None:
-						manager.add_warning(f"Tag '{self.argument}' does not exist.")
+						manager.add_warning(f'Tag "{self.argument}" does not exist.')
 			case "name":
 				# Temporary measure - switch to Postgres FTS later
 				resolved_q_object = Q(name__icontains=self.argument)
@@ -178,7 +178,7 @@ class Filter:
 			case _:
 				# Invalid expression - do something with it
 				if manager is not None:
-					manager.add_warning(f"Invalid expression '{self.keyword}:{self.argument}'")
+					manager.add_warning(f'Invalid expression "{self.keyword}:{self.argument}" was ignored.')
 		if resolved_q_object is not None:
 			if self.inverse:
 				return ~resolved_q_object
