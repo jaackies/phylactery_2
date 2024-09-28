@@ -198,6 +198,7 @@ class Filter:
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
+unquoted_text = regex(r"[^\s()]+")
 number = regex(r"[0-9]+").map(int)
 colon = string(":")
 inverse_dash = string("-")
@@ -221,7 +222,7 @@ quoted_text_expression = seq(
 
 unquoted_text_expression = seq(
 	inverse=inverse_dash.result(True).optional(False),
-	argument=slug_text
+	argument=unquoted_text
 ).combine_dict(Filter.from_text_expression)
 
 expression = (quoted_text_expression | keyword_expression | unquoted_text_expression).tag("EXPR")
@@ -426,7 +427,8 @@ def test():
 		"()",
 		"((is:book or is:boardgame)",
 		"is:book or",
-		"is:book or think:hard"
+		"is:book or think:hard",
+		"D&D",
 	]
 	for query in test_queries:
 		manager = SearchQueryManager(query=query)
