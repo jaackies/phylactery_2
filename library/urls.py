@@ -8,6 +8,7 @@ from library.wizards import (
 from library.views import (
 	ItemDetailView,
 	ItemListView,
+	ItemSearchView,
 	TagListView,
 	TagDetailView,
 	DashboardView,
@@ -24,6 +25,7 @@ from library.views import (
 app_name = 'library'
 urlpatterns = [
 	path("dashboard/", DashboardView.as_view(), name="dashboard"),
+	path("search/", ItemSearchView.as_view(), name="search"),
 	path("request/external/", ExternalReservationRequestView.as_view(), name="reservation_external"),
 	path("request/internal/", InternalReservationRequestView.as_view(), name="reservation_internal"),
 	path("approve/<int:pk>/", ReservationApprovalView.as_view(), name="approve_reservation"),

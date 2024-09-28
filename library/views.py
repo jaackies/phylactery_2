@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 from datetime import timedelta
 from library.models import Item, LibraryTag, BorrowerDetails, Reservation, ReservationStatus, BorrowRecord
 from library.forms import ExternalReservationRequestForm, InternalReservationRequestForm, ReservationModelForm, ReturnItemFormset, VerifyReturnFormset
+from library.search import SearchQueryManager
 from members.decorators import gatekeeper_required, committee_required
 
 
@@ -105,7 +106,8 @@ class ItemSearchView(ItemListView):
 			# Nothing to search with.
 			return Item.objects.none()
 		else:
-			pass
+			manager = SearchQueryManager(query=query)
+			return manager.get_results()
 	
 
 class TagListView(ListView):
