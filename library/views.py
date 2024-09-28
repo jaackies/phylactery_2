@@ -100,14 +100,27 @@ class ItemSearchView(ItemListView):
 	except we also handle simple searches.
 	"""
 	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.query = None
+		self.manager = None
+	
+	def setup(self, request, *args, **kwargs):
+		super().setup(request, *args, **kwargs)
+		self.query = self.request.GET.get("q", "")
+		if self.query:
+			self.manager = SearchQueryManager(query=self.query)
+			self.manager.evaluate()
+			for warning in self.manager.warnings:
+				messages.warning(request, warning)
+			for error in self.manager.errors:
+				messages.error(request, error)
+	
 	def get_queryset(self):
-		query = self.request.GET.get("q", "")
-		if not query:
-			# Nothing to search with.
-			return Item.objects.none()
+		if self.manager:
+			return self.manager.get_results()
 		else:
-			manager = SearchQueryManager(query=query)
-			return manager.get_results()
+			return Item.objects.none()
 	
 
 class TagListView(ListView):
