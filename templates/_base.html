@@ -163,13 +163,15 @@
 	<div class="modal-dialog" style="margin-top: 75px;">
 		<div class="modal-content">
 			<div class="modal-body">
-				<div class="input-group mb-2">
-					<input class="form-control form-control-lg" type="text" placeholder="Search our Library!" id="searchInput">
-					<button class="btn btn-primary">
-						<i class="bi-arrow-return-left d-none d-sm-inline"></i>
-						<i class="bi-search d-sm-none"></i>
-					</button>
-				</div>
+				<form action="{% url "library:search" %}" method="get">
+					<div class="input-group mb-2">
+						<input class="form-control form-control-lg" type="text" placeholder="Search our Library!" id="searchInput" name="q">
+						<button class="btn btn-primary" type="submit">
+							<i class="bi-arrow-return-left d-none d-sm-inline"></i>
+							<i class="bi-search d-sm-none"></i>
+						</button>
+					</div>
+				</form>
 				<div class="row gx-1">
 					<div class="col-6">
 						<button class="btn btn-outline-secondary btn-sm w-100">Syntax Guide</button>

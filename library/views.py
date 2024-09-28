@@ -101,7 +101,7 @@ class ItemSearchView(ItemListView):
 	"""
 	
 	def get_queryset(self):
-		query = self.request.GET("q", "")
+		query = self.request.GET.get("q", "")
 		if not query:
 			# Nothing to search with.
 			return Item.objects.none()
