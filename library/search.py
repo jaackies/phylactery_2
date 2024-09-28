@@ -246,6 +246,7 @@ class SearchQueryManager:
 		self.query = query.lower()
 		self.resolved_query = None
 		self.results = None
+		self.evaluated = False
 		
 		
 	def add_warning(self, warning):
@@ -398,17 +399,19 @@ class SearchQueryManager:
 				return resulting_expression[0]
 			else:
 				return None
-		if self.resolved_query is None:
-			try:
-				parsed_expression = parse_expression.parse(self.query)
-			except ParseError:
-				parsed_expression = None
-			if parsed_expression is None:
-				self.resolved_query = None
-			else:
-				self.resolved_query = parsed_expression.resolve(manager=self)
+		if not self.evaluated:
+			self.evaluated = True
 			if self.resolved_query is None:
-				self.add_error("All entered expressions were ignored.")
+				try:
+					parsed_expression = parse_expression.parse(self.query)
+				except ParseError:
+					parsed_expression = None
+				if parsed_expression is None:
+					self.resolved_query = None
+				else:
+					self.resolved_query = parsed_expression.resolve(manager=self)
+				if self.resolved_query is None:
+					self.add_error("All entered expressions were ignored.")
 
 
 
