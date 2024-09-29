@@ -1,6 +1,6 @@
 import json
 from accounts.models import UnigamesUser, create_fresh_unigames_user
-from blog.models import MailingList
+from blog.models import MailingList, BlogPost
 from library.models import Item, LibraryTag
 from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
@@ -79,6 +79,8 @@ class Command(BaseCommand):
 		self.import_model_data()
 		self.import_initial_library()
 		self.import_members()
+		self.import_blog()
+		self.import_final_library()
 	
 	def import_model_data(self):
 		old_db_data = input()
@@ -100,6 +102,15 @@ class Command(BaseCommand):
 			3) Attempt to group borrow records into borrowerdetails, and import them
 		"""
 		pass
+	
+	def import_blog(self):
+		"""
+		Just a simple one here, just importing the blogposts.
+		"""
+		json_objects = self.models["blog.blogpost"]
+		for blogpost in json_objects:
+			self.import_blog_post(pk=blogpost["pk"], fields=blogpost["fields"])
+		self.fix_pk_sequence(BlogPost)
 	
 	def import_members(self):
 		"""
@@ -348,6 +359,19 @@ class Command(BaseCommand):
 		self.stdout.write(f"Added blog.mailinglist: {new_mailing_list.name}")
 		new_mailing_list.members.set(fields["member"])
 		self.stdout.write(f"  - set {len(fields['member'])} members for {new_mailing_list.name}")
+		
+	def import_blog_post(self, pk, fields):
+		blogpost_data = {
+			"pk": pk,
+			"title": fields["title"],
+			"slug_title": fields["slug_title"],
+			"short_description": fields["short_description"],
+			"author": fields["author"],
+			"publish_on": fields["publish_on"],
+			"body": fields["body"]
+		}
+		new_blogpost = BlogPost.objects.create(**blogpost_data)
+		self.stdout.write(f"Added blog.blogpost: {new_blogpost.slug_title}")
 	
 	def fix_pk_sequence(self, app):
 		"""
