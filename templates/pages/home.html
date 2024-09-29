@@ -4,7 +4,93 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  <p class="lead">A Django starter project with batteries.</p>
-</div>
+	<div class="row g-2">
+		<div class="col-12">
+			<div class="card text-center">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div>
+						<div class="col-xs-12 col-sm-8 col-md-6 col-lg-6 col-xl-4">
+							<img src="{% static "images/unigames-logo-2023.svg" %}" class="img-fluid unigames-big-logo">
+							<span class="unigame-big-brand">Unigames</span>
+						</div>
+						<div class="col-xs-12 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div>
+					</div>
+					<h3 class="card-title">UWA's traditional gaming club</h3>
+				</div>
+				<div class="card-footer">
+					<a href="#" class="btn btn-outline-contrast">About Us</a>
+					<a href="#" class="btn btn-outline-contrast">How to Join</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card h-100">
+				<h4 class="card-header">Latest news:</h4>
+				<div class="list-group list-group-flush">
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">Blog Post Heading</h5>
+						</div>
+						<p class="mb-1">Short Description</p>
+						<div class="d-flex w-100 justify-content-between">
+							<small>by Me</small>
+							<small>1 minute ago</small>
+						</div>
+					</a>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">Blog Post Heading</h5>
+						</div>
+						<p class="mb-1">Short Description</p>
+						<div class="d-flex w-100 justify-content-between">
+							<small>by Me</small>
+							<small>1 minute ago</small>
+						</div>
+					</a>
+					<a href="#" class="list-group-item list-group-item-action">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">Blog Post Heading</h5>
+						</div>
+						<p class="mb-1">Short Description</p>
+						<div class="d-flex w-100 justify-content-between">
+							<small>by Me</small>
+							<small>1 minute ago</small>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card h-100">
+				<h4 class="card-header">Featured games:</h4>
+				<div id="featuredItems" class="carousel slide h-100">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#featuredItems" data-bs-slide-to="0" class="active" aria-current="true"></button>
+						<button type="button" data-bs-target="#featuredItems" data-bs-slide-to="1"></button>
+						<button type="button" data-bs-target="#featuredItems" data-bs-slide-to="2"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							Slide 0
+						</div>
+						<div class="carousel-item">
+							Slide 1
+						</div>
+						<div class="carousel-item">
+							Slide 2
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#featuredItems" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#featuredItems" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock content %}
