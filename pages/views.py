@@ -1,9 +1,28 @@
 from members.models import Rank
 from django.views.generic import TemplateView
+from django.utils import timezone
+from blog.models import BlogPost
+from library.models import Item
 
 
 class HomePageView(TemplateView):
 	template_name = "pages/home.html"
+	featured_tag_slug = "featured"
+	featured_item_limit = 5
+	recent_blog_post_limit = 3
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		
+		context["featured_items"] = Item.objects.get(
+			base_tags__slug__in=[self.featured_tag_slug]
+		).distinct().order_by("name")
+		
+		context["recent_blogposts"] = BlogPost.objects.filter(
+			publish_on__lte=timezone.now()
+		).distinct().order_by("-publish_on")[:3]
+		
+		return context
 
 
 class AboutPageView(TemplateView):
