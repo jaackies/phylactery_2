@@ -20,7 +20,7 @@ class HomePageView(TemplateView):
 		
 		context["recent_blogposts"] = BlogPost.objects.filter(
 			publish_on__lte=timezone.now()
-		).distinct().order_by("-publish_on")[:3]
+		).distinct().order_by("-publish_on")[:self.recent_blog_post_limit]
 		
 		return context
 
