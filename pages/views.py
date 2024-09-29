@@ -14,7 +14,7 @@ class HomePageView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		
-		context["featured_items"] = Item.objects.get(
+		context["featured_items"] = Item.objects.filter(
 			base_tags__slug__in=[self.featured_tag_slug]
 		).distinct().order_by("name")
 		
