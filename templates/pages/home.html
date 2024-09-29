@@ -28,36 +28,18 @@
 			<div class="card h-100">
 				<h4 class="card-header">Latest news:</h4>
 				<div class="list-group list-group-flush">
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">Blog Post Heading</h5>
-						</div>
-						<p class="mb-1">Short Description</p>
-						<div class="d-flex w-100 justify-content-between">
-							<small>by Me</small>
-							<small>1 minute ago</small>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">Blog Post Heading</h5>
-						</div>
-						<p class="mb-1">Short Description</p>
-						<div class="d-flex w-100 justify-content-between">
-							<small>by Me</small>
-							<small>1 minute ago</small>
-						</div>
-					</a>
-					<a href="#" class="list-group-item list-group-item-action">
-						<div class="d-flex w-100 justify-content-between">
-							<h5 class="mb-1">Blog Post Heading</h5>
-						</div>
-						<p class="mb-1">Short Description</p>
-						<div class="d-flex w-100 justify-content-between">
-							<small>by Me</small>
-							<small>1 minute ago</small>
-						</div>
-					</a>
+					{% for blogpost in recent_blogposts %}
+						<a href="{{ blogpost.get_absolute_url }}" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ blogpost.title }}</h5>
+							</div>
+							<p class="mb-1">{{ blogpost.short_description }}</p>
+							<div class="d-flex w-100 justify-content-between">
+								<small>{{ blogpost.author }}</small>
+								<small>{{ blogpost.get_pretty_timestamp }}</small>
+							</div>
+						</a>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
