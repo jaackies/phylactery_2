@@ -57,7 +57,7 @@
 						{% endif %}
 					</div>
 					{% if member.memberships.exists %}
-					<table class="table">
+					<table class="table mb-0">
 						<thead>
 							<tr>
 								<th scope="col">Date paid</th>
@@ -77,18 +77,18 @@
 										<td>${{ membership.amount_paid }}</td>
 									</tr>
 							{% endfor %}
-							{% if member.memberships.count > 2 %}
-								<tr>
-									<td colspan="3" class="text-center">
-										{% with remaining=member.memberships.count|add:"-2" %}
-											{{ remaining }} previous membership{{ remaining|pluralize }} not shown
-										{% endwith %}
-									</td>
-								</tr>
-							{% endif %}
 						</tbody>
 					</table>
 					{% endif %}
+					<div class="card-body p-2 text-center">
+						{% if member.memberships.count > 2 %}
+							{% with remaining=member.memberships.count|add:"-2" %}
+								<p class="card-text">{{ remaining }} previous membership{{ remaining|pluralize }} not shown</p>
+							{% endwith %}
+						{% else %}
+							<p class="card-text">All memberships shown</p>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 			<div class="col mb-3">
