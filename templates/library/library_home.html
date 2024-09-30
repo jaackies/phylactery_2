@@ -18,7 +18,8 @@
 								of board games, card games, RPG source books, and wargaming terrain.
 							</p>
 							<p class="card-text">
-								See all: <a href="#" class="btn btn-primary">Things</a>
+								<a href="{% url "library:item_list" %}" class="btn btn-primary">Browse our Library <i class="bi-arrow-right"></i></a>
+								<a href="{% url "library:tag_list" %}" class="btn btn-primary">Search by Tags <i class="bi-arrow-right"></i></a>
 							</p>
 						</div>
 					</div>
@@ -97,13 +98,13 @@
 						<div class="card-body">
 							<h5 class="card-title">Need some games for an event?</h5>
 							<p class="card-text">
-								Unigames also allows other clubs, organisations and people to reserve and borrow items for their events. 
+								Unigames also allows other clubs, organisations and people to reserve and borrow items for their events.
 								Whether you need one board game or several, Unigames is here to help!
 							</p>
 							<p class="card-text">
 								Submit a request form with at least 2-3 weeks notice, and we'll get back to you!
 							</p>
-							<a href="#" class="btn btn-primary">External Borrowing Request Form</a>
+							<a href="#" class="btn btn-primary">Reservation Request Form <i class="bi-arrow-right"></i></a>
 						</div>
 					</div>
 					<div class="d-none d-md-block col-md-4" style="background-size: cover; background-position: top; background-image: url('{% static "images/unigames_library.jpg" %}')"></div>
