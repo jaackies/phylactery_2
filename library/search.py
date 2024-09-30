@@ -136,6 +136,7 @@ class Filter:
 					"item-type-book": ["book", "bk"],
 					"item-type-board-game": ["boardgame", "board-game", "board_game", "bg"],
 					"item-type-card-game": ["cardgame", "card-game", "card_game", "cg"],
+					"item-type-other": ["other"],
 				}
 				for real_tag, alias_list in tag_aliases.items():
 					if self.argument in alias_list:
