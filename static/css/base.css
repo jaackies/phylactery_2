@@ -14,13 +14,14 @@
 .unigames-big-brand {
     font-family: newRocker;
     font-size: 4.1rem;
-    -webkit-text-stroke-color: white;
+    color: white;
+    -webkit-text-stroke-color: black;
     -webkit-text-stroke-width: 10px;
     paint-order: stroke fill;
 }
 
-[data-bs-theme=dark] .unigames-big-brand {
-    -webkit-text-stroke-color: black;
+.unigames-big-logo {
+    margin-bottom: -2.4em;
 }
 
 .btn-discord {
