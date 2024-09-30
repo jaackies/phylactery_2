@@ -11,6 +11,18 @@
     margin-right: -30px;
 }
 
+.unigames-big-brand {
+    font-family: newRocker;
+    font-size: 4.1rem;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 10px;
+    paint-order: stroke fill;
+}
+
+[data-bs-theme=dark] .unigames-big-brand {
+    -webkit-text-stroke-color: black;
+}
+
 .btn-discord {
     --bs-btn-bg: #5865F2;
     --bs-btn-border-color: #5865F2;
