@@ -1,0 +1,115 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Our Library{% endblock %}
+
+{% block content %}
+	<div class="row gy-2 text-center">
+		<div class="col-12">
+			<div class="card w-100" style="">
+				<div class="row g-0">
+					<div class="d-none d-md-block col-md-4 rounded-start" style="background-size: cover; background-position: top; background-image: url('{% static "images/unigames_library.jpg" %}')">
+					</div>
+					<div class="col-12 col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">The Unigames Library</h5>
+							<p class="card-text">
+								The pride and joy of Unigames, and also its greatest asset, the library contains our vast collection
+								of board games, card games, RPG source books, and wargaming terrain.
+							</p>
+							<p class="card-text">
+								See all: <a href="#" class="btn btn-primary">Things</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="card w-100" style="">
+				<div class="row g-0">
+					<div class="col-12 col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">Both in the clubroom, and at home</h5>
+							<p class="card-text">
+								All of our library items can be played, read, and used while in the clubroom, and members can also
+								borrow the vast majority of items for use at events or their own RPG groups!
+							</p>
+							<p class="card-text">
+								If you are a member and wish to borrow an item, swing by the clubroom when it's open and ask one of our
+								friendly gatekeepers!
+							</p>
+						</div>
+					</div>
+					<div class="d-none d-md-block col-md-4 rounded-end" style="background-size: cover; background-position: top; background-image: url('{% static "images/unigames_library.jpg" %}')"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="card w-100" style="">
+				<div class="row g-0">
+					<div class="d-none d-md-block col-md-4 rounded-start" style="background-size: cover; background-position: top; background-image: url('{% static "images/unigames_library.jpg" %}')">
+					</div>
+					<div class="col-12 col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">Our collection is vast and extensive</h5>
+							<p class="card-text">
+								Unigames currently has:
+							</p>
+						</div>
+						<div class="row px-2 pb-2 gx-2 ">
+							<div class="col-6">
+								<ul class="list-group">
+									<li class="list-group-item">X Books</li>
+								</ul>
+							</div>
+							<div class="col-6">
+								<ul class="list-group">
+									<li class="list-group-item">X Board Games</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row px-2 gx-2">
+							<div class="col-6">
+								<ul class="list-group">
+									<li class="list-group-item">X Card Games</li>
+								</ul>
+							</div>
+							<div class="col-6">
+								<ul class="list-group">
+									<li class="list-group-item">X other items</li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								and counting!
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<div class="card w-100" style="">
+				<div class="row g-0">
+					<div class="col-12 col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">Need some games for an event?</h5>
+							<p class="card-text">
+								Unigames also allows other clubs, organisations and people to reserve and borrow items for their events. 
+								Whether you need one board game or several, Unigames is here to help!
+							</p>
+							<p class="card-text">
+								Submit a request form with at least 2-3 weeks notice, and we'll get back to you!
+							</p>
+							<a href="#" class="btn btn-primary">External Borrowing Request Form</a>
+						</div>
+					</div>
+					<div class="d-none d-md-block col-md-4" style="background-size: cover; background-position: top; background-image: url('{% static "images/unigames_library.jpg" %}')"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

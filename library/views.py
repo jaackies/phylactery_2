@@ -386,7 +386,7 @@ class LibraryHomeView(TemplateView):
 	TODO: Replace template
 	"""
 	
-	template_name = "coming_soon.html"
+	template_name = "library/library_home.html"
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
