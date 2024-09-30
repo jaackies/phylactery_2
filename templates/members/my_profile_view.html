@@ -15,9 +15,12 @@
 						<div class="card-body">
 							<h4 class="card-title">Library Items</h4>
 							<p class="card-text">You have {{ active_records.count }} item{{ active_records.count|pluralize }} borrowed currently.</p>
+							{% if not active_records.exists %}
+								<a href="{% url "library:reservation_internal" %}" class="btn btn-secondary">Reserve Items <i class="bi-arrow-right"></i></a>
+							{% endif %}
 						</div>
 						{% if active_records.exists %}
-							<table class="table">
+							<table class="table mb-0">
 								<thead>
 									<tr>
 										<th scope="col">Item Name</th>
@@ -37,6 +40,9 @@
 									{% endfor %}
 								</tbody>
 							</table>
+							<div class="card-body">
+								<a href="{% url "library:reservation_internal" %}" class="btn btn-secondary">Reserve Items <i class="bi-arrow-right"></i></a>
+							</div>
 						{% endif %}
 					{% endwith %}
 				</div>
