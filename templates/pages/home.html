@@ -26,7 +26,10 @@
 		</div>
 		<div class="col-12 col-lg-6">
 			<div class="card h-100">
-				<h4 class="card-header">Latest news:</h4>
+				<div class="card-header d-flex justify-content-between">
+					<h4 class="mb-0">Latest posts:</h4>
+					<a href="{% url "blog:all_posts" %}" class="btn btn-outline-contrast btn-sm">All News</a>
+				</div>
 				<div class="list-group list-group-flush">
 					{% for blogpost in recent_blogposts %}
 						<a href="{{ blogpost.get_absolute_url }}" class="list-group-item list-group-item-action">
@@ -45,7 +48,12 @@
 		</div>
 		<div class="col-12 col-lg-6">
 			<div class="card h-100">
-				<h4 class="card-header">Featured games:</h4>
+				<div class="card-header d-flex justify-content-between">
+					<h4 class="mb-0">Featured Library Items:</h4>
+					<div>
+						<a href="{% url "library:item_list" %}" class="btn btn-outline-contrast btn-sm m-0">All Items</a>
+					</div>
+				</div>
 				<div id="featuredItems" class="carousel slide h-100" data-bs-ride="carousel">
 					<div class="carousel-indicators" style="bottom: -20px;">
 						{% for featured_item in featured_items %}
