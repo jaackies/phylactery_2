@@ -19,8 +19,14 @@
 					<h3 class="card-title">UWA's traditional gaming club</h3>
 				</div>
 				<div class="card-footer">
-					<a href="{% url "about" %}" class="btn btn-outline-contrast">About Us <i class="bi-arrow-right"></i></a>
-					<a href="#" class="btn btn-outline-contrast">How to Find Us / Join Us <i class="bi-arrow-right"></i></a>
+					<div class="row g-1">
+						<div class="col-12 col-lg-6">
+							<a href="{% url "contact" %}" class="btn btn-discord">Join our Discord <i class="bi-discord"></i></a>
+						</div>
+						<div class="col-12 col-lg-6">
+							<a href="{% url "about" %}" class="btn btn-secondary">About Us / Find Us / Join Us <i class="bi-arrow-right"></i></a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
