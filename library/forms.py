@@ -121,22 +121,24 @@ class ItemDueDateForm(forms.Form):
 	
 	def clean(self):
 		cleaned_data = super().clean()
-		item = cleaned_data["item"]
-		due_date = cleaned_data["due_date"]
-		item_availability = item.get_availability_info()
-		if not item_availability["available_to_borrow"]:
-			raise ValidationError(f"{item} is not available to borrow at the moment.")
-		if due_date > item_availability["max_due_date"]:
-			self.add_error(
-				field="due_date",
-				error=f"The due date can't be set beyond the maximum due date for this item. "
-				f"({item_availability['max_due_date']}"
-			)
-		if due_date < timezone.now().date():
-			self.add_error(
-				field="due_date",
-				error="Due date cannot be in the past."
-			)
+		item = cleaned_data.get("item")
+		due_date = cleaned_data.get("due_date")
+		if item and due_date:
+			# If both are valid so far:
+			item_availability = item.get_availability_info()
+			if not item_availability["available_to_borrow"]:
+				raise ValidationError(f"{item} is not available to borrow at the moment.")
+			if due_date > item_availability["max_due_date"]:
+				self.add_error(
+					field="due_date",
+					error=f"The due date can't be set beyond the maximum due date for this item. "
+					f"({item_availability['max_due_date']}"
+				)
+			if due_date < timezone.now().date():
+				self.add_error(
+					field="due_date",
+					error="Due date cannot be in the past."
+				)
 
 
 class InternalBorrowerDetailsForm(forms.Form):
