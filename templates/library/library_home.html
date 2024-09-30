@@ -60,18 +60,18 @@
 						</div>
 						<div class="row px-2 pb-2 gx-2 ">
 							<div class="col-6">
-								<a href="#" class="btn btn-outline-contrast w-100">{{ book_count }} Books <i class="bi-arrow-right"></i></a>
+								<a href="{% url "library:search" %}?q=is:book" class="btn btn-outline-contrast w-100">{{ book_count }} Books <i class="bi-arrow-right"></i></a>
 							</div>
 							<div class="col-6">
-								<a href="#" class="btn btn-outline-contrast w-100">{{ board_game_count }} Board Games <i class="bi-arrow-right"></i></a>
+								<a href="{% url "library:search" %}?q=is:boardgame" class="btn btn-outline-contrast w-100">{{ board_game_count }} Board Games <i class="bi-arrow-right"></i></a>
 							</div>
 						</div>
 						<div class="row px-2 gx-2">
 							<div class="col-6">
-								<a href="#" class="btn btn-outline-contrast w-100">{{ card_game_count }} Card Games <i class="bi-arrow-right"></i></a>
+								<a href="{% url "library:search" %}?q=is:cardgame" class="btn btn-outline-contrast w-100">{{ card_game_count }} Card Games <i class="bi-arrow-right"></i></a>
 							</div>
 							<div class="col-6">
-								<a href="#" class="btn btn-outline-contrast w-100">{{ other_count }} other items <i class="bi-arrow-right"></i></a>
+								<a href="{% url "library:search" %}?q=is:other" class="btn btn-outline-contrast w-100">{{ other_count }} other items <i class="bi-arrow-right"></i></a>
 							</div>
 						</div>
 						<div class="card-body">
