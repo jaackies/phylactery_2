@@ -383,11 +383,17 @@ class LibraryHomeView(TemplateView):
 	"""
 	Renders the Home page for the library.
 	Different from the Dashboard view.
-	TODO: Replace template
 	"""
 	
 	template_name = "library/library_home.html"
-
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["book_count"] = Item.objects.filter(base_tags__name__in=["Item Type: Book"]).count()
+		context["board_game_count"] = Item.objects.filter(base_tags__name__in=["Item Type: Board Game"]).count()
+		context["card_game_count"] = Item.objects.filter(base_tags__name__in=["Item Type: Card Game"]).count()
+		context["other_count"] = Item.objects.filter(base_tags__name__in=["Item Type: Other"]).count()
+		return context
 
 @method_decorator(gatekeeper_required, name="dispatch")
 class ReservationBorrowRedirectView(DetailView):
