@@ -6,6 +6,7 @@ from crispy_forms.bootstrap import StrictButton
 
 from accounts.models import UnigamesUser
 from blog.models import MailingList
+from phylactery.form_fields import HTML5DateInput
 
 
 class FresherMembershipForm(forms.Form):
@@ -208,9 +209,7 @@ class LegacyMembershipForm(FresherMembershipForm):
 	approx_join_date = forms.DateField(
 		required=True,
 		label="When did you first join Unigames? (approximately)",
-		widget=forms.DateInput(
-			attrs={"type": "date"}
-		)
+		widget=HTML5DateInput()
 	)
 	
 	def __init__(self, *args, **kwargs):

@@ -9,6 +9,7 @@ from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field
 
 from library.models import Item, Reservation, BorrowRecord, default_due_date
 from members.models import Member
+from phylactery.form_fields import HTML5DateInput
 
 
 class SelectLibraryItemsForm(forms.Form):
@@ -79,11 +80,7 @@ class ItemDueDateForm(forms.Form):
 	)
 	due_date = forms.DateField(
 		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		)
+		widget=HTML5DateInput()
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -217,20 +214,12 @@ class InternalReservationRequestForm(forms.Form):
 	)
 	requested_borrow_date = forms.DateField(
 		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		),
+		widget=HTML5DateInput(),
 		label="Requested borrow date"
 	)
 	requested_return_date = forms.DateField(
 		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		),
+		widget=HTML5DateInput(),
 		label="Requested return date"
 	)
 	items = forms.ModelMultipleChoiceField(
@@ -359,20 +348,12 @@ class ExternalReservationRequestForm(forms.Form):
 	)
 	requested_borrow_date = forms.DateField(
 		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		),
+		widget=HTML5DateInput(),
 		label="Requested borrow date"
 	)
 	requested_return_date = forms.DateField(
 		required=True,
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		),
+		widget=HTML5DateInput(),
 		label="Requested return date"
 	)
 	items = forms.ModelMultipleChoiceField(
@@ -505,16 +486,8 @@ class ReservationModelForm(FutureModelForm):
 					"data-theme": "bootstrap-5"
 				}
 			),
-			"requested_date_to_borrow": forms.DateInput(
-				attrs={
-					"type": "date"
-				}
-			),
-			"requested_date_to_return": forms.DateInput(
-				attrs={
-					"type": "date"
-				}
-			),
+			"requested_date_to_borrow": HTML5DateInput(),
+			"requested_date_to_return": HTML5DateInput(),
 			"additional_details": forms.Textarea(
 				attrs={
 					"rows": 4,
@@ -774,11 +747,7 @@ class ReservationSelectItemForm(forms.Form):
 		disabled=True,
 	)
 	due_date = forms.DateField(
-		widget=forms.DateInput(
-			attrs={
-				"type": "date"
-			}
-		),
+		widget=HTML5DateInput(),
 		required=True,
 		disabled=True,
 	)
