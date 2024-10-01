@@ -44,6 +44,8 @@ class LifeMemberView(TemplateView):
 class ContactView(TemplateView):
 	template_name = "pages/contact.html"
 
+class ConstitutionView(TemplateView):
+	template_name = "pages/constitution.html"
 
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
