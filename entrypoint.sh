@@ -11,10 +11,6 @@ USE_NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES:-1}
 # Cannot exceed worker_rlimit_nofile, see NGINX_WORKER_OPEN_FILES below
 NGINX_WORKER_CONNECTIONS=${NGINX_WORKER_CONNECTIONS:-1024}
 
-# Get the URL for static files from the environment variable
-USE_STATIC_URL=${STATIC_URL:-'/static'}
-# Get the absolute path of the static files from the environment variable
-USE_STATIC_PATH=${STATIC_PATH:-'/app/static'}
 # Get the URL for media files from the environment variable
 USE_MEDIA_URL=${MEDIA_URL:-'/media'}
 # Get the absolute path of the media files from the environment variable
@@ -60,9 +56,6 @@ else
     content_server=$content_server'    location @app {\n'
     content_server=$content_server'        include uwsgi_params;\n'
     content_server=$content_server'        uwsgi_pass unix:///tmp/uwsgi.sock;\n'
-    content_server=$content_server'    }\n'
-    content_server=$content_server"    location $USE_STATIC_URL {\n"
-    content_server=$content_server"        alias $USE_STATIC_PATH;\n"
     content_server=$content_server'    }\n'
     content_server=$content_server"    location $USE_MEDIA_URL {\n"
     content_server=$content_server"        alias $USE_MEDIA_PATH;\n"
