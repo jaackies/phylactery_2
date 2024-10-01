@@ -6,7 +6,7 @@ coverage==7.4.0
 crispy-bootstrap5==2023.10
 cryptography==41.0.7
 defusedxml==0.7.1
-Django==4.2.9
+Django==5.1.1
 django-allauth==0.63.4
 django-autocomplete-light==3.11.0rc1
 django-crispy-forms==2.0
