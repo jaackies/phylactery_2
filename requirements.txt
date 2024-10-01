@@ -1,10 +1,10 @@
-asgiref==3.6.0
+asgiref==3.8.1
 certifi==2023.11.17
 cffi==1.15.1
 charset-normalizer==3.0.1
 coverage==7.4.0
 crispy-bootstrap5==2023.10
-cryptography==41.0.7
+cryptography==43.0.1
 defusedxml==0.7.1
 Django==5.1.1
 django-allauth==0.63.4
@@ -18,7 +18,7 @@ environs==10.0.0
 factory-boy==3.3.0
 Faker==21.0.0
 gunicorn==21.2.0
-idna==3.4
+idna==3.7
 markdown2==2.4.13
 marshmallow==3.20.1
 oauthlib==3.2.2
