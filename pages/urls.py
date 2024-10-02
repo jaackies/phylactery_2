@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (
 	HomePageView, AboutPageView, EventsPageView, RolePlayingPageView,
-	CommitteeView, LifeMemberView, ContactView, ConstitutionView, WebcamsView, APIView
+	CommitteeView, LifeMemberView, ContactView, ConstitutionView, WebcamsView, APIView, RegulationsView
 )
 
 urlpatterns = [
@@ -16,4 +16,5 @@ urlpatterns = [
 	path("constitution/", ConstitutionView.as_view(), name="constitution"),
 	path("webcams/", WebcamsView.as_view(), name="webcams"),
 	path("api/", APIView.as_view(), name="api"),
+	path("regulations/", RegulationsView.as_view(), name="regulations"),
 ]
