@@ -56,6 +56,9 @@ class APIView(TemplateView):
 class RegulationsView(TemplateView):
 	template_name = "pages/regulations.html"
 
+class MinutesView(TemplateView):
+	template_name = "pages/minutes.html"
+
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
 	
