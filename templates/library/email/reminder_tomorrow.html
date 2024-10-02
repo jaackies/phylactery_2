@@ -55,5 +55,5 @@
 {% endcomment %}
 {% block unsubscribe_footer %}
 	These reminder emails cannot be disabled, but you can <br />
-	manage your other email preferences <a href="{{ protocol }}{{ domain }}{% url 'members:email-prefs' %}">here</a>.
+	manage your other email preferences <a href="{{ protocol }}{{ domain }}{% url "members:my_email_prefs" %}">here</a>.
 {% endblock %}
