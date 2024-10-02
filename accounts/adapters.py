@@ -15,6 +15,10 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 	def get_email_verification_redirect_url(self, email_address):
 		url = reverse("members:my_profile")
 		return url
+	
+	def send_mail(self, template_prefix, email, context):
+		pass
+		
 
 
 class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
