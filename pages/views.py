@@ -50,6 +50,9 @@ class ConstitutionView(TemplateView):
 class WebcamsView(TemplateView):
 	template_name = "pages/webcams.html"
 
+class APIView(TemplateView):
+	template_name = "coming_soon.html"
+
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
 	
