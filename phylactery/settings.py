@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 	"debug_toolbar",
 	"formtools",
 	"django_extensions",
+	"django_celery_beat",
 	# Local
 	"accounts",
 	"pages",
