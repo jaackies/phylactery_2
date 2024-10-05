@@ -13,6 +13,7 @@ coverage==7.6.1
 crispy-bootstrap5==2024.2
 cron-descriptor==1.4.5
 cryptography==43.0.1
+css-inline==0.14.1
 defusedxml==0.8.0rc2
 Django==5.1.1
 django-allauth==65.0.2
