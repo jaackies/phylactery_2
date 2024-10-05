@@ -88,14 +88,14 @@ TEMPLATES = [
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "phylactery",
-        "USER": "djangouser2",
-        "PASSWORD": "djangoiscool",
-        "HOST": "127.0.0.1",  # set in docker-compose.yml
-        "PORT": 5432,  # default postgres port
-    }
+	"default": {
+		"ENGINE": "django.db.backends.postgresql",
+		"NAME": "phylactery",
+		"USER": "djangouser2",
+		"PASSWORD": "djangoiscool",
+		"HOST": "127.0.0.1",  # set in docker-compose.yml
+		"PORT": 5432,  # default postgres port
+	}
 }
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
