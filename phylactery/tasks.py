@@ -12,9 +12,12 @@ inliner = css_inline.CSSInliner(
 )
 
 
-def compose_html_email(template_name, context, request=None):
+def render_html_email(template_name, context, request=None):
 	"""
 		Renders an email template in both html and plaintext.
+		Normally, this would construct an Email object and return it.
+		However, that isn't passable with Celery.
+		So we only render the email bodies and return those.
 	"""
 	context["protocol"] = "https://"
 	context["domain"] = Site.objects.get_current().domain

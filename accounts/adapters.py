@@ -16,9 +16,33 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		url = reverse("members:my_profile")
 		return url
 	
-	def send_mail(self, template_prefix, email, context):
+	def send_password_reset_mail(self, user, email, context):
 		pass
-		
+	
+	def send_confirmation_mail(self, request, emailconfirmation, signup):
+		pass
+	
+	def send_notification_mail(self, template_prefix, user, context=None, email=None):
+		pass
+	
+	def send_account_already_exists_mail(self, email):
+		pass
+	
+	def send_mail(self, template_prefix, email, context):
+		"""
+		AllAuth uses the previous four methods to send email.
+		We override those so that we can handle the email with
+		Celery instead.
+		However, one scenario (unknown account) just calls the send_mail
+		method directly. We handle that scenario here.
+		"""
+		if template_prefix == "account/email/unknown_account":
+			pass
+		else:
+			pass
+	
+	def send_unknown_account_email(self):
+		pass
 
 
 class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
