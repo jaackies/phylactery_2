@@ -5,6 +5,9 @@ from django.core.mail import get_connection, send_mail, send_mass_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import css_inline
+import re
+
+multiple_newline = re.compile(r"\n{2,}")
 
 logger = get_task_logger(__name__)
 inliner = css_inline.CSSInliner(
@@ -29,8 +32,11 @@ def render_html_email(template_name, context, request=None):
 	# Process the plaintext version
 	context["override_base"] = "email/email_base.txt"
 	plaintext_message = render_to_string(template_name, context, request=request)
+	# Remove excess whitespace
+	plaintext_message = "\n".join(line.strip() for line in plaintext_message.splitlines())
 	# Remove leftover HTML tags from the plaintext message
 	plaintext_message = strip_tags(plaintext_message)
+	plaintext_message = re.sub(multiple_newline, "\n\n", plaintext_message)
 	return plaintext_message, html_message
 
 
