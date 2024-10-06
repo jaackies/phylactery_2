@@ -4,6 +4,7 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.core.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
+from phylactery.tasks import render_html_email, send_single_email_task
 
 class CustomRegularAccountAdapter(DefaultAccountAdapter):
 	"""
@@ -17,7 +18,19 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		return url
 	
 	def send_password_reset_mail(self, user, email, context):
-		pass
+		subject = "Reset your Unigames password"
+		plaintext_message, html_message = render_html_email(
+			template_name="account/email/password_reset.html",
+			context=context,
+			request=self.request,
+		)
+		send_single_email_task.delay(
+			email_address=email,
+			subject=subject,
+			message=plaintext_message,
+			html_message=html_message,
+		)
+		
 	
 	def send_confirmation_mail(self, request, emailconfirmation, signup):
 		pass
