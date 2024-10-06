@@ -24,7 +24,7 @@ def compose_html_email(template_name, context, request=None):
 	html_message = inliner.inline(html_message)
 	
 	# Process the plaintext version
-	context["override_base"] = "phylactery/email_base.txt"
+	context["override_base"] = "email/email_base.txt"
 	plaintext_message = render_to_string(template_name, context, request=request)
 	# Remove leftover HTML tags from the plaintext message
 	plaintext_message = strip_tags(plaintext_message)
