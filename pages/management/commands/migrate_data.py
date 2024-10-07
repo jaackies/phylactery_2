@@ -1,7 +1,7 @@
 import json
 from accounts.models import UnigamesUser, create_fresh_unigames_user
 from blog.models import MailingList, BlogPost
-from library.models import Item, LibraryTag
+from library.models import Item, LibraryTag, BorrowerDetails, BorrowRecord
 from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -108,7 +108,37 @@ class Command(BaseCommand):
 			key = f"{borrow_record['fields']['borrowing_member']}-{borrow_record['fields']['member_address']}-{borrow_record['fields']['member_phone_number']}-{borrow_record['fields']['date_borrowed']}-{borrow_record['fields']['auth_gatekeeper_borrow']}"
 			borrow_record["key"] = key
 			borrow_records_by_instance[key].append(borrow_record)
-		print(len(borrow_records_by_instance.keys()))
+		for key, records in borrow_records_by_instance.items():
+			first_record_fields = records[0]["fields"]
+			borrowing_member_qs = Member.objects.filter(pk=first_record_fields["borrowing_member"])[0:1]
+			if borrowing_member_qs.exists():
+				internal_member = borrowing_member_qs.get()
+				borrower_name = internal_member.long_name
+			else:
+				internal_member = None
+				borrower_name = "<Internal Member record deleted>"
+			borrower_address = first_record_fields["member_address"]
+			borrower_phone = first_record_fields["member_phone_number"]
+			borrowed_datetime = first_record_fields["date_borrowed"]
+			borrow_authorised_by_qs = Member.objects.filter(pk=first_record_fields["auth_gatekeeper_borrow"])[0:1]
+			if borrow_authorised_by_qs.exists():
+				borrow_authorised_by = borrow_authorised_by_qs.get().long_name
+			else:
+				borrow_authorised_by = "<Internal Member record deleted>"
+			borrower_details = BorrowerDetails.objects.create(
+				is_external=False,
+				internal_member=internal_member,
+				borrower_name=borrower_name,
+				borrower_address=borrower_address,
+				borrower_phone=borrower_phone,
+				borrowed_datetime=borrowed_datetime,
+				borrow_authorised_by=borrow_authorised_by,
+			)
+			for record in records:
+				pass
+				
+			
+			
 	
 	def import_blog(self):
 		"""
@@ -379,6 +409,27 @@ class Command(BaseCommand):
 		}
 		new_blogpost = BlogPost.objects.create(**blogpost_data)
 		self.stdout.write(f"Added blog.blogpost: {new_blogpost.slug_title}")
+	
+	def import_borrow_record(self, borrower_details, fields):
+		return_authorised_by_qs = Member.objects.filter(pk=fields["auth_gatekeeper_return"])[0:1]
+		if return_authorised_by_qs.exists():
+			return_authorised_by = return_authorised_by_qs.get().long_name
+		else:
+			return_authorised_by = "<Internal Member record deleted>"
+		
+		borrow_record_data = {
+			"item": fields["item"],
+			"borrower": borrower_details,
+			"borrowed_datetime": borrower_details.borrowed_datetime,
+			"borrow_authorised_by": borrower_details.borrow_authorised_by,
+			"due_date": fields["due_date"],
+			"returned_datetime": fields["date_returned"],
+			"comments": "<migrated data>",
+			"verified_returned": fields["verified_returned"],
+			"return_authorised_by": return_authorised_by,
+		}
+		new_borrow_record = BorrowRecord.objects.create(**borrow_record_data)
+		
 	
 	def fix_pk_sequence(self, app):
 		"""
