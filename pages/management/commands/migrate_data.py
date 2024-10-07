@@ -77,9 +77,9 @@ def convert_to_date(date_str):
 class Command(BaseCommand):
 	def handle(self, *args, **options):
 		self.import_model_data()
-		#self.import_initial_library()
-		#self.import_members()
-		#self.import_blog()
+		self.import_initial_library()
+		self.import_members()
+		self.import_blog()
 		self.import_final_library()
 	
 	def import_model_data(self):
@@ -135,7 +135,7 @@ class Command(BaseCommand):
 				borrow_authorised_by=borrow_authorised_by,
 			)
 			for record in records:
-				pass
+				self.import_borrow_record(borrower_details, record)
 				
 			
 			
