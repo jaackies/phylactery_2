@@ -43,24 +43,24 @@ We will skip:
 	
 We will import:
 	- Blog Posts
-		- blog.blogpost
+		- blog.blogpost - Done!
 	- Library (almost everything)
 		- library.borrowrecord
 		- library.externalborrowingform
 		- library.externalborrowingitemrecord
-		- library.item
-		- library.itembasetags
-		- library.tagparent
+		- library.item - Done!
+		- library.itembasetags - Done!
+		- library.tagparent - Done!
 	- Members
-		- members.member
-		- members.memberflag
+		- members.member - Done!
+		- members.memberflag - Done!
 			- Reworked to be under Blog
-		- members.membership
-		- members.rankassignments
+		- members.membership - Done!
+		- members.rankassignments - Done!
 			- Reworked to be "ranks"
 	- Taggit Tags
-		- taggit.tag
-		- taggit.taggeditem
+		- taggit.tag - Done!
+		- taggit.taggeditem - Done!
 	
 
 """
