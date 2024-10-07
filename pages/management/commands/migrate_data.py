@@ -101,6 +101,15 @@ class Command(BaseCommand):
 			2) Convert external borrowing item record into borrowrecords.
 			3) Attempt to group borrow records into borrowerdetails, and import them
 		"""
+		
+		# Group borrow records into borrower details, and import them.
+		# For this, we assume that any borrow records that have the same:
+		# - borrowing member
+		# - address
+		# - phone number
+		# - borrow date
+		# - AND authorising gatekeeper
+		# are all part of the same borrowing instance
 		borrow_records_by_instance = defaultdict(list)
 		
 		json_objects = self.models["library.borrowrecord"]
