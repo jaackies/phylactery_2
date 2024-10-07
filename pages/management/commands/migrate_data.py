@@ -429,6 +429,7 @@ class Command(BaseCommand):
 			"return_authorised_by": return_authorised_by,
 		}
 		new_borrow_record = BorrowRecord.objects.create(**borrow_record_data)
+		self.stdout.write(f"Added library.borrowrecord: {new_borrow_record.pk}")
 		
 	
 	def fix_pk_sequence(self, app):
