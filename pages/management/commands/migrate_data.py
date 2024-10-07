@@ -101,6 +101,12 @@ class Command(BaseCommand):
 			2) Convert external borrowing item record into borrowrecords.
 			3) Attempt to group borrow records into borrowerdetails, and import them
 		"""
+		json_objects = self.models["library.externalborrowingform"]
+		for external_borrowing_form in json_objects:
+			# Make a BorrowerDetails,
+			# Then make a Reservation
+			pass
+		
 		
 		# Group borrow records into borrower details, and import them.
 		# For this, we assume that any borrow records that have the same:
