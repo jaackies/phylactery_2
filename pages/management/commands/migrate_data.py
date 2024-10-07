@@ -135,7 +135,7 @@ class Command(BaseCommand):
 				borrow_authorised_by=borrow_authorised_by,
 			)
 			for record in records:
-				self.import_borrow_record(borrower_details, record)
+				self.import_borrow_record(borrower_details, record["fields"])
 				
 			
 			
@@ -418,7 +418,7 @@ class Command(BaseCommand):
 			return_authorised_by = "<Internal Member record deleted>"
 		
 		borrow_record_data = {
-			"item": fields["item"],
+			"item": Item.objects.get(pk=fields["item"]),
 			"borrower": borrower_details,
 			"borrowed_datetime": borrower_details.borrowed_datetime,
 			"borrow_authorised_by": borrower_details.borrow_authorised_by,
