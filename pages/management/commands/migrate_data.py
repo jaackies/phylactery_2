@@ -77,9 +77,9 @@ def convert_to_date(date_str):
 class Command(BaseCommand):
 	def handle(self, *args, **options):
 		self.import_model_data()
-		self.import_initial_library()
-		self.import_members()
-		self.import_blog()
+		#self.import_initial_library()
+		#self.import_members()
+		#self.import_blog()
 		self.import_final_library()
 	
 	def import_model_data(self):
@@ -101,7 +101,14 @@ class Command(BaseCommand):
 			2) Convert external borrowing item record into borrowrecords.
 			3) Attempt to group borrow records into borrowerdetails, and import them
 		"""
-		pass
+		borrow_records_by_instance = defaultdict(list)
+		
+		json_objects = self.models["library.borrowrecord"]
+		for borrow_record in json_objects:
+			key = f"{borrow_record['fields']['borrowing_member']}-{borrow_record['fields']['member_address']}-{borrow_record['fields']['member_phone_number']}-{borrow_record['fields']['date_borrowed']}-{borrow_record['fields']['auth_gatekeeper_borrow']}"
+			borrow_record["key"] = key
+			borrow_records_by_instance[key].append(borrow_record)
+		print(len(borrow_records_by_instance.keys()))
 	
 	def import_blog(self):
 		"""
