@@ -1,7 +1,7 @@
 import json
 from accounts.models import UnigamesUser, create_fresh_unigames_user
 from blog.models import MailingList, BlogPost
-from library.models import Item, LibraryTag, BorrowerDetails, BorrowRecord
+from library.models import Item, LibraryTag, BorrowerDetails, BorrowRecord, Reservation
 from members.models import Member, Membership, Rank, RankChoices
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -68,6 +68,13 @@ We will import:
 BASE_PATH = settings.BASE_DIR / "pretty_models"
 
 
+APPROVAL_STATUS = {
+	"U": "?",
+	"D": "X",
+	"A": "A",
+	"C": "!",
+}
+
 def convert_to_date(date_str):
 	if date_str is None:
 		return None
@@ -77,9 +84,9 @@ def convert_to_date(date_str):
 class Command(BaseCommand):
 	def handle(self, *args, **options):
 		self.import_model_data()
-		self.import_initial_library()
-		self.import_members()
-		self.import_blog()
+		#self.import_initial_library()
+		#self.import_members()
+		#self.import_blog()
 		self.import_final_library()
 	
 	def import_model_data(self):
@@ -103,9 +110,7 @@ class Command(BaseCommand):
 		"""
 		json_objects = self.models["library.externalborrowingform"]
 		for external_borrowing_form in json_objects:
-			# Make a BorrowerDetails,
-			# Then make a Reservation
-			pass
+			self.import_external_borrowing_form(external_borrowing_form["pk"], external_borrowing_form["fields"])
 		
 		
 		# Group borrow records into borrower details, and import them.
@@ -445,7 +450,32 @@ class Command(BaseCommand):
 		}
 		new_borrow_record = BorrowRecord.objects.create(**borrow_record_data)
 		self.stdout.write(f"Added library.borrowrecord: {new_borrow_record.pk}")
-		
+	
+	def import_external_borrowing_form(self, pk, fields):
+		# Convert external borrowing forms into reservations
+		reservation_data = {
+			"pk": pk,
+			"is_external": True,
+			"internal_member": None,
+			"requestor_name": fields["applicant_name"],
+			"requestor_email": fields["contact_email"],
+			"requestor_phone": fields["contact_phone"],
+			"reserved_items": Item.objects.none(),
+			"requested_date_to_borrow": fields["requested_borrow_date"],
+			"requested_date_to_return": fields["requested_borrow_date"],
+			"submitted_datetime": fields["form_submitted_date"],
+			"approval_status": APPROVAL_STATUS[fields["form_status"]],
+			"additional_details": "<migrated data>\n",
+			"status_update_datetime": fields["form_submitted_date"],
+			"librarian_comments": fields["librarian_comments"],
+			"is_active": False,
+			"borrower": None,
+		}
+		if fields["applicant_org"]:
+			reservation_data["additional_details"] += f"Organisation: {fields['applicant_org']}\n"
+		reservation_data["additional_details"] += f"------\n{fields['event_details']}\n"
+		Reservation.objects.create(**reservation_data)
+		self.stdout.write(f"Added library.reservation from external borrowing form {pk}")
 	
 	def fix_pk_sequence(self, app):
 		"""
