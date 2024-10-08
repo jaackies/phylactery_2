@@ -113,6 +113,85 @@ class Command(BaseCommand):
 			self.import_external_borrowing_form(external_borrowing_form["pk"], external_borrowing_form["fields"])
 		self.fix_pk_sequence(Reservation)
 		
+		external_item_records_by_form_pk = defaultdict(list)
+		json_objects = self.models["library.externalborrowingitemrecord"]
+		for external_item_record in json_objects:
+			external_item_records_by_form_pk[external_item_record["fields"]["form"]].append(external_item_record)
+		
+		for reservation_pk, external_borrowing_records in external_item_records_by_form_pk.items():
+			reservation = Reservation.objects.get(pk=reservation_pk)
+			borrower_detail_address = "<migrated data>"
+			borrower_detail_phone = reservation.requestor_phone
+			borrower_detail_borrowed_date = None
+			borrower_detail_authed_by_pk = None
+			current_borrower_details = None
+			self.stdout.write(f"Adding borrow records for reservation {reservation_pk}")
+			for record in external_borrowing_records:
+				item = Item.objects.get(pk=record["fields"]["item"])
+				reservation.reserved_items.add(item)
+				if (
+						record["fields"]["borrower_name"] == ""
+						or record["fields"]["auth_gatekeeper_borrow"] == ""
+						or record["fields"]["date_borrowed"] == ""
+				):
+					# Skip adding a record
+					self.stdout.write(f"- Skipped adding record for {item}")
+					continue
+				else:
+					if (
+							current_borrower_details is None
+							or current_borrower_details.borrower_name != record["fields"]["borrower_name"]
+							or borrower_detail_borrowed_date != record["fields"]["date_borrowed"]
+							or borrower_detail_authed_by_pk != record["fields"]["auth_gatekeeper_borrow"]
+					):
+						# Make a new borrower details object
+						borrower_detail_authed_by_pk = record["fields"]["auth_gatekeeper_borrow"]
+						borrow_authed_by_qs = Member.objects.filter(pk=borrower_detail_authed_by_pk)[0:1]
+						if borrow_authed_by_qs.exists():
+							borrow_authed_by = borrow_authed_by_qs.get().long_name
+						else:
+							borrow_authed_by = "<Internal Member record deleted>"
+						borrower_detail_borrowed_date = record["fields"]["date_borrowed"]
+						current_borrower_details = BorrowerDetails.objects.create(
+							is_external=True,
+							internal_member=None,
+							borrower_name=record["fields"]["borrower_name"],
+							borrower_address=borrower_detail_address,
+							borrower_phone=borrower_detail_phone,
+							borrowed_datetime=borrower_detail_borrowed_date + "T04:00:00Z",
+							borrow_authorised_by=borrow_authed_by,
+						)
+				# Add the Borrow Record
+				if record["fields"]["date_returned"]:
+					returned_datetime = record["fields"]["date_returned"] + "T04:00:00Z"
+					verified_returned = True
+				else:
+					returned_datetime = ""
+					verified_returned = False
+				if record["fields"]["auth_gatekeeper_return"]:
+					return_authed_by_qs = Member.objects.filter(pk=record["fields"]["auth_gatekeeper_return"])[0:1]
+					if return_authed_by_qs.exists():
+						return_authed_by = return_authed_by_qs.get().long_name
+					else:
+						return_authed_by = "<Internal Member record deleted>"
+				else:
+					return_authed_by = ""
+				
+				BorrowRecord.objects.create(
+					item=item,
+					borrower=current_borrower_details,
+					borrowed_datetime=current_borrower_details.borrowed_datetime,
+					borrow_authorised_by=current_borrower_details.borrow_authorised_by,
+					due_date=reservation.requested_date_to_return,
+					returned_datetime=returned_datetime,
+					return_authorised_by=return_authed_by,
+					comments="<migrated data>",
+					verified_returned=verified_returned,
+				)
+				self.stdout.write(f"- Added external borrow record for {item}")
+	
+			
+		
 		# Group borrow records into borrower details, and import them.
 		# For this, we assume that any borrow records that have the same:
 		# - borrowing member
