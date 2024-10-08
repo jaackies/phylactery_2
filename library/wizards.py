@@ -128,7 +128,6 @@ class InternalBorrowItemsWizard(SessionWizardView):
 			)
 		
 		messages.success(self.request, "The items were successfully borrowed!")
-		print(cleaned_data)
 		
 		return redirect("library:dashboard")
 
