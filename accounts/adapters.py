@@ -19,7 +19,11 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		url = reverse("members:my_profile")
 		return url
 	
-	def send_password_reset_mail(self, user, email, context):
+	def send_password_reset_mail(self, user, email, ctx):
+		context = {
+			"email": email,
+		}
+		context.update(ctx)
 		subject = "Reset your Unigames password"
 		plaintext_message, html_message = render_html_email(
 			template_name="account/email/password_reset.html",
@@ -39,7 +43,8 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 			"key": emailconfirmation.key,
 			"activate_url": self.get_email_confirmation_url(
 				request, emailconfirmation
-			)
+			),
+			"email": emailconfirmation.email_address.email
 		}
 		subject = "Unigames - Please Confirm Your Email Address"
 		plaintext_message, html_message = render_html_email(
@@ -79,8 +84,7 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 			html_message=html_message,
 		)
 		
-	
-	def send_mail(self, template_prefix, email, context):
+	def send_mail(self, template_prefix, email, ctx):
 		"""
 		AllAuth uses the previous four methods to send email.
 		We override those so that we can handle the email with
@@ -89,12 +93,24 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		method directly. We handle that scenario here.
 		"""
 		if template_prefix == "account/email/unknown_account":
-			pass
+			context = {
+				"email": email
+			}
+			context.update(ctx)
+			subject = "Unknown Unigames Account"
+			plaintext_message, html_message = render_html_email(
+				template_name="account/email/unknown_account.html",
+				context=context,
+				request=self.request,
+			)
+			send_single_email_task.delay(
+				email_address=email,
+				subject=subject,
+				message=plaintext_message,
+				html_message=html_message,
+			)
 		else:
 			pass
-	
-	def send_unknown_account_email(self):
-		pass
 
 
 class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
