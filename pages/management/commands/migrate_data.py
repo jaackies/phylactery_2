@@ -111,7 +111,7 @@ class Command(BaseCommand):
 		json_objects = self.models["library.externalborrowingform"]
 		for external_borrowing_form in json_objects:
 			self.import_external_borrowing_form(external_borrowing_form["pk"], external_borrowing_form["fields"])
-		
+		self.fix_pk_sequence(Reservation)
 		
 		# Group borrow records into borrower details, and import them.
 		# For this, we assume that any borrow records that have the same:
@@ -460,7 +460,6 @@ class Command(BaseCommand):
 			"requestor_name": fields["applicant_name"],
 			"requestor_email": fields["contact_email"],
 			"requestor_phone": fields["contact_phone"],
-			"reserved_items": Item.objects.none(),
 			"requested_date_to_borrow": fields["requested_borrow_date"],
 			"requested_date_to_return": fields["requested_borrow_date"],
 			"submitted_datetime": fields["form_submitted_date"],
