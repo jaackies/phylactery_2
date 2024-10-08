@@ -362,12 +362,20 @@ class ExternalReservationBorrowItemsWizard(SessionWizardView):
 		reservation.save()
 		
 		# Create the Borrow Records for the items that are being borrowed.
+		borrowed_items = []
 		for item in selected_items:
 			BorrowRecord.objects.create(
 				item=item,
 				borrower=new_borrower_details,
 				due_date=reservation.requested_date_to_return,
 			)
+			borrowed_items.append((item, reservation.requested_date_to_return))
+		send_borrow_receipt(
+			email_address=reservation.requestor_email,
+			borrower_name=cleaned_data["borrower_name"],
+			items=borrowed_items,
+			authorised_by=self.request.user.member.long_name
+		)
 		
 		messages.success(self.request, f"The items were successfully borrowed!")
 		return redirect("library:dashboard")
