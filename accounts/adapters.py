@@ -31,10 +31,28 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 			message=plaintext_message,
 			html_message=html_message,
 		)
-		
 	
 	def send_confirmation_mail(self, request, emailconfirmation, signup):
-		pass
+		context = {
+			"user": emailconfirmation.email_address.user,
+			"key": emailconfirmation.key,
+			"activate_url": self.get_email_confirmation_url(
+				request, emailconfirmation
+			)
+		}
+		subject = "Unigames - Please Confirm Your Email Address"
+		plaintext_message, html_message = render_html_email(
+			template_name="account/email/email_confirmation.html",
+			context=context,
+			request=self.request,
+		)
+		send_single_email_task.delay(
+			email_address=emailconfirmation.email_address.email,
+			subject=subject,
+			message=plaintext_message,
+			html_message=html_message,
+		)
+		
 	
 	def send_notification_mail(self, template_prefix, user, context=None, email=None):
 		pass
