@@ -323,7 +323,7 @@ class ExternalReservationBorrowItemsWizard(SessionWizardView):
 		This includes:
 			- Creating a new BorrowerDetails object
 			- Create a new BorrowRecord object for each Item being borrowed.
-			- TODO: Email the borrower a receipt.
+			- Email the borrower a receipt.
 		"""
 		reservation = self.get_reservation()
 		cleaned_data = self.get_all_cleaned_data()
