@@ -16,7 +16,7 @@
 	The preheader is a short description of the contents of the email,
 	displayed as a summary in some email programs. 
 {% endcomment %}
-{% block preheader %}Hi there {{ member.short_name }}, here's your receipt for the items you borrowed today.{% endblock %}
+{% block preheader %}Hi there {{ borrower_name }}, here's your receipt for the items you borrowed today.{% endblock %}
 
 {% comment %}
 	The main content of the email.
