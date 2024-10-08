@@ -334,10 +334,10 @@ class ReturnItemsView(FormView):
 			messages.success(self.request, f"Successfully returned {returned} items.")
 			# TODO: Send email receipt to borrower that items have been returned.
 			# TODO: Send notification to the Librarian that items have been returned.
-			if self.borrower_details.reservation is not None:
-				if self.borrower_details in BorrowerDetails.objects.filter(completed=True):
+			if self.borrower_details in BorrowerDetails.objects.filter(completed=True):
+				for reservation in Reservation.objects.filter(borrower=self.borrower_details):
 					# This borrow record is now completed. We can update the reservation to be completed as well.
-					self.borrower_details.reservation.set_completed()
+					reservation.set_completed()
 		return redirect("library:dashboard")
 		
 
