@@ -202,7 +202,7 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 		This includes:
 			- Creating a new BorrowerDetails object
 			- Create a new BorrowRecord object for each Item being borrowed.
-			- TODO: Email the borrower a receipt.
+			- Email the borrower a receipt.
 		"""
 		reservation = self.get_reservation()
 		cleaned_data = self.get_all_cleaned_data()
@@ -241,12 +241,20 @@ class InternalReservationBorrowItemsWizard(SessionWizardView):
 		reservation.save()
 		
 		# Create the Borrow Records for the items that are being borrowed.
+		borrowed_items = []
 		for item in selected_items:
 			BorrowRecord.objects.create(
 				item=item,
 				borrower=new_borrower_details,
 				due_date=reservation.requested_date_to_return,
 			)
+			borrowed_items.append((item, reservation.requested_date_to_return))
+		send_borrow_receipt(
+			email_address=cleaned_data["member"].email,
+			borrower_name=cleaned_data["member"].long_name,
+			items=borrowed_items,
+			authorised_by=self.request.user.member.long_name
+		)
 		
 		messages.success(self.request, f"The items were successfully borrowed!")
 		return redirect("library:dashboard")
