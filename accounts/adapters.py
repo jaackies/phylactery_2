@@ -6,6 +6,7 @@ from django.shortcuts import redirect, reverse
 from django.contrib import messages
 from phylactery.tasks import render_html_email, send_single_email_task
 
+
 class CustomRegularAccountAdapter(DefaultAccountAdapter):
 	"""
 	Custom adapter for AllAuth accounts. This should disable signing up though the website.
