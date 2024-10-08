@@ -30,7 +30,7 @@
 	</p>
 	<p>
 		{% user_display user as user_display %}
-		You're receiving this email because user {{ user_display }} has given your email address to register an account on {{ site_domain }}.
+		You're receiving this email because user {{ user_display }} has given your email address to register an account on {{ current_site.domain }}.
 	</p>
 	<p>
 		To confirm this is correct, click the button below.

@@ -5,6 +5,7 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.core.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
 from phylactery.tasks import render_html_email, send_single_email_task
 
 
@@ -22,6 +23,7 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 	def send_password_reset_mail(self, user, email, ctx):
 		context = {
 			"email": email,
+			"current_site": get_current_site(self.request),
 		}
 		context.update(ctx)
 		subject = "Reset your Unigames password"
@@ -44,7 +46,8 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 			"activate_url": self.get_email_confirmation_url(
 				request, emailconfirmation
 			),
-			"email": emailconfirmation.email_address.email
+			"email": emailconfirmation.email_address.email,
+			"current_site": get_current_site(self.request),
 		}
 		subject = "Unigames - Please Confirm Your Email Address"
 		plaintext_message, html_message = render_html_email(
@@ -70,6 +73,7 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		context = {
 			"password_reset_url": password_reset_url,
 			"email": email,
+			"current_site": get_current_site(self.request),
 		}
 		subject = "Unigames Account Already Exists"
 		plaintext_message, html_message = render_html_email(
@@ -94,7 +98,8 @@ class CustomRegularAccountAdapter(DefaultAccountAdapter):
 		"""
 		if template_prefix == "account/email/unknown_account":
 			context = {
-				"email": email
+				"email": email,
+				"current_site": get_current_site(self.request),
 			}
 			context.update(ctx)
 			subject = "Unknown Unigames Account"
