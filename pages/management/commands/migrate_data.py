@@ -84,9 +84,9 @@ def convert_to_date(date_str):
 class Command(BaseCommand):
 	def handle(self, *args, **options):
 		self.import_model_data()
-		#self.import_initial_library()
-		#self.import_members()
-		#self.import_blog()
+		self.import_initial_library()
+		self.import_members()
+		self.import_blog()
 		self.import_final_library()
 	
 	def import_model_data(self):
@@ -140,6 +140,8 @@ class Command(BaseCommand):
 			borrower_address = first_record_fields["member_address"]
 			borrower_phone = first_record_fields["member_phone_number"]
 			borrowed_datetime = first_record_fields["date_borrowed"]
+			if borrowed_datetime:
+				borrowed_datetime += "T04:00:00Z"
 			borrow_authorised_by_qs = Member.objects.filter(pk=first_record_fields["auth_gatekeeper_borrow"])[0:1]
 			if borrow_authorised_by_qs.exists():
 				borrow_authorised_by = borrow_authorised_by_qs.get().long_name
@@ -448,6 +450,8 @@ class Command(BaseCommand):
 			"verified_returned": fields["verified_returned"],
 			"return_authorised_by": return_authorised_by,
 		}
+		if borrow_record_data["returned_datetime"]:
+			borrow_record_data["returned_datetime"] += "T04:00:00Z"
 		new_borrow_record = BorrowRecord.objects.create(**borrow_record_data)
 		self.stdout.write(f"Added library.borrowrecord: {new_borrow_record.pk}")
 	
