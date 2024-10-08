@@ -1,5 +1,6 @@
 from celery import shared_task
 from phylactery.tasks import render_html_email, send_single_email_task
+from django.utils import timezone
 
 
 def send_borrow_receipt(email_address, borrower_name, items, authorised_by):
@@ -7,6 +8,7 @@ def send_borrow_receipt(email_address, borrower_name, items, authorised_by):
 		"borrower_name": borrower_name,
 		"items": items,
 		"gatekeeper": authorised_by,
+		"today": timezone.now(),
 	}
 	subject = "Unigames Library Borrowing Receipt"
 	plaintext_message, html_message = render_html_email(
