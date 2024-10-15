@@ -10,6 +10,7 @@ def send_pending_email_orders_task():
 	Checks the list of EmailOrders, and sends any that:
 		a) Haven't been sent, and
 		b) Their BlogPost is published.
+	TODO: Send via Discord as well.
 	"""
 	
 	email_orders = EmailOrder.objects.filter(email_sent=False)
@@ -25,6 +26,7 @@ def send_pending_email_orders_task():
 				"blogpost": order.post,
 			}
 			plaintext_message, html_message = render_html_email(
+				# TODO: Add template
 				template_name="",
 				context=context,
 			)
