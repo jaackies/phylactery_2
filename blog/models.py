@@ -168,9 +168,14 @@ class EmailOrder(models.Model):
 	
 	@property
 	def is_ready(self):
-		# Returns True if the linked BlogPost is published
-		# and this order hasn't been completed.
-		return self.email_sent is False and self.blog_post.is_published is True
+		# Returns True if the linked BlogPost is published,
+		# there are members to send it to, and we haven't
+		# done this already.
+		return (
+			self.email_sent is False
+			and self.blog_post.is_published is True
+			and self.get_members_to_send_to().count() != 0
+		)
 	
 	def get_members_to_send_to(self):
 		# Returns a QuerySet of Members that emails should be sent to.
