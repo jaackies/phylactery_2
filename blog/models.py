@@ -4,6 +4,8 @@ from django.db.models.functions import Now
 from django.urls import reverse
 from django.utils import timezone
 
+from members.models import Member
+
 
 class BlogPostManager(models.Manager):
 	"""
@@ -143,3 +145,41 @@ class MailingList(models.Model):
 	def __str__(self):
 		return f"{self.name} {'(inactive)' if self.is_active is False else ''}"
 	
+
+class EmailOrder(models.Model):
+	"""
+	Tracks a specific request to email out a BlogPost to a group of MailingLists.
+	A Celery Task will check these every so often.
+	If it finds any EmailOrders that:
+		- aren't completed
+		- are linked to a BlogPost that is published
+	Then it will send out that post as an Email to all selecting MailingLists.
+	"""
+	
+	# The BlogPost to email
+	blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name="email_orders")
+	
+	# The lists to email it to
+	# If no lists are sent, then it will send to all members.
+	mailing_lists = models.ManyToManyField(MailingList, related_name="email_orders")
+	
+	# Has this been done?
+	email_sent = models.BooleanField(default=False)
+	
+	@property
+	def is_ready(self):
+		# Returns True if the linked BlogPost is published
+		# and this order hasn't been completed.
+		return self.email_sent is False and self.blog_post.is_published is True
+	
+	def get_members_to_send_to(self):
+		# Returns a QuerySet of Members that emails should be sent to.
+		if self.mailing_lists.count() == 0:
+			# Send this email to all Members that have opted in to emails.
+			qs = Member.objects.filter(optional_emails=True)
+		else:
+			qs = Member.objects.filter(mailing_lists__email_orders=self, optional_emails=True)
+		return qs
+	
+	def __str__(self):
+		return f"Email Order for {self.blog_post.title}"
