@@ -40,6 +40,6 @@
 	Used to override the footer at the bottom of the email.
 {% endcomment %}
 {% block unsubscribe_footer %}
-	{{ reason }}<br />
+	{{ reason|linebreaksbr }}<br />
 	Manage your email preferences <a href="{{ protocol }}{{ domain }}{% url "members:my_email_prefs" %}">here</a>.
 {% endblock %}
