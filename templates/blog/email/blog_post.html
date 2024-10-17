@@ -40,6 +40,6 @@
 	Used to override the footer at the bottom of the email.
 {% endcomment %}
 {% block unsubscribe_footer %}
-	This emailed borrowing receipt can't be disabled, but you can <br />
-	manage your other email preferences <a href="{{ protocol }}{{ domain }}{% url "members:my_email_prefs" %}">here</a>.
+	{{ reason }}<br />
+	Manage your other email preferences <a href="{{ protocol }}{{ domain }}{% url "members:my_email_prefs" %}">here</a>.
 {% endblock %}
