@@ -12,9 +12,11 @@
 {% block title %}{{ blogpost.title }}{% endblock %}
 {% block email_title %}{{ blogpost.title }}{% endblock %}
 
+{% load markdown_extras %}
+
 {% comment %}
 	The preheader is a short description of the contents of the email,
-	displayed as a summary in some email programs. 
+	displayed as a summary in some email programs.
 {% endcomment %}
 {% block preheader %}Unigames News - {{ blogpost.title }}{% endblock %}
 
@@ -25,7 +27,7 @@
 {% block content %}
 	<a href="{{ protocol }}{{ domain }}{{ blogpost.get_absolute_url }}">View this email in your browser</a>
 	<hr>
-	{% comment %}Stuff goes here{% endcomment %}
+	{{ blogpost.body|render_markdown }}
 	<hr>
 	<a href="{{ protocol }}{{ domain }}{{ blogpost.get_absolute_url }}">View this email in your browser</a>
 	<p>
@@ -38,6 +40,6 @@
 	Used to override the footer at the bottom of the email.
 {% endcomment %}
 {% block unsubscribe_footer %}
-	This emailed borrowing receipt can't be disabled, but you can <br /> 
+	This emailed borrowing receipt can't be disabled, but you can <br />
 	manage your other email preferences <a href="{{ protocol }}{{ domain }}{% url "members:my_email_prefs" %}">here</a>.
 {% endblock %}
