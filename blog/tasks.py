@@ -26,8 +26,7 @@ def send_pending_email_orders_task():
 				"blogpost": order.post,
 			}
 			plaintext_message, html_message = render_html_email(
-				# TODO: Add template
-				template_name="",
+				template_name="blog/email/blog_post.html",
 				context=context,
 			)
 			for member in members_to_email_to:
