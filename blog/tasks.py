@@ -40,7 +40,7 @@ def send_pending_email_orders_task():
 				)
 			
 			context = {
-				"blogpost": order.post,
+				"blogpost": order.blog_post,
 				"reason": reason,
 			}
 			
