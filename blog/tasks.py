@@ -25,18 +25,18 @@ def send_pending_email_orders_task():
 			
 			# Make a nice string to tell the members why they are receiving the email.
 			if order.mailing_lists.count() == 0:
-				reason = "This message was sent to all Unigames members that have 'Optional Emails' turned on."
+				reason = "This message was sent to all Unigames members \nthat have 'Optional Emails' turned on."
 			elif order.mailing_lists.count() == 1:
 				list_name = order.mailing_lists.first().name
 				reason = (
-					f"This message was sent to you because you are subscribed to the '{list_name}' mailing list, "
+					f"This message was sent to you because you are subscribed \nto the '{list_name}' mailing list, "
 					f"and have 'Optional Emails' turned on."
 				)
 			else:
 				list_names = ", ".join(order.mailing_lists.values_list("name", flat=True))
 				reason = (
-					f"This message was sent to you because you have 'Optional Emails' turned on, "
-					f"and are subscribed to one or more of these mailing lists: {list_names}"
+					f"This message was sent to you because you have 'Optional Emails' turned on, \n"
+					f"and are subscribed to one or more of these mailing lists: \n{list_names}"
 				)
 			
 			context = {
