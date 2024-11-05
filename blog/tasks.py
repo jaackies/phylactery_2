@@ -1,7 +1,8 @@
 from celery import shared_task
 
 from blog.models import EmailOrder
-from phylactery.tasks import render_html_email, send_single_email_task
+from phylactery.communication.email import render_html_email, send_single_email_task
+
 
 @shared_task(name="send_pending_email_orders_task")
 def send_pending_email_orders_task():

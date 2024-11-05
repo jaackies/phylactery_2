@@ -1,5 +1,5 @@
 from celery import shared_task
-from phylactery.tasks import render_html_email, send_single_email_task
+from phylactery.communication.email import render_html_email, send_single_email_task
 from django.utils import timezone
 
 

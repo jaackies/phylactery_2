@@ -6,7 +6,7 @@ from allauth.core.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
-from phylactery.tasks import render_html_email, send_single_email_task
+from phylactery.communication.email import render_html_email, send_single_email_task
 
 
 class CustomRegularAccountAdapter(DefaultAccountAdapter):
