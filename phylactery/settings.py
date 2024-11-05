@@ -222,5 +222,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Australia/Perth'
 
+REDIS_HOST = "localhost"
+
 # Import settings from Docker
 from .settings_override import *
