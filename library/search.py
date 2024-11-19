@@ -430,6 +430,8 @@ def test():
 		"is:book or",
 		"is:book or think:hard",
 		"D&D",
+		"name:D&D",
+		"name:'D&D'"
 	]
 	for query in test_queries:
 		manager = SearchQueryManager(query=query)
