@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
 from parsy import generate, regex, string, seq, eof, peek, fail, ParseError
 from library.models import LibraryTag, Item
@@ -150,14 +151,14 @@ class Filter:
 					if manager is not None:
 						manager.add_warning(f'Tag "{self.argument}" does not exist.')
 			case "name":
-				# Temporary measure - switch to Postgres FTS later
-				resolved_q_object = Q(name__icontains=self.argument)
+				# Uses Postgres FTS
+				resolved_q_object = Q(search_name=SearchQuery(self.argument, search_type="phrase"))
 			case "desc":
-				# Temporary measure - switch to Postgres FTS later
-				resolved_q_object = Q(description__icontains=self.argument)
+				# Uses Postgres FTS
+				resolved_q_object = Q(search_description=SearchQuery(self.argument, search_type="phrase"))
 			case "text":
-				# Temporary measure - switch to Postgres FTS later
-				resolved_q_object = Q(name__icontains=self.argument) | Q(description__icontains=self.argument)
+				# Uses Postgres FTS
+				resolved_q_object = Q(search_full=SearchQuery(self.argument, search_type="phrase"))
 			case "time":
 				# By default, filter games with a playtime strictly contained within the argument.
 				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
