@@ -193,6 +193,19 @@ class Item(models.Model):
 		expression=SearchVector("name", config="english"),
 		output_field=SearchVectorField(),
 	)
+	search_description = models.GeneratedField(
+		db_persist=True,
+		expression=SearchVector("description", config="english"),
+		output_field=SearchVectorField(),
+	)
+	search_full = models.GeneratedField(
+		db_persist=True,
+		expression=(
+				SearchVector("name", weight="A", config="english")
+				+ SearchVector("description", weight="B", config="english")
+		),
+		output_field=SearchVectorField(),
+	)
 	
 	def get_image_filename(self, filename: str) -> str:
 		filename, _, extension = filename.rpartition('.')
