@@ -4,7 +4,7 @@
 {% block title %}Search Syntax{% endblock %}
 
 {% block content %}
-	
+
 	<div class="row text-center">
 		<h1>Library Search Syntax</h1>
 		<p>You can use keywords to find library items with precision. Some examples are below:</p>
@@ -13,22 +13,43 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h3>Name and Description</h3>
-			<p>Blah blah blah</p>	
+			<p>
+				You can search for words that appear in the name or description of library items by using the <code>name:</code>
+				or <code>desc:</code> keywords. Using the <code>text:</code> keyword will search in both.
+			</p>
+			<p>
+				You can enclose text in quotes to find an exact phrase. For example, to find the exact phrase <code>"battle for control"</code>
+				in the description, you would use <a class="codelink" href="{% url "library:search" %}?q=desc:%22battle for control%22"><code>desc:"battle for control"</code></a>.
+			</p>
+			<p>
+				The search will also attempt to also attempt to match words with the same root words. The same search as above (<code>desc:"battle for control"</code>)
+				would also match an item with <code>"battling for control"</code> in the description.
+			</p>
+			<p>
+				Note: currently the system will only search for whole words, not parts of a word. This will be fixed in a future update.
+			</p>
 		</div>
 		<div class="col-12 col-md-6">
-			<h3>Name and Description</h3>
-			<p>Blah blah blah</p>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=name:root"><code>name:root</code></a></h5>
+					<p class="card-text">Finds all items with "root" in their name.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=desc:dungeon"><code>desc:dungeon</code></a></h5>
+					<p class="card-text">Finds all items with "dungeon" in their description.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=text:%22role-playing%22"><code>text:"role-playing"</code></a></h5>
+					<p class="card-text">Finds all items with "role-playing" in their name or description.</p>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-	<div class="row">
-		<h3>Name and Description</h3>
-		<p>Blah blah blah</p>
-	</div>
-	
-	<div class="row">
-		<h3>Name and Description</h3>
-		<p>Blah blah blah</p>
-	</div>
+	<hr>
 	
 {% endblock %}

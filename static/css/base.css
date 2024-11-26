@@ -101,6 +101,16 @@ td:has(> a.clickable-cell) {
     text-transform: capitalize;
 }
 
+a.codelink {
+    color: var(--bs-code-color);
+    text-decoration-color: var(--bs-code-color);
+    text-underline-offset: 0.375em !important;
+}
+
+a.codelink:hover {
+    color: var(--bs-body-color);
+}
+
 html[data-bs-theme="dark"] .select2-container--bootstrap-5 .select2-selection {
     background-color: transparent !important;
     border: 1px solid #495057;
