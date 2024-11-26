@@ -51,5 +51,77 @@
 		</div>
 	</div>
 	<hr>
-	
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<h3>Item Types</h3>
+			<p>
+				You can search for items based on their type.
+			</p>
+			<p>
+				To search for item types, use the <code>is:</code> keyword, followed by one of the item types.
+				(<code>book</code>, <code>boardgame</code>, <code>cardgame</code>, or <code>other</code>.)
+				<br />
+				Some aliases for these are supported, so you can usually type what you're thinking of.
+				As an example, to search for card games, you can use <code>is:cardgame</code>, <code>is:card-game</code>, or <code>is:cg</code>. 
+			</p>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:book"><code>is:book</code></a></h5>
+					<p class="card-text">Finds all books.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:cg"><code>is:cg</code></a></h5>
+					<p class="card-text">Finds all card games (using short syntax.)</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:board-game"><code>is:board-game</code></a></h5>
+					<p class="card-text">Finds all board games.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<h3>Item Tags</h3>
+			<p>
+				To search for items based on their tags, you'll need to know the exact slug title of the tag you want. 
+				This is done by converting everything to lower-case, removing all punctuation,
+				and replacing all spaces with hyphens. (<code>-</code>).
+				<br />
+				For example, the tag <code>Dice: d6</code> would become <code>dice-d6</code>.
+			</p>
+			<p>
+				Once you've done that, you can use the <code>tag:</code> keyword to find tags.
+			</p>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=tag:dice-d6"><code>tag:dice-d6</code></a></h5>
+					<p class="card-text">Finds all items that have the "Dice: d6" tag.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=tag:steady-hands"><code>tag:steady-hands</code></a></h5>
+					<p class="card-text">Finds all games that require steady hands (and have been tagged as such.)</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=tag:call-of-cthulhu"><code>tag:call-of-cthulhu</code></a></h5>
+					<p class="card-text">Finds items belonging to the Call of Cthulhu family.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+
 {% endblock %}
