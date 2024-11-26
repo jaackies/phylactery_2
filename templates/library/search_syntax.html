@@ -11,7 +11,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<h3><i class="bi-card-text"></i> Name and Description</h3>
 			<p>
 				You can search for words that appear in the name or description of library items by using the <code>name:</code>
@@ -29,7 +29,7 @@
 				Note: currently the system will only search for whole words, not parts of a word. This will be fixed in a future update.
 			</p>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=name:root"><code>name:root</code></a></h5>
@@ -52,7 +52,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<h3><i class="bi-circle-square"></i> Item Types</h3>
 			<p>
 				You can search for items based on their type.
@@ -68,7 +68,7 @@
 				<a class="codelink" href="{% url "library:search" %}?q=is:cg"><code>is:cg</code></a>.
 			</p>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:book"><code>is:book</code></a></h5>
@@ -91,7 +91,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<h3><i class="bi-tag"></i> Item Tags</h3>
 			<p>
 				To search for items based on their tags, you'll need to know the exact slug title of the tag you want.
@@ -104,7 +104,7 @@
 				Once you've done that, you can use the <code>tag:</code> keyword to find tags.
 			</p>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=tag:dice-d6"><code>tag:dice-d6</code></a></h5>
@@ -127,7 +127,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<h3><i class="bi-clock-history"></i> Play-time and Player Count</h3>
 			<p>
 				You can search based on the player count and play-time of games.
@@ -148,7 +148,7 @@
 				If games don't have a maximum play time set, it will check their average play time instead.
 			</p>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:1"><code>players:1</code></a></h5>
@@ -171,7 +171,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<h3><i class="bi-gear-wide-connected"></i> Advanced Features</h3>
 			<p>
 				You can combine search operators using boolean logic to creature powerful search queries.
@@ -192,7 +192,7 @@
 				Loose text words can also be inverted with <code>-</code>.
 			</p>
 		</div>
-		<div class="col-12 col-md-6">
+		<div class="col-12 col-lg-6">
 			<div class="card mb-2">
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:1 is:cardgame"><code>players:1 is:cardgame</code></a></h5>
