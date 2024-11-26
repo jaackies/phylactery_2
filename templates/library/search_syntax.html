@@ -12,7 +12,7 @@
 	<hr>
 	<div class="row">
 		<div class="col-12 col-md-6">
-			<h3>Name and Description</h3>
+			<h3><i class="bi-card-text"></i> Name and Description</h3>
 			<p>
 				You can search for words that appear in the name or description of library items by using the <code>name:</code>
 				or <code>desc:</code> keywords. Using the <code>text:</code> keyword will search in both.
@@ -53,7 +53,7 @@
 	<hr>
 	<div class="row">
 		<div class="col-12 col-md-6">
-			<h3>Item Types</h3>
+			<h3><i class="bi-circle-square"></i> Item Types</h3>
 			<p>
 				You can search for items based on their type.
 			</p>
@@ -62,7 +62,7 @@
 				(<code>book</code>, <code>boardgame</code>, <code>cardgame</code>, or <code>other</code>.)
 				<br />
 				Some aliases for these are supported, so you can usually type what you're thinking of.
-				As an example, to search for card games, you can use <code>is:cardgame</code>, <code>is:card-game</code>, or <code>is:cg</code>. 
+				As an example, to search for card games, you can use <code>is:cardgame</code>, <code>is:card-game</code>, or <code>is:cg</code>.
 			</p>
 		</div>
 		<div class="col-12 col-md-6">
@@ -89,9 +89,9 @@
 	<hr>
 	<div class="row">
 		<div class="col-12 col-md-6">
-			<h3>Item Tags</h3>
+			<h3><i class="bi-tag"></i> Item Tags</h3>
 			<p>
-				To search for items based on their tags, you'll need to know the exact slug title of the tag you want. 
+				To search for items based on their tags, you'll need to know the exact slug title of the tag you want.
 				This is done by converting everything to lower-case, removing all punctuation,
 				and replacing all spaces with hyphens. (<code>-</code>).
 				<br />
@@ -118,6 +118,100 @@
 				<div class="card-body">
 					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=tag:call-of-cthulhu"><code>tag:call-of-cthulhu</code></a></h5>
 					<p class="card-text">Finds items belonging to the Call of Cthulhu family.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<h3><i class="bi-clock-history"></i> Play-time and Player Count</h3>
+			<p>
+				You can search based on the player count and play-time of games.
+			</p>
+			<p>
+				Using the <code>players:</code> keyword will filter for any games that can be played with that amount of players.
+				A search for <code>players:1</code> will find all games that can be played solo, as an example.
+				It won't exclude games that can be played with more or less players, as long as it support the number you provide.
+			</p>
+			<p>
+				You can search for games playable in a certain amount of minutes using the <code>time:</code> keyword.
+				Some items entered in our database have an average playtime, and some also have a maximum play time.
+				This search term will filter based on the items maximum playtime (if it exists) or on the average playtime (if it doesn't.)
+			</p>
+			<p>
+				As an example: searching for <code>time:30</code> will attempt to find games that are playable within 30 minutes maximum.
+				It will find games with a maximum play time of 30 minutes or lower.
+				If games don't have a maximum play time set, it will check their average play time instead.
+			</p>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:1"><code>players:1</code></a></h5>
+					<p class="card-text">Finds games that support solo play.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:4"><code>players:4</code></a></h5>
+					<p class="card-text">Finds games that support 4 players.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=time:20"><code>time:20</code></a></h5>
+					<p class="card-text">Finds all games that have a playtime set that can be played in 20 minutes or less.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<h3><i class="bi-gear-wide-connected"></i> Advanced Features</h3>
+			<p>
+				You can combine search operators using boolean logic to creature powerful search queries.
+			</p>
+			<p>
+				By default, every search term you enter is combined. All of them must match to find an item.
+				<br />
+				If you wish to search over a set of options or choices, you can put the special word <code>or</code> / <code>OR</code> between them.
+			</p>
+			<p>
+				You may nest conditions inside parentheses <code>( )</code> to group them together.
+				This is most useful when combined with the <code>OR</code> keyword.
+			</p>
+			<p>
+				All keywords can be negated by prefixing them with a hyphen (<code>-</code>).
+				This inverts the meaning of the keyword to reject items that matched what you’ve searched for.
+				<br />
+				Loose text words can also be inverted with <code>-</code>.
+			</p>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:1 is:cardgame"><code>players:1 is:cardgame</code></a></h5>
+					<p class="card-text">Finds card games that also support solo play. (The terms are implicitly implied.)</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=players:3 or players:4"><code>players:3 or players:4</code></a></h5>
+					<p class="card-text">Finds games that support 3 or 4 players.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:boardgame (players:1 or time:30)"><code>is:boardgame (players:1 or time:30)</code></a></h5>
+					<p class="card-text">Finds boardgames that either support single player or can be played in 30 minutes.</p>
+				</div>
+			</div>
+			<div class="card mb-2">
+				<div class="card-body">
+					<h5 class="card-title"><a class="codelink stretched-link" href="{% url "library:search" %}?q=is:boardgame -players:1"><code>is:boardgame -players:1</code></a></h5>
+					<p class="card-text">Finds boardgames that don't support single player.</p>
 				</div>
 			</div>
 		</div>
