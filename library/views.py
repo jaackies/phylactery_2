@@ -130,7 +130,11 @@ class ItemSearchView(ListView):
 		if self.query:
 			context["query"] = self.query
 		return context
-	
+
+
+class SearchSyntaxView(TemplateView):
+	template_name = "library/search_syntax.html"
+
 
 class TagListView(ListView):
 	model = LibraryTag

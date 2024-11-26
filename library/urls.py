@@ -19,6 +19,7 @@ from library.views import (
 	ReturnItemsView,
 	LibraryHomeView,
 	ReservationBorrowRedirectView,
+	SearchSyntaxView,
 )
 
 
@@ -39,6 +40,7 @@ urlpatterns = [
 	path("borrow/reservation/external/<int:pk>/", ExternalReservationBorrowItemsWizard.as_view(), name="borrow_external_reservation"),
 	path("return/<int:pk>/", ReturnItemsView.as_view(), name="return"),
 	path("search", ItemSearchView.as_view(), name="search"),
+	path("syntax/", SearchSyntaxView.as_view(), name="syntax"),
 	path("autocomplete_item", ItemAutocomplete.as_view(), name="autocomplete_item"),
 	path("autocomplete_tag", LibraryTagAutocomplete.as_view(), name="autocomplete_tag"),
 	path("", LibraryHomeView.as_view(), name="home"),
