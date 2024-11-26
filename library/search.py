@@ -432,7 +432,8 @@ def test():
 		"is:book or think:hard",
 		"D&D",
 		"name:D&D",
-		"name:'D&D'"
+		"name:'D&D'",
+		"(is:bg time:30) or (is:book tag:13th-age)"
 	]
 	for query in test_queries:
 		manager = SearchQueryManager(query=query)
