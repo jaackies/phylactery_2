@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 	"members",
 	"blog",
 	"phylactery",
+	"transactions",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
