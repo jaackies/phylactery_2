@@ -19,3 +19,9 @@ class Transaction(models.Model):
 
   transaction_date = models.DateTimeField(
     auto_now_add=True)
+
+  def __str__(self):
+    if self.member==None:
+      return self.reference_number
+    else:
+      return self.member.long_name + " - " + self.reference_number
