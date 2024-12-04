@@ -44,20 +44,26 @@ class LifeMemberView(TemplateView):
 class ContactView(TemplateView):
 	template_name = "pages/contact.html"
 
+
 class ConstitutionView(TemplateView):
 	template_name = "pages/constitution.html"
+
 	
 class WebcamsView(TemplateView):
 	template_name = "pages/webcams.html"
 
+
 class APIView(TemplateView):
 	template_name = "coming_soon.html"
+
 	
 class RegulationsView(TemplateView):
 	template_name = "pages/regulations.html"
 
+
 class MinutesView(TemplateView):
 	template_name = "pages/minutes.html"
+
 
 class CommitteeView(TemplateView):
 	template_name = "pages/committee.html"
