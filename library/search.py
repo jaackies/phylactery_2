@@ -35,14 +35,6 @@ from library.models import LibraryTag, Item
 """
 
 
-class UnbalancedParenthesesException(Exception):
-	pass
-
-
-class UnrecognisedExpressionException(Exception):
-	pass
-
-
 class AnyOf:
 	"""
 	Class that represents expressions that are ORd together.
