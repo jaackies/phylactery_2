@@ -38,8 +38,10 @@ from library.models import LibraryTag, Item
 class UnbalancedParenthesesException(Exception):
 	pass
 
+
 class UnrecognisedExpressionException(Exception):
 	pass
+
 
 class AnyOf:
 	"""
@@ -73,6 +75,7 @@ class AnyOf:
 	def __repr__(self):
 		return f"{'NoneOf' if self.inverse else 'Any'}{self.contents}"
 
+
 class AllOf:
 	"""
 	Class that represents expressions that are ANDed together.
@@ -104,6 +107,7 @@ class AllOf:
 	
 	def __repr__(self):
 		return f"{'ExcludeAllOf' if self.inverse else 'AllOf'}{self.contents}"
+
 
 class Filter:
 	"""
@@ -188,13 +192,10 @@ class Filter:
 				return resolved_q_object
 		else:
 			return None
-				
-				
-			
-			
 	
 	def __repr__(self):
 		return f"<{'exclude' if self.inverse else 'filter'} {self.keyword}:{self.argument}>"
+
 
 # Parsy Expressions for parsing syntax
 double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
@@ -250,8 +251,7 @@ class SearchQueryManager:
 		self.resolved_query = None
 		self.results = None
 		self.evaluated = False
-		
-		
+	
 	def add_warning(self, warning):
 		# Adds a warning to the manager.
 		self.warnings.append(warning)
@@ -284,7 +284,7 @@ class SearchQueryManager:
 			- We need to use the generator syntax of Parsy.
 			- We need to add errors/warnings as we find them to the Manager.
 			- In order to do the above, we need to pass a reference to the instance to the parser.
-			- ...Which we cannot do because Parsy's generator decorator is poorly structured.
+			- ...Which we cannot do because the Parsy generator decorator is poorly structured.
 		Rather than write a whole new decorator, I decided to embed the generator-parser
 		inside a function that has the instance passed to it already.
 		
@@ -417,7 +417,6 @@ class SearchQueryManager:
 					self.add_error("All entered expressions were ignored.")
 
 
-
 def test():
 	test_queries = [
 		"is:book or is:boardgame",
@@ -450,6 +449,7 @@ def test():
 		if manager.has_errors():
 			print(manager.errors)
 		print()
+
 
 if __name__ == "__main__":
 	test()
