@@ -201,8 +201,8 @@ slug_text = regex(r"[a-z0-9_\-]+")  # Slug
 keyword_expression_arguments = number | quoted_text | slug_text
 any_whitespace = regex(r"\s*")
 
-or_separator = regex(r"(\s+|\b)or(\s+|\b)").tag("OR")
-and_separator = (regex(r"(\s+|\b)and(\s+|\b)") | regex(r"(\s+|\b)")).tag("AND")
+or_separator = regex(r"\s+or\s+").tag("OR")
+and_separator = (regex(r"\s+and\s+") | regex(r"\s+")).tag("AND")
 
 keyword_expression = seq(
 	inverse=inverse_dash.result(True).optional(False),
