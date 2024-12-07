@@ -194,11 +194,10 @@ double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
 unquoted_text = regex(r"[^\s()]+")
-number = regex(r"[0-9]+").map(int)
 colon = string(":")
 inverse_dash = string("-")
-slug_text = regex(r"[a-z0-9_\-]+")  # Slug
-keyword_expression_arguments = number | quoted_text | slug_text
+keyword = regex(r"[a-z]+")
+keyword_expression_arguments = quoted_text | unquoted_text
 any_whitespace = regex(r"\s*")
 
 or_separator = regex(r"\s+or\s+").tag("OR")
@@ -206,7 +205,7 @@ and_separator = (regex(r"\s+and\s+") | regex(r"\s+")).tag("AND")
 
 keyword_expression = seq(
 	inverse=inverse_dash.result(True).optional(False),
-	keyword=slug_text << colon,
+	keyword=keyword << colon,
 	argument=keyword_expression_arguments
 ).combine_dict(Filter.from_keyword_expression)
 
