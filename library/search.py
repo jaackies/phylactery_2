@@ -159,20 +159,30 @@ class Filter:
 				# By default, filter games with a playtime strictly contained within the argument.
 				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
 				# To do this, filter based on the max play time (if it exists), or the average play time.
-				resolved_q_object = (
-					Q(max_play_time__lte=self.argument)
-					| Q(max_play_time__isnull=True, average_play_time__lte=self.argument)
-				)
+				try:
+					self.argument = int(self.argument)
+				except ValueError:
+					manager.add_warning(f'Invalid expression "{self.keyword}:{self.argument}". The "{self.keyword}" keyword only accepts an integer as an argument.')
+				else:
+					resolved_q_object = (
+						Q(max_play_time__lte=self.argument)
+						| Q(max_play_time__isnull=True, average_play_time__lte=self.argument)
+					)
 			case "players":
 				# Filter if an item supports a specific amount of players
 				# Example: players:4 returns a game that can be played by 4 players (2-5, 3+, 1-4, exactly 4, etc.)
 				# Example: players:1 returns a game that can be played solo
 				# Will not match any item that doesn't have either a min or max player count.
-				resolved_q_object = (
-					Q(min_players__lte=self.argument, max_players__isnull=True)
-					| Q(min_players__isnull=True, max_players__gte=self.argument)
-					| Q(min_players__lte=self.argument, max_players__gte=self.argument)
-				)
+				try:
+					self.argument = int(self.argument)
+				except ValueError:
+					manager.add_warning(f'Invalid expression "{self.keyword}:{self.argument}". The "{self.keyword}" keyword only accepts an integer as an argument.')
+				else:
+					resolved_q_object = (
+						Q(min_players__lte=self.argument, max_players__isnull=True)
+						| Q(min_players__isnull=True, max_players__gte=self.argument)
+						| Q(min_players__lte=self.argument, max_players__gte=self.argument)
+					)
 			case _:
 				# Invalid expression - do something with it
 				if manager is not None:
