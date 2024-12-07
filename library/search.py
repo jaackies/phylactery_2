@@ -312,7 +312,7 @@ class SearchQueryManager:
 		self.rankings[new_rank_name] = SearchRank(F(search_type), SearchQuery(search_term, search_type="phrase"))
 		return new_rank_name
 	
-	def get_ordering_method(self):
+	def get_query_ordering_method(self):
 		# Returns what style of sorting we should do.
 		match self.ordering:
 			case "name":
@@ -344,8 +344,8 @@ class SearchQueryManager:
 					queryset = queryset.annotate(
 						avg=(sum([F(key) for key in self.rankings.keys()]))/float(len(self.rankings))
 					)
-					queryset = queryset.order_by(self.get_ordering_method())
-					print(f"----\n{queryset.values_list('name', 'avg')}\n----\n{self.get_ordering_method()}\n----")
+					queryset = queryset.order_by(self.get_query_ordering_method())
+					print(f"----\n{queryset.values_list('name', 'avg')}\n----\n{self.get_query_ordering_method()}\n----")
 				self.results = queryset
 		return self.results
 	
