@@ -128,6 +128,7 @@ class ItemSearchView(ListView):
 		if self.manager:
 			context["search_warnings"] = self.manager.warnings
 			context["search_errors"] = self.manager.errors
+			context["ordering_options"], context["selected_ordering"] = self.manager.get_ordering_options()
 		if self.query:
 			context["query"] = self.query
 		return context

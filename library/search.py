@@ -319,9 +319,24 @@ class SearchQueryManager:
 				return "name"
 			case "auto" | "relevance":
 				if len(self.rankings) > 0:
+					self.ordering = "relevance"
 					return "-avg"
 				else:
+					self.ordering = "name"
 					return "name"
+			case _:
+				self.ordering = "name"
+				return "name"
+	
+	def get_ordering_options(self):
+		self.get_query_ordering_method()
+		options = {
+			"name": "A-Z",
+		}
+		if len(self.rankings) > 0:
+			options["relevance"] = "Relevance"
+		selected = self.ordering
+		return options, selected
 	
 	def get_results(self):
 		"""
