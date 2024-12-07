@@ -319,9 +319,9 @@ class SearchQueryManager:
 				return "name"
 			case "auto" | "relevance":
 				if len(self.rankings) > 0:
-					return "name"
-				else:
 					return "-avg"
+				else:
+					return "name"
 	
 	def get_results(self):
 		"""
@@ -345,6 +345,7 @@ class SearchQueryManager:
 						avg=(sum([F(key) for key in self.rankings.keys()]))/float(len(self.rankings))
 					)
 					queryset = queryset.order_by(self.get_ordering_method())
+					print(f"----\n{queryset.values_list('name', 'avg')}\n----\n{self.get_ordering_method()}\n----")
 				self.results = queryset
 		return self.results
 	
