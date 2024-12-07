@@ -1,5 +1,5 @@
-from django.contrib.postgres.search import SearchQuery
-from django.db.models import Q
+from django.contrib.postgres.search import SearchQuery, SearchRank
+from django.db.models import Q, F
 from parsy import generate, regex, string, seq, eof, peek, fail, ParseError
 from library.models import LibraryTag, Item
 
@@ -167,14 +167,17 @@ class Filter:
 					if manager is not None:
 						manager.add_warning(f'Tag "{self.argument}" does not exist.')
 			case "name":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_name=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_name", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "desc":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_description=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_description", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "text":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_full=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_full", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "time":
 				# By default, filter games with a playtime strictly contained within the argument.
 				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
@@ -265,7 +268,7 @@ class SearchQueryManager:
 	any errors along the way.
 	"""
 	
-	def __init__(self, query=""):
+	def __init__(self, query="", ordering="auto"):
 		self.query = query.lower()
 		
 		# Carries Warnings and Errors to be displayed to the user
@@ -277,6 +280,14 @@ class SearchQueryManager:
 		self.resolved_query = None
 		self.results = None
 		self.evaluated = False
+		
+		# Some search terms add ranks to the search query.
+		# These are added by the add_ranking function, and tracked here.
+		self.rankings = {}
+		
+		# Default sorting method is "auto", which will sort by relevance if there's
+		# any ranking, and alphabetically if not.
+		self.ordering = ordering
 	
 	def add_warning(self, warning):
 		# Adds a warning to the manager.
@@ -294,14 +305,47 @@ class SearchQueryManager:
 		# Returns whether error(s) were generated.
 		return len(self.errors) > 0
 	
+	def add_ranking(self, search_type, search_term):
+		# Adds a SearchRank to the manager for tracking, and returns the annotation alias.
+		# Allows the manager to apply all rankings at the beginning, and the query to filter on them.
+		new_rank_name = f"rank_{len(self.rankings)}"
+		self.rankings[new_rank_name] = SearchRank(F(search_type), SearchQuery(search_term, search_type="phrase"))
+		return new_rank_name
+	
+	def get_ordering_method(self):
+		# Returns what style of sorting we should do.
+		match self.ordering:
+			case "name":
+				return "name"
+			case "auto" | "relevance":
+				if len(self.rankings) > 0:
+					return "name"
+				else:
+					return "-avg"
+	
 	def get_results(self):
+		"""
+			Once the text query has been resolved into a query object,
+			we can run it to get the results.
+		"""
 		if self.resolved_query is None:
 			self.evaluate()
 		if self.results is None:
 			if self.has_errors():
 				self.results = Item.objects.none()
 			else:
-				self.results = Item.objects.filter(self.resolved_query).distinct()
+				queryset = Item.objects.all()
+				# If any expressions have added rankings to the search, apply those first.
+				if len(self.rankings) > 0:
+					queryset = queryset.annotate(**self.rankings)
+				# Run the query
+				queryset = queryset.filter(self.resolved_query).distinct()
+				if len(self.rankings) > 0:
+					queryset = queryset.annotate(
+						avg=(sum([F(key) for key in self.rankings.keys()]))/float(len(self.rankings))
+					)
+					queryset = queryset.order_by(self.get_ordering_method())
+				self.results = queryset
 		return self.results
 	
 	def evaluate(self):
