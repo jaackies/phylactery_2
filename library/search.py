@@ -1,5 +1,5 @@
-from django.contrib.postgres.search import SearchQuery
-from django.db.models import Q
+from django.contrib.postgres.search import SearchQuery, SearchRank
+from django.db.models import Q, F
 from parsy import generate, regex, string, seq, eof, peek, fail, ParseError
 from library.models import LibraryTag, Item
 
@@ -46,6 +46,11 @@ class AnyOf:
 	def invert(self):
 		self.inverse = not self.inverse
 	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		# This is automatically disqualified: OR operators are not simple.
+		return False
+	
 	def resolve(self, manager=None):
 		"""
 		Resolves this group into a single Q object.
@@ -78,6 +83,12 @@ class AllOf:
 	
 	def invert(self):
 		self.inverse = not self.inverse
+	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		if self.inverse:
+			return False
+		return all([child.is_simple_text() for child in self.contents])
 	
 	def resolve(self, manager=None):
 		"""
@@ -112,7 +123,16 @@ class Filter:
 	
 	def invert(self):
 		self.inverse = not self.inverse
-
+	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		if self.inverse:
+			return False
+		elif self.keyword not in ["text", "desc", "name"]:
+			return False
+		else:
+			return True
+	
 	@classmethod
 	def from_keyword_expression(cls, keyword, argument, inverse=False):
 		return cls(keyword=keyword, argument=argument, inverse=inverse)
@@ -147,32 +167,45 @@ class Filter:
 					if manager is not None:
 						manager.add_warning(f'Tag "{self.argument}" does not exist.')
 			case "name":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_name=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_name", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "desc":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_description=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_description", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "text":
-				# Uses Postgres FTS
-				resolved_q_object = Q(search_full=SearchQuery(self.argument, search_type="phrase"))
+				# Adds a ranking to the manager, then filters on the ranking.
+				rank_name = manager.add_ranking("search_full", self.argument)
+				resolved_q_object = Q(**{f"{rank_name}__gt": 0})
 			case "time":
 				# By default, filter games with a playtime strictly contained within the argument.
 				# Example: time:40 won't find a game that takes 30-45 minutes, but time:45 will.
 				# To do this, filter based on the max play time (if it exists), or the average play time.
-				resolved_q_object = (
-					Q(max_play_time__lte=self.argument)
-					| Q(max_play_time__isnull=True, average_play_time__lte=self.argument)
-				)
+				try:
+					self.argument = int(self.argument)
+				except ValueError:
+					manager.add_warning(f'Invalid expression "{self.keyword}:{self.argument}". The "{self.keyword}" keyword only accepts an integer as an argument.')
+				else:
+					resolved_q_object = (
+						Q(max_play_time__lte=self.argument)
+						| Q(max_play_time__isnull=True, average_play_time__lte=self.argument)
+					)
 			case "players":
 				# Filter if an item supports a specific amount of players
 				# Example: players:4 returns a game that can be played by 4 players (2-5, 3+, 1-4, exactly 4, etc.)
 				# Example: players:1 returns a game that can be played solo
 				# Will not match any item that doesn't have either a min or max player count.
-				resolved_q_object = (
-					Q(min_players__lte=self.argument, max_players__isnull=True)
-					| Q(min_players__isnull=True, max_players__gte=self.argument)
-					| Q(min_players__lte=self.argument, max_players__gte=self.argument)
-				)
+				try:
+					self.argument = int(self.argument)
+				except ValueError:
+					manager.add_warning(f'Invalid expression "{self.keyword}:{self.argument}". The "{self.keyword}" keyword only accepts an integer as an argument.')
+				else:
+					resolved_q_object = (
+						Q(min_players__lte=self.argument, max_players__isnull=True)
+						| Q(min_players__isnull=True, max_players__gte=self.argument)
+						| Q(min_players__lte=self.argument, max_players__gte=self.argument)
+					)
 			case _:
 				# Invalid expression - do something with it
 				if manager is not None:
@@ -194,19 +227,18 @@ double_quoted_text = string('"') >> regex(r'[^"]*') << string('"')
 single_quoted_text = string("'") >> regex(r"[^']*") << string("'")
 quoted_text = single_quoted_text | double_quoted_text
 unquoted_text = regex(r"[^\s()]+")
-number = regex(r"[0-9]+").map(int)
 colon = string(":")
 inverse_dash = string("-")
-slug_text = regex(r"[a-z0-9_\-]+")  # Slug
-keyword_expression_arguments = number | quoted_text | slug_text
+keyword = regex(r"[a-z]+")
+keyword_expression_arguments = quoted_text | unquoted_text
 any_whitespace = regex(r"\s*")
 
-or_separator = regex(r"(\s+|\b)or(\s+|\b)").tag("OR")
-and_separator = (regex(r"(\s+|\b)and(\s+|\b)") | regex(r"(\s+|\b)")).tag("AND")
+or_separator = regex(r"\s+or\s+").tag("OR")
+and_separator = (regex(r"\s+and\s+") | regex(r"\s+")).tag("AND")
 
 keyword_expression = seq(
 	inverse=inverse_dash.result(True).optional(False),
-	keyword=slug_text << colon,
+	keyword=keyword << colon,
 	argument=keyword_expression_arguments
 ).combine_dict(Filter.from_keyword_expression)
 
@@ -236,13 +268,26 @@ class SearchQueryManager:
 	any errors along the way.
 	"""
 	
-	def __init__(self, query=""):
+	def __init__(self, query="", ordering="auto"):
+		self.query = query.lower()
+		
+		# Carries Warnings and Errors to be displayed to the user
 		self.warnings = []
 		self.errors = []
-		self.query = query.lower()
+		
+		# Tracks the status of the query,
+		# so we don't waste resources by processing the query twice.
 		self.resolved_query = None
 		self.results = None
 		self.evaluated = False
+		
+		# Some search terms add ranks to the search query.
+		# These are added by the add_ranking function, and tracked here.
+		self.rankings = {}
+		
+		# Default sorting method is "auto", which will sort by relevance if there's
+		# any ranking, and alphabetically if not.
+		self.ordering = ordering
 	
 	def add_warning(self, warning):
 		# Adds a warning to the manager.
@@ -260,14 +305,63 @@ class SearchQueryManager:
 		# Returns whether error(s) were generated.
 		return len(self.errors) > 0
 	
+	def add_ranking(self, search_type, search_term):
+		# Adds a SearchRank to the manager for tracking, and returns the annotation alias.
+		# Allows the manager to apply all rankings at the beginning, and the query to filter on them.
+		new_rank_name = f"rank_{len(self.rankings)}"
+		self.rankings[new_rank_name] = SearchRank(F(search_type), SearchQuery(search_term, search_type="phrase"))
+		return new_rank_name
+	
+	def get_query_ordering_method(self):
+		# Returns what style of sorting we should do.
+		match self.ordering:
+			case "name":
+				return "name"
+			case "auto" | "relevance":
+				if len(self.rankings) > 0:
+					self.ordering = "relevance"
+					return "-avg"
+				else:
+					self.ordering = "name"
+					return "name"
+			case _:
+				self.ordering = "name"
+				return "name"
+	
+	def get_ordering_options(self):
+		self.get_query_ordering_method()
+		options = {
+			"name": "A-Z",
+		}
+		if len(self.rankings) > 0:
+			options["relevance"] = "Relevance"
+		selected = self.ordering
+		return options, selected
+	
 	def get_results(self):
+		"""
+			Once the text query has been resolved into a query object,
+			we can run it to get the results.
+		"""
 		if self.resolved_query is None:
 			self.evaluate()
 		if self.results is None:
 			if self.has_errors():
 				self.results = Item.objects.none()
 			else:
-				self.results = Item.objects.filter(self.resolved_query).distinct()
+				queryset = Item.objects.all()
+				# If any expressions have added rankings to the search, apply those first.
+				if len(self.rankings) > 0:
+					queryset = queryset.annotate(**self.rankings)
+				# Run the query
+				queryset = queryset.filter(self.resolved_query).distinct()
+				if len(self.rankings) > 0:
+					queryset = queryset.annotate(
+						avg=(sum([F(key) for key in self.rankings.keys()]))/float(len(self.rankings))
+					)
+					queryset = queryset.order_by(self.get_query_ordering_method())
+					print(f"----\n{queryset.values_list('name', 'avg')}\n----\n{self.get_query_ordering_method()}\n----")
+				self.results = queryset
 		return self.results
 	
 	def evaluate(self):

@@ -112,8 +112,9 @@ class ItemSearchView(ListView):
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
 		self.query = self.request.GET.get("q", "")
+		ordering = self.request.GET.get("ordering", "auto")
 		if self.query:
-			self.manager = SearchQueryManager(query=self.query)
+			self.manager = SearchQueryManager(query=self.query, ordering=ordering)
 			self.manager.evaluate()
 	
 	def get_queryset(self):
@@ -127,6 +128,7 @@ class ItemSearchView(ListView):
 		if self.manager:
 			context["search_warnings"] = self.manager.warnings
 			context["search_errors"] = self.manager.errors
+			context["ordering_options"], context["selected_ordering"] = self.manager.get_ordering_options()
 		if self.query:
 			context["query"] = self.query
 		return context
