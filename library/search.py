@@ -246,9 +246,14 @@ class SearchQueryManager:
 	"""
 	
 	def __init__(self, query=""):
+		self.query = query.lower()
+		
+		# Carries Warnings and Errors to be displayed to the user
 		self.warnings = []
 		self.errors = []
-		self.query = query.lower()
+		
+		# Tracks the status of the query,
+		# so we don't waste resources by processing the query twice.
 		self.resolved_query = None
 		self.results = None
 		self.evaluated = False
