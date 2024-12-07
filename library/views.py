@@ -112,8 +112,9 @@ class ItemSearchView(ListView):
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
 		self.query = self.request.GET.get("q", "")
+		ordering = self.request.GET.get("ordering", "auto")
 		if self.query:
-			self.manager = SearchQueryManager(query=self.query)
+			self.manager = SearchQueryManager(query=self.query, ordering=ordering)
 			self.manager.evaluate()
 	
 	def get_queryset(self):
