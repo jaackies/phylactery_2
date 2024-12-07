@@ -46,6 +46,11 @@ class AnyOf:
 	def invert(self):
 		self.inverse = not self.inverse
 	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		# This is automatically disqualified: OR operators are not simple.
+		return False
+	
 	def resolve(self, manager=None):
 		"""
 		Resolves this group into a single Q object.
@@ -78,6 +83,12 @@ class AllOf:
 	
 	def invert(self):
 		self.inverse = not self.inverse
+	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		if self.inverse:
+			return False
+		return all([child.is_simple_text() for child in self.contents])
 	
 	def resolve(self, manager=None):
 		"""
@@ -112,7 +123,16 @@ class Filter:
 	
 	def invert(self):
 		self.inverse = not self.inverse
-
+	
+	def is_simple_text(self):
+		# A simple text expression contains no OR groups, contains only text filters, and is not negated
+		if self.inverse:
+			return False
+		elif self.keyword not in ["text", "desc", "name"]:
+			return False
+		else:
+			return True
+	
 	@classmethod
 	def from_keyword_expression(cls, keyword, argument, inverse=False):
 		return cls(keyword=keyword, argument=argument, inverse=inverse)
