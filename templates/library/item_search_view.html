@@ -49,9 +49,6 @@
 			</div>
 		{% endif %}
 	</div>
-	{% comment %}
-		TODO: Fix Pagination with GET Queries - Upgrade to Django 5.1?
-	{% endcomment %}
 	{% include "phylactery/snippets/pagination_snippet.html" %}
 	<div class="row">
 		{% for item in items_list %}
