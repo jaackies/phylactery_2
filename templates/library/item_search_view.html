@@ -5,7 +5,19 @@
 {% block content %}
 	<div class="d-flex justify-content-between">
 		<h6 style="line-height: revert"><span class="badge text-bg-warning rounded-pill">BETA</span> Library Search:</h6>
-		<span>Sorted by: <mark>A-Z</mark> | <a href="#">Relevance</a></span>
+		<span>
+			Sorted by:
+			{% for id, label in ordering_options.items %}
+				{% if id == selected_ordering %}
+					<strong>{{ label }}</strong>
+				{% else %}
+					<a href="{% querystring ordering=id %}">{{ label }}</a>
+				{% endif %}
+				{% if not forloop.last %}
+					|
+				{% endif %}
+			{% endfor %}
+		</span>
 	</div>
 	<form action="{% url "library:search" %}" method="get">
 		<div class="input-group mb-2">
