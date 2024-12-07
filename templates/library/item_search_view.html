@@ -3,7 +3,10 @@
 {% block title %}{{ page_title|default:"All Items" }}{% endblock %}
 
 {% block content %}
-	<h6><span class="badge text-bg-warning rounded-pill">BETA</span> Library Search:</h6>
+	<div class="d-flex justify-content-between">
+		<h6 style="line-height: revert"><span class="badge text-bg-warning rounded-pill">BETA</span> Library Search:</h6>
+		<span>Sorted by: <mark>A-Z</mark> | <a href="#">Relevance</a></span>
+	</div>
 	<form action="{% url "library:search" %}" method="get">
 		<div class="input-group mb-2">
 			<input class="form-control form-control-lg"
