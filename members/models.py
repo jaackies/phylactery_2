@@ -303,3 +303,17 @@ class Rank(models.Model):
 		# Set the expiry date to today.
 		self.expired_date = datetime.date.today()
 		self.save()
+
+
+class FinanceRecord(models.Model):
+	"""
+	A model for storing data about electronic bank transfers to the Unigames account.
+	"""
+	member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
+	purchase_type = models.CharField(max_length=200, blank=True)
+	reference_code = models.CharField(max_length=20)
+	amount = models.DecimalField(max_digits=5, decimal_places=2)
+	added_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
