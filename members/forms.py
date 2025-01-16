@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import TextChoices
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div
@@ -230,6 +231,22 @@ class LegacyMembershipForm(FresherMembershipForm):
 
 
 class MembershipFormPreview(forms.Form):
+	class PaymentChoices(TextChoices):
+		CASH = "cash", "Paying with cash"
+		TRANSFER = "transfer", "Paying via bank transfer"
+		
+	
+	cash_or_transfer = forms.ChoiceField(
+		widget=forms.RadioSelect(),
+		choices=PaymentChoices,
+		required=True,
+		label="How is this member paying?"
+	)
+	reference_code = forms.CharField(
+		max_length=20,
+		required=False,
+		help_text="If they are paying via bank transfer, please generate a reference code and enter it here"
+	)
 	verified_correct = forms.BooleanField(
 		required=True,
 		label="I confirm that this information is correct to the best of my knowledge."
@@ -239,6 +256,7 @@ class MembershipFormPreview(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
+		# TODO: Add two new fields to layout
 		self.helper.layout = Layout(
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder.html' %}"),
 			Div(
