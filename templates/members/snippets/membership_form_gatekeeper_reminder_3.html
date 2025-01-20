@@ -1,0 +1,24 @@
+{% comment %}
+	This closes the card in "membership_form_gatekeeper_reminder_2.html"
+{% endcomment %}
+			</div>
+			<div class="col-12 col-lg-2"></div>
+		</div>
+	</div>
+</div>
+<div id="checklist-card" class="card">
+	<div class="card-header text-bg-warning">
+		Please ensure that:
+	</div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+			<i class="bi-check-circle"></i> The member's short name and long name are accurate and appropriate.<br />
+			<em>(i.e. {{ preview_data.long_name }} isn't mistakenly just their last name.)</em>
+		</li>
+		<li class="list-group-item"><i class="bi-check-circle"></i> The member has paid <mark>{{ preview_data.is_guild|yesno:"$5,$7" }}</mark>.</li>
+		<li class="list-group-item"><i class="bi-check-circle"></i> The member has been given a membership sticker.</li>
+	</ul>
+	<div class="card-body pb-0">
+{% comment %}
+	This card is closed in the Layout Object in the MembershipFormPreview Form.
+{% endcomment %}

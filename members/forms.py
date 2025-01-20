@@ -2,8 +2,8 @@ from django import forms
 from django.db.models import TextChoices
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Div
-from crispy_forms.bootstrap import StrictButton
+from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field, Row, Column
+from crispy_forms.bootstrap import StrictButton, InlineField
 
 from accounts.models import UnigamesUser
 from blog.models import MailingList
@@ -256,12 +256,14 @@ class MembershipFormPreview(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
-		# TODO: Add two new fields to layout
 		self.helper.layout = Layout(
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder.html' %}"),
-			Div(
-				'verified_correct',
-			)
+			Field("cash_or_transfer", template="members/snippets/radio_button_template.html"),
+			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_2.html' %}"),
+			Field('reference_code'),
+			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_3.html' %}"),
+			Field("verified_correct"),
+			HTML("</div></div>")
 		)
 
 
