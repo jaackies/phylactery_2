@@ -309,11 +309,32 @@ class FinanceRecord(models.Model):
 	"""
 	A model for storing data about electronic bank transfers to the Unigames account.
 	"""
-	member = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=True)
-	purchase_type = models.CharField(max_length=200, blank=True)
-	reference_code = models.CharField(max_length=20)
-	amount = models.DecimalField(max_digits=5, decimal_places=2)
-	added_at = models.DateTimeField(auto_now_add=True)
+	member = models.ForeignKey(
+		Member,
+		on_delete=models.SET_NULL, null=True, blank=True,
+		help_text="The member who made the purchase."
+	)
+	purchase_type = models.CharField(
+		max_length=200, blank=True,
+		help_text="A brief description of the purchase."
+	)
+	reference_code = models.CharField(
+		max_length=20,
+		help_text="A unique identifier for this payment."
+	)
+	amount = models.DecimalField(
+		max_digits=5, decimal_places=2,
+		help_text="The amount transferred."
+	)
+	added_at = models.DateTimeField(
+		auto_now_add=True,
+		help_text="Date and time payment was made."
+	)
+	added_by = models.ForeignKey(
+		Member,
+		on_delete=models.SET_NULL, null=True, blank=True,
+		help_text="The Gatekeeper who facilitated the transfer."
+	)
 
 	def __str__(self):
 		return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
