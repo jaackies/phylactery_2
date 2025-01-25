@@ -234,7 +234,6 @@ class MembershipFormPreview(forms.Form):
 	class PaymentChoices(TextChoices):
 		CASH = "cash", "Paying with cash"
 		TRANSFER = "transfer", "Paying via bank transfer"
-		
 	
 	cash_or_transfer = forms.ChoiceField(
 		widget=forms.RadioSelect(),
