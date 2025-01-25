@@ -312,6 +312,7 @@ class FinanceRecord(models.Model):
 	member = models.ForeignKey(
 		Member,
 		on_delete=models.SET_NULL, null=True, blank=True,
+		related_name="transfers",
 		help_text="The member who made the purchase."
 	)
 	purchase_type = models.CharField(
@@ -333,6 +334,7 @@ class FinanceRecord(models.Model):
 	added_by = models.ForeignKey(
 		Member,
 		on_delete=models.SET_NULL, null=True, blank=True,
+		related_name="transfers_authorised",
 		help_text="The Gatekeeper who facilitated the transfer."
 	)
 
