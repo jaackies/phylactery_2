@@ -1,11 +1,9 @@
 // Script for the membership form
 // Shows / Hides the relevant fields based on which option is selected.
 
-const cash_button = document.querySelector("input[name='preview-cash_or_transfer'][value='cash']");
-const transfer_button = document.querySelector("input[name='preview-cash_or_transfer'][value='transfer']");
-
-
 const checkPaymentMethod = () => {
+	const cash_button = document.querySelector("input[name='preview-cash_or_transfer'][value='cash']");
+	const transfer_button = document.querySelector("input[name='preview-cash_or_transfer'][value='transfer']");
 	const transfer_panel = document.querySelector("#reference-code-card");
 	const checklist_panel = document.querySelector("#checklist-card");
 	const payment_text = document.querySelector("#payment_method_text");
@@ -44,6 +42,8 @@ const checkPaymentMethod = () => {
 
 }
 
-document.addEventListener("DOMContentLoaded", checkPaymentMethod);
-cash_button.addEventListener("change", checkPaymentMethod);
-transfer_button.addEventListener("change", checkPaymentMethod);
+document.addEventListener("DOMContentLoaded", function() {
+	document.querySelector("input[name='preview-cash_or_transfer'][value='cash']").addEventListener("change", checkPaymentMethod);
+	document.querySelector("input[name='preview-cash_or_transfer'][value='transfer']").addEventListener("change", checkPaymentMethod);
+	checkPaymentMethod();
+});
