@@ -338,7 +338,8 @@ class FinanceRecord(models.Model):
 		help_text="The Gatekeeper who facilitated the transfer."
 	)
 	resolved = models.BooleanField(
-		help_text="Check this when the transaction has been resolved / verified."
+		help_text="Check this when the transaction has been resolved / verified.",
+		default=False,
 	)
 
 	def __str__(self):
