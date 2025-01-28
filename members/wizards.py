@@ -94,7 +94,7 @@ class FresherMembershipWizard(SessionWizardView):
 			guild_member=cleaned_data.get("is_guild"),
 			amount_paid=amount_paid,
 			expired=False,
-			authorised_by=self.request.user.get_member
+			authorised_by=self.request.unigames_member
 		)
 		new_membership.save()
 		
@@ -277,7 +277,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			guild_member=cleaned_data.get("is_guild"),
 			amount_paid=amount_paid,
 			expired=False,
-			authorised_by=self.request.user.get_member
+			authorised_by=self.request.unigames_member
 		)
 		new_membership.save()
 		
