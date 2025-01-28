@@ -264,6 +264,16 @@ class MembershipFormPreview(forms.Form):
 			Field("verified_correct"),
 			HTML("</div></div>")
 		)
+	
+	def clean(self):
+		cleaned_data = super().clean()
+		cash_or_transfer = cleaned_data.get("cash_or_transfer")
+		reference_code = cleaned_data.get("reference_code")
+		
+		if cash_or_transfer == "transfer" and not reference_code:
+			self.add_error("reference_code", "A reference code is required if paying via bank transfer.")
+		
+		return cleaned_data
 
 
 class ChangeEmailPreferencesForm(forms.Form):
