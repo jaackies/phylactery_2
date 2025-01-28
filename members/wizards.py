@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
 from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
-from .models import Member, Membership
+from .models import Member, Membership, FinanceRecord
 from accounts.models import create_fresh_unigames_user
 from blog.models import MailingList
 
@@ -102,6 +102,17 @@ class FresherMembershipWizard(SessionWizardView):
 		for form_field, pk in form_list[0].extra_fields.items():
 			if cleaned_data.get(form_field) is True:
 				new_member.mailing_lists.add(pk)
+		
+		# If they paid with a transfer, add in the reference code
+		if cleaned_data.get("cash_or_transfer") == "transfer":
+			FinanceRecord.objects.create(
+				member=new_member,
+				purchase_type="Membership",
+				reference_code=cleaned_data.get("reference_code"),
+				amount=amount_paid,
+				added_by=self.request.unigames_member,
+				resolved=False,
+			)
 		
 		# TODO: Email the new Member with a welcome email.
 		
@@ -269,6 +280,17 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			authorised_by=self.request.user.get_member
 		)
 		new_membership.save()
+		
+		# If they paid with a transfer, add in the reference code
+		if cleaned_data.get("cash_or_transfer") == "transfer":
+			FinanceRecord.objects.create(
+				member=self.stale_member,
+				purchase_type="Membership",
+				reference_code=cleaned_data.get("reference_code"),
+				amount=amount_paid,
+				added_by=self.request.unigames_member,
+				resolved=False,
+			)
 		
 		# TODO: Send receipt email
 		
