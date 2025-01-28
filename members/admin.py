@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from blog.models import MailingList
-from .models import Member, Membership, Rank
+from .models import Member, Membership, Rank, FinanceRecord
 
 
 class RankInline(admin.TabularInline):
@@ -27,3 +27,4 @@ class MemberAdmin(admin.ModelAdmin):
 
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Membership)
+admin.site.register(FinanceRecord)
