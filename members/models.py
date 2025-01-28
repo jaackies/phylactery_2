@@ -337,6 +337,9 @@ class FinanceRecord(models.Model):
 		related_name="transfers_authorised",
 		help_text="The Gatekeeper who facilitated the transfer."
 	)
+	resolved = models.BooleanField(
+		help_text="Check this when the transaction has been resolved / verified."
+	)
 
 	def __str__(self):
 		return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
