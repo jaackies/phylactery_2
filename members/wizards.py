@@ -49,7 +49,6 @@ class FresherMembershipWizard(SessionWizardView):
 		"""
 		initial = super().get_form_initial(step)
 		if step == "preview":
-			print(f" === {self.storage.extra_data=}")
 			initial["reference_code"] = self.storage.extra_data.get("reference_code")
 		return initial
 	
@@ -246,7 +245,6 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		
 		# Populate the reference code from storage
 		if step == "preview":
-			print(f" === {self.storage.extra_data=}")
 			initial["reference_code"] = self.storage.extra_data.get("reference_code")
 		
 		return initial
