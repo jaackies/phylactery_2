@@ -260,7 +260,7 @@ class MembershipFormPreview(forms.Form):
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder.html' %}"),
 			Field("cash_or_transfer", template="members/snippets/radio_button_template.html"),
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_2.html' %}"),
-			Field('reference_code'),
+			Field('reference_code', css_class="form-control-lg text-center"),
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_3.html' %}"),
 			Field("verified_correct"),
 			HTML("</div></div>")
