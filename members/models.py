@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from accounts.models import UnigamesUser
 from library.models import BorrowRecord
+from members.codes import generate_reference_code
 
 # Advanced models are models we shouldn't let anyone but Webkeepers touch.
 # For permission syncing.
@@ -305,6 +306,15 @@ class Rank(models.Model):
 		self.save()
 
 
+class FinanceRecordManager(models.Manager):
+	"""
+	Manager for the Finance Records.
+	"""
+	@staticmethod
+	def generate_code():
+		return generate_reference_code()
+
+
 class FinanceRecord(models.Model):
 	"""
 	A model for storing data about electronic bank transfers to the Unigames account.
@@ -341,6 +351,7 @@ class FinanceRecord(models.Model):
 		help_text="Check this when the transaction has been resolved / verified.",
 		default=False,
 	)
+	objects = FinanceRecordManager()
 
 	def __str__(self):
 		return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
