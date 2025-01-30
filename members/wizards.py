@@ -165,7 +165,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		self.storage.current_step = self.steps.first
 		
 		# Put the pk of the member in storage for tamper detection.
-		self.storage.extra_data = {"stale_member": stale_member.pk}
+		self.storage.extra_data.update({"stale_member": stale_member.pk})
 		return self.render(self.get_form())
 	
 	def post(self, *args, **kwargs):
