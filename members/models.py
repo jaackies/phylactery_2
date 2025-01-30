@@ -354,4 +354,7 @@ class FinanceRecord(models.Model):
 	objects = FinanceRecordManager()
 
 	def __str__(self):
-		return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
+		if self.member is not None:
+			return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
+		else:
+			return f"<deleted member>: {self.amount} ({self.reference_code})"
