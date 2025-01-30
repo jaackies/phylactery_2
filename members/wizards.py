@@ -23,6 +23,36 @@ class FresherMembershipWizard(SessionWizardView):
 	]
 	template_name = "members/membership_form.html"
 	
+	def get(self, request, *args, **kwargs):
+		"""
+		This overrides the superclass GET method entirely.
+		Reasons:
+			- We call all the original GET code anyway.
+			- This allows us to generate a reference code and put it in storage.
+			- It's only used when the member pays via bank transfer, but it means
+				the code won't change when the member changes pages.
+		"""
+		
+		# Original GET code
+		self.storage.reset()
+		self.storage.current_step = self.steps.first
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual.
+		return self.render(self.get_form())
+	
+	def get_form_initial(self, step):
+		"""
+		Populates the reference code in the payment section.
+		"""
+		initial = super().get_form_initial(step)
+		if step == "preview":
+			print(f" === {self.storage.extra_data=}")
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		return initial
+	
 	def render_goto_step(self, *args, **kwargs):
 		"""
 		This method overrides the WizardView Method.
@@ -138,6 +168,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		Reasons:
 			- We call all the original GET code anyway.
 			- This allows us to hook up the requested stale member into internal storage.
+			- We also generate a reference code for paying via bank transfer.
 		We also override the POST method as well below.
 		"""
 		
@@ -166,6 +197,11 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		
 		# Put the pk of the member in storage for tamper detection.
 		self.storage.extra_data.update({"stale_member": stale_member.pk})
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual
 		return self.render(self.get_form())
 	
 	def post(self, *args, **kwargs):
@@ -207,6 +243,12 @@ class StaleMembershipWizard(FresherMembershipWizard):
 				initial["is_guild"] = False
 			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
 				initial[f"mailing_list_{mailing_list_pk}"] = True
+		
+		# Populate the reference code from storage
+		if step == "preview":
+			print(f" === {self.storage.extra_data=}")
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		
 		return initial
 	
 	def get_context_data(self, form, **kwargs):
