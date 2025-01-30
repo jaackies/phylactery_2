@@ -244,7 +244,8 @@ class MembershipFormPreview(forms.Form):
 	reference_code = forms.CharField(
 		max_length=20,
 		required=False,
-		help_text="If they are paying via bank transfer, please generate a reference code and enter it here"
+		disabled=True,
+		help_text="Please direct the member to enter this code in the 'Reference Code' section of their banking app."
 	)
 	verified_correct = forms.BooleanField(
 		required=True,
