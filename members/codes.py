@@ -38,6 +38,7 @@ def generate_reference_code():
 		There are 267 prefixes and 20 suffixes.
 		The number is generated as a number from 1 to 99 inclusive.
 		This means this can generate 528,660 different codes.
+		The generated code is guaranteed to have a maximum length of 20.
 	"""
 	prefix = random.choice(PREFIXES)
 	suffix = random.choice(SUFFIXES)
