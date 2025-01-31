@@ -397,3 +397,22 @@ class FinanceRecordWizard(SessionWizardView):
 		if step == "0":
 			initial["reference_code"] = self.storage.extra_data.get("reference_code")
 		return initial
+	
+	def done(self, form_list, **kwargs):
+		cleaned_data = self.get_all_cleaned_data()
+		FinanceRecord.objects.create(
+			member=cleaned_data.get("member"),
+			purchase_type=cleaned_data.get("description"),
+			reference_code=cleaned_data.get("reference_code"),
+			amount=cleaned_data.get("amount"),
+			added_by=self.request.unigames_member,
+			resolved=False,
+		)
+		
+		messages.success(
+			self.request,
+			f"Successfully added finance record for {cleaned_data.get('member')} "
+			f"with code {cleaned_data.get('reference_code')}."
+		)
+		
+		return redirect("members:finance_record")
