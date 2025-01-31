@@ -5,7 +5,13 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
-from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
+from .forms import (
+	FresherMembershipForm,
+	StaleMembershipForm,
+	LegacyMembershipForm,
+	MembershipFormPreview,
+	AddFinanceRecordForm,
+)
 from .models import Member, Membership, FinanceRecord
 from accounts.models import create_fresh_unigames_user
 from blog.models import MailingList
@@ -347,3 +353,45 @@ class LegacyMembershipWizard(FresherMembershipWizard):
 		("0", LegacyMembershipForm,),
 		("preview", MembershipFormPreview,),
 	]
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class FinanceRecordWizard(SessionWizardView):
+	"""
+	A wizard to handle a manual entry of a FinanceRecord.
+	This enables us to save the generated code in storage,
+	otherwise it would be randomly generated each time.
+	"""
+	
+	form_list = [
+		("0", AddFinanceRecordForm,),
+	]
+	
+	def get(self, request, *args, **kwargs):
+		"""
+		This overrides the superclass GET method entirely.
+		Reasons:
+			- We call all the original GET code anyway.
+			- This allows us to generate a reference code and put it in storage.
+			- It's only used when the member pays via bank transfer, but it means
+				the code won't change when the member changes pages.
+		"""
+		
+		# Original GET code
+		self.storage.reset()
+		self.storage.current_step = self.steps.first
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual.
+		return self.render(self.get_form())
+	
+	def get_form_initial(self, step):
+		"""
+		Populates the reference code in the payment section.
+		"""
+		initial = super().get_form_initial(step)
+		if step == "0":
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		return initial

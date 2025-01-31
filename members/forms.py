@@ -1,3 +1,4 @@
+from dal import autocomplete
 from django import forms
 from django.db.models import TextChoices
 from django.utils import timezone
@@ -7,6 +8,7 @@ from crispy_forms.bootstrap import StrictButton, InlineField
 
 from accounts.models import UnigamesUser
 from blog.models import MailingList
+from members.models import Member
 from phylactery.form_fields import HTML5DateInput
 
 
@@ -326,4 +328,45 @@ class ChangeEmailPreferencesForm(forms.Form):
 					self.member.mailing_lists.add(pk)
 				else:
 					self.member.mailing_lists.remove(pk)
+
+
+class AddFinanceRecordForm(forms.Form):
+	member = forms.ModelChoiceField(
+		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2(
+			url="members:autocomplete_member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		)
+	)
+	amount = forms.DecimalField(
+		max_digits=5,
+		decimal_places=2,
+	)
+	description = forms.CharField(
+		max_length=200,
+		widget=forms.Textarea(),
+		help_text="A brief description of the purchase.<br />"
+		"Examples: <br />"
+		"3x DFT Boosters. <br />"
+		"Shirt + Stickers"
+	)
+	reference_code = forms.CharField(
+		max_length=20,
+		required=False,
+		disabled=True,
+		help_text="Please direct the member to enter this code in the 'Reference Code' section of their banking app."
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.layout = Layout(
+			Field("member"),
+			Field("amount"),
+			Field("description"),
+			Field("reference_code"),
+		)
 
