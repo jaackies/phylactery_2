@@ -5,11 +5,30 @@
 {% block title %}Add Finance Record{% endblock %}
 
 {% block content %}
-	<div class="d-flex justify-content-between mb-3">
-		<a class="btn btn-outline-secondary" href="{% url "members:signup_hub" %}"><i class="bi-arrow-left"></i> Back to Signup Hub</a>
-		<span>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</span>
-	</div>
-	<form action="" method="POST">
+	<div class="container" style="max-width: 576px;">
+		<div class="mb-3">
+			<h2>Add Finance Record</h2>
+			<p>When a member wants to pay Unigames for something via bank transfer, use this form to log it.</p>
+		</div>
+		<div id="reference-code-card" class="card mb-3">
+			<div class="card-header text-bg-warning">
+				Account Details:
+			</div>
+			<div class="card-body text-center">
+				<h4>Unigames Account Details</h4>
+				<dl class="row">
+					<dt class="col-6 text-end">Account Name:</dt>
+					<dd class="col-6 text-start">Unigames UWA</dd>
+					<dt class="col-6 text-end">BSB:</dt>
+					<dd class="col-6 text-start">066-103</dd>
+					<dt class="col-6 text-end">Account Number:</dt>
+					<dd class="col-6 text-start">1051-8815</dd>
+				</dl>
+			</div>
+		</div>
+
+
+		<form action="" method="POST">
 		{% csrf_token %}
 		{{ wizard.management_form }}
 		{% if wizard.form.forms %}
@@ -28,6 +47,8 @@
 			</div>
 		</div>
 	</form>
+
+	</div>
 	<script src="{% static "js/prevent_unload.js" %}"></script>
 {% endblock %}
 

@@ -4,7 +4,7 @@ from django.db.models import TextChoices
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field, Row, Column
-from crispy_forms.bootstrap import StrictButton, InlineField
+from crispy_forms.bootstrap import StrictButton, InlineField, PrependedText
 
 from accounts.models import UnigamesUser
 from blog.models import MailingList
@@ -338,25 +338,30 @@ class AddFinanceRecordForm(forms.Form):
 			attrs={
 				"data-theme": "bootstrap-5"
 			}
-		)
+		),
+		help_text="The member sending money to Unigames."
 	)
 	amount = forms.DecimalField(
 		max_digits=5,
 		decimal_places=2,
+		help_text="Amount they are paying, to two decimal places."
 	)
 	description = forms.CharField(
 		max_length=200,
-		widget=forms.Textarea(),
 		help_text="A brief description of the purchase.<br />"
 		"Examples: <br />"
-		"3x DFT Boosters. <br />"
-		"Shirt + Stickers"
+		"- 3x DFT Boosters. <br />"
+		"- Shirt + Stickers"
 	)
 	reference_code = forms.CharField(
 		max_length=20,
 		required=False,
 		disabled=True,
 		help_text="Please direct the member to enter this code in the 'Reference Code' section of their banking app."
+	)
+	verified_correct = forms.BooleanField(
+		required=True,
+		label="I confirm that this information is correct to the best of my knowledge."
 	)
 	
 	def __init__(self, *args, **kwargs):
@@ -366,8 +371,9 @@ class AddFinanceRecordForm(forms.Form):
 		self.helper.include_media = False
 		self.helper.layout = Layout(
 			Field("member"),
-			Field("amount"),
+			PrependedText("amount", "$"),
 			Field("description"),
-			Field("reference_code"),
+			Field("reference_code", css_class="form-control-lg text-center"),
+			Field("verified_correct"),
 		)
 
