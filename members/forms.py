@@ -363,6 +363,7 @@ class AddFinanceRecordForm(forms.Form):
 		super().__init__(*args, **kwargs)
 		self.helper = FormHelper()
 		self.helper.form_tag = False
+		self.helper.include_media = False
 		self.helper.layout = Layout(
 			Field("member"),
 			Field("amount"),

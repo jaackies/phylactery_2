@@ -367,6 +367,8 @@ class FinanceRecordWizard(SessionWizardView):
 		("0", AddFinanceRecordForm,),
 	]
 	
+	template_name = "members/finance_form.html"
+	
 	def get(self, request, *args, **kwargs):
 		"""
 		This overrides the superclass GET method entirely.
