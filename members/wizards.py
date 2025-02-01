@@ -416,8 +416,10 @@ class FinanceRecordWizard(SessionWizardView):
 			f"with code {cleaned_data.get('reference_code')}."
 		)
 		
+		# Treasurer Role ID: 612900808580923393
+		
 		send_to_operations(
-			f"<@612900808580923393>: A new finance record has been added: \n"
+			f"<@&612900808580923393>: A new finance record has been added: \n"
 			f"Code: {cleaned_data.get('reference_code')} \n"
 			f"Description: {cleaned_data.get('description')}"
 		)
