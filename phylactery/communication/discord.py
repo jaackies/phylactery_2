@@ -1,3 +1,4 @@
+import json
 from redis import Redis
 
 from celery import shared_task
@@ -18,6 +19,23 @@ def send_to_discord(redis_channel_name: str, message: str):
 	r = Redis(host=settings.REDIS_HOST, port=6379, decode_responses=True)
 	r.publish(redis_channel_name, message)
 	r.close()
+
+
+def send_notification(roles: str | list[str], message: str, redis_channel_name: str = "discord:notifications:ping"):
+	"""
+	Composes a JSON fragment to send through Redis to the discord bot.
+	Roles should be either a string or list of strings containing the roles that should be allowed to be mentioned in the message.
+	"""
+	if type(roles) is str:
+		roles = [roles]
+	notification_message = {
+		"roles": roles,
+		"message": message,
+	}
+	send_to_discord.delay(
+		redis_channel_name=redis_channel_name,
+		message=json.dumps(notification_message)
+	)
 
 
 def send_to_minutes(message: str):
