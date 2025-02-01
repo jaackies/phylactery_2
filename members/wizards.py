@@ -15,6 +15,7 @@ from .forms import (
 from .models import Member, Membership, FinanceRecord
 from accounts.models import create_fresh_unigames_user
 from blog.models import MailingList
+from phylactery.communication.discord import send_to_operations
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
@@ -413,6 +414,12 @@ class FinanceRecordWizard(SessionWizardView):
 			self.request,
 			f"Successfully added finance record for {cleaned_data.get('member')} "
 			f"with code {cleaned_data.get('reference_code')}."
+		)
+		
+		send_to_operations(
+			f"@Treasurer: A new finance record has been added: \n"
+			f"Code: {cleaned_data.get('reference_code')} \n"
+			f"Description: {cleaned_data.get('description')}"
 		)
 		
 		return redirect("members:finance_record")
