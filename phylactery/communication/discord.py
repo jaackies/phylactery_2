@@ -28,7 +28,7 @@ def send_to_news(message: str):
 	send_to_discord.delay(redis_channel_name="discord:news:ping", message=message)
 
 
-def send_to_library(message: str):
+def send_to_operations(message: str):
 	send_to_discord.delay(redis_channel_name="discord:operations:ping", message=message)
 
 
