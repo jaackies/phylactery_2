@@ -34,5 +34,3 @@ def send_to_operations(message: str):
 
 def send_to_door(message: str):
 	send_to_discord.delay(redis_channel_name="discord:door:ping", message=message)
-
-
