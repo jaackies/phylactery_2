@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Add Finance Record{% endblock %}
+
+{% block content %}
+	<div class="container" style="max-width: 576px;">
+		<div class="mb-3">
+			<h2>Add Finance Record</h2>
+			<p>When a member wants to pay Unigames for something via bank transfer, use this form to log it.</p>
+		</div>
+		<div id="reference-code-card" class="card mb-3">
+			<div class="card-header text-bg-warning">
+				Account Details:
+			</div>
+			<div class="card-body text-center">
+				<h4>Unigames Account Details</h4>
+				<dl class="row">
+					<dt class="col-6 text-end">Account Name:</dt>
+					<dd class="col-6 text-start">Unigames UWA</dd>
+					<dt class="col-6 text-end">BSB:</dt>
+					<dd class="col-6 text-start">066-103</dd>
+					<dt class="col-6 text-end">Account Number:</dt>
+					<dd class="col-6 text-start">1051-8815</dd>
+				</dl>
+			</div>
+		</div>
+
+
+		<form action="" method="POST">
+		{% csrf_token %}
+		{{ wizard.management_form }}
+		{% if wizard.form.forms %}
+			{% for form in wizard.form.forms %}
+				{% crispy form %}
+			{% endfor %}
+		{% else %}
+			{% crispy wizard.form %}
+		{% endif %}
+		<div class="d-flex flex-row justify-content-end">
+			<div class="p-2">
+				<button type="submit"
+						class="btn btn-success">
+					Submit <i class="bi-check2"></i>
+				</button>
+			</div>
+		</div>
+	</form>
+
+	</div>
+	<script src="{% static "js/prevent_unload.js" %}"></script>
+{% endblock %}
+
+{% block post_js_form_media %}
+	{% if not wizard.form.helper.include_media %}
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+		<!-- JQuery -->
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+		{{ wizard.form.media }}
+	{% endif %}
+{% endblock %}

@@ -5,10 +5,17 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from formtools.wizard.views import SessionWizardView
 from .decorators import gatekeeper_required
-from .forms import FresherMembershipForm, StaleMembershipForm, LegacyMembershipForm, MembershipFormPreview
-from .models import Member, Membership
+from .forms import (
+	FresherMembershipForm,
+	StaleMembershipForm,
+	LegacyMembershipForm,
+	MembershipFormPreview,
+	AddFinanceRecordForm,
+)
+from .models import Member, Membership, FinanceRecord
 from accounts.models import create_fresh_unigames_user
 from blog.models import MailingList
+from phylactery.communication.discord import send_to_operations
 
 
 @method_decorator(gatekeeper_required, name="dispatch")
@@ -22,6 +29,35 @@ class FresherMembershipWizard(SessionWizardView):
 		("preview", MembershipFormPreview,),
 	]
 	template_name = "members/membership_form.html"
+	
+	def get(self, request, *args, **kwargs):
+		"""
+		This overrides the superclass GET method entirely.
+		Reasons:
+			- We call all the original GET code anyway.
+			- This allows us to generate a reference code and put it in storage.
+			- It's only used when the member pays via bank transfer, but it means
+				the code won't change when the member changes pages.
+		"""
+		
+		# Original GET code
+		self.storage.reset()
+		self.storage.current_step = self.steps.first
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual.
+		return self.render(self.get_form())
+	
+	def get_form_initial(self, step):
+		"""
+		Populates the reference code in the payment section.
+		"""
+		initial = super().get_form_initial(step)
+		if step == "preview":
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		return initial
 	
 	def render_goto_step(self, *args, **kwargs):
 		"""
@@ -94,7 +130,7 @@ class FresherMembershipWizard(SessionWizardView):
 			guild_member=cleaned_data.get("is_guild"),
 			amount_paid=amount_paid,
 			expired=False,
-			authorised_by=self.request.user.get_member
+			authorised_by=self.request.unigames_member
 		)
 		new_membership.save()
 		
@@ -102,6 +138,17 @@ class FresherMembershipWizard(SessionWizardView):
 		for form_field, pk in form_list[0].extra_fields.items():
 			if cleaned_data.get(form_field) is True:
 				new_member.mailing_lists.add(pk)
+		
+		# If they paid with a transfer, add in the reference code
+		if cleaned_data.get("cash_or_transfer") == "transfer":
+			FinanceRecord.objects.create(
+				member=new_member,
+				purchase_type="Membership",
+				reference_code=cleaned_data.get("reference_code"),
+				amount=amount_paid,
+				added_by=self.request.unigames_member,
+				resolved=False,
+			)
 		
 		# TODO: Email the new Member with a welcome email.
 		
@@ -127,6 +174,7 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		Reasons:
 			- We call all the original GET code anyway.
 			- This allows us to hook up the requested stale member into internal storage.
+			- We also generate a reference code for paying via bank transfer.
 		We also override the POST method as well below.
 		"""
 		
@@ -154,7 +202,12 @@ class StaleMembershipWizard(FresherMembershipWizard):
 		self.storage.current_step = self.steps.first
 		
 		# Put the pk of the member in storage for tamper detection.
-		self.storage.extra_data = {"stale_member": stale_member.pk}
+		self.storage.extra_data.update({"stale_member": stale_member.pk})
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual
 		return self.render(self.get_form())
 	
 	def post(self, *args, **kwargs):
@@ -196,6 +249,11 @@ class StaleMembershipWizard(FresherMembershipWizard):
 				initial["is_guild"] = False
 			for mailing_list_pk in self.stale_member.mailing_lists.filter(is_active=True).values_list('pk', flat=True):
 				initial[f"mailing_list_{mailing_list_pk}"] = True
+		
+		# Populate the reference code from storage
+		if step == "preview":
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		
 		return initial
 	
 	def get_context_data(self, form, **kwargs):
@@ -266,9 +324,20 @@ class StaleMembershipWizard(FresherMembershipWizard):
 			guild_member=cleaned_data.get("is_guild"),
 			amount_paid=amount_paid,
 			expired=False,
-			authorised_by=self.request.user.get_member
+			authorised_by=self.request.unigames_member
 		)
 		new_membership.save()
+		
+		# If they paid with a transfer, add in the reference code
+		if cleaned_data.get("cash_or_transfer") == "transfer":
+			FinanceRecord.objects.create(
+				member=self.stale_member,
+				purchase_type="Membership",
+				reference_code=cleaned_data.get("reference_code"),
+				amount=amount_paid,
+				added_by=self.request.unigames_member,
+				resolved=False,
+			)
 		
 		# TODO: Send receipt email
 		
@@ -285,3 +354,72 @@ class LegacyMembershipWizard(FresherMembershipWizard):
 		("0", LegacyMembershipForm,),
 		("preview", MembershipFormPreview,),
 	]
+
+
+@method_decorator(gatekeeper_required, name="dispatch")
+class FinanceRecordWizard(SessionWizardView):
+	"""
+	A wizard to handle a manual entry of a FinanceRecord.
+	This enables us to save the generated code in storage,
+	otherwise it would be randomly generated each time.
+	"""
+	
+	form_list = [
+		("0", AddFinanceRecordForm,),
+	]
+	
+	template_name = "members/finance_form.html"
+	
+	def get(self, request, *args, **kwargs):
+		"""
+		This overrides the superclass GET method entirely.
+		Reasons:
+			- We call all the original GET code anyway.
+			- This allows us to generate a reference code and put it in storage.
+			- It's only used when the member pays via bank transfer, but it means
+				the code won't change when the member changes pages.
+		"""
+		
+		# Original GET code
+		self.storage.reset()
+		self.storage.current_step = self.steps.first
+		
+		# Generate a new reference code, and put it in storage.
+		self.storage.extra_data.update({"reference_code": FinanceRecord.objects.generate_code()})
+		
+		# Render form as usual.
+		return self.render(self.get_form())
+	
+	def get_form_initial(self, step):
+		"""
+		Populates the reference code in the payment section.
+		"""
+		initial = super().get_form_initial(step)
+		if step == "0":
+			initial["reference_code"] = self.storage.extra_data.get("reference_code")
+		return initial
+	
+	def done(self, form_list, **kwargs):
+		cleaned_data = self.get_all_cleaned_data()
+		FinanceRecord.objects.create(
+			member=cleaned_data.get("member"),
+			purchase_type=cleaned_data.get("description"),
+			reference_code=cleaned_data.get("reference_code"),
+			amount=cleaned_data.get("amount"),
+			added_by=self.request.unigames_member,
+			resolved=False,
+		)
+		
+		messages.success(
+			self.request,
+			f"Successfully added finance record for {cleaned_data.get('member')} "
+			f"with code {cleaned_data.get('reference_code')}."
+		)
+		
+		send_to_operations(
+			f"@Treasurer: A new finance record has been added: \n"
+			f"Code: {cleaned_data.get('reference_code')} \n"
+			f"Description: {cleaned_data.get('description')}"
+		)
+		
+		return redirect("members:finance_record")

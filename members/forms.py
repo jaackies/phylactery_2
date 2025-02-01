@@ -1,11 +1,14 @@
+from dal import autocomplete
 from django import forms
+from django.db.models import TextChoices
 from django.utils import timezone
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Div
-from crispy_forms.bootstrap import StrictButton
+from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field, Row, Column
+from crispy_forms.bootstrap import StrictButton, InlineField, PrependedText
 
 from accounts.models import UnigamesUser
 from blog.models import MailingList
+from members.models import Member
 from phylactery.form_fields import HTML5DateInput
 
 
@@ -230,6 +233,22 @@ class LegacyMembershipForm(FresherMembershipForm):
 
 
 class MembershipFormPreview(forms.Form):
+	class PaymentChoices(TextChoices):
+		CASH = "cash", "Paying with cash"
+		TRANSFER = "transfer", "Paying via bank transfer"
+	
+	cash_or_transfer = forms.ChoiceField(
+		widget=forms.RadioSelect(),
+		choices=PaymentChoices,
+		required=True,
+		label="How is this member paying?"
+	)
+	reference_code = forms.CharField(
+		max_length=20,
+		required=False,
+		disabled=True,
+		help_text="Please direct the member to enter this code in the 'Reference Code' section of their banking app."
+	)
 	verified_correct = forms.BooleanField(
 		required=True,
 		label="I confirm that this information is correct to the best of my knowledge."
@@ -241,10 +260,23 @@ class MembershipFormPreview(forms.Form):
 		self.helper.form_tag = False
 		self.helper.layout = Layout(
 			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder.html' %}"),
-			Div(
-				'verified_correct',
-			)
+			Field("cash_or_transfer", template="members/snippets/radio_button_template.html"),
+			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_2.html' %}"),
+			Field('reference_code', css_class="form-control-lg text-center"),
+			HTML("{% include 'members/snippets/membership_form_gatekeeper_reminder_3.html' %}"),
+			Field("verified_correct"),
+			HTML("</div></div>")
 		)
+	
+	def clean(self):
+		cleaned_data = super().clean()
+		cash_or_transfer = cleaned_data.get("cash_or_transfer")
+		reference_code = cleaned_data.get("reference_code")
+		
+		if cash_or_transfer == "transfer" and not reference_code:
+			self.add_error("reference_code", "A reference code is required if paying via bank transfer.")
+		
+		return cleaned_data
 
 
 class ChangeEmailPreferencesForm(forms.Form):
@@ -296,4 +328,52 @@ class ChangeEmailPreferencesForm(forms.Form):
 					self.member.mailing_lists.add(pk)
 				else:
 					self.member.mailing_lists.remove(pk)
+
+
+class AddFinanceRecordForm(forms.Form):
+	member = forms.ModelChoiceField(
+		queryset=Member.objects.all(),
+		widget=autocomplete.ModelSelect2(
+			url="members:autocomplete_member",
+			attrs={
+				"data-theme": "bootstrap-5"
+			}
+		),
+		help_text="The member sending money to Unigames."
+	)
+	amount = forms.DecimalField(
+		max_digits=5,
+		decimal_places=2,
+		help_text="Amount they are paying, to two decimal places."
+	)
+	description = forms.CharField(
+		max_length=200,
+		help_text="A brief description of the purchase.<br />"
+		"Examples: <br />"
+		"- 3x DFT Boosters. <br />"
+		"- Shirt + Stickers"
+	)
+	reference_code = forms.CharField(
+		max_length=20,
+		required=False,
+		disabled=True,
+		help_text="Please direct the member to enter this code in the 'Reference Code' section of their banking app."
+	)
+	verified_correct = forms.BooleanField(
+		required=True,
+		label="I confirm that this information is correct to the best of my knowledge."
+	)
+	
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_tag = False
+		self.helper.include_media = False
+		self.helper.layout = Layout(
+			Field("member"),
+			PrependedText("amount", "$"),
+			Field("description"),
+			Field("reference_code", css_class="form-control-lg text-center"),
+			Field("verified_correct"),
+		)
 

@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from accounts.models import UnigamesUser
 from library.models import BorrowRecord
+from members.codes import generate_reference_code
 
 # Advanced models are models we shouldn't let anyone but Webkeepers touch.
 # For permission syncing.
@@ -303,3 +304,57 @@ class Rank(models.Model):
 		# Set the expiry date to today.
 		self.expired_date = datetime.date.today()
 		self.save()
+
+
+class FinanceRecordManager(models.Manager):
+	"""
+	Manager for the Finance Records.
+	"""
+	@staticmethod
+	def generate_code():
+		return generate_reference_code()
+
+
+class FinanceRecord(models.Model):
+	"""
+	A model for storing data about electronic bank transfers to the Unigames account.
+	"""
+	member = models.ForeignKey(
+		Member,
+		on_delete=models.SET_NULL, null=True, blank=True,
+		related_name="transfers",
+		help_text="The member who made the purchase."
+	)
+	purchase_type = models.CharField(
+		max_length=200, blank=True,
+		help_text="A brief description of the purchase."
+	)
+	reference_code = models.CharField(
+		max_length=20,
+		help_text="A unique identifier for this payment."
+	)
+	amount = models.DecimalField(
+		max_digits=5, decimal_places=2,
+		help_text="The amount transferred."
+	)
+	added_at = models.DateTimeField(
+		auto_now_add=True,
+		help_text="Date and time payment was made."
+	)
+	added_by = models.ForeignKey(
+		Member,
+		on_delete=models.SET_NULL, null=True, blank=True,
+		related_name="transfers_authorised",
+		help_text="The Gatekeeper who facilitated the transfer."
+	)
+	resolved = models.BooleanField(
+		help_text="Check this when the transaction has been resolved / verified.",
+		default=False,
+	)
+	objects = FinanceRecordManager()
+
+	def __str__(self):
+		if self.member is not None:
+			return f"{self.member.long_name}: {self.amount} ({self.reference_code})"
+		else:
+			return f"<deleted member>: {self.amount} ({self.reference_code})"
