@@ -6,6 +6,12 @@ from django.conf import settings
 
 logger = get_task_logger(__name__)
 
+# Gatekeepers Role ID: 459262632113995776
+# Committee Role ID: 459262627437346817
+# Treasurer Role ID: 612900808580923393
+# Secretary Role ID: 612901130438967296
+# Librarian Role ID: 612901006203682817
+
 
 @shared_task(name="send_to_discord")
 def send_to_discord(redis_channel_name: str, message: str):
