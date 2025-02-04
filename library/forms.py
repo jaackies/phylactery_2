@@ -10,7 +10,6 @@ from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field
 from library.models import Item, Reservation, BorrowRecord, default_due_date
 from members.models import Member
 from phylactery.form_fields import HTML5DateInput
-from phylactery.communication.discord import send_to_operations
 
 
 class SelectLibraryItemsForm(forms.Form):
@@ -317,10 +316,6 @@ class InternalReservationRequestForm(forms.Form):
 		new_reservation = Reservation.objects.create(**reservation_data)
 		new_reservation.reserved_items.set(self.cleaned_data["items"])
 		
-		# Send word to the librarian that a Reservation request has been submitted:
-		discord_message = f"Greetings <@&612901006203682817>! A new reservation request form has been submitted for approval in the Library dashboard."
-		send_to_operations(discord_message)
-
 
 class ExternalReservationRequestForm(forms.Form):
 	name = forms.CharField(
@@ -465,10 +460,6 @@ class ExternalReservationRequestForm(forms.Form):
 			)
 		new_reservation = Reservation.objects.create(**reservation_data)
 		new_reservation.reserved_items.set(self.cleaned_data["items"])
-		
-		# Send word to the librarian that a Reservation request has been submitted:
-		discord_message = f"Greetings <@&612901006203682817>! A new reservation request form has been submitted for approval in the Library dashboard."
-		send_to_operations(discord_message)
 
 
 class ReservationModelForm(FutureModelForm):
