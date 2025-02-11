@@ -472,11 +472,17 @@ class CommitteeTransferForm(ControlPanelForm):
 		for position in field_names_by_position:
 			for assigned_field_name, options_field_name in field_names_by_position[position]:
 				if position == RankChoices.OCM:
-					position_initial = current_committee[position][current_ocm_number].member
+					try:
+						position_initial = current_committee[position][current_ocm_number].member
+					except IndexError:
+						position_initial = None
 					field_label = f"Assigned {position.label} #{current_ocm_number+1}"
 					current_ocm_number += 1
 				else:
-					position_initial = current_committee[position][0].member
+					try:
+						position_initial = current_committee[position][0].member
+					except IndexError:
+						position_initial = None
 					field_label = f"Assigned {position.label}"
 				self.fields[assigned_field_name] = forms.ModelChoiceField(
 						label=field_label,
