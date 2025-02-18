@@ -50,8 +50,11 @@ class ControlPanelFormView(FormView):
 		return FORM_CLASSES.get(self.kwargs["slug"])
 	
 	def form_valid(self, form):
-		form.submit(self.request)
-		return super().form_valid(form)
+		form_response = form.submit(self.request)
+		if form_response:
+			return form_response
+		else:
+			return super().form_valid(form)
 	
 	def get_success_url(self):
 		return reverse("control_panel:list")
