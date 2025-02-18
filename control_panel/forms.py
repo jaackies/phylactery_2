@@ -705,6 +705,7 @@ class GetMembershipInfoForm(ControlPanelForm):
 				}
 			)
 			writer = csv.writer(response)
+			writer.writerow(["Name", "Student Number", "Guild"])
 			writer.writerows(csv_data)
 			return response
 		else:
