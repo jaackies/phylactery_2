@@ -575,7 +575,6 @@ class CommitteeTransferForm(ControlPanelForm):
 					self.add_error(assigned_field_name, f"Committee can't have duplicate members.")
 				
 				else:
-					new_committee_members.add(cleaned_assigned_member)
 					match cleaned_option:
 						case "retain":
 							# Check for a data entry error
@@ -584,13 +583,14 @@ class CommitteeTransferForm(ControlPanelForm):
 								self.add_error(assigned_field_name, "")
 								self.add_error(
 									options_field_name,
-									"You selected 'Retain', but also selected a different member for this position. "
+									"You selected 'No Changes', but also selected a different member for this position. "
 									"Did you make a mistake?"
 								)
 							else:
 								# Check if they're eligible. If not, then errors will be added automatically.
 								if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 									# They're valid! Put them in!
+									new_committee_members.add(cleaned_assigned_member)
 									committee_to_remove.discard(cleaned_assigned_member)
 									old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 									committee_changes.append(
@@ -600,6 +600,7 @@ class CommitteeTransferForm(ControlPanelForm):
 							# Check if they're eligible. If not, then errors will be added automatically.
 							if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 								# They're valid! Put them in!
+								new_committee_members.add(cleaned_assigned_member)
 								committee_to_remove.discard(cleaned_assigned_member)
 								old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 								committee_changes.append(
