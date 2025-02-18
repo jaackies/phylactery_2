@@ -2,12 +2,15 @@ import datetime
 from dal import autocomplete
 from django import forms
 from django.contrib import messages
+from django.http import HttpResponse
+from django.utils import timezone
 from django.utils.text import slugify
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import Accordion, AccordionGroup
 from members.models import Member, Rank, RankChoices, Membership
 from phylactery.form_fields import HTML5DateInput
+import csv
 
 
 def expire_active_ranks(rank_to_expire, rank_to_exclude):
@@ -657,8 +660,56 @@ class GetMembershipInfoForm(ControlPanelForm):
 		RankChoices.WEBKEEPER,
 	]
 	
+	membership_date = forms.DateField(
+		label="Date of membership:",
+		required=True,
+		widget=HTML5DateInput(),
+	)
+	only_guild = forms.BooleanField(
+		label="Only show memberships from Guild members?",
+		required=False,
+	)
+	
 	def get_layout(self):
-		return Layout()
+		return Layout(
+			"membership_date",
+			"only_guild",
+		)
+	
+	def clean_membership_date(self):
+		today = timezone.localdate()
+		cleaned_date = self.cleaned_data["membership_date"]
+		if cleaned_date > today:
+			raise forms.ValidationError("Date cannot be in the future.")
+		return cleaned_date
+	
+	def submit(self, request):
+		memberships = Membership.objects.filter(
+			date_purchased=self.cleaned_data["membership_date"]
+		)
+		if self.cleaned_data["only_guild"]:
+			memberships = memberships.filter(
+				guild_member=True
+			)
+		if memberships.count() > 0:
+			date_string = self.cleaned_data["membership_date"].isoformat()
+			csv_data = memberships.values_list(
+				"member__long_name",
+				"member__student_number",
+				"guild_member",
+			)
+			response = HttpResponse(
+				content_type="text/csv",
+				headers={
+					"Content-Disposition": f'attachment; filename="{date_string}-memberships.csv"'
+				}
+			)
+			writer = csv.writer(response)
+			writer.writerow(["Name", "Student Number", "Guild"])
+			writer.writerows(csv_data)
+			return response
+		else:
+			messages.warning(request, "No memberships exist for the chosen date.")
 	
 
 FORM_CLASSES = {}
@@ -669,6 +720,6 @@ for form_class in (
 	MakeWebkeepersForm,
 	AddRemoveRanksForm,
 	CommitteeTransferForm,
-	# GetMembershipInfoForm,
+	GetMembershipInfoForm,
 ):
 	FORM_CLASSES[slugify(form_class.form_name)] = form_class
