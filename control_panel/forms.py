@@ -412,6 +412,11 @@ class CommitteeTransferForm(ControlPanelForm):
 		("remove", "Remove the committee member from this position, with no replacement"),
 	]
 	
+	UNASSIGNED_RADIO_CHOICES = [
+		("retain", "Keep this position unassigned"),
+		("elect", "Elect new committee member"),
+	]
+	
 	COMMITTEE_POSITIONS = [
 		RankChoices.PRESIDENT,
 		RankChoices.VICEPRESIDENT,
@@ -472,12 +477,26 @@ class CommitteeTransferForm(ControlPanelForm):
 		for position in field_names_by_position:
 			for assigned_field_name, options_field_name in field_names_by_position[position]:
 				if position == RankChoices.OCM:
-					position_initial = current_committee[position][current_ocm_number].member
+					try:
+						position_initial = current_committee[position][current_ocm_number].member
+					except IndexError:
+						position_initial = None
 					field_label = f"Assigned {position.label} #{current_ocm_number+1}"
 					current_ocm_number += 1
 				else:
-					position_initial = current_committee[position][0].member
+					try:
+						position_initial = current_committee[position][0].member
+					except IndexError:
+						position_initial = None
 					field_label = f"Assigned {position.label}"
+				
+				field_choices = self.RADIO_CHOICES
+				field_required = True
+				if position_initial is None:
+					# Present a different set of choices if there's no member assigned
+					field_choices = self.UNASSIGNED_RADIO_CHOICES
+					field_required = False
+				
 				self.fields[assigned_field_name] = forms.ModelChoiceField(
 						label=field_label,
 						queryset=Member.objects.all(),
@@ -488,10 +507,12 @@ class CommitteeTransferForm(ControlPanelForm):
 							}
 						),
 						initial=position_initial,
+						required=field_required
 					)
+				
 				self.fields[options_field_name] = forms.ChoiceField(
 					widget=forms.RadioSelect,
-					choices=self.RADIO_CHOICES,
+					choices=field_choices,
 					label="",
 					initial="retain"
 				)
@@ -538,11 +559,22 @@ class CommitteeTransferForm(ControlPanelForm):
 			for assigned_field_name, options_field_name in field_names_by_position[position]:
 				cleaned_assigned_member = self.cleaned_data[assigned_field_name]
 				cleaned_option = self.cleaned_data[options_field_name]
-				if cleaned_assigned_member in new_committee_members:
-					# Committee can't have duplicate members.
+				
+				if cleaned_assigned_member is None:
+					# Only valid option is "retain" in this case.
+					if cleaned_option == "elect":
+						self.add_error(
+							assigned_field_name,
+							"You selected 'elect', but no new committee member was selected for this position."
+						)
+					# Nothing else we need to do for this oen.
+					continue
+				
+				if cleaned_assigned_member in new_committee_members and cleaned_option != "remove":
+					# Check if there's any duplicates (provided we aren't removing this member.)
 					self.add_error(assigned_field_name, f"Committee can't have duplicate members.")
+				
 				else:
-					new_committee_members.add(cleaned_assigned_member)
 					match cleaned_option:
 						case "retain":
 							# Check for a data entry error
@@ -551,13 +583,14 @@ class CommitteeTransferForm(ControlPanelForm):
 								self.add_error(assigned_field_name, "")
 								self.add_error(
 									options_field_name,
-									"You selected 'Retain', but also selected a different member for this position. "
+									"You selected 'No Changes', but also selected a different member for this position. "
 									"Did you make a mistake?"
 								)
 							else:
 								# Check if they're eligible. If not, then errors will be added automatically.
 								if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 									# They're valid! Put them in!
+									new_committee_members.add(cleaned_assigned_member)
 									committee_to_remove.discard(cleaned_assigned_member)
 									old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 									committee_changes.append(
@@ -567,6 +600,7 @@ class CommitteeTransferForm(ControlPanelForm):
 							# Check if they're eligible. If not, then errors will be added automatically.
 							if self.check_valid_for_position(assigned_field_name, cleaned_assigned_member, position):
 								# They're valid! Put them in!
+								new_committee_members.add(cleaned_assigned_member)
 								committee_to_remove.discard(cleaned_assigned_member)
 								old_position = old_committee_by_member.get(cleaned_assigned_member, None)
 								committee_changes.append(
